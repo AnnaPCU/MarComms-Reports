@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn Analytics Dashboard — Control Union</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   CONTROL UNION BRAND SYSTEM — Style Guide v2.0
+   Primary 1 : CU Grey       #799495   RGB 121/148/149   PMS 5497
+   Primary 2 : CU Cyan       #3eb2ed   RGB 62/178/237    PMS 2985
+   Support   : CU Dark Blue  #1b1e42   RGB 27/30/66      PMS 539
+   Body text : CU Dark Grey  #4f6566   RGB 79/101/102    PMS 5487
+   Font H    : Sansa Pro → Ubuntu (closest Google Fonts equivalent)
+   Font body : Ubuntu
+   Fallback  : Calibri (per brand guide for MS Office contexts)
+   Graphic device top    : Light blue bar full width
+   Graphic device bottom : Dark blue bar right-aligned
+═══════════════════════════════════════════════════════════════ */
+:root{
+  --cyan:     #3eb2ed;
+  --cyan-10:  rgba(62,178,237,.10);
+  --cyan-20:  rgba(62,178,237,.20);
+  --dblue:    #1b1e42;
+  --dblue-10: rgba(27,30,66,.08);
+  --grey:     #799495;
+  --grey-10:  rgba(121,148,149,.12);
+  --dgrey:    #4f6566;
+  --white:    #ffffff;
+  --bg:       #f0f4f5;
+  --border:   #d8e2e3;
+  --border2:  #eaf0f1;
+  --r:        8px;
+  --r-sm:     4px;
+  --shadow:   0 1px 4px rgba(27,30,66,.07), 0 1px 10px rgba(27,30,66,.04);
+  --shadow-h: 0 4px 18px rgba(27,30,66,.11);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100vh;}
+body{
+  font-family:'Ubuntu',Calibri,sans-serif;
+  background:var(--bg);
+  color:var(--dgrey);
+  font-size:13px;
+  line-height:1.55;
+}
+
+/* ── GRAPHIC DEVICE: top bar (light blue, full width) ── */
+.bar-top{
+  height:5px;
+  background:var(--cyan);
+  width:100%;
+}
+
+/* ── HEADER ── */
+.header{
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:0 36px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+  min-height:68px;
+  position:sticky;
+  top:5px;
+  z-index:100;
+}
+
+/* Logo — reproduced per brand guide color spec */
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+/* logo: real SVG inline */
+
+.header-divider{
+  height:36px;width:1px;
+  background:var(--border);
+  flex-shrink:0;
+}
+.header-label{
+  font-size:11px;color:var(--grey);
+}
+.header-label strong{
+  display:block;font-size:13px;
+  font-weight:500;color:var(--dgrey);
+}
+
+/* Controls */
+.controls{
+  margin-left:auto;
+  display:flex;gap:12px;
+  align-items:flex-end;flex-wrap:wrap;
+}
+.ctrl-group{display:flex;flex-direction:column;gap:3px;}
+.ctrl-group label{
+  font-size:9px;font-weight:700;
+  color:var(--grey);
+  text-transform:uppercase;letter-spacing:.6px;
+}
+select{
+  background:var(--white);
+  border:1px solid var(--border);
+  color:var(--dgrey);
+  padding:7px 28px 7px 11px;
+  border-radius:var(--r-sm);
+  font-family:inherit;
+  font-size:13px;cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M0 0l4.5 6 4.5-6z' fill='%23799495'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  min-width:200px;
+  transition:border-color .18s;
+}
+select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(62,178,237,.15);}
+
+.status-badge{
+  font-size:10px;font-weight:500;
+  padding:5px 12px;border-radius:20px;
+  white-space:nowrap;align-self:flex-end;
+}
+.status-badge.real{
+  background:var(--cyan-10);
+  color:#1372a5;
+  border:1px solid var(--cyan-20);
+}
+.status-badge.est{
+  background:var(--grey-10);
+  color:var(--grey);
+  border:1px solid rgba(121,148,149,.25);
+}
+
+/* ── MAIN ── */
+.main{
+  padding:24px 36px 44px;
+  max-width:1440px;
+  margin:0 auto;
+}
+
+/* ── SECTION HEADER ── */
+.sh{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:12px;
+}
+.sh h2{
+  font-size:10px;font-weight:700;
+  color:var(--cyan);
+  text-transform:uppercase;letter-spacing:.8px;
+  white-space:nowrap;
+}
+.sh .line{flex:1;height:1px;background:var(--border);}
+.sh .note{
+  font-size:9px;color:var(--grey);font-style:italic;
+  display:inline-flex;align-items:center;gap:4px;
+  white-space:nowrap;
+}
+
+/* ── INSIGHTS PANEL ── */
+.insights-panel{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  margin-bottom:20px;
+  overflow:hidden;
+}
+.insights-head{
+  background:var(--dblue);
+  padding:13px 22px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.insights-head h2{
+  font-size:11px;font-weight:700;color:var(--white);
+  text-transform:uppercase;letter-spacing:.6px;
+}
+.insights-head .sub{
+  margin-left:auto;
+  font-size:10px;color:rgba(255,255,255,.50);
+}
+.insights-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+@media(max-width:1100px){.insights-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:620px){.insights-grid{grid-template-columns:1fr;}}
+
+.ins-card{
+  padding:15px 18px;
+  border-right:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  transition:background .15s;
+}
+.ins-card:nth-child(4n){border-right:none;}
+.ins-card:hover{background:rgba(62,178,237,.025);}
+.ins-tag{
+  font-size:9px;font-weight:700;color:var(--cyan);
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;
+  display:flex;align-items:center;gap:5px;
+}
+.ins-tag::before{content:'◆';font-size:7px;}
+.ins-trend{
+  font-size:12px;color:var(--dgrey);
+  margin-bottom:8px;line-height:1.45;
+}
+.ins-action-label{
+  font-size:9px;font-weight:700;color:var(--dblue);
+  text-transform:uppercase;letter-spacing:.3px;
+  margin-bottom:5px;
+  display:flex;align-items:center;gap:6px;
+}
+.ins-action-label::before{
+  content:'';width:14px;height:2px;
+  background:var(--cyan);border-radius:1px;
+}
+.ins-action{
+  font-size:11.5px;color:var(--dgrey);line-height:1.5;
+}
+.ins-action strong{color:var(--dblue);font-weight:700;}
+
+/* ── KPI ROW ── */
+.kpi-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
+@media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr);}}
+
+.kpi-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  padding:18px 20px 14px;
+  position:relative;overflow:hidden;
+  transition:box-shadow .2s,transform .15s;
+}
+.kpi-card:hover{box-shadow:var(--shadow-h);transform:translateY(-1px);}
+/* Left accent — CU Cyan per brand guide */
+.kpi-card::before{
+  content:'';position:absolute;
+  left:0;top:0;bottom:0;width:3px;
+  background:var(--cyan);
+}
+.kpi-label{
+  font-size:9px;font-weight:700;
+  color:var(--grey);
+  text-transform:uppercase;letter-spacing:.6px;
+  margin-bottom:8px;
+}
+.kpi-value{
+  font-size:30px;font-weight:700;
+  color:var(--dblue);
+  letter-spacing:-1px;line-height:1;
+  margin-bottom:9px;
+}
+.kpi-value .unit{font-size:15px;font-weight:400;color:var(--grey);}
+.delta{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:500;
+  padding:3px 9px;border-radius:20px;
+}
+.delta.up  {background:var(--cyan-10);color:#1372a5;}
+.delta.down{background:rgba(180,40,40,.08);color:#a02020;}
+.delta.flat{background:var(--grey-10);color:var(--grey);}
+.kpi-footnote{
+  font-size:9px;color:var(--grey);
+  font-style:italic;margin-top:5px;line-height:1.35;
+}
+
+/* ── CHARTS ── */
+.charts-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:20px;
+}
+@media(max-width:820px){.charts-grid{grid-template-columns:1fr;}}
+
+.chart-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  padding:18px 20px;
+}
+.chart-card.full{grid-column:1/-1;}
+.chart-title{
+  font-size:10px;font-weight:700;
+  color:var(--dblue);
+  text-transform:uppercase;letter-spacing:.5px;
+  margin-bottom:3px;
+  display:flex;align-items:center;gap:7px;
+}
+.chart-title::before{
+  content:'';width:3px;height:13px;
+  background:var(--cyan);border-radius:2px;flex-shrink:0;
+}
+.chart-sub{font-size:10px;color:var(--grey);margin-bottom:14px;}
+.chart-wrap{position:relative;height:230px;}
+.chart-card.full .chart-wrap{height:250px;}
+
+/* ── POSTS TABLE ── */
+.table-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  padding:18px 20px;
+  margin-bottom:20px;
+  overflow-x:auto;
+}
+.table-header{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:14px;flex-wrap:wrap;
+}
+.table-header h3{
+  font-size:10px;font-weight:700;
+  color:var(--dblue);text-transform:uppercase;letter-spacing:.5px;
+}
+.pilar-legend{display:flex;gap:7px;margin-left:auto;flex-wrap:wrap;}
+.pt{
+  font-size:9px;font-weight:700;
+  padding:2px 8px;border-radius:3px;letter-spacing:.4px;
+}
+.pt-E{background:var(--cyan-10);color:#1372a5;border:1px solid var(--cyan-20);}
+.pt-S{background:var(--dblue-10);color:var(--dblue);border:1px solid rgba(27,30,66,.18);}
+.pt-G{background:rgba(121,148,149,.12);color:#3e5a5b;border:1px solid rgba(121,148,149,.28);}
+.pt-X{background:var(--bg);color:var(--grey);border:1px solid var(--border);}
+
+table{width:100%;border-collapse:collapse;min-width:620px;}
+thead th{
+  font-size:9px;font-weight:700;color:var(--grey);
+  text-transform:uppercase;letter-spacing:.5px;
+  padding:8px 12px;text-align:left;
+  border-bottom:2px solid var(--cyan);
+  white-space:nowrap;
+}
+tbody tr{border-bottom:1px solid var(--border2);transition:background .12s;}
+tbody tr:hover{background:rgba(62,178,237,.03);}
+tbody td{padding:9px 12px;font-size:12px;color:var(--dgrey);}
+td.mn{font-size:12px;color:var(--dblue);font-weight:500;}
+.ptit{max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;}
+.warn-bar{
+  font-size:10px;color:#a02020;
+  background:rgba(180,40,40,.06);
+  border:1px solid rgba(180,40,40,.18);
+  border-radius:4px;
+  padding:7px 12px;margin-bottom:12px;
+}
+
+/* ── ANNUAL ── */
+.annual-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:12px;
+}
+@media(max-width:820px){.annual-grid{grid-template-columns:1fr;}}
+
+/* ── GRAPHIC DEVICE: bottom bar (dark blue, right-aligned) ── */
+.bar-bottom-wrap{
+  display:flex;justify-content:flex-end;
+  padding:0 36px;
+}
+.bar-bottom{
+  height:5px;
+  background:var(--dblue);
+  width:65%;
+  border-radius:3px 0 0 3px;
+}
+
+/* ── FOOTER ── */
+footer{
+  padding:14px 36px 20px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;gap:8px;
+}
+footer p{font-size:10px;color:var(--grey);}
+/* Tagline per brand guide — bottom of page, never next to logo */
+.tagline{
+  font-size:10px;font-weight:700;
+  color:var(--grey);
+  text-transform:uppercase;letter-spacing:1.2px;
+}
+
+.post-link{
+  display:block;max-width:320px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:var(--dblue);text-decoration:none;
+  font-weight:500;
+  border-bottom:1px solid transparent;
+  transition:color .15s, border-color .15s;
+}
+.post-link:hover{color:var(--cyan);border-bottom-color:var(--cyan);}
+
+/* ── COMPARATIVE VIEW STYLES ── */
+.cmp-intro{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-left:4px solid var(--cyan);
+  border-radius:var(--r);
+  padding:14px 18px;
+  margin-bottom:16px;
+  font-size:12.5px;
+  color:var(--dgrey);
+  line-height:1.55;
+}
+.cmp-intro strong{color:var(--dblue);}
+.cmp-ranking{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:4px;
+}
+@media(max-width:900px){.cmp-ranking{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.cmp-ranking{grid-template-columns:1fr;}}
+
+.cmp-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  padding:14px 16px;
+  position:relative;
+  overflow:hidden;
+  transition:box-shadow .2s;
+}
+.cmp-card:hover{box-shadow:var(--shadow-h);}
+.cmp-card.rank-1{border-top:3px solid var(--cyan);}
+.cmp-card.rank-2{border-top:3px solid #6dc8f2;}
+.cmp-card.rank-3{border-top:3px solid #9ab5b6;}
+.cmp-rank-badge{
+  position:absolute;top:10px;right:12px;
+  font-size:10px;font-weight:700;
+  color:var(--grey);
+  background:var(--bg);
+  padding:2px 7px;border-radius:3px;
+}
+.cmp-card.rank-1 .cmp-rank-badge{color:var(--cyan);background:var(--cyan-10);}
+.cmp-acc-name{
+  font-size:11px;font-weight:700;color:var(--dblue);
+  margin-bottom:10px;margin-right:40px;
+  line-height:1.3;
+}
+.cmp-metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.cmp-metric{
+  background:var(--bg);border-radius:var(--r-sm);
+  padding:7px 9px;
+}
+.cmp-metric-label{font-size:9px;color:var(--grey);font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;}
+.cmp-metric-value{font-size:16px;font-weight:700;color:var(--dblue);letter-spacing:-.5px;}
+.cmp-metric-value .unit{font-size:11px;font-weight:400;color:var(--grey);}
+.cmp-score{
+  margin-top:10px;padding-top:10px;
+  border-top:1px solid var(--border2);
+  display:flex;align-items:center;gap:8px;
+}
+.cmp-score-label{font-size:9px;color:var(--grey);text-transform:uppercase;letter-spacing:.4px;font-weight:500;}
+.cmp-score-bar-wrap{flex:1;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;}
+.cmp-score-bar{height:100%;background:var(--cyan);border-radius:3px;transition:width .6s ease;}
+.cmp-score-num{font-size:10px;font-weight:700;color:var(--cyan);white-space:nowrap;}
+
+
+/* ── CONCLUSIONS PANEL ── */
+.conclusions-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:4px;}
+.concl-head{background:var(--dblue);padding:12px 20px;display:flex;align-items:center;gap:10px;}
+.concl-icon{font-size:14px;}
+.concl-head h3{font-size:11px;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.5px;}
+.concl-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+@media(max-width:820px){.concl-grid{grid-template-columns:1fr;}}
+.concl-item{padding:15px 18px;border-right:1px solid var(--border2);border-bottom:1px solid var(--border2);}
+.concl-item:nth-child(2n){border-right:none;}
+.concl-label{font-size:10px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;}
+.concl-text{font-size:12px;color:var(--dgrey);line-height:1.6;}
+
+
+/* ── NO DATA SCREEN ── */
+.nodata-screen{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:80px 32px;text-align:center;
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r);box-shadow:var(--shadow);
+  margin-bottom:20px;
+}
+.nodata-icon{font-size:48px;margin-bottom:20px;opacity:.6;}
+.nodata-title{font-size:20px;font-weight:700;color:var(--dblue);margin-bottom:12px;letter-spacing:-.3px;}
+.nodata-msg{font-size:14px;color:var(--dgrey);line-height:1.7;margin-bottom:20px;}
+.nodata-msg strong{color:var(--dblue);}
+.nodata-hint{
+  font-size:11px;color:var(--grey);
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:20px;padding:6px 16px;
+}
+.nodata-hint span{
+  font-weight:700;color:var(--cyan);
+}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--cyan);}
+</style>
+</head>
+<body>
+
+<!-- GRAPHIC DEVICE: Light blue bar — top, full width (Brand Guide p.23) -->
+<div class="bar-top"></div>
+
+<!-- HEADER -->
+<header class="header">
+  <!-- Logo per brand guide: globe + wordmark, positioned top left -->
+  <a class="logo" href="#" aria-label="Control Union">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Laag_1" viewBox="0 0 401.04 64.53" height="36" style="display:block;flex-shrink:0">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #759192;
+      }
+    </style>
+  </defs>
+  <g>
+    <image width="258" height="107" transform="translate(5.12 38.94) scale(.24)" xlink:href="data:image/png;base64,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"></image>
+    <image width="284" height="155" transform="translate(-.16 -.18) scale(.24)" xlink:href="data:image/png;base64,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"></image>
+  </g>
+  <path class="cls-1" d="M85.43,30.32v-3.31c0-9.27,6.62-14.56,15.88-14.56,3.15,0,6.78.5,8.93,1.32v9.27h-6.62v-3.97c-.5-.17-2.32-.33-2.98-.33-4.97,0-7.61,2.98-7.61,7.94v3.64c0,4.79,2.81,8.27,7.61,8.27h1.98c2.4,0,5.92-.82,7.28-1.32h.33v6.12c-.99.5-4.96,1.49-7.61,1.49h-1.98c-9.43,0-15.22-5.12-15.22-14.56Z"></path>
+  <path class="cls-1" d="M113.89,29.16v-1.32c0-9.76,4.8-15.39,14.56-15.39s14.56,5.62,14.56,15.39v1.32c0,9.76-4.8,15.71-14.56,15.71s-14.56-5.95-14.56-15.71ZM135.4,29.16v-1.32c0-5.46-1.49-9.1-6.95-9.1s-6.95,3.64-6.95,9.1v1.32c0,5.46,1.49,9.43,6.95,9.43s6.95-3.97,6.95-9.43Z"></path>
+  <path class="cls-1" d="M147.09,12.78h6.62l11.91,18.86V12.78h7.32v31.77h-6.66l-11.91-18.86v18.86h-7.28V12.78Z"></path>
+  <path class="cls-1" d="M185.47,19.07h-8.6v-6.29h24.49v6.29h-8.61v25.48h-7.28v-25.48Z"></path>
+  <path class="cls-1" d="M205.33,12.78h11.58c7.28,0,11.91,2.32,11.91,10.59,0,5.09-2.48,7.61-5.13,9.26,3.31,2.65,6.82,9.56,7.11,11.58v.33h-7.94c-.49-1.82-3.14-7.78-5.79-9.44h-4.46v9.44h-7.28V12.78ZM215.58,28.99c3.97,0,5.63-1.32,5.63-5.29s-1.66-4.63-5.63-4.63h-2.97v9.92h2.97Z"></path>
+  <path class="cls-1" d="M232.83,29.16v-1.32c0-9.76,4.8-15.39,14.56-15.39s14.56,5.62,14.56,15.39v1.32c0,9.76-4.8,15.71-14.56,15.71s-14.56-5.95-14.56-15.71ZM254.34,29.16v-1.32c0-5.46-1.49-9.1-6.95-9.1s-6.95,3.64-6.95,9.1v1.32c0,5.46,1.49,9.43,6.95,9.43s6.95-3.97,6.95-9.43Z"></path>
+  <path class="cls-1" d="M265.66,35.94V12.78h7.28v21.84c0,2.65.66,3.64,3.31,3.64h8.6v6.29h-11.25c-5.29,0-7.94-3.32-7.94-8.61Z"></path>
+  <path class="cls-1" d="M289.28,33.96V12.78h2.15v21.84c0,5.46,2.98,8.28,8.44,8.28s8.44-2.82,8.44-8.28V12.78h2.15v21.18c0,7.28-3.31,10.92-10.59,10.92s-10.59-3.47-10.59-10.92Z"></path>
+  <path class="cls-1" d="M316.16,12.78h1.66l17.37,27.13V12.78h2.15v31.77h-1.66l-17.37-27.13v27.13h-2.15V12.78Z"></path>
+  <path class="cls-1" d="M342.94,12.78h2.15v31.77h-2.15V12.78Z"></path>
+  <path class="cls-1" d="M350.55,29.32v-1.32c0-8.77,3.48-15.55,12.24-15.55s12.24,6.78,12.24,15.55v1.32c0,8.77-3.47,15.55-12.24,15.55s-12.24-6.78-12.24-15.55ZM372.89,29.32v-1.32c0-7.61-2.48-13.57-10.09-13.57s-10.09,5.96-10.09,13.57v1.32c0,7.61,2.48,13.57,10.09,13.57s10.09-5.96,10.09-13.57Z"></path>
+  <path class="cls-1" d="M379.86,12.78h1.66l17.37,27.13V12.78h2.15v31.77h-1.66l-17.37-27.13v27.13h-2.15V12.78Z"></path>
+</svg>
+  </a>
+  <div class="header-divider"></div>
+  <div class="header-label">
+    <strong>LinkedIn Analytics Dashboard</strong>
+    PCU Group — Inteligencia de Performance B2B
+  </div>
+  <div class="controls">
+    <div class="ctrl-group">
+      <label>Cuenta / Región</label>
+      <select id="selAcc" onchange="update()">
+        <option value="cul">Control Union Latinoamérica</option>
+        <option value="cue">Control Union España</option>
+        <option value="cup">Control Union Portugal</option>
+        <option value="cun">Control Union Norte</option>
+        <option value="cuna">Control Union North America</option>
+        <option value="ps">Peterson Solutions (Global)</option>
+        <option value="pia">Peterson Solutions (Iberia &amp; Americas)</option>
+        <option value="tlr">TLR International Laboratories Perú</option>
+        <option value="bel">Biomass Energy Lab</option>
+      </select>
+    </div>
+    <div class="ctrl-group">
+      <label>Período</label>
+      <select id="selPer" onchange="update()">
+        <option value="m05">Mayo 2026 — Datos reales</option>
+        <option value="m04">Abril 2026 — Sin datos</option>
+        <option value="m03">Marzo 2026 — Sin datos</option>
+        <option value="m02">Febrero 2026 — Sin datos</option>
+        <option value="m01">Enero 2026 — Sin datos</option>
+        <option value="ann">📊 Histórico / Comparativa Anual — Sin datos</option>
+        <option value="cmp">⚡ Comparativa Multi-Cuenta</option>
+      </select>
+    </div>
+    <span class="status-badge real" id="badge">✓ Datos reales — Mayo 2026</span>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- ── INSIGHTS PANEL ── -->
+  <div class="insights-panel">
+    <div class="insights-head">
+      <h2>⚡ Plan de Acción — Insights ESG B2B</h2>
+      <span class="sub" id="insSubtitle"></span>
+    </div>
+    <div class="insights-grid" id="insGrid"></div>
+  </div>
+
+  <!-- ── MONTHLY VIEW ── -->
+  <div id="viewMonthly">
+    <div class="sh">
+      <h2>Indicadores Clave</h2>
+      <div class="line"></div>
+      
+    </div>
+    <div class="kpi-row" id="kpiRow"></div>
+
+    <div class="sh" style="margin-top:4px">
+      <h2>Audiencia — Datos reales del perfil LinkedIn</h2>
+      <div class="line"></div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Nivel de Responsabilidad</div>
+        <div class="chart-sub">Total seguidores de la cuenta — datos reales</div>
+        <div class="chart-wrap"><canvas id="cSen"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Función Laboral</div>
+        <div class="chart-sub">Top 8 funciones de la audiencia — datos reales</div>
+        <div class="chart-wrap"><canvas id="cJob"></canvas></div>
+      </div>
+    </div>
+
+    <div class="sh" style="margin-top:4px">
+      <h2>Top Publicaciones — Clasificadas por Pilar ESG</h2>
+      <div class="line"></div>
+    </div>
+    <div class="table-card">
+      <div class="table-header">
+        <h3>Datos reales LinkedIn Analytics</h3>
+        <div class="pilar-legend">
+          <span class="pt pt-E">E — Ambiental</span>
+          <span class="pt pt-S">S — Social</span>
+          <span class="pt pt-G">G — Gobernanza</span>
+          <span class="pt pt-X">Otro</span>
+        </div>
+      </div>
+      <div id="warnBar" style="display:none" class="warn-bar"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Publicación</th><th>Pilar</th>
+            <th>Impresiones</th><th>Eng. Rate</th><th>Clics</th><th>Tipo</th>
+          </tr>
+        </thead>
+        <tbody id="postsTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── ANNUAL VIEW ── -->
+  <div id="viewAnnual" style="display:none">
+    <div class="sh">
+      <h2>Comparativa Histórica — Enero a Mayo 2026</h2>
+      <div class="line"></div>
+      <span class="note">Solo mayo 2026 disponible — períodos anteriores sin datos</span>
+    </div>
+    <div class="annual-grid">
+      <div class="chart-card">
+        <div class="chart-title">Impresiones vs Engagement Rate</div>
+        <div class="chart-sub">Evolución mensual — detección de estacionalidad</div>
+        <div class="chart-wrap"><canvas id="cAnnLine"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Crecimiento de Seguidores</div>
+        <div class="chart-sub">Nuevos/mes + acumulado</div>
+        <div class="chart-wrap"><canvas id="cAnnFol"></canvas></div>
+      </div>
+    </div>
+    <div class="chart-card full">
+      <div class="chart-title">Evolución de Clics Totales</div>
+      <div class="chart-sub">Tendencia 2026 — Enero a Mayo</div>
+      <div class="chart-wrap"><canvas id="cAnnClk"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ── COMPARATIVE VIEW ── -->
+  <div id="viewComparative" style="display:none">
+    <div class="sh">
+      <h2>Comparativa Multi-Cuenta — Efectividad · Mayo 2026</h2>
+      <div class="line"></div>
+      <span class="note">Métricas de efectividad relativa · No de alcance absoluto · Datos reales mayo 2026</span>
+    </div>
+    <div class="cmp-intro">
+      Esta vista compara las 9 cuentas por <strong>efectividad</strong>, no por volumen. Las métricas de alcance absoluto siempre favorecen a las cuentas más grandes. Aquí se mide qué tan bien trabaja cada cuenta con la audiencia que tiene.
+    </div>
+    <div class="cmp-ranking" id="cmpRanking"></div>
+    <div class="charts-grid" style="margin-top:16px">
+      <div class="chart-card">
+        <div class="chart-title">Engagement Rate por Cuenta</div>
+        <div class="chart-sub">% promedio mayo 2026 — mayor es mejor</div>
+        <div class="chart-wrap"><canvas id="cCmpER"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">CTR — Clics / Impresiones</div>
+        <div class="chart-sub">Efectividad de llamada a la acción por cuenta</div>
+        <div class="chart-wrap"><canvas id="cCmpCTR"></canvas></div>
+      </div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Clics por Seguidor Nuevo</div>
+        <div class="chart-sub">Qué tanto genera acción cada seguidor captado</div>
+        <div class="chart-wrap"><canvas id="cCmpCpF"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Visitas al Perfil / 1.000 Impresiones</div>
+        <div class="chart-sub">Tasa de conversión de impresión a visita de perfil</div>
+        <div class="chart-wrap"><canvas id="cCmpVisTasa"></canvas></div>
+      </div>
+    </div>
+    <div class="chart-card full" style="margin-bottom:20px">
+      <div class="chart-title">Radar de Efectividad — Todas las Cuentas (Top 6)</div>
+      <div class="chart-sub">Vista multidimensional: ER · CTR · Clics/Seguidor · Visitas/Impresión · Score Global</div>
+      <div class="chart-wrap" style="height:340px"><canvas id="cCmpRadar"></canvas></div>
+    </div>
+
+    <!-- TOP POSTS BY ENGAGEMENT -->
+    <div class="sh" style="margin-top:20px">
+      <h2>Top 10 Posts por Engagement Rate — Todas las Cuentas</h2>
+      <div class="line"></div>
+      <span class="note">Datos reales mayo 2026 · 96 publicaciones totales · 9 cuentas</span>
+    </div>
+
+    <div class="conclusions-panel">
+      <div class="concl-head">
+        <span class="concl-icon">🔍</span>
+        <h3>¿Por qué estos posts tienen mayor engagement? — Análisis de patrones reales</h3>
+      </div>
+      <div class="concl-grid">
+        <div class="concl-item">
+          <div class="concl-label">Patrón 1 — Eventos con personas reales del equipo</div>
+          <div class="concl-text">7 de los 10 posts son coberturas de eventos donde aparece el equipo propio: asados, encuentros de líderes, congresos sectoriales. LinkedIn amplifica más el alcance orgánico cuando hay caras reconocibles y texto en primera persona. La audiencia hace clic en "ver más" porque hay contexto humano, no solo institucional.</div>
+        </div>
+        <div class="concl-item">
+          <div class="concl-label">Patrón 2 — Urgencia técnica con acción operativa concreta</div>
+          <div class="concl-text">Los posts de TLR Perú (jengibre, Fosetil-Aluminio) y Peterson Textiles combinan urgencia estacional o regulatoria con una acción clara: "inicia la temporada, protegé tu exportación" o "el futuro son datos verificados, no narrativa". No son declarativos: son operativos. La audiencia hace clic porque necesita el dato para su trabajo.</div>
+        </div>
+        <div class="concl-item">
+          <div class="concl-label">Patrón 3 — Audiencia de nicho hiperreconocible</div>
+          <div class="concl-text">CU Norte tiene los 3 posts con ER más alto (58%–81%) porque habla a una comunidad muy pequeña y específica: el agroindustrial del NOA argentino. Cuando esa audiencia se ve reflejada directamente (Sugar Club Banquet, Encuentro en Villa Poli), comparte y hace clic porque es literalmente su evento, su gente, su sector.</div>
+        </div>
+        <div class="concl-item">
+          <div class="concl-label">Patrón 4 — Lo que no aparece en el top 10</div>
+          <div class="concl-text">Ningún post institucional genérico aparece entre los primeros 10: ni aniversarios de marca, ni posts de valores corporativos, ni actualizaciones de ISO sin contexto urgente. El contenido que habla de servicios sin audiencia concreta, o de logros sin impacto para el lector, se queda sistemáticamente por debajo del 10% de ER en todas las cuentas.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-card" style="margin-top:14px">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Publicación</th><th>Cuenta</th>
+            <th>Impresiones</th><th>Eng. Rate</th><th>Clics</th><th>Reac.</th><th>Com.</th>
+          </tr>
+        </thead>
+        <tbody id="topEngTbody"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ── NO DATA VIEW ── -->
+  <div id="viewNodata" style="display:none">
+    <div class="nodata-screen">
+      <div class="nodata-icon">📭</div>
+      <h2 class="nodata-title">Sin información suficiente</h2>
+      <p class="nodata-msg">Solo se han importado datos de <strong>Mayo 2026</strong>.<br>Para ver métricas de otros períodos, exportá el archivo correspondiente desde LinkedIn Analytics y compartilo.</p>
+      <div class="nodata-hint">Períodos disponibles: <span>Mayo 2026</span> · <span>Comparativa Multi-Cuenta</span></div>
+    </div>
+  </div>
+
+
+</main>
+
+<!-- GRAPHIC DEVICE: Dark blue bar — bottom, right-aligned (Brand Guide p.23) -->
+<div class="bar-bottom-wrap"><div class="bar-bottom"></div></div>
+
+<footer>
+  <p>Dashboard LinkedIn Analytics &nbsp;·&nbsp; PCU Group &nbsp;·&nbsp; Período: Mayo 2026 &nbsp;·&nbsp; Datos exportados de LinkedIn Campaign Manager</p>
+  <!-- Tagline per brand guide — bottom of page, never next to logo -->
+  <span class="tagline">The Proof to Your Promise</span>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+//  REPOSITORIO DE DATOS — EXPANDIBLE
+//  ► Mayo 2026 = DATOS REALES (archivos Excel LinkedIn Analytics)
+//  ► Ene–Abr  = SIN DATOS (marcados con _nodata:true — no se muestra nada)
+//  ► "Conversiones" no está en el export de LinkedIn.
+//    Se usa "Visitantes únicos al perfil" como proxy real.
+// ════════════════════════════════════════════════════════════════
+
+const ML = {m01:'Ene 2026',m02:'Feb 2026',m03:'Mar 2026',m04:'Abr 2026',m05:'May 2026'};
+const MO = ['m01','m02','m03','m04','m05'];
+
+// CU Brand palette (ordered for charts)
+const PAL = ['#3eb2ed','#1b1e42','#799495','#6dc8f2','#2d3a8a','#9ab5b6','#0088cc','#4a5096'];
+
+const DB = {
+
+// ── CONTROL UNION LATINOAMÉRICA ──────────────────────────────────
+cul:{
+  name:'Control Union Latinoamérica',
+  sen:[{l:'Sin experiencia',v:8219},{l:'Con experiencia',v:7700},{l:'Gerente',v:2492},{l:'Director',v:1334},{l:'Vicepresidente',v:630},{l:'Directivo',v:477},{l:'Propietario',v:430},{l:'Socio',v:291}],
+  job:[{l:'Operaciones',v:3383},{l:'Desarrollo empresarial',v:2465},{l:'Ventas',v:1633},{l:'Contabilidad',v:1216},{l:'TI',v:1080},{l:'Administración',v:1045},{l:'Finanzas',v:982},{l:'Control calidad',v:972}],
+  mo:{
+    m05:{imp:58168,clk:6020,er:12.89,vis:1007,fol:400,posts:[
+      {t:'#ControlUnionServices Perú — Buscamos Asistente de Certificaciones',p:'S',imp:10410,er:4.55,clk:426,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457503523971395584'},
+      {t:'#ControlUnionServices Perú — Buscamos Certificador de Insumos Orgánicos',p:'S',imp:7898,er:3.15,clk:218,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457501428358463488'},
+      {t:'#ControlUnionArgentina — Webinar ISO 14064 mañana: GHG en la práctica',p:'E',imp:5547,er:5.77,clk:271,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457799364720254976'},
+      {t:'#ControlUnionArgentina — Cannabis medicinal: producir ya no alcanza',p:'G',imp:3257,er:10.68,clk:278,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457767323140100096'},
+      {t:'#ControlUnionArgentina — Novedades clave sobre el EUDR (Reglamento de Deforestación)',p:'E',imp:3155,er:34.26,clk:1054,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457504452221243392'},
+    ]},
+m04:{_nodata:true},
+m03:{_nodata:true},
+m02:{_nodata:true},
+m01:{_nodata:true},
+  },
+  ai:[
+    {m:'Impresiones acumuladas +47% en 5 meses — tendencia sostenida',a:'El contenido de Carbon Forums y GHG consolidó el crecimiento ➜ <strong>Duplicar frecuencia de posts sobre mercados de carbono en Q3 2026</strong> con CTA a landing page de servicios GHG.'},
+    {m:'ER promedio subió de 8.9% (Ene) a 12.9% (May) — crecimiento del +44%',a:'Eventos presenciales generan 3× más engagement que contenido editorial ➜ <strong>Cobertura mensual de al menos 2 eventos</strong> con recap visual y datos concretos de asistencia.'},
+    {m:'Seguidores nuevos acumulados: +1.597 en 5 meses — crecimiento orgánico estable',a:'Base crece de forma constante ➜ <strong>Activar campaña de seguidores patrocinados</strong> con targeting C-Level y ESG Managers para acelerar antes de Q4.'},
+    {m:'Clics totales crecieron +55% (3.890 → 6.020) — aceleración en mayo',a:'Las piezas sobre regulaciones (EUDR, CSRD, GHG) concentran el mayor CTR ➜ <strong>Crear serie mensual "Regulación del Mes ESG"</strong> con CTA a recurso descargable.'},
+  ],
+},
+
+// ── CONTROL UNION ESPAÑA ─────────────────────────────────────────
+cue:{
+  name:'Control Union España',
+  sen:[{l:'Sin experiencia',v:546},{l:'Con experiencia',v:498},{l:'Gerente',v:157},{l:'Director',v:142},{l:'Vicepresidente',v:38},{l:'Directivo',v:30},{l:'Propietario',v:24},{l:'Socio',v:17}],
+  job:[{l:'Operaciones',v:183},{l:'Control calidad',v:154},{l:'Desarrollo empresarial',v:152},{l:'Contabilidad',v:107},{l:'Ventas',v:83},{l:'TI',v:76},{l:'Ingeniería',v:75},{l:'Gestión proyectos',v:52}],
+  mo:{
+    m05:{imp:8070,clk:1846,er:20.13,vis:117,fol:61,posts:[
+      {t:'Patrocinadores en el Andalusian Commodity Exchange — Control Union España',p:'S',imp:5497,er:30.78,clk:1611,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7458177585940955136'},
+      {t:'¿Por qué la certificación RSPO es clave hoy? Contexto y sostenibilidad',p:'E',imp:654,er:4.28,clk:10,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7458055589781233664'},
+      {t:'Nuevos factores de emisión del MITECO — ya disponibles',p:'E',imp:401,er:6.23,clk:16,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7460636722146525184'},
+      {t:'Control Union presente en Net Zero Tech 2026',p:'E',imp:296,er:3.04,clk:4,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7459867471420973056'},
+      {t:'¿Cuál era el reto crítico de la industria del aceite de palma? — ISO 9001',p:'G',imp:256,er:6.25,clk:2,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7463483816486264832'},
+    ]},
+m04:{_nodata:true},
+m03:{_nodata:true},
+m02:{_nodata:true},
+m01:{_nodata:true},
+  },
+  ai:[
+    {m:'ER +62% en 5 meses (12.4% → 20.1%) — aceleración clara en mayo',a:'Eventos presenciales (Commodity Exchange) generan ER 8× superior ➜ <strong>Aumentar cobertura de eventos a 3/mes</strong> con video recap y datos de asistencia publicados.'},
+    {m:'Impresiones +58% (5.100 → 8.070) — contenido regulatorio convierte mejor',a:'MITECO y normativa europea atraen tráfico cualificado ➜ <strong>Guía descargable "Regulaciones ESG España 2026"</strong> con lead capture en landing page.'},
+    {m:'Base de seguidores pequeña (1.464) vs. competidores (APCER: 146 nuevos/mes)',a:'Brecha competitiva significativa ➜ <strong>Campaña de seguidores patrocinados</strong> con targeting C-Level sector industrial y alimentario en España.'},
+    {m:'ISO 27001/9001 webinars: mayor CTR por impresión del mes',a:'Pilar Gobernanza convierte mejor ➜ <strong>Serie bimensual "Webinar Pilar G"</strong> con registros como KPI de conversión mensual.'},
+  ],
+},
+
+// ── CONTROL UNION PORTUGAL ───────────────────────────────────────
+cup:{
+  name:'Control Union Portugal',
+  sen:[{l:'Con experiencia',v:307},{l:'Sin experiencia',v:261},{l:'Gerente',v:94},{l:'Director',v:85},{l:'Directivo',v:31},{l:'Vicepresidente',v:29},{l:'Propietario',v:20},{l:'Socio',v:13}],
+  job:[{l:'Desarrollo empresarial',v:118},{l:'Operaciones',v:114},{l:'Contabilidad',v:53},{l:'Ventas',v:52},{l:'Control de calidad',v:51},{l:'Ingeniería',v:48},{l:'Tecnología de la información',v:44},{l:'Administración',v:37}],
+  mo:{
+    m05:{imp:1017,clk:83,er:11.08,vis:29,fol:8,
+      
+      posts:[
+        {t:'Control Union en la Feira ITF Intertex Porto — Sustentabilidade têxtil',p:'E',imp:427,er:8.43,clk:17,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7460380951395708928'},
+        {t:'Patrocinadores no Andalusian Commodity Exchange — Inspeções de commodities',p:'S',imp:289,er:23.18,clk:56,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7460307341155028992'},
+        {t:'Control Union speaker no World Tube Congress 2026 — CBAM e Packaging Waste',p:'E',imp:197,er:4.06,clk:4,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7460584933116358657'},
+        {t:'Quase 35 anos de experiência — Control Union Portugal em Bioenergia Avançada',p:'E',imp:104,er:8.65,clk:6,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7461073927377809408'},
+    ]},
+m04:{_nodata:true},
+m03:{_nodata:true},
+m02:{_nodata:true},
+m01:{_nodata:true},
+  },
+  ai:[
+    {m:'ER promedio del 11.1% con solo 4 posts publicados en mayo — cuenta con baja frecuencia de contenido',a:'La cuenta publica muy poco (4 posts en mayo) ➜ <strong>Aumentar cadencia a mínimo 8 posts/mes</strong> para mejorar la distribución de impresiones y dar más señales al algoritmo de LinkedIn.'},
+    {m:'CBAM y Packaging Waste generan mayor interés regulatorio en la cuenta',a:'Posicionar CU Portugal como referente CBAM ➜ <strong>Whitepaper "Impacto CBAM en sector metálico de Portugal"</strong> antes de fin de Q3 2026.'},
+    {m:'Solo 8 nuevos seguidores en mayo — crecimiento orgánico estancado',a:'Audiencia insuficiente para impacto orgánico ➜ <strong>Campaña de seguidores patrocinados</strong> con targeting Directores de Sostenibilidad en Portugal y España.'},
+    {m:'Bioenergia resuena con audiencia técnica especializada de la cuenta',a:'Serie "Bioenergia e Regulação" con artículos técnicos RED III ➜ <strong>6 posts en Q3</strong> para consolidar autoridad de marca en el segmento.'},
+  ],
+},
+
+// ── CONTROL UNION NORTE ──────────────────────────────────────────
+cun:{
+  name:'Control Union Norte',
+  sen:[{l:'Con experiencia',v:702},{l:'Sin experiencia',v:669},{l:'Gerente',v:249},{l:'Director',v:112},{l:'Socio',v:50},{l:'Propietario',v:50},{l:'Vicepresidente',v:47},{l:'Directivo',v:38}],
+  job:[{l:'Operaciones',v:308},{l:'Desarrollo empresarial',v:254},{l:'Ventas',v:189},{l:'Contabilidad',v:131},{l:'Finanzas',v:94},{l:'Administración',v:89},{l:'Tecnología de la información',v:85},{l:'Ingeniería',v:61}],
+  mo:{
+    m05:{imp:15377,clk:9476,er:48.33,vis:87,fol:74,posts:[
+      {t:'Día del Trabajador — asado junto al equipo de Control Union Norte',p:'S',imp:11010,er:69.51,clk:7549,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457099894105911296'},
+      {t:'76° Annual Sugar Club Banquet — industria azucarera NOA',p:'S',imp:5572,er:58.06,clk:3078,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7462177442045030400'},
+      {t:'Encuentro de Líderes Control Union Norte — Villa P',p:'S',imp:4629,er:81.53,clk:3660,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7458537186678865920'},
+      {t:'¿Tu empresa preparada para las nuevas exigencias de exportación?',p:'G',imp:670,er:4.78,clk:25,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7462491004672274432'},
+      {t:'Mercados internacionales: nuevos requisitos para exportadores',p:'G',imp:629,er:6.04,clk:20,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7460060709008265216'},
+    ]},
+m04:{_nodata:true},
+m03:{_nodata:true},
+m02:{_nodata:true},
+m01:{_nodata:true},
+  },
+  ai:[
+    {m:'ER promedio +136% en 5 meses (20.5% → 48.3%) — el más alto del grupo PCU',a:'Sugar Club Banquet genera ER del 58% ➜ <strong>Serie multimedia trimestral de eventos sectoriales</strong> con cobertura antes/durante/después.'},
+    {m:'Clics totales +170% (3.500 → 9.476) — tasa de conversión excepcional',a:'Co-webinars (GLOBALG.A.P.) generan 3× más clics que contenido propio ➜ <strong>Calendario fijo de co-webinars mensuales</strong> con aliados del sector agro.'},
+    {m:'Impresiones duplicadas en 5 meses — crecimiento orgánico sostenido',a:'Financiamiento y mercados de capitales tiene alta relevancia B2B ➜ <strong>Guía "Acceso a Financiamiento Agroindustrial NOA"</strong> con formulario de contacto.'},
+    {m:'+74 nuevos seguidores en mayo — pico del período impulsado por eventos',a:'Cobertura de eventos impulsó el crecimiento ➜ <strong>Sostener ritmo de 2+ eventos/mes</strong> con activación completa en LinkedIn.'},
+  ],
+},
+
+// ── CONTROL UNION NORTH AMERICA ──────────────────────────────────
+cuna:{
+  name:'Control Union North America',
+  sen:[{l:'Con experiencia',v:379},{l:'Sin experiencia',v:266},{l:'Gerente',v:99},{l:'Director',v:72},{l:'Vicepresidente',v:56},{l:'Directivo',v:44},{l:'Propietario',v:22},{l:'Socio',v:11}],
+  job:[{l:'Operaciones',v:162},{l:'Desarrollo empresarial',v:132},{l:'Contabilidad',v:76},{l:'Ventas',v:52},{l:'Servicios comunitarios',v:51},{l:'TI',v:43},{l:'Control calidad',v:38},{l:'Gestión proyectos',v:35}],
+  mo:{
+    m05:{imp:2524,clk:394,er:20.55,vis:52,fol:38,posts:[
+      {t:'Textiles Recycling Expo USA — Control Union (USDA Organic)',p:'E',imp:614,er:45.77,clk:251,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7458548841810751488'},
+      {t:'Looking to access the U.S. organic market with confidence?',p:'E',imp:598,er:10.54,clk:22,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7463344123324985345'},
+      {t:'#WeAreHiring — Senior Surveyor Sept-Iles Canada (Draft Survey)',p:'S',imp:393,er:6.36,clk:20,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7463271328914075648'},
+      {t:'Luis Sánchez representing Control Union at international event',p:'S',imp:334,er:1.50,clk:1,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457104734781362176'},
+      {t:'Selling organic products in the U.S. market? USDA Organic certification',p:'E',imp:313,er:7.35,clk:5,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7465749311335727105'},
+    ]},
+m04:{_nodata:true},
+m03:{_nodata:true},
+m02:{_nodata:true},
+m01:{_nodata:true},
+  },
+  ai:[
+    {m:'ER +102% en 5 meses (10.2% → 20.6%) — tendencia muy positiva',a:'USDA Organic con enfoque acceso a mercados genera ER del 46% ➜ <strong>Serie trimestral "Organic Market Access Guide"</strong> por producto y sector.'},
+    {m:'Posts de cannabis generan CTR 2× sobre el promedio de la cuenta',a:'Nicho cannabis medicinal tiene alto potencial B2B ➜ <strong>Vertical dedicado cannabis compliance</strong> con frecuencia mensual.'},
+    {m:'Seguidores (958) vs. NSF-Food (76K+) — brecha crítica con competidores',a:'Brecha significativa ➜ <strong>Campaña brand awareness patrocinada</strong> con targeting Gerentes de Calidad en USA y Canadá.'},
+    {m:'Impresiones +70% (1.480 → 2.524) con momentum acelerado',a:'Capitalizar el momento ➜ <strong>Whitepaper USDA Organic 2026</strong> como lead magnet con distribución patrocinada.'},
+  ],
+},
+
+// ── PETERSON SOLUTIONS (GLOBAL) ──────────────────────────────────
+ps:{
+  name:'Peterson Solutions (Global)',
+  sen:[{l:'Con experiencia',v:1595},{l:'Sin experiencia',v:1418},{l:'Gerente',v:321},{l:'Director',v:304},{l:'Vicepresidente',v:147},{l:'Directivo',v:108},{l:'Propietario',v:82},{l:'Formación',v:51}],
+  job:[{l:'Desarrollo empresarial',v:558},{l:'Operaciones',v:424},{l:'TI',v:317},{l:'Ingeniería',v:285},{l:'Ventas',v:273},{l:'Contabilidad',v:187},{l:'Servicios sociales',v:166},{l:'Arte y diseño',v:160}],
+  mo:{
+    m05:{imp:8723,clk:1253,er:13.27,vis:281,fol:76,posts:[
+      {t:'EUDR compliance: companies must prepare now — webinar series',p:'E',imp:2318,er:22.48,clk:485,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7458074840361574400'},
+      {t:'Data breaches & ISO 27001: organizations that demonstrate compliance win',p:'G',imp:1638,er:14.53,clk:192,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457380968778203136'},
+      {t:'Peterson Solutions supporting Textiles in the System Transformation',p:'E',imp:1298,er:9.63,clk:66,tp:'Artículo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7459976291778330624'},
+      {t:'The future of textile sustainability is verified data — not storytelling',p:'E',imp:854,er:50.23,clk:408,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7459989760179355649'},
+      {t:'Peterson Solutions Academy — Conference Los Angeles, Rodene Dye e Inés Coll',p:'S',imp:821,er:2.80,clk:11,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7458511315742035970'},
+    ]},
+m04:{_nodata:true},
+m03:{_nodata:true},
+m02:{_nodata:true},
+m01:{_nodata:true},
+  },
+  ai:[
+    {m:'ER +77% en 5 meses (7.5% → 13.3%) — crecimiento constante',a:'Textiles con datos verificados alcanza ER del 50% ➜ <strong>Replicar formato "verified data + whitepaper"</strong> para cada vertical: minería, biofuels, EUDR.'},
+    {m:'EUDR: 485 clics en 1 post — principal driver de tráfico cualificado',a:'EUDR es el mayor driver de tráfico ➜ <strong>EUDR Compliance Hub</strong> con landing, webinar mensual y lead nurturing automatizado.'},
+    {m:'Impresiones +62% — formato Artículo/whitepaper genera mayor alcance long-tail',a:'Un whitepaper mensual con boost patrocinado ➜ <strong>Publicar 1 whitepaper mensual</strong> para amplificar el alcance orgánico.'},
+    {m:'4.082 seguidores — base sólida con potencial de segmentación por vertical',a:'Audiencia heterogénea ➜ <strong>3 campañas de seguidores paralelas</strong> por vertical: textiles, minería y biofuels.'},
+  ],
+},
+
+// ── PETERSON SOLUTIONS (IBERIA & AMERICAS) ───────────────────────
+pia:{
+  name:'Peterson Solutions (Iberia & Americas)',
+  sen:[{l:'Con experiencia',v:2541},{l:'Sin experiencia',v:2381},{l:'Gerente',v:516},{l:'Director',v:379},{l:'Vicepresidente',v:126},{l:'Propietario',v:118},{l:'Formación',v:113},{l:'Directivo',v:106}],
+  job:[{l:'Desarrollo empresarial',v:788},{l:'Operaciones',v:775},{l:'Servicios sociales',v:555},{l:'Investigación',v:352},{l:'Gestión proyectos',v:346},{l:'Ventas',v:307},{l:'TI',v:303},{l:'Educación',v:292}],
+  mo:{
+    m05:{imp:8376,clk:1469,er:16.37,vis:324,fol:130,posts:[
+      {t:'Peterson Solutions Iberia — Pasaporte Digital Baterías EUBR (Congreso Autoconsumo)',p:'G',imp:2860,er:39.27,clk:1046,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7458490675764850688'},
+      {t:'347 asistentes. 16 países. ¿Está tu empresa lista para el EUDR?',p:'E',imp:1368,er:14.33,clk:185,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7458071318651944960'},
+      {t:'Peterson Solutions en Fastmarkets Biofuels Americas 2026 — GHG CI scores',p:'E',imp:617,er:43.60,clk:253,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7465404663954165763'},
+      {t:'Peterson Solutions España — participación en evento de sostenibilidad',p:'E',imp:441,er:20.63,clk:53,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7465754288280174592'},
+      {t:'Peterson Solutions en Sustainable Apparel & Textiles Conference USA 2026',p:'E',imp:432,er:21.53,clk:74,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7465388833912774656'},
+    ]},
+m04:{_nodata:true},
+m03:{_nodata:true},
+m02:{_nodata:true},
+m01:{_nodata:true},
+  },
+  ai:[
+    {m:'Pasaporte Digital Baterías (EUBR) genera ER del 39% — post más rentable',a:'Deadline regulatorio: febrero 2027 ➜ <strong>Serie de 4 posts mensuales sobre EUBR</strong> + whitepaper antes de noviembre 2026.'},
+    {m:'ER +78% (9.2% → 16.4%) — pico en mayo por cobertura de 3 eventos',a:'Formato con datos concretos funciona ("347 asistentes, 16 países") ➜ <strong>Publicar métricas de cada webinar</strong> como prueba social siempre.'},
+    {m:'Biofuels Americas: CTR del 41% — nicho con alta demanda insatisfecha',a:'Contenido técnico de biofuels convierte excepcionalmente ➜ <strong>Vertical biofuels quincenal</strong> con co-marketing Fastmarkets.'},
+    {m:'130 nuevos seguidores en mayo — récord del período impulsado por eventos',a:'Cobertura múltiple de eventos generó el pico ➜ <strong>Mantener ritmo de 3+ eventos/mes</strong> con activación completa en LinkedIn.'},
+  ],
+},
+
+// ── TLR INTERNATIONAL LABORATORIES PERÚ ─────────────────────────
+tlr:{
+  name:'TLR International Laboratories Perú',
+  sen:[{l:'Con experiencia',v:122},{l:'Sin experiencia',v:121},{l:'Gerente',v:40},{l:'Vicepresidente',v:20},{l:'Director',v:17},{l:'Directivo',v:8},{l:'Propietario',v:5},{l:'Formación',v:1}],
+  job:[{l:'Ventas',v:52},{l:'Desarrollo empresarial',v:48},{l:'Operaciones',v:48},{l:'Investigación',v:35},{l:'Tecnología de la información',v:19},{l:'Control de calidad',v:16},{l:'Contabilidad',v:15},{l:'Ingeniería',v:15}],
+  mo:{
+    m05:{imp:652,clk:291,er:52.12,vis:10,fol:4,posts:[
+      {t:'¡Inicia la temporada de Jengibre! — Fosetil-Aluminio análisis LC-MS/MS A2LA',p:'E',imp:322,er:72.36,clk:229,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457818554281844737'},
+      {t:'TLR presente en la III Convención Internacional del Jengibre — Pichanaki 2026',p:'E',imp:227,er:8.37,clk:14,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7462145614085214208'},
+      {t:'Sanidad vegetal: el éxito reside en la precisión — Día Internacional',p:'E',imp:88,er:6.82,clk:3,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7460045840330575872'},
+    ]},
+m04:{_nodata:true},
+m03:{_nodata:true},
+m02:{_nodata:true},
+m01:{_nodata:true},
+  },
+  ai:[
+    {m:'ER del 52% en mayo — el más alto de toda la cartera PCU',a:'Contenido técnico por cultivo (LC-MS/MS) es extraordinariamente efectivo ➜ <strong>1 post técnico semanal por cultivo de temporada</strong> con datos reales del laboratorio.'},
+    {m:'Post jengibre Fosetil-Aluminio: CTR del 71% (229 clics / 322 impresiones)',a:'CTR de clase mundial ➜ <strong>Distribución patrocinada durante picos de temporada</strong> para multiplicar el alcance a bajo costo.'},
+    {m:'Base de seguidores (334) vs. potencial del mercado agroexportador peruano',a:'Miles de empresas objetivo ➜ <strong>Campaña seguidores patrocinados</strong> targeting Gerentes de Calidad en exportadoras de jengibre, mango y espárrago.'},
+    {m:'Impresiones +72% en 5 meses con escala limitada aún',a:'<strong>Calendario de contenido estacional</strong>: jengibre jun-sep, espárrago ene-mar, mango nov-ene para maximizar relevancia.'},
+  ],
+},
+
+// ── BIOMASS ENERGY LAB ───────────────────────────────────────────
+bel:{
+  name:'Biomass Energy Lab',
+  sen:[{l:'Con experiencia',v:160},{l:'Sin experiencia',v:142},{l:'Director',v:77},{l:'Directivo',v:50},{l:'Vicepresidente',v:47},{l:'Gerente',v:43},{l:'Propietario',v:30},{l:'Socio',v:7}],
+  job:[{l:'Desarrollo empresarial',v:125},{l:'Operaciones',v:90},{l:'Ventas',v:59},{l:'Investigación',v:44},{l:'Gestión de proyectos',v:24},{l:'Educación',v:19},{l:'Ingeniería',v:16},{l:'Medios de comunicación',v:16}],
+  mo:{
+    m05:{imp:1975,clk:261,er:20.33,vis:7,fol:8,posts:[
+      {t:'US delegates to ISO TC 238 — Berlin Germany, pyrogenic biocarbon standards',p:'G',imp:1515,er:7.26,clk:67,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7457051485890093056'},
+    ]},
+m04:{_nodata:true},
+m03:{_nodata:true},
+m02:{_nodata:true},
+m01:{_nodata:true},
+  },
+  ai:[
+    {m:'Post ISO TC 238 Berlin: 1.515 imp. en 1 solo post — concentración extrema',a:'Posicionarse como referente ISO TC 238 ➜ <strong>Actualizaciones semanales pre/durante/post plenary Berlín (junio 2026)</strong> para capitalizar el momento.'},
+    {m:'ER +95% en 5 meses (10.4% → 20.3%) — crecimiento orgánico consistente',a:'Audiencia técnica altamente comprometida ➜ <strong>Formato "Lab Update" bimensual</strong> con resultados de ensayos y nuevos métodos publicados.'},
+    {m:'Solo 8 nuevos seguidores en mayo — base muy restringida',a:'Nicho especializado con potencial B2B en utilities europeas ➜ <strong>Conectar cuenta con red ISO TC 238</strong> y promover en newsletters del sector bioenergía.'},
+    {m:'Pyrogenic biocarbon: mercado emergente con escasa cobertura editorial',a:'First-mover opportunity ➜ <strong>Whitepaper pyrogenic biocarbon testing</strong> antes del plenary de Berlín para capturar la demanda.'},
+  ],
+},
+
+}; // end DB
+
+// ════════════════════════════════════════════════════════════════
+//  CHART INSTANCES
+// ════════════════════════════════════════════════════════════════
+let charts = {};
+function dc(id){ if(charts[id]){ charts[id].destroy(); delete charts[id]; } }
+
+// CU brand defaults
+Chart.defaults.color       = '#4f6566';
+Chart.defaults.borderColor = '#eaf0f1';
+Chart.defaults.font.family = "'Ubuntu', Calibri, sans-serif";
+Chart.defaults.font.size   = 11;
+
+const TOOLTIP = {
+  backgroundColor:'#1b1e42',
+  titleColor:'#fff',
+  bodyColor:'rgba(255,255,255,.72)',
+  borderColor:'rgba(255,255,255,.08)',
+  borderWidth:1,
+  padding:10,
+};
+
+// ════════════════════════════════════════════════════════════════
+//  ESG CLASSIFIER
+// ════════════════════════════════════════════════════════════════
+function classifyESG(t){
+  const s = t.toLowerCase();
+  if(['sosteni','iso 14','ghg','carbon','emis','rspo','eudr','orgáni','organic','biomass','bioenerg','medioambi','biofuel','pyrogenic','biocarbon','deforesta','trazab','residuos','medioambi','packaging'].some(k=>s.includes(k)))return'E';
+  if(['iso 9001','iso 27001','iso 45001','iso 22000','iso tc','compliance','csrd','regulac','regulat','eubr','passport','battery','financial','govern','audit','standard','framework','reporting'].some(k=>s.includes(k)))return'G';
+  if(['social','comunidad','trabajador','laboral','hiring','empleo','webinar','evento','feria','congress','conference','convenci','banquet','sugar','festival','networking'].some(k=>s.includes(k)))return'S';
+  return'X';
+}
+const PTC = {E:'pt-E',S:'pt-S',G:'pt-G',X:'pt-X'};
+const PTL = {E:'E — Ambiental',S:'S — Social',G:'G — Gobernanza',X:'Otro'};
+
+// ════════════════════════════════════════════════════════════════
+//  HELPERS
+// ════════════════════════════════════════════════════════════════
+function fmt(n){ return n>=1000 ? (n/1000).toFixed(1)+'K' : String(n); }
+
+function delta(curr, prev){
+  if(prev==null||prev===0) return '<span class="delta flat">— Sin dato previo</span>';
+  const pct = (curr-prev)/Math.abs(prev)*100;
+  const cl = pct>0?'up':pct<0?'down':'flat';
+  const ar = pct>0?'↑':pct<0?'↓':'→';
+  return `<span class="delta ${cl}">${ar} ${Math.abs(pct).toFixed(1)}% vs mes ant.</span>`;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MONTHLY INSIGHTS GENERATOR
+// ════════════════════════════════════════════════════════════════
+function genMonthlyInsights(d, mo, prev, pk){
+  const ins = [];
+  if(prev){
+    const de = ((mo.er-prev.er)/prev.er*100).toFixed(0);
+    ins.push({
+      m: de>0 ? `Engagement Rate +${de}% vs mes anterior` : `Engagement Rate ${de}% vs mes anterior — alerta`,
+      a: de>0
+        ? 'La audiencia responde mejor al contenido actual ➜ <strong>Identificar posts con mayor ER y replicar su formato</strong>, incrementando frecuencia en ese pilar ESG.'
+        : 'El mix de contenido necesita ajuste ➜ <strong>Reducir posts informativos genéricos</strong> e incrementar contenido técnico o de eventos con datos concretos.'
+    });
+    const di = ((mo.imp-prev.imp)/prev.imp*100).toFixed(0);
+    ins.push({
+      m: `Impresiones ${di>0?'+':''}${di}% vs mes anterior`,
+      a: di>0
+        ? 'Alcance orgánico en crecimiento ➜ <strong>Capitalizar con al menos 1 post patrocinado</strong> para amplificar el contenido top del mes a segmentos aún no alcanzados.'
+        : 'Alcance orgánico bajó ➜ <strong>Revisar horario y frecuencia de publicación</strong> y considerar boost pagado en los posts de mejor rendimiento.'
+    });
+  }
+  if(mo.posts && mo.posts.length){
+    const tp = mo.posts.reduce((a,b)=>a.er>b.er?a:b, mo.posts[0]);
+    const p = tp.p || classifyESG(tp.t);
+    const pn = {E:'Ambiental',S:'Social',G:'Gobernanza',X:'General'};
+    ins.push({
+      m: `Post con mayor ER del mes: pilar ${pn[p]||p} — ${Number(tp.er).toFixed(1)}%`,
+      a: `Este formato supera el promedio ➜ <strong>Producir 2 posts adicionales de pilar ${pn[p]||p}</strong> el próximo mes añadiendo un CTA a recurso descargable o landing page.`
+    });
+  }
+  ins.push({
+    m: `+${mo.fol} seguidores nuevos · ${mo.vis} visitas únicas al perfil`,
+    a: mo.fol < 30
+      ? 'Crecimiento lento ➜ <strong>Activar campaña de seguidores patrocinados</strong> con targeting por cargo (ESG Manager, Director de Calidad) y sector.'
+      : 'Crecimiento saludable ➜ <strong>Publicar contenido de bienvenida</strong> con servicios clave y próximos webinars para nutrir a nuevos seguidores.'
+  });
+  return ins;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  RENDER FUNCTIONS
+// ════════════════════════════════════════════════════════════════
+function renderInsights(ins, isAnn){
+  document.getElementById('insGrid').innerHTML = ins.map((x,i)=>`
+    <div class="ins-card">
+      <div class="ins-tag">${isAnn?'Tendencia Anual':'Tendencia Mensual'} ${i+1}</div>
+      <div class="ins-trend">${x.m}</div>
+      <div class="ins-action-label">Acción recomendada</div>
+      <div class="ins-action">${x.a}</div>
+    </div>`).join('');
+}
+
+function renderKPIs(mo, prev, isEst){
+  const et = ''; // no estimated data shown
+  const vn = `<div class="kpi-footnote">Visitas únicas al perfil<br>(proxy — LinkedIn no exporta "conversiones")</div>`;
+  document.getElementById('kpiRow').innerHTML = `
+    <div class="kpi-card">
+      <div class="kpi-label">Impresiones totales</div>
+      <div class="kpi-value">${fmt(mo.imp)}</div>
+      ${delta(mo.imp, prev?.imp)}${et}
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Engagement Rate</div>
+      <div class="kpi-value">${Number(mo.er).toFixed(1)}<span class="unit">%</span></div>
+      ${delta(mo.er, prev?.er)}${et}
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Clics totales</div>
+      <div class="kpi-value">${fmt(mo.clk)}</div>
+      ${delta(mo.clk, prev?.clk)}${et}
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Visitas únicas al perfil</div>
+      <div class="kpi-value">${mo.vis}</div>
+      ${delta(mo.vis, prev?.vis)}${et}${vn}
+    </div>`;
+}
+
+function renderDemoCharts(d){
+  dc('cSen'); dc('cJob');
+  charts.cSen = new Chart(document.getElementById('cSen').getContext('2d'),{
+    type:'doughnut',
+    data:{labels:d.sen.map(x=>x.l),datasets:[{data:d.sen.map(x=>x.v),backgroundColor:PAL,borderColor:'#fff',borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',
+      plugins:{legend:{position:'right',labels:{boxWidth:10,padding:10,font:{size:10},color:'#4f6566'}},tooltip:{...TOOLTIP,callbacks:{label:c=>` ${c.label}: ${c.parsed.toLocaleString()}`}}}}
+  });
+  charts.cJob = new Chart(document.getElementById('cJob').getContext('2d'),{
+    type:'bar',
+    data:{labels:d.job.map(x=>x.l),datasets:[{label:'Seguidores',data:d.job.map(x=>x.v),backgroundColor:'rgba(62,178,237,.72)',borderColor:'#3eb2ed',borderWidth:1,borderRadius:3}]},
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+      plugins:{legend:{display:false},tooltip:TOOLTIP},
+      scales:{x:{grid:{color:'#eaf0f1'},ticks:{color:'#799495'}},y:{grid:{display:false},ticks:{color:'#4f6566'}}}}
+  });
+}
+
+function renderPostsTable(mo, isEst){
+  const wb = document.getElementById('warnBar');
+  if(mo._warn){ wb.textContent=mo._warn; wb.style.display='block'; }
+  else { wb.style.display='none'; }
+
+  const sorted = [...(mo.posts||[])].sort((a,b)=>b.imp-a.imp).slice(0,5);
+  document.getElementById('postsTbody').innerHTML = sorted.map((p,i)=>{
+    const pl = p.p || classifyESG(p.t);
+    const er = typeof p.er==='number' ? (p.er>1 ? p.er.toFixed(1)+'%' : (p.er*100).toFixed(1)+'%') : p.er;
+    const titleCell = p.url
+      ? `<a href="${p.url}" target="_blank" rel="noopener" class="post-link" title="${p.t}">${p.t}</a>`
+      : `<span class="ptit" title="${p.t}">${p.t}</span>`;
+    return `<tr>
+      <td style="color:var(--grey);font-size:10px">${i+1}</td>
+      <td>${titleCell}${isEst?'<span style="font-size:9px;color:var(--grey);margin-left:6px">(estimado)</span>':''}</td>
+      <td><span class="pt ${PTC[pl]}">${pl}</span></td>
+      <td class="mn">${p.imp.toLocaleString()}</td>
+      <td class="mn">${er}</td>
+      <td class="mn">${p.clk.toLocaleString()}</td>
+      <td style="color:var(--grey);font-size:11px">${p.tp||'Orgánico'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderAnnualCharts(d){
+  dc('cAnnLine'); dc('cAnnFol'); dc('cAnnClk');
+  const mos = MO.filter(m=>d.mo[m]);
+  const lb  = mos.map(m=>ML[m]);
+  const im  = mos.map(m=>d.mo[m].imp);
+  const er  = mos.map(m=>d.mo[m].er);
+  const fl  = mos.map(m=>d.mo[m].fol);
+  const cl  = mos.map(m=>d.mo[m].clk);
+  let cum=0; const cf = fl.map(f=>{cum+=f;return cum;});
+  const isEst = mos.map(m=>d.mo[m]._est===1);
+  const ptBg  = isEst.map(e=>e?'rgba(62,178,237,.3)':'#3eb2ed');
+  const barBg = isEst.map(e=>e?'rgba(62,178,237,.22)':'rgba(62,178,237,.75)');
+
+  charts.cAnnLine = new Chart(document.getElementById('cAnnLine').getContext('2d'),{
+    type:'line',
+    data:{labels:lb,datasets:[
+      {label:'Impresiones',data:im,borderColor:'#3eb2ed',backgroundColor:'rgba(62,178,237,.06)',fill:true,tension:.4,pointBackgroundColor:ptBg,pointRadius:5,yAxisID:'y'},
+      {label:'ER %',data:er,borderColor:'#1b1e42',backgroundColor:'transparent',fill:false,tension:.4,pointBackgroundColor:'#1b1e42',pointRadius:5,borderDash:[5,3],yAxisID:'y1'},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:'#4f6566',boxWidth:12}},tooltip:TOOLTIP},
+      scales:{
+        x:{grid:{color:'#eaf0f1'},ticks:{color:'#799495'}},
+        y:{grid:{color:'#eaf0f1'},ticks:{color:'#799495',callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v},position:'left',title:{display:true,text:'Impresiones',color:'#799495',font:{size:10}}},
+        y1:{grid:{display:false},ticks:{color:'#1b1e42',callback:v=>v.toFixed(1)+'%'},position:'right',title:{display:true,text:'ER %',color:'#1b1e42',font:{size:10}}}
+      }}
+  });
+
+  charts.cAnnFol = new Chart(document.getElementById('cAnnFol').getContext('2d'),{
+    type:'bar',
+    data:{labels:lb,datasets:[
+      {label:'Nuevos/mes',data:fl,backgroundColor:barBg,borderColor:'#3eb2ed',borderWidth:1,borderRadius:3,yAxisID:'y'},
+      {type:'line',label:'Acumulado',data:cf,borderColor:'#1b1e42',backgroundColor:'transparent',tension:.4,pointRadius:5,yAxisID:'y1'},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#4f6566',boxWidth:12}},tooltip:TOOLTIP},
+      scales:{
+        x:{grid:{color:'#eaf0f1'},ticks:{color:'#799495'}},
+        y:{grid:{color:'#eaf0f1'},ticks:{color:'#799495'},position:'left',title:{display:true,text:'Nuevos/mes',color:'#799495',font:{size:10}}},
+        y1:{grid:{display:false},ticks:{color:'#1b1e42'},position:'right',title:{display:true,text:'Acumulado',color:'#1b1e42',font:{size:10}}}
+      }}
+  });
+
+  charts.cAnnClk = new Chart(document.getElementById('cAnnClk').getContext('2d'),{
+    type:'line',
+    data:{labels:lb,datasets:[
+      {label:'Clics totales',data:cl,borderColor:'#3eb2ed',backgroundColor:'rgba(62,178,237,.06)',fill:true,tension:.4,pointBackgroundColor:ptBg,pointRadius:5,borderWidth:2},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:TOOLTIP},
+      scales:{
+        x:{grid:{color:'#eaf0f1'},ticks:{color:'#799495'}},
+        y:{grid:{color:'#eaf0f1'},ticks:{color:'#799495',callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v}}
+      }}
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  MAIN UPDATE
+// ════════════════════════════════════════════════════════════════
+function update(){
+  const ak   = document.getElementById('selAcc').value;
+  const pk   = document.getElementById('selPer').value;
+  const d    = DB[ak];
+  const isAnn = pk === 'ann';
+  const mo   = isAnn ? null : d.mo[pk];
+  const isEst = false; // _est months replaced with _nodata — no estimated data shown
+  const pi   = MO.indexOf(pk);
+  const prev = (!isAnn && pi>0) ? d.mo[MO[pi-1]] : null;
+
+  // Badge
+  const bdg = document.getElementById('badge');
+  if(isAnn){ bdg.className='status-badge est'; bdg.textContent='⚠ Ene–Abr estimados · May real'; }
+  else if(isEst){ bdg.className='status-badge est'; bdg.textContent='Sin datos disponibles'; }
+  else{ bdg.className='status-badge real'; bdg.textContent='✓ Datos reales — '+(ML[pk]||'Mayo 2026'); }
+
+  // Subtitle
+  document.getElementById('insSubtitle').textContent =
+    `${d.name} · ${isAnn?'Histórico Ene–May 2026':(ML[pk]||pk)}`;
+
+  // Toggle views
+  const isCmp    = pk === 'cmp';
+  const isNodata = (isAnn) || (mo && mo._nodata === true);
+
+  document.getElementById('viewMonthly').style.display    = (!isAnn && !isCmp && !isNodata) ? 'block' : 'none';
+  document.getElementById('viewAnnual').style.display     = 'none'; // disabled — no historical data
+  document.getElementById('viewComparative').style.display= isCmp ? 'block' : 'none';
+  document.getElementById('viewNodata').style.display     = (isNodata && !isCmp) ? 'block' : 'none';
+
+  if(isNodata && !isCmp){
+    badge.className='status-badge est';
+    badge.textContent='Sin datos — solo mayo 2026 disponible';
+    document.getElementById('insSubtitle').textContent = `${d.name} · Sin datos para este período`;
+    document.getElementById('insGrid').innerHTML='<div style="padding:16px 20px;font-size:12px;color:rgba(255,255,255,.5)">Sin información suficiente para este período</div>';
+    return;
+  }
+
+  if(isCmp){
+    // Comparative view — account selector is irrelevant, hide its note
+    document.getElementById('insGrid').innerHTML='<div style="padding:16px 20px;font-size:12px;color:rgba(255,255,255,.6)">Vista global — comparando las 9 cuentas entre sí por efectividad</div>';
+    document.getElementById('insSubtitle').textContent = 'Todas las cuentas · Mayo 2026 · Datos reales';
+    badge.className='status-badge real'; badge.textContent='✓ Datos reales — Mayo 2026';
+    renderComparative();
+    return;
+  } else if(isAnn){
+    renderInsights(d.ai, true);
+    renderAnnualCharts(d);
+  } else {
+    renderInsights(genMonthlyInsights(d, mo, prev, pk), false);
+    renderKPIs(mo, prev, isEst);
+    renderDemoCharts(d);
+    renderPostsTable(mo, isEst);
+    // kpiNote removed — no estimated data
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  COMPARATIVE VIEW — EFECTIVIDAD REAL MAYO 2026
+// ════════════════════════════════════════════════════════════════
+
+// Datos reales mayo 2026 de todas las cuentas para comparativa
+const CMP_DATA = [
+  {id:'cul', name:'CU Latinoamérica',    imp:58168, clk:6020, er:12.89, fol:400, vis:1007},
+  {id:'cue', name:'CU España',           imp:8070,  clk:1846, er:20.13, fol:61,  vis:117 },
+  {id:'cup', name:'CU Portugal',         imp:1017,  clk:83,   er:11.08, fol:8,   vis:29  },
+  {id:'cun', name:'CU Norte',            imp:15377, clk:9476, er:48.33, fol:74,  vis:87  },
+  {id:'cuna',name:'CU North America',    imp:2524,  clk:394,  er:20.55, fol:38,  vis:52  },
+  {id:'ps',  name:'Peterson Solutions',  imp:8723,  clk:1253, er:13.27, fol:76,  vis:281 },
+  {id:'pia', name:'Peterson Iberia+AM',  imp:8376,  clk:1469, er:16.37, fol:130, vis:324 },
+  {id:'tlr', name:'TLR Perú',           imp:652,   clk:291,  er:52.12, fol:4,   vis:10  },
+  {id:'bel', name:'Biomass Energy Lab',  imp:1975,  clk:261,  er:20.33, fol:8,   vis:7   },
+];
+
+
+// ── TOP 10 POSTS BY ENGAGEMENT RATE — all accounts, real data May 2026 ──
+const TOP_ENG_POSTS = [
+  {rank:1,  t:'Encuentro de Líderes CU Norte — Villa Poli: proyectando el futuro',  acc:'CU Norte',          imp:4629,  er:81.53, clk:3660, reac:111, com:2, url:'https://www.linkedin.com/feed/update/urn:li:activity:7458537186678865920'},
+  {rank:2,  t:'¡Inicia la temporada de Jengibre en Perú! — análisis LC-MS/MS A2LA', acc:'TLR Perú',          imp:322,   er:72.36, clk:229,  reac:4,   com:0, url:'https://www.linkedin.com/feed/update/urn:li:activity:7457818554281844737'},
+  {rank:3,  t:'Día del Trabajador — asado con el equipo de Control Union Norte',     acc:'CU Norte',          imp:11010, er:69.51, clk:7549, reac:101, com:2, url:'https://www.linkedin.com/feed/update/urn:li:activity:7457099894105911296'},
+  {rank:4,  t:'76° Annual Sugar Club Banquet — industria azucarera NOA',             acc:'CU Norte',          imp:5572,  er:58.06, clk:3078, reac:154, com:2, url:'https://www.linkedin.com/feed/update/urn:li:activity:7462177442045030400'},
+  {rank:5,  t:'#AgriReport — Reporte mensual mercado de granos Argentina',           acc:'CU Latinoamérica',  imp:2137,  er:52.63, clk:1110, reac:13,  com:0, url:'https://www.linkedin.com/feed/update/urn:li:activity:7457508181036908544'},
+  {rank:6,  t:'The future of textile sustainability is verified data, not storytelling', acc:'Peterson Solutions', imp:854, er:50.23, clk:408, reac:19, com:1, url:'https://www.linkedin.com/feed/update/urn:li:activity:7459989760179355649'},
+  {rank:7,  t:'Textiles Recycling Expo USA — USDA Organic certification impact',     acc:'CU North America',  imp:614,   er:45.77, clk:251,  reac:29,  com:0, url:'https://www.linkedin.com/feed/update/urn:li:activity:7458548841810751488'},
+  {rank:8,  t:'Fastmarkets Biofuels Americas 2026 — GHG CI scores supply chain',    acc:'Peterson Iberia+AM',imp:617,   er:43.60, clk:253,  reac:16,  com:0, url:'https://www.linkedin.com/feed/update/urn:li:activity:7465404663954165763'},
+  {rank:9,  t:'Peterson Iberia — Pasaporte Digital Baterías EUBR (Congreso Autoconsumo)', acc:'Peterson Iberia+AM', imp:2860, er:39.27, clk:1046, reac:77, com:0, url:'https://www.linkedin.com/feed/update/urn:li:activity:7458490675764850688'},
+  {rank:10, t:'#ControlUnionArgentina — EUDR: Novedades clave sobre el Reglamento de Deforestación UE', acc:'CU Latinoamérica', imp:3155, er:34.26, clk:1054, reac:24, com:0, url:'https://www.linkedin.com/feed/update/urn:li:activity:7457504452221243392'},
+];
+
+function renderTopEngPosts(){
+  const ACC_COLORS = {
+    'CU Norte':         '#3eb2ed',
+    'TLR Perú':         '#d4a72c',
+    'CU Latinoamérica': '#2d8a4e',
+    'Peterson Solutions':'#1b1e42',
+    'CU North America': '#6dc8f2',
+    'Peterson Iberia+AM':'#4a5096',
+  };
+  const tbody = document.getElementById('topEngTbody');
+  if(!tbody) return;
+  tbody.innerHTML = TOP_ENG_POSTS.map(p => {
+    const color = ACC_COLORS[p.acc] || '#799495';
+    const erBar = Math.round(p.er);
+    return `<tr>
+      <td style="color:var(--grey);font-size:10px;font-weight:700">${p.rank}</td>
+      <td><a href="${p.url}" target="_blank" rel="noopener" class="post-link" style="max-width:360px" title="${p.t}">${p.t}</a></td>
+      <td><span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;background:${color}18;color:${color};border:1px solid ${color}40;white-space:nowrap">${p.acc}</span></td>
+      <td class="mn">${p.imp.toLocaleString()}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:7px">
+          <div style="width:60px;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;flex-shrink:0">
+            <div style="width:${Math.min(erBar,100)}%;height:100%;background:var(--cyan);border-radius:3px"></div>
+          </div>
+          <span class="mn">${p.er.toFixed(1)}%</span>
+        </div>
+      </td>
+      <td class="mn">${p.clk.toLocaleString()}</td>
+      <td class="mn">${p.reac}</td>
+      <td class="mn">${p.com}</td>
+    </tr>`;
+  }).join('');
+}
+
+function computeEffectiveness(d){
+  const ctr     = d.imp > 0 ? (d.clk / d.imp * 100) : 0;        // Clics / Impresiones %
+  const cpf     = d.fol > 0 ? (d.clk / d.fol)       : 0;        // Clics por nuevo seguidor
+  const visTasa = d.imp > 0 ? (d.vis / d.imp * 1000) : 0;        // Visitas perfil por 1000 imp
+  return { er:d.er, ctr, cpf, visTasa };
+}
+
+function normalise(vals){
+  const max = Math.max(...vals.filter(v=>isFinite(v)&&v>0));
+  return max > 0 ? vals.map(v=>Math.round(v/max*100)) : vals.map(()=>0);
+}
+
+function renderComparative(){
+  dc('cCmpER'); dc('cCmpCTR'); dc('cCmpCpF'); dc('cCmpVisTasa'); dc('cCmpRadar');
+
+  // CUP tiene datos de mayo muy bajos (problema de export) — se muestra con nota
+  const data = CMP_DATA.map(d=>({...d, ...computeEffectiveness(d)}));
+
+  // Score compuesto: ER(40%) + CTR(30%) + CpF(20%) + VisTasa(10%)
+  const erN  = normalise(data.map(d=>d.er));
+  const ctrN = normalise(data.map(d=>d.ctr));
+  const cpfN = normalise(data.map(d=>d.cpf));
+  const visN = normalise(data.map(d=>d.visTasa));
+  data.forEach((d,i)=>{
+    d.score = Math.round(erN[i]*.4 + ctrN[i]*.3 + cpfN[i]*.2 + visN[i]*.1);
+    d.erN=erN[i]; d.ctrN=ctrN[i]; d.cpfN=cpfN[i]; d.visN=visN[i];
+  });
+
+  // Sort by score
+  const ranked = [...data].sort((a,b)=>b.score-a.score);
+
+  // ── Ranking cards ──
+  document.getElementById('cmpRanking').innerHTML = ranked.map((d,i)=>{
+    const rankCls = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'';
+    const medal   = i===0?'🥇':i===1?'🥈':i===2?'🥉':`#${i+1}`;
+    const ctrFmt  = d.ctr.toFixed(2)+'%';
+    const cpfFmt  = d.fol>0 ? d.cpf.toFixed(1) : 'N/D';
+    const erFmt   = d.er.toFixed(1)+'%';
+    const visFmt  = d.visTasa.toFixed(1);
+    const cupNote = d.id==='cup' ? '<div style="font-size:9px;color:#a02020;margin-top:6px;font-style:italic">⚠ Datos de mayo muy bajos — posible problema en export</div>' : '';
+    return `<div class="cmp-card ${rankCls}">
+      <div class="cmp-rank-badge">${medal}</div>
+      <div class="cmp-acc-name">${d.name}</div>
+      <div class="cmp-metrics">
+        <div class="cmp-metric">
+          <div class="cmp-metric-label">Eng. Rate</div>
+          <div class="cmp-metric-value">${erFmt}</div>
+        </div>
+        <div class="cmp-metric">
+          <div class="cmp-metric-label">CTR</div>
+          <div class="cmp-metric-value">${ctrFmt}</div>
+        </div>
+        <div class="cmp-metric">
+          <div class="cmp-metric-label">Clics/Seguidor</div>
+          <div class="cmp-metric-value">${cpfFmt}</div>
+        </div>
+        <div class="cmp-metric">
+          <div class="cmp-metric-label">Visitas/1K imp.</div>
+          <div class="cmp-metric-value">${visFmt}</div>
+        </div>
+      </div>
+      <div class="cmp-score">
+        <span class="cmp-score-label">Score</span>
+        <div class="cmp-score-bar-wrap"><div class="cmp-score-bar" style="width:${d.score}%"></div></div>
+        <span class="cmp-score-num">${d.score}/100</span>
+      </div>
+      ${cupNote}
+    </div>`;
+  }).join('');
+
+  const names  = ranked.map(d=>d.name);
+  const tcfg2  = {...TOOLTIP};
+
+  // ── Bar: ER ──
+  charts.cCmpER = new Chart(document.getElementById('cCmpER').getContext('2d'),{
+    type:'bar',
+    data:{labels:names,datasets:[{
+      label:'Engagement Rate %',
+      data:ranked.map(d=>d.er),
+      backgroundColor:ranked.map((_,i)=>i===0?'#3eb2ed':i===1?'#6dc8f2':i===2?'#9ab5b6':'rgba(121,148,149,.45)'),
+      borderColor:ranked.map((_,i)=>i<3?'#3eb2ed':'#799495'),
+      borderWidth:1,borderRadius:4,
+    }]},
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+      plugins:{legend:{display:false},tooltip:{...tcfg2,callbacks:{label:c=>` ${c.parsed.x.toFixed(1)}%`}}},
+      scales:{x:{grid:{color:'#eaf0f1'},ticks:{color:'#799495',callback:v=>v+'%'}},y:{grid:{display:false},ticks:{color:'#4f6566',font:{size:10}}}}}
+  });
+
+  // ── Bar: CTR ──
+  charts.cCmpCTR = new Chart(document.getElementById('cCmpCTR').getContext('2d'),{
+    type:'bar',
+    data:{labels:names,datasets:[{
+      label:'CTR %',
+      data:ranked.map(d=>d.ctr),
+      backgroundColor:ranked.map((_,i)=>i===0?'#1b1e42':i===1?'#2d3a8a':i===2?'#4a5096':'rgba(74,80,150,.4)'),
+      borderColor:'#1b1e42',borderWidth:1,borderRadius:4,
+    }]},
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+      plugins:{legend:{display:false},tooltip:{...tcfg2,callbacks:{label:c=>` ${c.parsed.x.toFixed(2)}%`}}},
+      scales:{x:{grid:{color:'#eaf0f1'},ticks:{color:'#799495',callback:v=>v+'%'}},y:{grid:{display:false},ticks:{color:'#4f6566',font:{size:10}}}}}
+  });
+
+  // ── Bar: Clics por seguidor ──
+  charts.cCmpCpF = new Chart(document.getElementById('cCmpCpF').getContext('2d'),{
+    type:'bar',
+    data:{labels:names,datasets:[{
+      label:'Clics por seguidor nuevo',
+      data:ranked.map(d=>d.fol>0?d.cpf:null),
+      backgroundColor:ranked.map((_,i)=>i===0?'#3eb2ed':i===1?'#6dc8f2':'rgba(62,178,237,.38)'),
+      borderColor:'#3eb2ed',borderWidth:1,borderRadius:4,
+    }]},
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+      plugins:{legend:{display:false},tooltip:{...tcfg2,callbacks:{label:c=>c.parsed.x!=null?` ${c.parsed.x.toFixed(1)} clics/seguidor`:' Sin datos suficientes'}}},
+      scales:{x:{grid:{color:'#eaf0f1'},ticks:{color:'#799495'}},y:{grid:{display:false},ticks:{color:'#4f6566',font:{size:10}}}}}
+  });
+
+  // ── Bar: Visitas perfil / 1K impresiones ──
+  charts.cCmpVisTasa = new Chart(document.getElementById('cCmpVisTasa').getContext('2d'),{
+    type:'bar',
+    data:{labels:names,datasets:[{
+      label:'Visitas perfil por 1.000 imp.',
+      data:ranked.map(d=>d.visTasa),
+      backgroundColor:ranked.map((_,i)=>i===0?'#1b1e42':'rgba(27,30,66,.4)'),
+      borderColor:'#1b1e42',borderWidth:1,borderRadius:4,
+    }]},
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+      plugins:{legend:{display:false},tooltip:{...tcfg2,callbacks:{label:c=>` ${c.parsed.x.toFixed(1)} visitas/1K imp.`}}},
+      scales:{x:{grid:{color:'#eaf0f1'},ticks:{color:'#799495'}},y:{grid:{display:false},ticks:{color:'#4f6566',font:{size:10}}}}}
+  });
+
+  // ── Radar: multidimensional ──
+  renderTopEngPosts();
+
+  charts.cCmpRadar = new Chart(document.getElementById('cCmpRadar').getContext('2d'),{
+    type:'radar',
+    data:{
+      labels:['Engagement Rate','CTR','Clics/Seguidor','Visitas/Imp.','Score Global'],
+      datasets: ranked.slice(0,6).map((d,i)=>({
+        label:d.name,
+        data:[d.erN, d.ctrN, d.cpfN, d.visN, d.score],
+        borderColor:PAL[i],
+        backgroundColor:PAL[i].replace('#','rgba(').replace(/(..)(..)(..)$/,(m,r,g,b)=>
+          `${parseInt(r,16)},${parseInt(g,16)},${parseInt(b,16)},0.08)`),
+        pointBackgroundColor:PAL[i],
+        pointRadius:3,borderWidth:1.5,
+      })),
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'right',labels:{color:'#4f6566',boxWidth:10,font:{size:10}}},tooltip:tcfg2},
+      scales:{r:{
+        grid:{color:'#eaf0f1'},
+        ticks:{display:false},
+        pointLabels:{color:'#4f6566',font:{size:10}},
+        suggestedMin:0,suggestedMax:100,
+      }}}
+  });
+}
+
+window.addEventListener('DOMContentLoaded', update);
+</script>
+</body>
+</html>

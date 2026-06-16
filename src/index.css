@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cu-cyan: #3eb2ed;
+  --cu-dblue: #1b1e42;
+  --cu-grey: #799495;
+  --cu-dgrey: #4f6566;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  font-family: 'Ubuntu', Calibri, system-ui, sans-serif;
+  background: #f0f4f5;
+  color: #4f6566;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* scrollbar de marca */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f0f4f5;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8e2e3;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3eb2ed;
+}
