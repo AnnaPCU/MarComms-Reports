@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Lock } from 'lucide-react';
-import { Logo } from '@/components/brand/Logo';
 import { BarTop, BarBottom } from '@/components/brand/BrandBars';
 import { Tagline } from '@/components/brand/Tagline';
 
@@ -25,7 +24,8 @@ export function LoginScreen({ onLogin }) {
           onSubmit={handleSubmit}
           className="w-full max-w-sm animate-fade-in rounded-cu border border-cu-border bg-white p-8 shadow-cu"
         >
-          <Logo className="mb-6" />
+          {/* Logo propio de MarComms — pendiente de que el usuario lo provea.
+              Por ahora no mostramos el de Control Union en el login. */}
           <h1 className="mb-1 text-lg font-bold tracking-tight text-cu-dblue">
             Reportes MarComms
           </h1>

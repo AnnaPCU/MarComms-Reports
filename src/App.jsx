@@ -9,6 +9,7 @@ import { Header } from '@/components/shared/Header';
 import { PilarNav } from '@/components/shared/PilarNav';
 import { LoginScreen } from '@/components/login/LoginScreen';
 import { ImportApp } from '@/components/import/ImportApp';
+import { exportViewAsHtml } from '@/utils/exportHtml';
 
 export default function App() {
   const { authed, login, logout } = useAuth();
@@ -31,6 +32,15 @@ export default function App() {
 
   const cfg = getPilarConfig(pilar);
   const Pilar = cfg.Component;
+  const accountName = cfg.accounts.find((a) => a.id === account)?.name ?? '';
+  const periodLabel = cfg.periods.find((p) => p.id === period)?.label ?? period;
+
+  function handleDownload() {
+    const node = document.getElementById('report-view');
+    const title = [PILAR_BY_ID[pilar].label, accountName, periodLabel].filter(Boolean).join(' — ');
+    const filename = `reporte-${pilar}${account ? '-' + account : ''}${period ? '-' + period : ''}.html`;
+    exportViewAsHtml(node, { title, filename });
+  }
 
   // Badge de estado de datos (regla de honestidad).
   let badge = null;
@@ -58,12 +68,15 @@ export default function App() {
         onPeriodChange={setPeriod}
         badge={badge}
         onImport={() => setShowImport(true)}
+        onDownload={handleDownload}
         onLogout={logout}
       />
       <PilarNav active={pilar} onChange={changePilar} />
 
       <main className="mx-auto w-full max-w-[1440px] flex-1 px-9 pb-11 pt-6">
-        <Pilar account={account} period={period} />
+        <div id="report-view">
+          <Pilar account={account} period={period} />
+        </div>
       </main>
 
       <BarBottom />

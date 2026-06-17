@@ -7,6 +7,7 @@
 import * as social from '@/services/socialService';
 import * as paid from '@/services/paidService';
 import * as website from '@/services/websiteService';
+import { QUARTERS_2026 } from '@/constants/periods';
 
 import { SocialApp } from '@/components/social/SocialApp';
 import { PaidApp } from '@/components/paid/PaidApp';
@@ -28,7 +29,8 @@ export const REGISTRY = {
   paid: {
     Component: PaidApp,
     accounts: paid.listAccounts(),
-    periods: [...paid.listPeriods()].reverse(),
+    // meses (más reciente primero) + trimestres → permite ver/importar por Q
+    periods: [...paid.listPeriods()].reverse().concat(QUARTERS_2026),
     defaultPeriod: 'm05', // CU Portugal: último mes completo
     hasDataFor: paid.hasDataFor,
   },

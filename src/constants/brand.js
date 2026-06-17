@@ -26,3 +26,33 @@ export const PAL = [
 ];
 
 export const TAGLINE = 'The Proof to Your Promise';
+
+// ════════════════════════════════════════════════════════════════
+//  MARCA POR CUENTA — define qué logo va en el header según de quién
+//  se estén mostrando las métricas. 'cu' | 'peterson' | null (sin logo).
+//  Las cuentas conocidas tienen mapeo explícito; las nuevas (importadas)
+//  caen al inferido por nombre.
+// ════════════════════════════════════════════════════════════════
+const BRAND_BY_ID = {
+  // Social
+  cul: 'cu', cue: 'cu', cup: 'cu', cun: 'cu', cuna: 'cu',
+  ps: 'peterson', pia: 'peterson',
+  tlr: null, bel: null, // TLR y Biomass no son CU ni Peterson → sin logo
+  // Paid
+  pt: 'cu', es: 'cu',
+  // Website
+  cua: 'cu',
+};
+
+export function brandOf(id, name = '') {
+  if (id in BRAND_BY_ID) return BRAND_BY_ID[id];
+  const s = name.toLowerCase();
+  if (s.includes('peterson')) return 'peterson';
+  if (s.includes('control union') || s.startsWith('cu ') || s === 'cu') return 'cu';
+  return null;
+}
+
+export const BRAND_LOGOS = {
+  cu: { src: '/logo-control-union.svg', alt: 'Control Union' },
+  peterson: { src: '/logo-peterson-solutions.png', alt: 'Peterson Solutions' },
+};

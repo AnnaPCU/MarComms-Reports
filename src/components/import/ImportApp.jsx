@@ -4,14 +4,20 @@ import { isSupabaseConfigured } from '@/lib/supabaseClient';
 import { IMPORT_TARGETS, DIMENSION_OPTIONS } from '@/constants/importTargets';
 import * as socialSvc from '@/services/socialService';
 import * as paidSvc from '@/services/paidService';
+import { QUARTERS_2026 } from '@/constants/periods';
 import { parseFile } from '@/utils/import/parseFile';
-import { buildRecords, runImport, loadMapping, saveMapping } from '@/services/importService';
+import { buildRecords, runImport, loadMapping, saveMapping, slugify } from '@/services/importService';
 import { Select } from '@/components/shared/Select';
+
+const NEW_ACCOUNT = '__new__';
 
 // Cuentas + períodos por pilar (para los selectores del wizard).
 const PILAR_DATA = {
   social: { accounts: socialSvc.listAccounts(), periods: [...socialSvc.listPeriods()].reverse() },
-  paid: { accounts: paidSvc.listAccounts(), periods: [...paidSvc.listPeriods()].reverse() },
+  paid: {
+    accounts: paidSvc.listAccounts(),
+    periods: [...paidSvc.listPeriods()].reverse().concat(QUARTERS_2026),
+  },
 };
 const PILAR_OPTIONS = Object.entries(IMPORT_TARGETS).map(([id, t]) => ({ id, label: t.label }));
 
@@ -35,6 +41,7 @@ export function ImportApp({ onClose, defaultPilar = 'social', defaultAccount }) 
   const dataset = target.datasets.find((d) => d.id === datasetId) ?? target.datasets[0];
 
   const [clientId, setClientId] = useState(defaultAccount ?? accounts[0]?.id ?? '');
+  const [newAccountName, setNewAccountName] = useState('');
   const [periodId, setPeriodId] = useState(periods[0]?.id ?? '');
   const [dimension, setDimension] = useState('seniority');
   const [headerOffset, setHeaderOffset] = useState(dataset.headerOffset ?? 0);
@@ -51,6 +58,7 @@ export function ImportApp({ onClose, defaultPilar = 'social', defaultAccount }) 
     const t = IMPORT_TARGETS[id];
     setDatasetId(t.datasets[0].id);
     setClientId(PILAR_DATA[id].accounts[0]?.id ?? '');
+    setNewAccountName('');
     setPeriodId(PILAR_DATA[id].periods[0]?.id ?? '');
     setHeaderOffset(t.datasets[0].headerOffset ?? 0);
     setFileRef(null);
@@ -107,7 +115,15 @@ export function ImportApp({ onClose, defaultPilar = 'social', defaultAccount }) 
     }
   }, [parsed, dataset, mapping]);
 
+  const isNewAccount = clientId === NEW_ACCOUNT;
+  const effectiveClientId = isNewAccount ? slugify(newAccountName) : clientId;
+
   async function doImport() {
+    if (isNewAccount && !effectiveClientId) {
+      setStatus('error');
+      setMessage('Poné un nombre para la cuenta nueva.');
+      return;
+    }
     setStatus('importing');
     setMessage('');
     try {
@@ -115,11 +131,11 @@ export function ImportApp({ onClose, defaultPilar = 'social', defaultAccount }) 
       const { count } = await runImport({
         pilar,
         source: target.source,
-        clientId,
+        clientId: effectiveClientId,
         periodId,
         dataset,
         records,
-        extra: { dimension },
+        extra: { dimension, clientName: isNewAccount ? newAccountName : undefined },
       });
       setStatus('done');
       setMessage(`Importadas ${count} fila(s). La vista se actualizó sola.`);
@@ -163,9 +179,28 @@ export function ImportApp({ onClose, defaultPilar = 'social', defaultAccount }) 
               label="Cuenta"
               value={clientId}
               onChange={setClientId}
-              options={accounts.map((a) => ({ id: a.id, label: a.name }))}
+              options={[
+                ...accounts.map((a) => ({ id: a.id, label: a.name })),
+                { id: NEW_ACCOUNT, label: '➕ Nueva cuenta…' },
+              ]}
             />
             <Select label="Período" value={periodId} onChange={setPeriodId} options={periods} />
+            {clientId === NEW_ACCOUNT && (
+              <div className="col-span-2 flex flex-col gap-[3px]">
+                <label className="text-[9px] font-bold uppercase tracking-[0.6px] text-cu-grey">
+                  Nombre de la cuenta nueva
+                </label>
+                <input
+                  value={newAccountName}
+                  onChange={(e) => setNewAccountName(e.target.value)}
+                  placeholder="Ej. Control Union Brasil"
+                  className="rounded-sm border border-cu-border bg-white px-2.5 py-[7px] text-[13px] text-cu-dgrey outline-none focus:border-cu-cyan"
+                />
+                {newAccountName && (
+                  <span className="text-[10px] text-cu-grey">id: {slugify(newAccountName) || '—'}</span>
+                )}
+              </div>
+            )}
             {dataset.dimension && (
               <Select label="Dimensión de audiencia" value={dimension} onChange={setDimension} options={DIMENSION_OPTIONS} />
             )}
@@ -180,6 +215,9 @@ export function ImportApp({ onClose, defaultPilar = 'social', defaultAccount }) 
                 onChange={(e) => changeOffset(e.target.value)}
                 className="rounded-sm border border-cu-border bg-white px-2.5 py-[7px] text-[13px] text-cu-dgrey outline-none focus:border-cu-cyan"
               />
+              <span className="text-[10px] leading-tight text-cu-grey">
+                Filas a ignorar arriba del encabezado. Google Ads trae 2 (título + fechas).
+              </span>
             </div>
           </div>
 
@@ -257,7 +295,12 @@ export function ImportApp({ onClose, defaultPilar = 'social', defaultAccount }) 
             </button>
             <button
               onClick={doImport}
-              disabled={!isSupabaseConfigured || !records.length || status === 'importing'}
+              disabled={
+                !isSupabaseConfigured ||
+                !records.length ||
+                status === 'importing' ||
+                (isNewAccount && !newAccountName.trim())
+              }
               className="rounded-sm bg-cu-cyan px-4 py-2 text-[12px] font-bold text-white transition-colors hover:bg-[#2c9fd9] disabled:cursor-not-allowed disabled:opacity-40"
             >
               {status === 'importing' ? 'Importando…' : 'Importar'}

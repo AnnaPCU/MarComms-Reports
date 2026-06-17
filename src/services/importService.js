@@ -37,10 +37,34 @@ export function buildRecords(dataset, rows, mapping) {
     .filter((rec) => dataset.fields.every((f) => !f.required || rec[f.key] != null && rec[f.key] !== ''));
 }
 
-// Persiste un import. `extra.dimension` se usa para audience.
+// Tabla de clientes por pilar (para crear cuentas nuevas al importar).
+const CLIENT_TABLE = { social: 'social_clients', paid: 'paid_clients', website: 'web_clients' };
+
+// slug estable a partir de un nombre ("CU Brasil" → "cu-brasil").
+export function slugify(name) {
+  return String(name)
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .slice(0, 32);
+}
+
+async function ensureClient(pilar, id, name) {
+  const table = CLIENT_TABLE[pilar];
+  if (!table || !id) return;
+  const { error } = await supabase.from(table).upsert({ id, name: name || id }, { onConflict: 'id' });
+  if (error) throw error;
+}
+
+// Persiste un import. `extra.dimension` (audience) y `extra.clientName` (cuenta nueva).
 export async function runImport({ pilar, source, clientId, periodId, dataset, records, extra = {} }) {
   if (!supabase) throw new Error('Supabase no está configurado — no se puede guardar.');
   if (!records.length) throw new Error('No hay filas válidas para importar.');
+
+  // 0) Si es una cuenta nueva, crearla antes de escribir datos.
+  if (extra.clientName) await ensureClient(pilar, clientId, extra.clientName);
 
   // 1) Ledger
   const { data: imp, error: impErr } = await supabase
