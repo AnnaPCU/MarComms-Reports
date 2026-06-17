@@ -12,15 +12,7 @@ import {
   Legend,
 } from 'recharts';
 import { ChartCard } from '@/components/shared/ChartCard';
-import { PAL, CU } from '@/constants/brand';
-
-const tooltipStyle = {
-  backgroundColor: CU.dblue,
-  border: 'none',
-  borderRadius: 6,
-  color: '#fff',
-  fontSize: 11,
-};
+import { PAL, CU, CHART_TOOLTIP } from '@/constants/brand';
 
 export function AudienceCharts({ audience }) {
   const { seniority, jobFunction } = audience;
@@ -47,7 +39,7 @@ export function AudienceCharts({ audience }) {
               ))}
             </Pie>
             <Tooltip
-              contentStyle={tooltipStyle}
+              {...CHART_TOOLTIP}
               formatter={(v, n) => [v.toLocaleString('es-AR'), n]}
             />
             <Legend
@@ -79,7 +71,7 @@ export function AudienceCharts({ audience }) {
               tick={{ fontSize: 10, fill: CU.dgrey }}
             />
             <Tooltip
-              contentStyle={tooltipStyle}
+              {...CHART_TOOLTIP}
               cursor={{ fill: 'rgba(62,178,237,.06)' }}
               formatter={(v) => [v.toLocaleString('es-AR'), 'Seguidores']}
             />

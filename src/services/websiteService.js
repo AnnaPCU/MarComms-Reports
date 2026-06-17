@@ -11,11 +11,15 @@ export function listPeriods() {
   return QUARTERS_2026;
 }
 
+const EMBED = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
+
 export function getQuarter(accountId, periodId) {
+  if (EMBED?.snapshot && 'quarter' in EMBED.snapshot) return EMBED.snapshot.quarter;
   return WEBSITE_DB[accountId]?.periods?.[periodId] ?? null;
 }
 
 export function getHandle(accountId) {
+  if (EMBED?.snapshot?.handle != null) return EMBED.snapshot.handle;
   return WEBSITE_DB[accountId]?.handle ?? '';
 }
 

@@ -16,16 +16,8 @@ import {
 import { CMP_DATA, TOP_ENG_POSTS } from '@/services/socialService';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { ChartCard } from '@/components/shared/ChartCard';
-import { PAL, CU } from '@/constants/brand';
+import { PAL, CU, CHART_TOOLTIP } from '@/constants/brand';
 import { num } from '@/utils/format';
-
-const tooltipStyle = {
-  backgroundColor: CU.dblue,
-  border: 'none',
-  borderRadius: 6,
-  color: '#fff',
-  fontSize: 11,
-};
 
 function effectiveness(d) {
   return {
@@ -146,7 +138,7 @@ export function ComparativeView() {
               <CartesianGrid horizontal={false} stroke={CU.border2} />
               <XAxis type="number" tick={{ fontSize: 10, fill: CU.grey }} unit="%" />
               <YAxis type="category" dataKey="name" width={110} tick={{ fontSize: 9, fill: CU.dgrey }} />
-              <Tooltip contentStyle={tooltipStyle} formatter={(v) => [`${v.toFixed(1)}%`, 'ER']} cursor={{ fill: 'rgba(62,178,237,.06)' }} />
+              <Tooltip {...CHART_TOOLTIP} formatter={(v) => [`${v.toFixed(1)}%`, 'ER']} cursor={{ fill: 'rgba(62,178,237,.06)' }} />
               <Bar dataKey="er" fill={CU.cyan} radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -158,7 +150,7 @@ export function ComparativeView() {
               <CartesianGrid horizontal={false} stroke={CU.border2} />
               <XAxis type="number" tick={{ fontSize: 10, fill: CU.grey }} unit="%" />
               <YAxis type="category" dataKey="name" width={110} tick={{ fontSize: 9, fill: CU.dgrey }} />
-              <Tooltip contentStyle={tooltipStyle} formatter={(v) => [`${v.toFixed(2)}%`, 'CTR']} cursor={{ fill: 'rgba(27,30,66,.06)' }} />
+              <Tooltip {...CHART_TOOLTIP} formatter={(v) => [`${v.toFixed(2)}%`, 'CTR']} cursor={{ fill: 'rgba(27,30,66,.06)' }} />
               <Bar dataKey="ctr" fill={CU.dblue} radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -187,7 +179,7 @@ export function ComparativeView() {
               />
             ))}
             <Legend wrapperStyle={{ fontSize: 10, color: CU.dgrey }} />
-            <Tooltip contentStyle={tooltipStyle} />
+            <Tooltip {...CHART_TOOLTIP} />
           </RadarChart>
         </ResponsiveContainer>
       </ChartCard>

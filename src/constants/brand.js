@@ -28,6 +28,24 @@ export const PAL = [
 export const TAGLINE = 'The Proof to Your Promise';
 
 // ════════════════════════════════════════════════════════════════
+//  TOOLTIP DE CHARTS — única fuente de verdad para Recharts.
+//  Fondo dark blue + texto SIEMPRE blanco (Recharts por defecto pinta
+//  el texto con el color de la serie, que sobre fondo oscuro puede
+//  quedar ilegible). Usar SIEMPRE esto para garantizar contraste.
+// ════════════════════════════════════════════════════════════════
+export const CHART_TOOLTIP = {
+  contentStyle: {
+    backgroundColor: '#1b1e42',
+    border: 'none',
+    borderRadius: 6,
+    padding: '8px 10px',
+    fontSize: 11,
+  },
+  itemStyle: { color: '#ffffff' },
+  labelStyle: { color: 'rgba(255,255,255,.72)', marginBottom: 2 },
+};
+
+// ════════════════════════════════════════════════════════════════
 //  MARCA POR CUENTA — define qué logo va en el header según de quién
 //  se estén mostrando las métricas. 'cu' | 'peterson' | null (sin logo).
 //  Las cuentas conocidas tienen mapeo explícito; las nuevas (importadas)

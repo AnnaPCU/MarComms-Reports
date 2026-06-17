@@ -13,21 +13,13 @@ import { getQuarter, getHandle, listAccounts } from '@/services/websiteService';
 import { QUARTERS_2026 } from '@/constants/periods';
 import { hasData } from '@/utils/hasData';
 import { num } from '@/utils/format';
-import { CU, PAL } from '@/constants/brand';
+import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { AnalysisCard } from '@/components/shared/AnalysisCard';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { Glossary } from '@/components/shared/Glossary';
-
-const tooltipStyle = {
-  backgroundColor: CU.dblue,
-  border: 'none',
-  borderRadius: 6,
-  color: '#fff',
-  fontSize: 11,
-};
 
 // Pilar Website — trimestral, con dos sub-reportes: Website (GA) y SEO (GSC).
 export function WebsiteApp({ account, period }) {
@@ -134,7 +126,7 @@ function SiteView({ data, accName, periodLabel }) {
               <CartesianGrid vertical={false} stroke={CU.border2} />
               <XAxis dataKey="name" tick={{ fontSize: 9, fill: CU.grey }} />
               <YAxis tick={{ fontSize: 10, fill: CU.grey }} />
-              <Tooltip contentStyle={tooltipStyle} formatter={(v) => num(v)} cursor={{ fill: 'rgba(62,178,237,.06)' }} />
+              <Tooltip {...CHART_TOOLTIP} formatter={(v) => num(v)} cursor={{ fill: 'rgba(62,178,237,.06)' }} />
               <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                 {kpiChart.map((e, i) => (
                   <Cell key={i} fill={e.fill} />
@@ -200,7 +192,7 @@ function SeoView({ data, accName, periodLabel }) {
               <CartesianGrid vertical={false} stroke={CU.border2} />
               <XAxis dataKey="name" tick={{ fontSize: 9, fill: CU.grey }} />
               <YAxis tick={{ fontSize: 10, fill: CU.grey }} />
-              <Tooltip contentStyle={tooltipStyle} formatter={(v) => num(v)} cursor={{ fill: 'rgba(62,178,237,.06)' }} />
+              <Tooltip {...CHART_TOOLTIP} formatter={(v) => num(v)} cursor={{ fill: 'rgba(62,178,237,.06)' }} />
               <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                 {kpiChart.map((e, i) => (
                   <Cell key={i} fill={e.fill} />

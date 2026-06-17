@@ -16,21 +16,34 @@ import {
 //    importan datos para (cuenta, período), la vista se refresca sola.
 //  Devuelve siempre el mismo shape { mo, prev, audience }.
 // ════════════════════════════════════════════════════════════════
+const EMBED = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
+
 export function useSocialMonthly(account, period) {
   const live = Boolean(supabase);
 
-  const [state, setState] = useState(() =>
-    live
+  const [state, setState] = useState(() => {
+    // Modo embed (HTML descargado): datos fijos del snapshot.
+    if (EMBED?.snapshot) {
+      const s = EMBED.snapshot;
+      return {
+        mo: s.mo ?? null,
+        prev: s.prev ?? null,
+        audience: s.audience ?? { seniority: [], jobFunction: [] },
+        loading: false,
+      };
+    }
+    return live
       ? { mo: null, prev: null, audience: { seniority: [], jobFunction: [] }, loading: true }
       : {
           mo: getMonthly(account, period),
           prev: getPrevMonthly(account, period),
           audience: getAudience(account),
           loading: false,
-        },
-  );
+        };
+  });
 
   useEffect(() => {
+    if (EMBED) return; // embed: sin fetch ni realtime
     if (!live) {
       setState({
         mo: getMonthly(account, period),

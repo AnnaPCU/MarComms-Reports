@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Círculo de fondo — CU Cyan -->
+  <circle cx="32" cy="32" r="32" fill="#3eb2ed"/>
+  <!-- Cuerpo del clipboard: relleno BLANCO sólido (no contorno) -->
+  <rect x="17.5" y="16" width="29" height="34" rx="4" fill="#ffffff"/>
+  <!-- Clip superior, también blanco sólido -->
+  <rect x="25.5" y="10.5" width="13" height="9" rx="2.5" fill="#ffffff"/>
+  <!-- Líneas de texto en cyan, sobre el blanco -->
+  <g stroke="#3eb2ed" stroke-width="2.8" stroke-linecap="round">
+    <line x1="23.5" y1="27" x2="40.5" y2="27"/>
+    <line x1="23.5" y1="33" x2="40.5" y2="33"/>
+    <line x1="23.5" y1="39" x2="36" y2="39"/>
+  </g>
+</svg>

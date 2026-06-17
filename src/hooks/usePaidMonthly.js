@@ -5,13 +5,17 @@ import { fetchMonthly, getMonthly } from '@/services/paidService';
 // Hook reactivo del pilar Paid (igual patrón que useSocialMonthly):
 // seed local sin Supabase; en Supabase lee + se suscribe a realtime para
 // que la vista se refresque sola al importar.
+const EMBED = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
+
 export function usePaidMonthly(account, period) {
   const live = Boolean(supabase);
-  const [state, setState] = useState(() =>
-    live ? { mo: null, loading: true } : { mo: getMonthly(account, period), loading: false },
-  );
+  const [state, setState] = useState(() => {
+    if (EMBED?.snapshot) return { mo: EMBED.snapshot.mo ?? null, loading: false };
+    return live ? { mo: null, loading: true } : { mo: getMonthly(account, period), loading: false };
+  });
 
   useEffect(() => {
+    if (EMBED) return; // embed: datos fijos
     if (!live) {
       setState({ mo: getMonthly(account, period), loading: false });
       return;

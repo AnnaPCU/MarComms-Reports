@@ -10,6 +10,8 @@ import { PilarNav } from '@/components/shared/PilarNav';
 import { LoginScreen } from '@/components/login/LoginScreen';
 import { ImportApp } from '@/components/import/ImportApp';
 import { exportViewAsHtml } from '@/utils/exportHtml';
+import { buildSnapshot } from '@/utils/snapshot';
+import { brandOf } from '@/constants/brand';
 
 export default function App() {
   const { authed, login, logout } = useAuth();
@@ -35,11 +37,19 @@ export default function App() {
   const accountName = cfg.accounts.find((a) => a.id === account)?.name ?? '';
   const periodLabel = cfg.periods.find((p) => p.id === period)?.label ?? period;
 
-  function handleDownload() {
-    const node = document.getElementById('report-view');
+  async function handleDownload() {
     const title = [PILAR_BY_ID[pilar].label, accountName, periodLabel].filter(Boolean).join(' — ');
     const filename = `reporte-${pilar}${account ? '-' + account : ''}${period ? '-' + period : ''}.html`;
-    exportViewAsHtml(node, { title, filename });
+    const snapshot = await buildSnapshot(pilar, account, period);
+    await exportViewAsHtml({
+      pilar,
+      account,
+      period,
+      brand: brandOf(account, accountName),
+      title,
+      filename,
+      snapshot,
+    });
   }
 
   // Badge de estado de datos (regla de honestidad).
