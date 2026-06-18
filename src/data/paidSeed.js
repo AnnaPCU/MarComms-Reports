@@ -9,7 +9,7 @@
 
 export const PAID_CLIENTS = [
   { id: 'pt', name: 'CU Portugal' },
-  { id: 'es', name: 'España' },
+  { id: 'es', name: 'CU España' },
 ];
 
 // Helper para no repetir campañas en cero.
@@ -103,7 +103,7 @@ export const PAID_DB = {
   },
 
   es: {
-    name: 'España',
+    name: 'CU España',
     periods: {
       m04: {
         channel: 'Google Ads Search',

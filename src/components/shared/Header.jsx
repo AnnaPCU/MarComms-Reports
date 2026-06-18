@@ -50,7 +50,7 @@ export function Header({
           className="flex h-9 items-center gap-1.5 rounded-sm border border-cu-border px-3 text-[11px] font-medium text-cu-dgrey transition-colors hover:border-cu-cyan hover:text-cu-cyan"
         >
           <Download className="h-3.5 w-3.5" />
-          HTML
+          Descargar
         </button>
         <button
           onClick={onImport}

@@ -6,8 +6,25 @@
 //  En dev (sin bundle único) cae a un snapshot estático del DOM.
 // ════════════════════════════════════════════════════════════════
 
+import { BRAND_LOGOS } from '@/constants/brand';
+
 const FONT_LINK =
   '<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />';
+
+// Convierte un asset (logo) a data URI para que funcione offline en el HTML.
+async function fetchAsDataUri(url) {
+  try {
+    const blob = await (await fetch(url)).blob();
+    return await new Promise((resolve) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve(fr.result);
+      fr.onerror = () => resolve(null);
+      fr.readAsDataURL(blob);
+    });
+  } catch {
+    return null;
+  }
+}
 
 function triggerDownload(html, filename) {
   const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
@@ -47,6 +64,9 @@ const safeForScript = (s) => s.replace(/<\/script>/gi, '<\\/script>');
 const safeJson = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c');
 
 export async function exportViewAsHtml({ pilar, account, period, brand, title, filename, snapshot }) {
+  // Logo de la marca como data URI (para que no se rompa en el archivo offline).
+  const logoSrc = brand && BRAND_LOGOS[brand] ? await fetchAsDataUri(BRAND_LOGOS[brand].src) : null;
+
   // Buscar el bundle de producción (Vite emite 1 JS + 1 CSS en /assets/).
   const moduleSrc = [...document.querySelectorAll('script[type="module"][src]')]
     .map((s) => s.src)
@@ -62,7 +82,7 @@ export async function exportViewAsHtml({ pilar, account, period, brand, title, f
     for (const href of cssHrefs) css += (await fetchText(href)) + '\n';
     if (!css) css = collectInlineCss();
 
-    const embed = safeJson({ pilar, account, period, brand, title, snapshot });
+    const embed = safeJson({ pilar, account, period, brand, title, snapshot, logoSrc });
 
     const doc = `<!DOCTYPE html>
 <html lang="es">
