@@ -63,6 +63,7 @@ Requiere Supabase configurado.
 ## Documentación
 
 - [`SETUP_SUPABASE.md`](SETUP_SUPABASE.md) — crear el proyecto Supabase paso a paso.
+- [`SETUP_AUTOIMPORT.md`](SETUP_AUTOIMPORT.md) — import automático desde una carpeta (Storage + `/api/process-imports`).
 - [`DEPLOY.md`](DEPLOY.md) — integración GitHub → Vercel → Supabase.
 - [`CLAUDE.md`](CLAUDE.md) — marca, reglas y convenciones del proyecto.
 - [`supabase/`](supabase/) — migrations, seeds y `all_in_one.sql`.
