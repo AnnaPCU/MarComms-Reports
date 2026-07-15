@@ -1,3 +1,8 @@
+> ℹ️ **Actualizado:** el proyecto **ya no usa Supabase**. Para el deploy solo
+> aplica GitHub → Vercel (los datos van en el bundle). Las secciones de Supabase y
+> las env vars `VITE_SUPABASE_*` de abajo son **históricas** y no hacen falta.
+> La única env var opcional es `VITE_SHARED_PASSWORD`. Ver `PROJECT_CONTEXT.md`.
+
 # Integración GitHub → Vercel → Supabase
 
 Runbook para dejar la app desplegada con auto-deploy. Mismo patrón que el Marcomms Hub.

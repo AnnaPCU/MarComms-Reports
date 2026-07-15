@@ -1,5 +1,11 @@
 # CLAUDE.md — Dashboard MarComms Control Union
 
+> 🟢 **ESTADO ACTUAL — leer `PROJECT_CONTEXT.md` primero.**
+> La arquitectura vigente es **seed en código, sin base de datos**: **Supabase fue
+> descartado** y el **import por la web fue retirado**. Las secciones de más abajo
+> que describen Supabase/import/realtime son **históricas** (intención original) y
+> ya no reflejan el código. Ante cualquier duda, manda `PROJECT_CONTEXT.md`.
+
 > ⚠️ **Proyecto independiente del Marcomms Hub — no integrar todavía.**
 > Este dashboard se desarrolla y despliega por separado. No conectar, importar ni
 > acoplar con el Marcomms Hub hasta nueva indicación.

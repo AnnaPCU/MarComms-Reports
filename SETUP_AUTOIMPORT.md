@@ -1,3 +1,7 @@
+> 🗄️ **DOCUMENTO HISTÓRICO — no aplica al estado actual.** El autoimport y su
+> función serverless fueron **eliminados** (requerían Supabase, ya descartado).
+> Los datos se cargan por código. Ver `PROJECT_CONTEXT.md`.
+
 # Import automático desde una carpeta (autoimport)
 
 Subís un Excel/CSV a una carpeta → se detecta solo → se carga en la base → el

@@ -1,3 +1,7 @@
+> 🗄️ **DOCUMENTO HISTÓRICO — no aplica al estado actual.** Supabase fue
+> **descartado**: la app corre con seed en código, sin base de datos. Se conserva
+> como referencia por si se reconecta a futuro. Ver `PROJECT_CONTEXT.md`.
+
 # Setup Supabase — paso a paso
 
 Guía para levantar el backend real. Toma ~5 minutos. Hacelo una sola vez.
