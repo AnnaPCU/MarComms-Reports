@@ -1,5 +1,7 @@
 // Embudo de conversión Impresión → Clic → Lead (formas cónicas con clip-path)
 // + tarjetas de coste (Coste, CPC medio, Coste/lead, Optimización).
+// El texto de cada etapa se centra y se acota al ancho de la forma, para que
+// NUNCA sobresalga del color del embudo.
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct = (v) =>
   Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
@@ -15,20 +17,24 @@ const trap = (t, b) => {
   return `polygon(${tl}% 0, ${tr}% 0, ${br}% 100%, ${bl}% 100%)`;
 };
 
-function Stage({ gradient, clip, name, value, right, retention }) {
+// Etapa del embudo. topW/botW = ancho % de la forma arriba/abajo.
+// El contenido se centra y se limita al ancho de la parte más angosta,
+// así queda siempre dentro del color.
+function Stage({ gradient, topW, botW, name, value, desc, retention }) {
+  const maxW = Math.max(Math.min(topW, botW) - 6, 20); // % de ancho para el texto
   return (
     <div className="relative flex w-full justify-center">
-      <div className="relative flex h-[78px] w-full items-center justify-center gap-8 text-center text-white">
+      <div className="relative flex h-[84px] w-full items-center justify-center text-center text-white">
         <span
           className="absolute inset-0 z-[1]"
-          style={{ clipPath: clip, background: gradient, filter: 'drop-shadow(0 3px 6px rgba(27,30,66,.14))' }}
+          style={{ clipPath: trap(topW, botW), background: gradient, filter: 'drop-shadow(0 3px 6px rgba(27,30,66,.14))' }}
         />
-        <div className="z-[3] flex flex-col gap-0.5">
-          <span className="text-[10px] font-bold uppercase tracking-[0.6px] opacity-90">{name}</span>
-          <span className="text-[26px] font-bold leading-none tracking-tight">{value}</span>
+        <div className="z-[3] mx-auto flex flex-col items-center gap-0.5 px-2" style={{ maxWidth: `${maxW}%` }}>
+          <span className="text-[9px] font-bold uppercase leading-tight tracking-[0.6px] opacity-90">{name}</span>
+          <span className="text-[24px] font-bold leading-none tracking-tight">{value}</span>
+          {desc && <span className="mt-0.5 text-[9.5px] leading-tight opacity-95">{desc}</span>}
         </div>
-        {right && <div className="z-[3] text-[10px] leading-tight opacity-95">{right}</div>}
-        <span className="absolute right-4 top-1/2 z-[4] -translate-y-1/2 whitespace-nowrap rounded-full border border-cu-border bg-white px-2.5 py-[3px] text-[11px] font-bold text-cu-dblue shadow-cu">
+        <span className="absolute right-3 top-1/2 z-[4] -translate-y-1/2 whitespace-nowrap rounded-full border border-cu-border bg-white px-2.5 py-[3px] text-[11px] font-bold text-cu-dblue shadow-cu">
           {retention}
         </span>
       </div>
@@ -68,9 +74,6 @@ export function PaidFunnel({ totals: t, campaigns = [] }) {
   const conv = t.conversions || 0;
   const currency = t.currency || 'EUR';
 
-  const wImp = 100,
-    wClk = 70,
-    wConv = conv > 0 ? 44 : 40;
   const retClk = imp ? (clk / imp) * 100 : 0;
   const retConv = clk ? (conv / clk) * 100 : 0;
 
@@ -87,54 +90,35 @@ export function PaidFunnel({ totals: t, campaigns = [] }) {
         <div className="flex flex-col items-center">
           <Stage
             gradient="linear-gradient(135deg,#1b1e42,#343c7d)"
-            clip={trap(wImp, wClk)}
+            topW={100}
+            botW={76}
             name="Impresiones"
             value={numEs(imp)}
-            right={
-              <>
-                El anuncio se mostró
-                <br />
-                <b className="text-[14px] font-bold">{numEs(imp)}</b> veces
-              </>
-            }
+            desc={`El anuncio se mostró ${numEs(imp)} veces`}
             retention="100 %"
           />
           <Drop>
-            CTR <b className="font-bold text-cu-cyan">&nbsp;{pct(t.ctr)}</b>&nbsp;· impresión → clic
+            CTR&nbsp;<b className="font-bold text-cu-cyan">{pct(t.ctr)}</b>&nbsp;· impresión → clic
           </Drop>
           <Stage
             gradient="linear-gradient(135deg,#2069a8,#3eb2ed)"
-            clip={trap(wClk, wConv)}
+            topW={76}
+            botW={54}
             name="Clics"
             value={numEs(clk)}
-            right={
-              <>
-                CPC
-                <br />
-                <b className="text-[14px] font-bold">{money(t.cpc, currency)}</b>
-              </>
-            }
+            desc={`CPC ${money(t.cpc, currency)}`}
             retention={pct(retClk)}
           />
           <Drop>
-            Conversión <b className="font-bold text-cu-cyan">&nbsp;{pct(clk ? (conv / clk) * 100 : 0)}</b>&nbsp;· clic → lead
+            Conversión&nbsp;<b className="font-bold text-cu-cyan">{pct(retConv)}</b>&nbsp;· clic → lead
           </Drop>
           <Stage
             gradient="linear-gradient(135deg,#247a44,#3fb86a)"
-            clip={trap(wConv, Math.max(wConv - 14, 24))}
+            topW={54}
+            botW={40}
             name="Conversiones"
             value={numEs(conv)}
-            right={
-              conv > 0 ? (
-                <>
-                  Coste/lead
-                  <br />
-                  <b className="text-[14px] font-bold">{money(t.costPerConv, currency)}</b>
-                </>
-              ) : (
-                <>Sin leads en el período</>
-              )
-            }
+            desc={conv > 0 ? `Coste/lead ${money(t.costPerConv, currency)}` : 'Sin leads en el período'}
             retention={pct(retConv)}
           />
         </div>

@@ -36,6 +36,33 @@ function topBy(campaigns, key) {
   return campaigns.reduce((a, b) => ((b[key] || 0) > (a[key] || 0) ? b : a), campaigns[0]);
 }
 
+// ── Score de efectividad por campaña (0-100) ──
+// Pondera tasa de conversión (45%), CTR (30%) y eficiencia de coste/lead (25%).
+// Si en el período no hubo conversiones, el peso recae en CTR (55%) y eficiencia
+// de CPC (45%). Todo normalizado dentro del set de campañas con actividad.
+export function scoreCampaigns(mo) {
+  const active = activeCampaigns(mo);
+  if (!active.length) return [];
+  const maxCtr = Math.max(...active.map((c) => c.ctr || 0), 0);
+  const maxCvr = Math.max(...active.map((c) => c.convRate || 0), 0);
+  const cpcs = active.map((c) => c.cpc || 0).filter((v) => v > 0);
+  const minCpc = cpcs.length ? Math.min(...cpcs) : 0;
+  const cpls = active.filter((c) => (c.conversions || 0) > 0).map((c) => c.costPerConv || 0).filter((v) => v > 0);
+  const minCpl = cpls.length ? Math.min(...cpls) : 0;
+  const anyConv = maxCvr > 0;
+
+  return active
+    .map((c) => {
+      const ctrN = maxCtr ? ((c.ctr || 0) / maxCtr) * 100 : 0;
+      const cvrN = maxCvr ? ((c.convRate || 0) / maxCvr) * 100 : 0;
+      const cpcEff = (c.cpc || 0) > 0 && minCpc ? (minCpc / c.cpc) * 100 : 0;
+      const cplEff = (c.conversions || 0) > 0 && minCpl ? (minCpl / c.costPerConv) * 100 : 0;
+      const score = anyConv ? 0.45 * cvrN + 0.3 * ctrN + 0.25 * cplEff : 0.55 * ctrN + 0.45 * cpcEff;
+      return { ...c, score: Math.round(score), ctrN, cvrN, cpcEff, cplEff };
+    })
+    .sort((a, b) => b.score - a.score);
+}
+
 // ── Insights (4 tarjetas: tendencia + acción) ──
 export function genPaidInsights(mo) {
   if (!mo?.totals) return [];
