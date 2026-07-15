@@ -1,11 +1,16 @@
 // Panel de insights / plan de acción (cabecera dark blue + grid de tarjetas).
 // Cada item: { m: tendencia, a: acción recomendada (HTML inline permitido) }.
-export function InsightsPanel({ subtitle, items, label = 'Tendencia Mensual' }) {
+export function InsightsPanel({
+  subtitle,
+  items,
+  label = 'Tendencia Mensual',
+  title = '⚡ Plan de Acción — Insights ESG B2B',
+}) {
   return (
     <div className="mb-5 overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
       <div className="flex flex-wrap items-center gap-2.5 bg-cu-dblue px-5 py-3">
         <h2 className="text-[11px] font-bold uppercase tracking-[0.6px] text-white">
-          ⚡ Plan de Acción — Insights ESG B2B
+          {title}
         </h2>
         {subtitle && (
           <span className="ml-auto text-[10px] text-white/50">{subtitle}</span>

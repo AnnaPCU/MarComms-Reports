@@ -1,4 +1,4 @@
-// Tarjeta de KPI con acento cyan a la izquierda y delta vs período anterior.
+// Tarjeta de KPI con acento a la izquierda y delta/subvalor + footnote.
 const DELTA_CLS = {
   up: 'bg-cu-cyan/10 text-[#1372a5]',
   down: 'bg-[#b42828]/10 text-[#a02020]',
@@ -6,10 +6,16 @@ const DELTA_CLS = {
   none: 'bg-cu-grey/10 text-cu-grey',
 };
 
-export function KpiCard({ label, value, unit, delta, footnote }) {
+const ACCENT_CLS = {
+  cyan: 'bg-cu-cyan',
+  green: 'bg-[#2d8a4e]',
+  amber: 'bg-[#d4a72c]',
+};
+
+export function KpiCard({ label, value, unit, delta, footnote, accent = 'cyan' }) {
   return (
     <div className="relative overflow-hidden rounded-cu border border-cu-border bg-white px-5 pb-3.5 pt-4 shadow-cu transition-shadow hover:shadow-cu-h">
-      <span className="absolute inset-y-0 left-0 w-[3px] bg-cu-cyan" />
+      <span className={`absolute inset-y-0 left-0 w-[3px] ${ACCENT_CLS[accent] ?? ACCENT_CLS.cyan}`} />
       <div className="mb-2 text-[9px] font-bold uppercase tracking-[0.6px] text-cu-grey">
         {label}
       </div>
