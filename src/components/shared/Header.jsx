@@ -1,11 +1,11 @@
-import { LogOut, UploadCloud, Download } from 'lucide-react';
+import { LogOut, Download } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
 import { Select } from '@/components/shared/Select';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { brandOf } from '@/constants/brand';
 
 // Header sticky: logo (dinámico según la cuenta) + etiqueta + filtros + estado +
-// descargar HTML + importar + logout.
+// descargar HTML + logout.
 export function Header({
   pilarLabel,
   accounts,
@@ -15,7 +15,6 @@ export function Header({
   period,
   onPeriodChange,
   badge,
-  onImport,
   onDownload,
   onLogout,
 }) {
@@ -51,14 +50,6 @@ export function Header({
         >
           <Download className="h-3.5 w-3.5" />
           Descargar
-        </button>
-        <button
-          onClick={onImport}
-          title="Importar datos"
-          className="flex h-9 items-center gap-1.5 rounded-sm bg-cu-cyan px-3 text-[11px] font-bold text-white transition-colors hover:bg-[#2c9fd9]"
-        >
-          <UploadCloud className="h-3.5 w-3.5" />
-          Importar
         </button>
         <button
           onClick={onLogout}

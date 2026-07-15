@@ -8,7 +8,6 @@ import { Tagline } from '@/components/brand/Tagline';
 import { Header } from '@/components/shared/Header';
 import { PilarNav } from '@/components/shared/PilarNav';
 import { LoginScreen } from '@/components/login/LoginScreen';
-import { ImportApp } from '@/components/import/ImportApp';
 import { exportViewAsHtml } from '@/utils/exportHtml';
 import { buildSnapshot } from '@/utils/snapshot';
 import { brandOf } from '@/constants/brand';
@@ -20,7 +19,6 @@ export default function App() {
   const initial = getPilarConfig('social');
   const [account, setAccount] = useState(initial.accounts[0]?.id ?? '');
   const [period, setPeriod] = useState(initial.defaultPeriod ?? '');
-  const [showImport, setShowImport] = useState(false);
 
   // Al cambiar de pilar, reseteamos cuenta/período a los defaults del pilar.
   function changePilar(id) {
@@ -77,7 +75,6 @@ export default function App() {
         period={period}
         onPeriodChange={setPeriod}
         badge={badge}
-        onImport={() => setShowImport(true)}
         onDownload={handleDownload}
         onLogout={logout}
       />
@@ -96,10 +93,6 @@ export default function App() {
         </p>
         <Tagline />
       </footer>
-
-      {showImport && (
-        <ImportApp defaultAccount={pilar === 'social' ? account : undefined} onClose={() => setShowImport(false)} />
-      )}
     </div>
   );
 }
