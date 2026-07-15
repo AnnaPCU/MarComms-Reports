@@ -1,25 +1,20 @@
-import { createClient } from '@supabase/supabase-js';
-
-// Cliente único de Supabase.
+// ════════════════════════════════════════════════════════════════
+//  FUENTE DE DATOS — seed en código (Supabase descartado)
 //
-// Si faltan las env vars, NO falla: exporta `supabase = null` y la app entra en
-// "modo seed local" (los services caen al seed embebido de Mayo 2026). Esto
-// permite desarrollar sin un proyecto Supabase todavía (decisión confirmada).
+//  Los reportes se sirven desde el seed en código (src/data/*). Ese seed viaja
+//  en el bundle publicado, por lo que es idéntico y persistente para TODOS los
+//  visitantes (cualquier navegador o dispositivo), sin base de datos ni backend.
+//  La carga de datos se hace por código (commit → deploy), no desde la UI.
+//
+//  Antes existía un modo Supabase (lectura en vivo + realtime + import desde la
+//  web). Se descartó porque el requisito —que los datos persistan para cualquiera
+//  que entre desde un navegador— ya lo cumple el seed en código. Las funciones de
+//  los services detectan `supabase === null` y leen del seed.
+//
+//  ¿Reconectar una base a futuro? Restaurar acá el `createClient(...)` con las env
+//  vars VITE_SUPABASE_URL / VITE_SUPABASE_PUBLISHABLE_KEY y volver a habilitar el
+//  camino `if (supabase)` en los services/hooks.
+// ════════════════════════════════════════════════════════════════
 
-const url = import.meta.env.VITE_SUPABASE_URL;
-const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-
-export const isSupabaseConfigured = Boolean(url && key);
-
-export const supabase = isSupabaseConfigured
-  ? createClient(url, key, {
-      auth: { persistSession: true, autoRefreshToken: true },
-    })
-  : null;
-
-if (!isSupabaseConfigured && import.meta.env.DEV) {
-  // eslint-disable-next-line no-console
-  console.info(
-    '[Reports] Supabase no configurado — corriendo en modo SEED LOCAL (Mayo 2026, solo lectura).',
-  );
-}
+export const isSupabaseConfigured = false;
+export const supabase = null;
