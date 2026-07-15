@@ -18,24 +18,13 @@ vas a usar en el paso 3.
 
 ## 2. GitHub (código)
 
-El repo local ya está inicializado y con el primer commit hecho. Falta crear el
-repo remoto y pushear.
+✅ **El repo remoto ya existe:** `AnnaPCU/MarComms-Reports`. No hay que crearlo.
 
-### Opción A — con GitHub CLI (`gh`)
-```bash
-gh repo create control-union/marcomms-reports --private --source=. --remote=origin --push
-```
-
-### Opción B — desde la web (sin gh)
-1. Entrá a [github.com/new](https://github.com/new) → nombre `marcomms-reports`
-   (en la organización de Control Union/Peterson si corresponde) → **Private** →
-   *Create repository* (sin README, ya tenemos uno).
-2. En la terminal, dentro del proyecto:
-   ```bash
-   git remote add origin https://github.com/<org>/marcomms-reports.git
-   git branch -M main
-   git push -u origin main
-   ```
+- Rama de **producción**: `main` (es la que Vercel publica en la URL principal).
+- Rama de **trabajo**: `claude/funny-maxwell-5ms7op` (los cambios se desarrollan acá
+  y, una vez conectado Vercel, generan una *preview URL* automática por cada push).
+- Para que un cambio llegue a la **URL de producción**, la rama de trabajo se
+  **mergea a `main`** (un click en GitHub: *Compare & pull request* → *Merge*).
 
 > El `.gitignore` ya excluye `node_modules`, `dist` y `.env.local` — las
 > credenciales nunca se suben.
@@ -67,10 +56,17 @@ A partir de acá, **cada push a `main` redeploya solo**. Las ramas/PRs generan
 ## 4. Verificación
 
 - Abrí la URL de Vercel → debería pedir la contraseña del equipo.
-- Pilar Social → datos de Mayo 2026 (vienen del seed SQL).
+- Pilar **Social** → datos de Mayo 2026 (vienen del seed SQL `all_in_one.sql`).
+- Pilares **Paid** y **Website** → van a decir *"Sin información suficiente"* hasta
+  que se importen sus datos. **Esto es esperado**, no un error: el seed SQL solo trae
+  Social. Los datos de Paid/Website se cargan por import (manual o autoimport).
 - Botón **Importar** habilitado (Supabase conectado). Probá importar un CSV →
   la vista se actualiza sola (realtime).
 - Consola del navegador: sin el aviso de "modo seed local".
+
+> **Siguiente paso previsto:** importar los datos de **Paid Media – Junio 2026**
+> (a partir de los exports de Google Ads) y luego resolver los puntos del análisis
+> técnico. Con Supabase conectado, cada import se refleja al instante en la URL.
 
 ---
 
