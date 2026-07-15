@@ -14,7 +14,7 @@ import { Glossary } from '@/components/shared/Glossary';
 import { PaidFunnel } from '@/components/paid/PaidFunnel';
 import { PaidCharts } from '@/components/paid/PaidCharts';
 import { CampaignsTable } from '@/components/paid/CampaignsTable';
-import { ConclusionsPanel, NextStepsPanel } from '@/components/paid/PerformancePanels';
+import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { ComparativeCampaigns } from '@/components/paid/ComparativeCampaigns';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');

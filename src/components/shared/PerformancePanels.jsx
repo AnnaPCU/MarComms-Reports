@@ -1,13 +1,13 @@
 // Panel de diagnóstico (grid 2-col) y panel de próximos pasos (lista numerada).
-// Ambos con cabecera dark blue, al estilo del dashboard de referencia.
+// Genéricos: los usan los pilares Paid, Social y Website. Cabecera dark blue.
 
-export function ConclusionsPanel({ items = [] }) {
+export function ConclusionsPanel({ items = [], title = 'Diagnóstico y recomendaciones' }) {
   if (!items.length) return null;
   return (
     <div className="mb-5 overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
       <div className="flex items-center gap-2.5 bg-cu-dblue px-5 py-3">
         <span className="text-[14px]">📌</span>
-        <h3 className="text-[11px] font-bold uppercase tracking-[0.5px] text-white">Diagnóstico y recomendaciones</h3>
+        <h3 className="text-[11px] font-bold uppercase tracking-[0.5px] text-white">{title}</h3>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2">
         {items.map((it, i) => (

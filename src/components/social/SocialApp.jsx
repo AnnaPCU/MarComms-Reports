@@ -3,12 +3,14 @@ import { listAccounts } from '@/services/socialService';
 import { useSocialMonthly } from '@/hooks/useSocialMonthly';
 import { ML } from '@/data/socialSeed';
 import { monthHasData } from '@/utils/hasData';
-import { genMonthlyInsights } from '@/utils/socialInsights';
-import { fmt, pct, computeDelta } from '@/utils/format';
+import { genMonthlyInsights, genSocialConclusions, genSocialNextSteps } from '@/utils/socialInsights';
+import { fmt, pct, num, computeDelta } from '@/utils/format';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
+import { Funnel } from '@/components/shared/Funnel';
+import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { AudienceCharts } from '@/components/social/AudienceCharts';
 import { PostsTable } from '@/components/social/PostsTable';
 import { ComparativeView } from '@/components/social/ComparativeView';
@@ -84,11 +86,55 @@ export function SocialApp({ account, period }) {
         />
       </div>
 
+      <SectionHeader title="Embudo de Interacción — Impresión → Clic → Perfil" note="LinkedIn Orgánico" />
+      <div className="mb-5 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">
+        <div className="mx-auto max-w-[640px]">
+          <Funnel
+            stages={[
+              {
+                name: 'Impresiones',
+                value: num(mo.imp),
+                desc: `El contenido se mostró ${num(mo.imp)} veces`,
+                retention: '100 %',
+              },
+              {
+                name: 'Clics',
+                value: num(mo.clk),
+                desc: `ER ${Number(mo.er).toFixed(1)}%`,
+                retention: mo.imp ? `${((mo.clk / mo.imp) * 100).toFixed(2)} %` : '—',
+                drop: (
+                  <>
+                    CTR&nbsp;<b className="font-bold text-cu-cyan">{mo.imp ? ((mo.clk / mo.imp) * 100).toFixed(2) : '0'} %</b>&nbsp;· impresión → clic
+                  </>
+                ),
+              },
+              {
+                name: 'Visitas al perfil',
+                value: num(mo.vis),
+                desc: `+${num(mo.fol)} seguidores`,
+                retention: mo.clk ? `${((mo.vis / mo.clk) * 100).toFixed(1)} %` : '—',
+                drop: (
+                  <>
+                    <b className="font-bold text-cu-cyan">{mo.clk ? ((mo.vis / mo.clk) * 100).toFixed(1) : '0'} %</b>&nbsp;· clic → visita al perfil
+                  </>
+                ),
+              },
+            ]}
+          />
+        </div>
+      </div>
+
       <SectionHeader title="Audiencia — Datos reales del perfil LinkedIn" />
       <AudienceCharts audience={audience} />
 
       <SectionHeader title="Top Publicaciones — Clasificadas por Pilar ESG" />
       <PostsTable posts={mo.posts} />
+
+      <SectionHeader title="Lectura de Performance" />
+      <ConclusionsPanel items={genSocialConclusions(mo, prev)} />
+
+      <SectionHeader title="Conclusión — Próximos Pasos" />
+      <NextStepsPanel steps={genSocialNextSteps(mo, prev)} subtitle={`${accName} · ${ML[period] || period}`} />
 
       <Glossary keys="social" />
     </div>

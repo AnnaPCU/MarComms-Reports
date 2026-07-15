@@ -16,7 +16,7 @@ import {
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { SectionHeader } from '@/components/shared/SectionHeader';
-import { NextStepsPanel } from '@/components/paid/PerformancePanels';
+import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { scoreCampaigns } from '@/utils/paidInsights';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
