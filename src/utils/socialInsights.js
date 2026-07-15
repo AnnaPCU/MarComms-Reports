@@ -11,20 +11,20 @@ export function genMonthlyInsights(mo, prev) {
   if (!mo) return ins;
 
   if (prev && prev.er != null && prev.imp != null) {
-    const de = (((mo.er - prev.er) / prev.er) * 100).toFixed(0);
+    const de = ((mo.er - prev.er) / prev.er) * 100;
     ins.push({
       m:
         de > 0
-          ? `Engagement Rate +${de}% vs mes anterior`
-          : `Engagement Rate ${de}% vs mes anterior — alerta`,
+          ? `Engagement Rate +${de.toFixed(0)}% vs mes anterior`
+          : `Engagement Rate ${de.toFixed(0)}% vs mes anterior — alerta`,
       a:
         de > 0
           ? 'La audiencia responde mejor al contenido actual ➜ <strong>Identificar posts con mayor ER y replicar su formato</strong>, incrementando frecuencia en ese pilar ESG.'
           : 'El mix de contenido necesita ajuste ➜ <strong>Reducir posts informativos genéricos</strong> e incrementar contenido técnico o de eventos con datos concretos.',
     });
-    const di = (((mo.imp - prev.imp) / prev.imp) * 100).toFixed(0);
+    const di = ((mo.imp - prev.imp) / prev.imp) * 100;
     ins.push({
-      m: `Impresiones ${di > 0 ? '+' : ''}${di}% vs mes anterior`,
+      m: `Impresiones ${di > 0 ? '+' : ''}${di.toFixed(0)}% vs mes anterior`,
       a:
         di > 0
           ? 'Alcance orgánico en crecimiento ➜ <strong>Capitalizar con al menos 1 post patrocinado</strong> para amplificar el contenido top del mes a segmentos aún no alcanzados.'

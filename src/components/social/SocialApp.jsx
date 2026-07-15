@@ -4,7 +4,7 @@ import { useSocialMonthly } from '@/hooks/useSocialMonthly';
 import { ML } from '@/data/socialSeed';
 import { monthHasData } from '@/utils/hasData';
 import { genMonthlyInsights, genSocialConclusions, genSocialNextSteps } from '@/utils/socialInsights';
-import { fmt, pct, num, computeDelta } from '@/utils/format';
+import { fmt, num, computeDelta } from '@/utils/format';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
