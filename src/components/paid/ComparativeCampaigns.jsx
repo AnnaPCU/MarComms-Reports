@@ -18,6 +18,7 @@ import { ChartCard } from '@/components/shared/ChartCard';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { scoreCampaigns } from '@/utils/paidInsights';
+import { isExternalReport } from '@/utils/reportAudience';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct = (v) =>
@@ -173,16 +174,20 @@ export function ComparativeCampaigns({ mo, currency = 'EUR' }) {
         </div>
       </div>
 
-      <SectionHeader title="Conclusión — Próximos Pasos" />
-      <NextStepsPanel
-        steps={[
-          `<strong>Priorizar ${ranked[0].name}</strong>: es la campaña más efectiva del período (score ${ranked[0].score}). Sostener y escalar su presupuesto.`,
-          ranked.length > 1
-            ? `<strong>Optimizar las de menor score</strong>: revisar anuncios, palabras clave y landing pages de ${ranked[ranked.length - 1].name} y similares.`
-            : `<strong>Ampliar la base</strong>: activar más campañas para tener con qué comparar el próximo mes.`,
-          `<strong>Comparar mes a mes</strong>: seguir la evolución del score para confirmar si las optimizaciones mejoran la efectividad relativa.`,
-        ]}
-      />
+      {!isExternalReport() && (
+        <>
+          <SectionHeader title="Conclusión — Próximos Pasos" />
+          <NextStepsPanel
+            steps={[
+              `<strong>Priorizar ${ranked[0].name}</strong>: es la campaña más efectiva del período (score ${ranked[0].score}). Sostener y escalar su presupuesto.`,
+              ranked.length > 1
+                ? `<strong>Optimizar las de menor score</strong>: revisar anuncios, palabras clave y landing pages de ${ranked[ranked.length - 1].name} y similares.`
+                : `<strong>Ampliar la base</strong>: activar más campañas para tener con qué comparar el próximo mes.`,
+              `<strong>Comparar mes a mes</strong>: seguir la evolución del score para confirmar si las optimizaciones mejoran la efectividad relativa.`,
+            ]}
+          />
+        </>
+      )}
     </div>
   );
 }

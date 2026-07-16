@@ -8,6 +8,7 @@ import { Tagline } from '@/components/brand/Tagline';
 import { Header } from '@/components/shared/Header';
 import { PilarNav } from '@/components/shared/PilarNav';
 import { LoginScreen } from '@/components/login/LoginScreen';
+import { DownloadDialog } from '@/components/shared/DownloadDialog';
 import { exportViewAsHtml } from '@/utils/exportHtml';
 import { buildSnapshot } from '@/utils/snapshot';
 import { reportFilename, expandAccountName } from '@/utils/reportFilename';
@@ -20,6 +21,7 @@ export default function App() {
   const initial = getPilarConfig('social');
   const [account, setAccount] = useState(initial.accounts[0]?.id ?? '');
   const [period, setPeriod] = useState(initial.defaultPeriod ?? '');
+  const [showDownload, setShowDownload] = useState(false);
 
   // Al cambiar de pilar, reseteamos cuenta/período a los defaults del pilar.
   function changePilar(id) {
@@ -36,14 +38,17 @@ export default function App() {
   const accountName = cfg.accounts.find((a) => a.id === account)?.name ?? '';
   const periodLabel = cfg.periods.find((p) => p.id === period)?.label ?? period;
 
-  async function handleDownload() {
+  // audience: 'internal' (reporte completo) | 'external' (sin "Próximos Pasos")
+  async function doDownload(audience) {
+    setShowDownload(false);
     const title = [PILAR_BY_ID[pilar].label, expandAccountName(accountName), periodLabel].filter(Boolean).join(' — ');
-    const filename = reportFilename({ pilarLabel: PILAR_BY_ID[pilar].label, accountName, period, periodLabel });
+    const filename = reportFilename({ pilarLabel: PILAR_BY_ID[pilar].label, accountName, period, periodLabel, audience });
     const snapshot = await buildSnapshot(pilar, account, period);
     await exportViewAsHtml({
       pilar,
       account,
       period,
+      audience,
       brand: brandOf(account, accountName),
       title,
       filename,
@@ -76,7 +81,7 @@ export default function App() {
         period={period}
         onPeriodChange={setPeriod}
         badge={badge}
-        onDownload={handleDownload}
+        onDownload={() => setShowDownload(true)}
         onLogout={logout}
       />
       <PilarNav active={pilar} onChange={changePilar} />
@@ -94,6 +99,8 @@ export default function App() {
         </p>
         <Tagline />
       </footer>
+
+      {showDownload && <DownloadDialog onClose={() => setShowDownload(false)} onChoose={doDownload} />}
     </div>
   );
 }

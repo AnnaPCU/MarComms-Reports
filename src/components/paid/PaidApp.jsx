@@ -16,6 +16,7 @@ import { PaidCharts } from '@/components/paid/PaidCharts';
 import { CampaignsTable } from '@/components/paid/CampaignsTable';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { ComparativeCampaigns } from '@/components/paid/ComparativeCampaigns';
+import { isExternalReport } from '@/utils/reportAudience';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct = (v) =>
@@ -163,8 +164,12 @@ export function PaidApp({ account, period }) {
           <SectionHeader title="Lectura de Performance" />
           <ConclusionsPanel items={genPaidConclusions(mo)} />
 
-          <SectionHeader title="Conclusión — Próximos Pasos" />
-          <NextStepsPanel steps={genPaidNextSteps(mo)} subtitle={[accName, periodLabel].filter(Boolean).join(' · ')} />
+          {!isExternalReport() && (
+            <>
+              <SectionHeader title="Conclusión — Próximos Pasos" />
+              <NextStepsPanel steps={genPaidNextSteps(mo)} subtitle={[accName, periodLabel].filter(Boolean).join(' · ')} />
+            </>
+          )}
         </>
       )}
 

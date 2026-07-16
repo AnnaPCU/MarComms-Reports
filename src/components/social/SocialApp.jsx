@@ -11,6 +11,7 @@ import { KpiCard } from '@/components/shared/KpiCard';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { Funnel } from '@/components/shared/Funnel';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
+import { isExternalReport } from '@/utils/reportAudience';
 import { AudienceCharts } from '@/components/social/AudienceCharts';
 import { PostsTable } from '@/components/social/PostsTable';
 import { ComparativeView } from '@/components/social/ComparativeView';
@@ -133,8 +134,12 @@ export function SocialApp({ account, period }) {
       <SectionHeader title="Lectura de Performance" />
       <ConclusionsPanel items={genSocialConclusions(mo, prev)} />
 
-      <SectionHeader title="Conclusión — Próximos Pasos" />
-      <NextStepsPanel steps={genSocialNextSteps(mo, prev)} subtitle={`${accName} · ${ML[period] || period}`} />
+      {!isExternalReport() && (
+        <>
+          <SectionHeader title="Conclusión — Próximos Pasos" />
+          <NextStepsPanel steps={genSocialNextSteps(mo, prev)} subtitle={`${accName} · ${ML[period] || period}`} />
+        </>
+      )}
 
       <Glossary keys="social" />
     </div>

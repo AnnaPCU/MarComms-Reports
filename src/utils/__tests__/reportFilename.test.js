@@ -42,6 +42,12 @@ describe('reportFilename', () => {
     ).toBe('Control_Union_Norte__Reporte_Social_Media_Comparativa.html');
   });
 
+  it('uso externo agrega el sufijo _Externo (interno no)', () => {
+    const base = { pilarLabel: 'Paid Media', accountName: 'CU Portugal', period: 'm06', periodLabel: 'Junio 2026' };
+    expect(reportFilename({ ...base, audience: 'internal' })).toBe('Control_Union_Portugal__Reporte_Paid_Media_Junio_2026.html');
+    expect(reportFilename({ ...base, audience: 'external' })).toBe('Control_Union_Portugal__Reporte_Paid_Media_Junio_2026_Externo.html');
+  });
+
   it('sin cuenta/período (Email/Webinars) no rompe', () => {
     expect(reportFilename({ pilarLabel: 'Email Marketing', accountName: '', period: '', periodLabel: '' })).toBe(
       'Reporte_Email_Marketing.html',

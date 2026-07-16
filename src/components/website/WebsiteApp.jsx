@@ -30,6 +30,7 @@ import { Glossary } from '@/components/shared/Glossary';
 import { Funnel } from '@/components/shared/Funnel';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
+import { isExternalReport } from '@/utils/reportAudience';
 
 const pctv = (v) => Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
 
@@ -183,8 +184,12 @@ function SiteView({ data, accName, periodLabel }) {
       <SectionHeader title="Lectura de Performance" />
       <ConclusionsPanel items={genSiteConclusions(data)} />
 
-      <SectionHeader title="Conclusión — Próximos Pasos" />
-      <NextStepsPanel steps={genSiteNextSteps(data)} subtitle={`${accName} · ${periodLabel}`} />
+      {!isExternalReport() && (
+        <>
+          <SectionHeader title="Conclusión — Próximos Pasos" />
+          <NextStepsPanel steps={genSiteNextSteps(data)} subtitle={`${accName} · ${periodLabel}`} />
+        </>
+      )}
     </>
   );
 }
@@ -276,8 +281,12 @@ function SeoView({ data, accName, periodLabel }) {
       <SectionHeader title="Lectura de Performance" />
       <ConclusionsPanel items={genSeoConclusions(data)} />
 
-      <SectionHeader title="Conclusión — Próximos Pasos" />
-      <NextStepsPanel steps={genSeoNextSteps(data)} subtitle={`${accName} · ${periodLabel}`} />
+      {!isExternalReport() && (
+        <>
+          <SectionHeader title="Conclusión — Próximos Pasos" />
+          <NextStepsPanel steps={genSeoNextSteps(data)} subtitle={`${accName} · ${periodLabel}`} />
+        </>
+      )}
     </>
   );
 }

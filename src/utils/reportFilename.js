@@ -49,10 +49,12 @@ function periodPart(period, periodLabel) {
   return slugPart(periodLabel); // trimestres u otros formatos
 }
 
-export function reportFilename({ pilarLabel, accountName, period, periodLabel }) {
+export function reportFilename({ pilarLabel, accountName, period, periodLabel, audience }) {
   const acc = slugPart(expandAccountName(accountName));
   const pil = slugPart(pilarLabel);
   const per = periodPart(period, periodLabel);
-  const base = (acc ? acc + '__' : '') + 'Reporte_' + pil + (per ? '_' + per : '');
+  // El reporte externo lleva sufijo para distinguirlo del interno al descargar ambos.
+  const suffix = audience === 'external' ? '_Externo' : '';
+  const base = (acc ? acc + '__' : '') + 'Reporte_' + pil + (per ? '_' + per : '') + suffix;
   return `${base}.html`;
 }
