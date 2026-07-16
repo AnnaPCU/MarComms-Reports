@@ -10,7 +10,7 @@ import { PilarNav } from '@/components/shared/PilarNav';
 import { LoginScreen } from '@/components/login/LoginScreen';
 import { exportViewAsHtml } from '@/utils/exportHtml';
 import { buildSnapshot } from '@/utils/snapshot';
-import { reportFilename } from '@/utils/reportFilename';
+import { reportFilename, expandAccountName } from '@/utils/reportFilename';
 import { brandOf } from '@/constants/brand';
 
 export default function App() {
@@ -37,7 +37,7 @@ export default function App() {
   const periodLabel = cfg.periods.find((p) => p.id === period)?.label ?? period;
 
   async function handleDownload() {
-    const title = [PILAR_BY_ID[pilar].label, accountName, periodLabel].filter(Boolean).join(' — ');
+    const title = [PILAR_BY_ID[pilar].label, expandAccountName(accountName), periodLabel].filter(Boolean).join(' — ');
     const filename = reportFilename({ pilarLabel: PILAR_BY_ID[pilar].label, accountName, period, periodLabel });
     const snapshot = await buildSnapshot(pilar, account, period);
     await exportViewAsHtml({

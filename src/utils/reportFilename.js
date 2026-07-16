@@ -20,6 +20,15 @@ const MONTHS = {
   m12: 'Diciembre',
 };
 
+// Expande la abreviatura de marca al nombre completo (para descargables/títulos).
+// "CU Portugal" → "Control Union Portugal" · "PS Argentina" → "Peterson Solutions Argentina".
+export function expandAccountName(name) {
+  const s = String(name ?? '').trim();
+  if (/^CU\b/.test(s)) return s.replace(/^CU\b/, 'Control Union');
+  if (/^PS\b/.test(s)) return s.replace(/^PS\b/, 'Peterson Solutions');
+  return s;
+}
+
 // Limpia un texto para usarlo en un nombre de archivo seguro:
 // sin acentos/ñ, y espacios/símbolos → "_".
 export function slugPart(s) {
@@ -41,7 +50,7 @@ function periodPart(period, periodLabel) {
 }
 
 export function reportFilename({ pilarLabel, accountName, period, periodLabel }) {
-  const acc = slugPart(accountName);
+  const acc = slugPart(expandAccountName(accountName));
   const pil = slugPart(pilarLabel);
   const per = periodPart(period, periodLabel);
   const base = (acc ? acc + '__' : '') + 'Reporte_' + pil + (per ? '_' + per : '');
