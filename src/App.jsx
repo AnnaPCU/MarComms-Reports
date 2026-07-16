@@ -10,6 +10,7 @@ import { PilarNav } from '@/components/shared/PilarNav';
 import { LoginScreen } from '@/components/login/LoginScreen';
 import { exportViewAsHtml } from '@/utils/exportHtml';
 import { buildSnapshot } from '@/utils/snapshot';
+import { reportFilename } from '@/utils/reportFilename';
 import { brandOf } from '@/constants/brand';
 
 export default function App() {
@@ -37,7 +38,7 @@ export default function App() {
 
   async function handleDownload() {
     const title = [PILAR_BY_ID[pilar].label, accountName, periodLabel].filter(Boolean).join(' — ');
-    const filename = `reporte-${pilar}${account ? '-' + account : ''}${period ? '-' + period : ''}.html`;
+    const filename = reportFilename({ pilarLabel: PILAR_BY_ID[pilar].label, accountName, period, periodLabel });
     const snapshot = await buildSnapshot(pilar, account, period);
     await exportViewAsHtml({
       pilar,
