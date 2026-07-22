@@ -59,7 +59,8 @@ const BRAND_BY_ID = {
   // Paid
   pt: 'cu', es: 'cu', cuc: 'cu', psar: 'peterson',
   // Website
-  cua: 'cu',
+  cua: 'cu', cubr: 'cu', cucl: 'cu', cumx: 'cu', cunam: 'cu', cupe: 'cu', cupt: 'cu', cues: 'cu',
+  psam: 'peterson', psib: 'peterson',
 };
 
 export function brandOf(id, name = '') {

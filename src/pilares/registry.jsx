@@ -38,7 +38,7 @@ export const REGISTRY = {
     Component: WebsiteApp,
     accounts: website.listAccounts(),
     periods: website.listPeriods(),
-    defaultPeriod: 'q1-2026',
+    defaultPeriod: 'q2-2026', // último trimestre cargado
     hasDataFor: website.hasDataFor,
   },
   email: { Component: EmailApp, accounts: [], periods: [], defaultPeriod: null, hasDataFor: null },
