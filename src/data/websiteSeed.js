@@ -292,3 +292,134 @@ export const WEBSITE_DB = {
     },
   },
 };
+
+// ── Q1 2026 (de los reportes por cuenta) ───────────────────────────
+// CU Argentina ya tiene Q1 arriba. Acá se agrega Q1 al resto de las cuentas.
+// PS Americas / PS Iberia: solo Website (sin SEO en el período).
+const WEBSITE_Q1_2026 = {
+  cubr: {
+    site: {
+      singleTraffic: 564, totalTraffic: 869, impressions: 1841, conversions: 186,
+      topLandingPages: [
+        lp('https://brasil.controlunion.com/', 391),
+        lp('https://brasil.controlunion.com/vagas/', 148),
+        lp('https://brasil.controlunion.com/programas-de-certificacao/', 132),
+      ],
+    },
+    seo: {
+      averagePosition: 9.0, impressions: 23533, totalClicks: 521,
+      topKeywords: [kw('control union', 148), kw('control union brasil', 36), kw('controlunion', 30)],
+    },
+  },
+  cucl: {
+    site: {
+      singleTraffic: 149, totalTraffic: 225, impressions: 516, conversions: 29,
+      topLandingPages: [
+        lp('https://chile.controlunion.com/', 90),
+        lp('https://chile.controlunion.com/service/certificaciones/', 39),
+        lp('https://chile.controlunion.com/programas-de-certificacion/', 38),
+      ],
+    },
+    seo: {
+      averagePosition: 10.24, impressions: 32682, totalClicks: 476,
+      topKeywords: [kw('control union chile', 67), kw('control union', 45), kw('bap', 14)],
+    },
+  },
+  cumx: {
+    site: {
+      singleTraffic: 224, totalTraffic: 355, impressions: 910, conversions: 71,
+      topLandingPages: [
+        lp('https://mexico.controlunion.com/', 152),
+        lp('https://mexico.controlunion.com/service/certificaciones/', 83),
+        lp('https://mexico.controlunion.com/contacto/', 52),
+      ],
+    },
+    seo: {
+      averagePosition: 13.29, impressions: 45605, totalClicks: 1024,
+      topKeywords: [kw('control union', 124), kw('control union mexico', 58), kw('smeta 7.0 pdf', 16)],
+    },
+  },
+  cunam: {
+    site: {
+      singleTraffic: 186, totalTraffic: 303, impressions: 624, conversions: 45,
+      topLandingPages: [
+        lp('https://northamerica.controlunion.com/', 185),
+        lp('https://northamerica.controlunion.com/certification-programs', 85),
+        lp('https://northamerica.controlunion.com/about-us', 49),
+      ],
+    },
+    seo: {
+      averagePosition: 9.4, impressions: 10192, totalClicks: 93,
+      topKeywords: [kw('control union usa', 10), kw('control union canada', 7), kw('control union', 4)],
+    },
+  },
+  cupe: {
+    site: {
+      singleTraffic: 873, totalTraffic: 1622, impressions: 3457, conversions: 240,
+      topLandingPages: [
+        lp('http://peru.controlunion.com/', 643),
+        lp('https://peru.controlunion.com/programas-de-certificacion/', 264),
+        lp('https://peru.controlunion.com/service/certificaciones/', 210),
+      ],
+    },
+    seo: {
+      averagePosition: 6.93, impressions: 125906, totalClicks: 2082,
+      topKeywords: [kw('control union', 95), kw('control union services', 65), kw('control union peru', 51)],
+    },
+  },
+  cupt: {
+    site: {
+      singleTraffic: 368, totalTraffic: 532, impressions: 1418, conversions: 81,
+      topLandingPages: [
+        lp('https://portugal.controlunion.com/esquemas-de-certificacao/', 199),
+        lp('https://portugal.controlunion.com/', 183),
+        lp('https://portugal.controlunion.com/certificacoes/', 96),
+      ],
+    },
+    seo: {
+      averagePosition: 10.4, impressions: 21042, totalClicks: 330,
+      topKeywords: [kw('control union', 60), kw('control union portugal', 28), kw('controlunion', 14)],
+    },
+  },
+  cues: {
+    site: {
+      singleTraffic: 861, totalTraffic: 1216, impressions: 2618, conversions: 106,
+      topLandingPages: [
+        lp('https://espana.controlunion.com/', 460),
+        lp('https://espana.controlunion.com/certificaciones', 169),
+        lp('https://espana.controlunion.com/programas-de-certificacion/', 157),
+      ],
+    },
+    seo: {
+      averagePosition: 10.4, impressions: 66918, totalClicks: 579,
+      topKeywords: [kw('control union', 55), kw('control union españa', 28), kw('iso 21401', 18)],
+    },
+  },
+  psam: {
+    site: {
+      singleTraffic: 143, totalTraffic: 265, impressions: 624, conversions: 15,
+      topLandingPages: [
+        lp('https://americas.peterson-solutions.com/', 223),
+        lp('https://americas.peterson-solutions.com/home/sobre-peterson/', 58),
+        lp('https://americas.peterson-solutions.com/vacantes/', 29),
+      ],
+    },
+    // Sin datos SEO en el período.
+  },
+  psib: {
+    site: {
+      singleTraffic: 115, totalTraffic: 199, impressions: 535, conversions: 19,
+      topLandingPages: [
+        lp('https://iberia.peterson-solutions.com/', 198),
+        lp('https://iberia.peterson-solutions.com/contacto/', 34),
+        lp('https://iberia.peterson-solutions.com/vacantes/', 34),
+      ],
+    },
+    // Sin datos SEO en el período.
+  },
+};
+
+// Mergea Q1 dentro de periods de cada cuenta (CU Argentina ya lo tiene arriba).
+for (const [id, data] of Object.entries(WEBSITE_Q1_2026)) {
+  if (WEBSITE_DB[id]) WEBSITE_DB[id].periods['q1-2026'] = data;
+}
