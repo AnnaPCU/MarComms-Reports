@@ -21,8 +21,8 @@ export const REGISTRY = {
   social: {
     Component: SocialApp,
     accounts: social.listAccounts(),
-    // meses (más reciente primero) + comparativa
-    periods: [...social.listPeriods()].reverse().concat(COMPARATIVE),
+    // meses (más reciente primero) + comparativa + trimestres (Q2 con datos)
+    periods: [...social.listPeriods()].reverse().concat(COMPARATIVE, QUARTERS_2026),
     defaultPeriod: 'm05',
     hasDataFor: social.hasDataFor,
   },

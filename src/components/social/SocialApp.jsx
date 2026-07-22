@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { listAccounts } from '@/services/socialService';
 import { useSocialMonthly } from '@/hooks/useSocialMonthly';
 import { ML } from '@/data/socialSeed';
+import { QUARTERS_2026 } from '@/constants/periods';
 import { monthHasData } from '@/utils/hasData';
 import { genMonthlyInsights, genSocialConclusions, genSocialNextSteps } from '@/utils/socialInsights';
 import { fmt, num, computeDelta } from '@/utils/format';
@@ -15,7 +16,10 @@ import { isExternalReport } from '@/utils/reportAudience';
 import { AudienceCharts } from '@/components/social/AudienceCharts';
 import { PostsTable } from '@/components/social/PostsTable';
 import { ComparativeView } from '@/components/social/ComparativeView';
+import { SocialQuarterlyView } from '@/components/social/SocialQuarterlyView';
 import { Glossary } from '@/components/shared/Glossary';
+
+const periodLabelOf = (period) => ML[period] || QUARTERS_2026.find((q) => q.id === period)?.label || period;
 
 // Vista del pilar Social Media (LinkedIn).
 export function SocialApp({ account, period }) {
@@ -63,6 +67,16 @@ export function SocialApp({ account, period }) {
             </>
           }
         />
+        <Glossary keys="social" />
+      </>
+    );
+  }
+
+  // ── Vista TRIMESTRAL (datos por Q; otras métricas que el mensual) ──
+  if (mo.quarterly) {
+    return (
+      <>
+        <SocialQuarterlyView mo={mo} audience={audience} accName={accName} periodLabel={periodLabelOf(period)} />
         <Glossary keys="social" />
       </>
     );

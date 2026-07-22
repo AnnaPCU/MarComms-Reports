@@ -242,6 +242,33 @@ m01:{_nodata:true},
 
 }; // end DB
 
+// ── Datos TRIMESTRALES (LinkedIn Q2 2026) ──────────────────────────
+// El reporte trimestral trae otras métricas que el mensual: reactions y
+// cantidad de posteos, pero NO trae Engagement Rate ni visitas al perfil, y
+// los top posteos vienen sin título (solo imp/reactions/clics). Por eso la
+// vista trimestral es distinta (marca `quarterly: true`).
+const SOCIAL_QUARTERLY = {
+  'q2-2026': {
+    cul: { quarterly: true, fol: 1031, imp: 199270, reactions: 2868, clk: 27641, postsCount: 106,
+      top: [{ imp: 5621, reactions: 38, clk: 273 }, { imp: 4789, reactions: 70, clk: 368 }, { imp: 4039, reactions: 107, clk: 1117 }] },
+    cun: { quarterly: true, fol: 164, imp: 29581, reactions: 678, clk: 14702, postsCount: 18,
+      top: [{ imp: 6576, reactions: 173, clk: 3556 }, { imp: 4849, reactions: 113, clk: 3729 }, { imp: 4553, reactions: 101, clk: 3045 }] },
+    ps: { quarterly: true, fol: 260, imp: 29082, reactions: 649, clk: 4140, postsCount: 25,
+      top: [{ imp: 2358, reactions: 28, clk: 485 }, { imp: 1673, reactions: 29, clk: 192 }, { imp: 1666, reactions: 54, clk: 80 }] },
+    bel: { quarterly: true, fol: 57, imp: 6591, reactions: 244, clk: 764, postsCount: 6,
+      top: [{ imp: 1886, reactions: 80, clk: 43 }, { imp: 1534, reactions: 35, clk: 67 }, { imp: 1157, reactions: 61, clk: 156 }] },
+    tlr: { quarterly: true, fol: 22, imp: 2948, reactions: 47, clk: 759, postsCount: 7,
+      top: [{ imp: 664, reactions: 14, clk: 62 }, { imp: 338, reactions: 5, clk: 231 }, { imp: 297, reactions: 4, clk: 135 }] },
+  },
+};
+
+// Mergea los trimestres dentro del mo de cada cuenta (mismo acceso que los meses).
+for (const [periodId, byAccount] of Object.entries(SOCIAL_QUARTERLY)) {
+  for (const [accId, data] of Object.entries(byAccount)) {
+    if (DB[accId]) DB[accId].mo[periodId] = data;
+  }
+}
+
 export const CMP_DATA = [
   {id:'cul', name:'CU Latinoamérica',    imp:58168, clk:6020, er:12.89, fol:400, vis:1007},
   {id:'cue', name:'CU España',           imp:8070,  clk:1846, er:20.13, fol:61,  vis:117 },

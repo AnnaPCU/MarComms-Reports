@@ -114,3 +114,67 @@ export function genSocialNextSteps(mo, prev) {
   steps.push(`<strong>Comparar mes a mes</strong>: seguir Impresiones, ER y clics para confirmar la tendencia y ajustar la frecuencia de publicación.`);
   return steps;
 }
+
+// ════════════════════════════════════════════════════════════════
+//  TRIMESTRAL — el reporte trae reactions y cantidad de posteos, pero no ER
+//  ni visitas al perfil. Los generadores usan solo lo que existe.
+// ════════════════════════════════════════════════════════════════
+const ctrOf = (mo) => (mo.imp ? (mo.clk / mo.imp) * 100 : 0);
+const topByClk = (mo) => (mo.top?.length ? mo.top.reduce((a, b) => ((b.clk || 0) > (a.clk || 0) ? b : a), mo.top[0]) : null);
+
+export function genQuarterlyInsights(mo) {
+  if (!mo) return [];
+  const ctr = ctrOf(mo);
+  const tp = topByClk(mo);
+  const ins = [];
+  ins.push({
+    m: `${numEs(mo.imp)} impresiones y ${numEs(mo.clk)} clics en el trimestre (CTR ${ctr.toFixed(1)}%).`,
+    a: `Alcance orgánico sólido ➜ <strong>identificar los formatos de mayor CTR</strong> y aumentar su frecuencia el próximo trimestre.`,
+  });
+  ins.push({
+    m: `${numEs(mo.reactions)} reacciones sobre ${numEs(mo.postsCount)} posteos publicados.`,
+    a: `<strong>Replicar los temas de los posteos más reaccionados</strong> para sostener la conversación con la audiencia.`,
+  });
+  if (tp) {
+    ins.push({
+      m: `El posteo con más clics del trimestre generó ${numEs(tp.clk)} clics (${numEs(tp.imp)} impresiones).`,
+      a: `<strong>Analizar qué disparó ese resultado</strong> (tema, formato, CTA) y replicarlo en la agenda del próximo trimestre.`,
+    });
+  }
+  ins.push({
+    m: `+${numEs(mo.fol)} seguidores nuevos en el trimestre.`,
+    a:
+      mo.fol < 100
+        ? `Crecimiento moderado ➜ <strong>activar campaña de seguidores patrocinados</strong> con targeting por cargo (ESG/Calidad) y sector.`
+        : `Buen crecimiento ➜ <strong>nutrir a los nuevos seguidores</strong> con contenido de servicios y próximos webinars.`,
+  });
+  return ins.slice(0, 4);
+}
+
+export function genQuarterlyConclusions(mo) {
+  if (!mo) return [];
+  const ctr = ctrOf(mo);
+  return [
+    { label: 'Alcance', text: `<strong>${numEs(mo.imp)} impresiones</strong> y <strong>${numEs(mo.clk)} clics</strong> (CTR ${ctr.toFixed(1)}%) en el trimestre.` },
+    { label: 'Interacción', text: `<strong>${numEs(mo.reactions)} reacciones</strong> sobre ${numEs(mo.postsCount)} posteos publicados.` },
+    { label: 'Audiencia', text: `<strong>+${numEs(mo.fol)} seguidores nuevos</strong> en el período.` },
+    {
+      label: 'Cadencia',
+      text: `${numEs(mo.postsCount)} posteos en el trimestre: ${mo.postsCount >= 30 ? 'ritmo alto y sostenido' : 'hay margen para aumentar la frecuencia'} de publicación.`,
+    },
+  ];
+}
+
+export function genQuarterlyNextSteps(mo) {
+  if (!mo) return [];
+  return [
+    `<strong>Replicar los posteos top</strong> del trimestre (mayor alcance y clics), ajustando tema, formato y CTA.`,
+    mo.postsCount < 30
+      ? `<strong>Aumentar la cadencia de publicación</strong> para dar más señales al algoritmo y ampliar el alcance.`
+      : `<strong>Sostener la cadencia</strong> priorizando los formatos de mayor interacción.`,
+    mo.fol < 100
+      ? `<strong>Acelerar el crecimiento de audiencia</strong> con una campaña de seguidores segmentada por cargo y sector.`
+      : `<strong>Nutrir a los nuevos seguidores</strong> con contenido de bienvenida y próximos webinars.`,
+    `<strong>Comparar trimestre a trimestre</strong>: seguir impresiones, clics, reacciones y seguidores nuevos.`,
+  ];
+}
