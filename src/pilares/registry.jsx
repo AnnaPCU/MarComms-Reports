@@ -7,6 +7,7 @@
 import * as social from '@/services/socialService';
 import * as paid from '@/services/paidService';
 import * as website from '@/services/websiteService';
+import * as email from '@/services/emailService';
 import { QUARTERS_2026 } from '@/constants/periods';
 
 import { SocialApp } from '@/components/social/SocialApp';
@@ -41,7 +42,14 @@ export const REGISTRY = {
     defaultPeriod: 'q2-2026', // último trimestre cargado
     hasDataFor: website.hasDataFor,
   },
-  email: { Component: EmailApp, accounts: [], periods: [], defaultPeriod: null, hasDataFor: null },
+  email: {
+    Component: EmailApp,
+    accounts: email.listAccounts(),
+    // meses presentes en el seed (más reciente primero); vacío hasta el 1er import
+    periods: [...email.listPeriods()].reverse(),
+    defaultPeriod: email.listPeriods().slice(-1)[0]?.id ?? null,
+    hasDataFor: email.hasDataFor,
+  },
   webinars: { Component: WebinarsApp, accounts: [], periods: [], defaultPeriod: null, hasDataFor: null },
 };
 

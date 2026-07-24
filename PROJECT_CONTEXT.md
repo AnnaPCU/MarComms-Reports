@@ -73,12 +73,16 @@ src/
     paid/                     PaidApp, PaidFunnel, PaidCharts, CampaignsTable, ComparativeCampaigns
     social/                   SocialApp, AudienceCharts, PostsTable, ComparativeView
     website/                  WebsiteApp (sub-tabs Website/SEO)
-    email/ webinars/          EmailApp, WebinarsApp (placeholder NoData + glosario)
+    email/                    EmailApp, EmailCharts, HotLeadsTable (Mailchimp)
+    webinars/                 WebinarsApp (placeholder NoData + glosario)
     embed/                    EmbedApp (render del HTML descargable)
   utils/
     paidInsights.js           insights/diagnóstico/próximos pasos + scoreCampaigns (Paid)
     socialInsights.js         insights/diagnóstico/próximos pasos (Social) + ESG
     websiteInsights.js        insights/diagnóstico/próximos pasos (Website/SEO)
+    emailInsights.js          insights/diagnóstico/próximos pasos (Email) + benchmarks B2B
+    mailchimp/                lógica pura: leads (parseo/detección de columnas),
+                              aggregate (métricas/comparativa/hot leads), build (compone campaña)
     esg.js                    clasificador ESG por keywords
     format.js                 fmt/num/pct/computeDelta (es-AR)
     hasData.js                regla de honestidad de datos
@@ -146,7 +150,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Social Media | ✅ Completo (datos Mayo 2026) + comparativa |
 | Paid Media | ✅ Completo (Feb–Jun 2026) + drill-down + comparativa |
 | Website (GA + SEO) | ✅ Completo (Q1 2026, CU Argentina) |
-| Email Marketing | ⛔ Placeholder (NoData + glosario) — falta export/datos |
+| Email Marketing | ✅ Reporte armado (Mailchimp) — a la espera del 1er export real; NoData hasta cargar datos |
 | Webinars | ⛔ Placeholder (NoData + glosario) — falta export/datos |
 | Descarga HTML | ✅ Funciona (snapshot embebido) |
 | Login compartido | ✅ Funciona (localStorage) |
@@ -166,7 +170,13 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 ## 11. Pendientes
 
-- Email Marketing y Webinars: definir formato de export real y cargar datos.
+- **Email Marketing**: cargar el primer export real de Mailchimp. La vista y la
+  lógica ya están; se procesa con `node scripts/mailchimp-to-seed.mjs <config.json>`
+  (ver cabecera del script) y se pega el resultado en `src/data/emailSeed.js`
+  (`EMAIL_DB`). El CSV de destinatarios alimenta los *hot leads*; el resumen de la
+  campaña (`stats`) alimenta las tasas. Insights por reglas fijas vs. benchmarks B2B
+  (sin IA).
+- Webinars: definir formato de export real y cargar datos.
 - Formatos de export reales de LinkedIn / GA4 / Search Console (documentar columnas).
 - Lint real + tests de funciones puras (hoy `npm run lint` es un stub).
 - Opcional: extender drill-down/comparativa a Social por cuenta si se pide.

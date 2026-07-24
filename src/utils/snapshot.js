@@ -6,6 +6,7 @@
 import * as social from '@/services/socialService';
 import * as paid from '@/services/paidService';
 import * as website from '@/services/websiteService';
+import * as email from '@/services/emailService';
 
 export function buildSnapshot(pilar, account, period) {
   if (pilar === 'social') {
@@ -22,5 +23,8 @@ export function buildSnapshot(pilar, account, period) {
   if (pilar === 'website') {
     return { quarter: website.getQuarter(account, period), handle: website.getHandle(account) };
   }
-  return {}; // email / webinars: sin datos, solo glosario
+  if (pilar === 'email') {
+    return { campaign: email.getCampaign(account, period), handle: email.getHandle(account) };
+  }
+  return {}; // webinars: sin datos, solo glosario
 }
