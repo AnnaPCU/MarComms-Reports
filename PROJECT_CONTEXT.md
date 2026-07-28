@@ -149,7 +149,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 |--------|--------|
 | Social Media | ✅ Completo (datos Mayo 2026) + comparativa |
 | Paid Media | ✅ Completo (Feb–Jun 2026) + drill-down + comparativa |
-| Website (GA + SEO) | ✅ Completo (Q1 2026, CU Argentina) |
+| Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas incl. CU Canada y CU United States) |
 | Email Marketing | ✅ Reporte armado (Mailchimp) — a la espera del 1er export real; NoData hasta cargar datos |
 | Webinars | ⛔ Placeholder (NoData + glosario) — falta export/datos |
 | Descarga HTML | ✅ Funciona (snapshot embebido) |

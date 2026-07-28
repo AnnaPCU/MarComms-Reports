@@ -59,7 +59,7 @@ const BRAND_BY_ID = {
   // Paid
   pt: 'cu', es: 'cu', cuc: 'cu', psar: 'peterson',
   // Website
-  cua: 'cu', cubr: 'cu', cucl: 'cu', cumx: 'cu', cunam: 'cu', cupe: 'cu', cupt: 'cu', cues: 'cu',
+  cua: 'cu', cubr: 'cu', cucl: 'cu', cumx: 'cu', cunam: 'cu', cuca: 'cu', cuus: 'cu', cupe: 'cu', cupt: 'cu', cues: 'cu',
   psam: 'peterson', psib: 'peterson',
 };
 

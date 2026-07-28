@@ -12,6 +12,8 @@ export const WEBSITE_CLIENTS = [
   { id: 'cucl', name: 'Control Union Chile' },
   { id: 'cumx', name: 'Control Union México' },
   { id: 'cunam', name: 'Control Union North America' },
+  { id: 'cuca', name: 'Control Union Canada' },
+  { id: 'cuus', name: 'Control Union United States' },
   { id: 'cupe', name: 'Control Union Perú' },
   { id: 'cupt', name: 'Control Union Portugal' },
   { id: 'cues', name: 'Control Union España' },
@@ -167,6 +169,58 @@ export const WEBSITE_DB = {
           impressions: 36018,
           totalClicks: 345,
           topKeywords: [kw('control union usa', 43), kw('control union canada', 29), kw('control union', 28)],
+        },
+      },
+    },
+  },
+
+  cuca: {
+    name: 'Control Union Canada',
+    handle: '@controlunionnorthamerica',
+    periods: {
+      'q2-2026': {
+        site: {
+          singleTraffic: 309,
+          totalTraffic: 449,
+          impressions: 965,
+          conversions: 14,
+          topLandingPages: [
+            lp('https://northamerica.controlunion.com/', 143),
+            lp('https://northamerica.controlunion.com/certification-program/grs-global-recycled-standard/', 132),
+            lp('https://northamerica.controlunion.com/industry/forestry/', 43),
+          ],
+        },
+        seo: {
+          averagePosition: 7,
+          impressions: 2374,
+          totalClicks: 105,
+          topKeywords: [kw('control union canada', 21), kw('control union', 13), kw('cumcs', 3)],
+        },
+      },
+    },
+  },
+
+  cuus: {
+    name: 'Control Union United States',
+    handle: '@controlunionnorthamerica',
+    periods: {
+      'q2-2026': {
+        site: {
+          singleTraffic: 614,
+          totalTraffic: 732,
+          impressions: 1400,
+          conversions: 40,
+          topLandingPages: [
+            lp('https://northamerica.controlunion.com/', 395),
+            lp('https://northamerica.controlunion.com/vacancies/', 77),
+            lp('https://northamerica.controlunion.com/service/certification/', 42),
+          ],
+        },
+        seo: {
+          averagePosition: 12.7,
+          impressions: 16023,
+          totalClicks: 105,
+          topKeywords: [kw('control union usa', 19), kw('control union', 13), kw('primusgfs', 1)],
         },
       },
     },
