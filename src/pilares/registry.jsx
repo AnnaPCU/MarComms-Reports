@@ -26,7 +26,7 @@ export const REGISTRY = {
     accounts: social.listAccounts(),
     // meses (más reciente primero) + resumen anual + comparativa
     periods: [...social.listPeriods()].reverse().concat(YEAR_2026, COMPARATIVE),
-    defaultPeriod: 'm06',
+    defaultPeriod: 'm07',
     hasDataFor: social.hasDataFor,
   },
   paid: {
