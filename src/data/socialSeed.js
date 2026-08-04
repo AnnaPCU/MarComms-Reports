@@ -1,10 +1,13 @@
 // ════════════════════════════════════════════════════════════════
-//  SEED — Pilar Social Media (LinkedIn) · Mayo 2026
-//  Portado tal cual del dashboard original "Mayo_ Reportes_Linkedin.html".
-//  Ene–Abr 2026 quedan como _nodata (regla de honestidad: sin datos = 
+//  SEED — Pilar Social Media (LinkedIn) · 2026
+//  Estructura + audiencia portadas del dashboard original. Los datos
+//  mensuales de Abril y Mayo 2026 se cargan desde socialMonthly.js (exports
+//  unificados de LinkedIn) y se mergean sobre DB al final del archivo.
+//  Ene–Mar 2026 quedan como _nodata (regla de honestidad: sin datos =
 //  "Sin información suficiente", nunca números inventados).
-//  Fuente de verdad TEMPORAL hasta que el import a Supabase persista datos.
 // ════════════════════════════════════════════════════════════════
+
+import { SOCIAL_MONTHLY_2026 } from '@/data/socialMonthly';
 
 export const ML = {m01:'Ene 2026',m02:'Feb 2026',m03:'Mar 2026',m04:'Abr 2026',m05:'May 2026'};
 export const MO = ['m01','m02','m03','m04','m05'];
@@ -242,16 +245,24 @@ m01:{_nodata:true},
 
 }; // end DB
 
+// ── Mergea los datos mensuales reales (Abril + Mayo 2026) desde los exports
+//    unificados de LinkedIn. Sobrescribe m04/m05 de cada cuenta con la misma
+//    metodología (ver socialMonthly.js). Ene–Mar quedan _nodata (honestidad).
+for (const [id, months] of Object.entries(SOCIAL_MONTHLY_2026)) {
+  if (DB[id]) DB[id].mo = { ...DB[id].mo, ...months };
+}
+
+// Comparativa multi-cuenta (Mayo 2026) — alineada al seed mensual unificado.
 export const CMP_DATA = [
-  {id:'cul', name:'CU Latinoamérica',    imp:58168, clk:6020, er:12.89, fol:400, vis:1007},
-  {id:'cue', name:'CU España',           imp:8070,  clk:1846, er:20.13, fol:61,  vis:117 },
-  {id:'cup', name:'CU Portugal',         imp:1017,  clk:83,   er:11.08, fol:8,   vis:29  },
-  {id:'cun', name:'CU Norte',            imp:15377, clk:9476, er:48.33, fol:74,  vis:87  },
-  {id:'cuna',name:'CU North America',    imp:2524,  clk:394,  er:20.55, fol:38,  vis:52  },
-  {id:'ps',  name:'Peterson Solutions',  imp:8723,  clk:1253, er:13.27, fol:76,  vis:281 },
-  {id:'pia', name:'Peterson Iberia+AM',  imp:8376,  clk:1469, er:16.37, fol:130, vis:324 },
-  {id:'tlr', name:'TLR Perú',           imp:652,   clk:291,  er:52.12, fol:4,   vis:10  },
-  {id:'bel', name:'Biomass Energy Lab',  imp:1975,  clk:261,  er:20.33, fol:8,   vis:7   },
+  {id:'cul', name:'CU Latinoamérica',    imp:95563, clk:9816,  er:11.41, fol:400, vis:1007},
+  {id:'cue', name:'CU España',           imp:11179, clk:2238,  er:21.57, fol:61,  vis:117 },
+  {id:'cup', name:'CU Portugal',         imp:1166,  clk:85,    er:10.21, fol:8,   vis:29  },
+  {id:'cun', name:'CU Norte',            imp:26982, clk:14477, er:55.28, fol:74,  vis:87  },
+  {id:'cuna',name:'CU North America',    imp:4849,  clk:636,   er:16.13, fol:38,  vis:52  },
+  {id:'ps',  name:'Peterson Solutions',  imp:12676, clk:1810,  er:15.94, fol:76,  vis:281 },
+  {id:'pia', name:'Peterson Iberia+AM',  imp:13704, clk:2368,  er:18.91, fol:130, vis:324 },
+  {id:'tlr', name:'TLR Perú',           imp:985,   clk:320,   er:33.81, fol:4,   vis:10  },
+  {id:'bel', name:'Biomass Energy Lab',  imp:2256,  clk:274,   er:14.36, fol:8,   vis:7   },
 ];
 
 export const TOP_ENG_POSTS = [
