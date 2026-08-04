@@ -9,8 +9,8 @@
 
 import { SOCIAL_MONTHLY_2026 } from '@/data/socialMonthly';
 
-export const ML = {m01:'Ene 2026',m02:'Feb 2026',m03:'Mar 2026',m04:'Abr 2026',m05:'May 2026'};
-export const MO = ['m01','m02','m03','m04','m05'];
+export const ML = {m01:'Ene 2026',m02:'Feb 2026',m03:'Mar 2026',m04:'Abr 2026',m05:'May 2026',m06:'Jun 2026'};
+export const MO = ['m01','m02','m03','m04','m05','m06'];
 
 export const DB = {
 
