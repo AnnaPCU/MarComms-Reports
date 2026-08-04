@@ -1,9 +1,10 @@
 // ════════════════════════════════════════════════════════════════
-//  DATOS MENSUALES 2026 — Social/LinkedIn (Abril a Julio).
-//  Generado desde los exports unificados de LinkedIn (scripts de tooling).
-//  Se mergea sobre DB en socialSeed.js. Métrica ER = (clics+reacciones+
-//  comentarios+compartidos)/impresiones, ponderado por impresiones (mensual).
-//  Impresiones/clics = totales del mes; vis = visitantes únicos; fol = seguidores nuevos.
+//  DATOS MENSUALES 2026 — Social/LinkedIn (Marzo a Julio).
+//  Generado desde los exports de LinkedIn (unificados o crudos) con los
+//  scripts de tooling. Se mergea sobre DB en socialSeed.js.
+//  Métrica ER = (clics+reacciones+comentarios+compartidos)/impresiones,
+//  ponderado por impresiones (mensual). Impresiones/clics = totales del mes;
+//  vis = visitantes únicos; fol = seguidores nuevos.
 // ════════════════════════════════════════════════════════════════
 
 export const SOCIAL_MONTHLY_2026 = {
@@ -36,6 +37,13 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'#ControlUnionServices #Peru Estuvimos presentes en Seafood Expo Global Barcelona 2026, el evento más grande de',imp:3677,er:31.79,clk:1092,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7453563479245938688'},
       {t:'#ControlUnionServices #Peru Entrega de Certificado Orgánico a Ocho Sur',imp:3403,er:15.87,clk:492,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7449530891422400512'}
     ]},
+    m03: {imp:53240,clk:7801,er:16.22,vis:895,fol:337,posts:[
+      {t:'#ControlUnionServices #Peru Como parte de nuestro compromiso con el desarrollo y fortalecimiento del sector te',imp:4503,er:35.82,clk:1508,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7442633835848077313'},
+      {t:'#ControlUnionServices #Peru Estuvimos presentes en Seafood Expo North America en Boston 🇺🇸, uno de los princip',imp:4072,er:35.22,clk:1340,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7440028437894950912'},
+      {t:'#ControlUnionServices #WeAreHiring #Lima #Perú',imp:3731,er:4.07,clk:118,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7442536057742598144'},
+      {t:'#ControlUnionServices #Perú No todo el trabajo en certificación ocurre en terreno.',imp:3081,er:25.71,clk:721,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7443310623079301121'},
+      {t:'#ControlUnionServices #Perú La semana pasada compartimos un espacio especial para reconocer y celebrar a las m',imp:2897,er:34.31,clk:938,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7437914002346647552'}
+    ]},
   },
   cue: {
     m07: {imp:1123,clk:122,er:13.00,vis:61,fol:19,posts:[
@@ -64,6 +72,13 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'Hace unas semanas tuvimos el placer de organizar un webinar sobre RecyClass, contando con la participación dir',imp:538,er:7.06,clk:16,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7445726825361670144'},
       {t:'#Webinar ¡Nueva fecha! Descubre los principales cambios de la nueva ISO 9001:2026 y cómo impactarán en tu orga',imp:502,er:4.58,clk:21,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7455256734161420288'}
     ]},
+    m03: {imp:6109,clk:379,er:7.69,vis:162,fol:114,posts:[
+      {t:'Buscamos personal (#hiring) para el cargo de Program Manager - Certificados de Ahorro Energético (CAE) en Madr',imp:608,er:7.24,clk:34,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7439635505559928832'},
+      {t:'#WeAreHiring En Control Union España seguimos ampliando nuestro equipo de certificación y buscamos un/a Progra',imp:606,er:6.44,clk:26,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7438180888795975680'},
+      {t:'Buscamos personal (#hiring) para el cargo de Prácticas HR Administración de Personal en Madrid, Community of M',imp:585,er:9.57,clk:45,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7434576609447444480'},
+      {t:'El pasado 5 de marzo, Control Union Spain estuvo presente en GD4S Biomethane Connect Europe, un evento clave q',imp:524,er:23.28,clk:110,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7437117366192308226'},
+      {t:'Las auditorías de segunda parte se han convertido en una herramienta estratégica para las organizaciones que b',imp:434,er:3.23,clk:7,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7435255419121483776'}
+    ]},
   },
   cup: {
     m07: {imp:715,clk:75,er:14.27,vis:27,fol:9,posts:[
@@ -81,6 +96,13 @@ export const SOCIAL_MONTHLY_2026 = {
     ]},
     m04: {imp:505,clk:65,er:12.08,vis:45,fol:14,posts:[
 ]},
+    m03: {imp:3184,clk:242,er:9.58,vis:65,fol:43,posts:[
+      {t:'#ControlUnionPortugal Na Control Union Portugal somos o seu parceiro de confiança na inspeção de óleos e produ',imp:372,er:5.65,clk:7,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7440698745094295552'},
+      {t:'A rever os seus esquemas de certificação GMP+?',imp:344,er:27.33,clk:88,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7444292417102573570'},
+      {t:'#ControlUnionPortugal Num contexto global marcado por instabilidade nos mercados energéticos, conflitos geopol',imp:332,er:5.72,clk:7,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7439234087917273088'},
+      {t:'#ControlUnionPortugal A segurança alimentar é hoje um requisito essencial para operar nos mercados nacionais e',imp:327,er:5.20,clk:2,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7442125794706878464'},
+      {t:'#ControlUnionPortugal A informação é um dos ativos mais valiosos de qualquer organização.',imp:314,er:6.37,clk:5,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7437059803924832256'}
+    ]},
   },
   cun: {
     m07: {imp:6016,clk:1129,er:20.55,vis:42,fol:14,posts:[
@@ -106,6 +128,11 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'Cada vez más organizaciones reportan su huella de carbono, pero no siempre cuentan con datos que puedan sosten',imp:1308,er:6.96,clk:65,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7455243257388707841'},
       {t:'Control Union se suma como sponsor del 3° Foro Estratégico IAEF NOA: “Argentina Productiva: El Interior como P',imp:834,er:4.80,clk:23,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7446966919326318592'},
       {t:'Los invitamos a este webinar gratuito de Peterson Solutions (Iberia & Americas)',imp:558,er:1.97,clk:9,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7452706771057491968'}
+    ]},
+    m03: {imp:2997,clk:1615,er:55.86,vis:93,fol:46,posts:[
+      {t:'Expoagro es uno de los principales puntos de encuentro para el sector agroindustrial.',imp:1620,er:68.46,clk:1075,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7439644059951853569'},
+      {t:'Reporte Sectorial | Azúcar – Campaña 2025',imp:1460,er:82.74,clk:1174,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7444730557558816768'},
+      {t:'En Control Union Norte brindamos servicios de Depósito Fiscal, acompañando a nuestros clientes en la gestión y',imp:462,er:13.20,clk:49,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7434945867733856257'}
     ]},
   },
   cuna: {
@@ -137,6 +164,13 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'#ControlUnionUSA was pleased to participate in a crucial discussion hosted by the University of Illinois Chica',imp:538,er:22.12,clk:93,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7453513275549421569'},
       {t:'#ControlUnionCanada #FishersFinest wanted to go global. But first, they needed GACP certification.',imp:343,er:30.03,clk:98,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7452417289645268992'}
     ]},
+    m03: {imp:3678,clk:231,er:9.98,vis:46,fol:30,posts:[
+      {t:'#ControlUnionUSA It was a great opportunity to connect with professionals across the grain, feed, and agricult',imp:1066,er:19.04,clk:138,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7442641125598814208'},
+      {t:'#WeAreHiring #ControlUnionUSA Position: Planner / Administrative Assistant',imp:742,er:7.55,clk:41,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7437479902553079808'},
+      {t:'Join us for an upcoming webinar hosted by AAFA focused on key compliance and regulatory developments impacting',imp:438,er:7.53,clk:9,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7435018414634479616'},
+      {t:'#ControlUnionCanada We are pleased to share that YEMIL ZARZAR KOURNIATIS will be attending the GFSI Conference',imp:327,er:7.95,clk:9,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7439370093832347648'},
+      {t:'#ControlUnionCanada We will be attending Seafood Processing North America 2026, one of the leading events for ',imp:261,er:8.05,clk:8,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7437558147365392385'}
+    ]},
   },
   ps: {
     m07: {imp:6103,clk:570,er:12.90,vis:260,fol:86,posts:[
@@ -166,6 +200,13 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'GOTS 8.0 is raising the bar and many companies are still unsure if they’re ready.',imp:1336,er:9.06,clk:77,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7447553872765706240'},
       {t:'New EU rule: no more destroying unsold textiles.',imp:1245,er:49.48,clk:584,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7448399506309668864'},
       {t:'🌍 From Green Claims to EmpCo: How EU Rules on Sustainability Claims Are Changing',imp:1134,er:5.11,clk:22,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7452978275078950912'}
+    ]},
+    m03: {imp:9411,clk:1623,er:20.41,vis:252,fol:456,posts:[
+      {t:'GOTS 8.0 is generating a lot of interest, and a lot of questions. Many of you couldn\'t get a seat in our previ',imp:2257,er:15.73,clk:270,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7442143145162797057'},
+      {t:'We have a great opportunity for recent graduates or early-career professionals to join our newly re-launched D',imp:2167,er:6.92,clk:105,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7434194128961454080'},
+      {t:'#PetersonSolutionsTechnology More regulations. More certifications. More data.',imp:1042,er:71.31,clk:710,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7442563555205214208'},
+      {t:'Fashion demands transparency and proof. When data is scattered across workshops, dye houses and suppliers, tra',imp:838,er:6.56,clk:27,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7437490170494423041'},
+      {t:'#PetersonSolutionsTechnology Sustainability has become a strategic priority.',imp:769,er:45.25,clk:320,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7444737961298120704'}
     ]},
   },
   pia: {
@@ -197,6 +238,13 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'#PetersonSolutionsArgentina ¡ES HOY! En 1 hora comienza este webinar clave',imp:1220,er:3.93,clk:22,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7452703159652859904'},
       {t:'#PetersonSolutiosIberia #España Mañana el Parlamento Europeo toma decisiones sobre el EUDR. ¿Tu empresa sabe l',imp:1031,er:7.47,clk:49,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7455257227369541632'}
     ]},
+    m03: {imp:58877,clk:1541,er:3.15,vis:429,fol:111,posts:[
+      {t:'#PetersonSolutionsArgentina 📍 Expoagro 2026',imp:3002,er:7.00,clk:146,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7435360111059173376'},
+      {t:'#PetersonSolutionsIberia #España La certificación ISCC está dejando de ser opcional. Hoy es un requisito real ',imp:1020,er:6.18,clk:31,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7439270285553491968'},
+      {t:'#PetersonSolutionsArgentina Estuvimos presentes en Expoagro 2026, donde nuestro equipo participó de un espacio',imp:962,er:37.01,clk:334,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7438227965639008256'},
+      {t:'#PetersonSolutionsArgentina El agua se ha convertido en un factor estratégico para la gestión de riesgos, el c',imp:936,er:6.41,clk:24,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7442578919775526912'},
+      {t:'#PetersonSolutionsUSA Navigating ISCC PLUS certification can be challenging, especially for companies operatin',imp:916,er:3.49,clk:12,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7443009467824209920'}
+    ]},
   },
   tlr: {
     m07: {imp:552,clk:84,er:17.03,vis:8,fol:7,posts:[
@@ -215,6 +263,11 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'¿Tu cadena alimentaria cumple con los estándares de seguridad más exigentes?',imp:297,er:46.80,clk:135,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7450268685648150528'},
       {t:'Asegura el cumplimiento normativo de tus recursos hídricos con TLR International Laboratories Perú💧',imp:227,er:40.97,clk:91,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7445180528959561728'}
     ]},
+    m03: {imp:638,clk:99,er:17.08,vis:25,fol:12,posts:[
+      {t:'Más allá del peso: Por qué la Actividad de Agua (Aw) es la clave de su vida de anaquel.',imp:305,er:19.34,clk:54,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7434929492722106368'},
+      {t:'En la cadena alimentaria, las micotoxinas constituyen uno de los contaminantes químicos más críticos debido a ',imp:249,er:28.92,clk:66,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7444805011383132160'},
+      {t:'¡Inicia la temporada de cosecha en Perú! Asegura la calidad de tu exportación con TLR. ☕🇵🇪',imp:248,er:20.16,clk:45,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7442628169926492160'}
+    ]},
   },
   bel: {
     m07: {imp:3429,clk:167,er:9.83,vis:16,fol:44,posts:[
@@ -232,6 +285,9 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'Join us at the Argus Biomass Conference in London!',imp:1886,er:6.95,clk:43,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7450890908352487425'},
       {t:'Last week, we participated in the International Biomass Conference & Expo (IBCE) 2026 in Nashville, TN.',imp:1157,er:19.01,clk:156,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7446880830129496065'},
       {t:'Understanding Biocarbon: Are We Speaking the Same Language?',imp:1097,er:45.21,clk:463,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7453065167480963072'}
+    ]},
+    m03: {imp:1481,clk:59,er:7.77,vis:13,fol:18,posts:[
+      {t:'We are pleased to be joining the Argus Biomass Conference in London this April as part of the Control Union No',imp:818,er:6.23,clk:25,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7434228528755175425'}
     ]},
   },
 };
