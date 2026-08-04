@@ -88,7 +88,8 @@ def extract_account(folder):
                     clk=int(num(r[ci_clk] if ci_clk < len(r) else 0)),
                     er=er_p, tp=tp))
     posts.sort(key=lambda p: p['imp'], reverse=True)
-    return dict(imp=int(imp), clk=int(clk), er=er, vis=int(vis), fol=int(fol), posts=posts[:6]), (dates[0] if dates else '?', dates[-1] if dates else '?', len(dates))
+    # np = total de publicaciones del mes (la lista completa, antes del top 5)
+    return dict(imp=int(imp), clk=int(clk), er=er, vis=int(vis), fol=int(fol), np=len(posts), posts=posts[:6]), (dates[0] if dates else '?', dates[-1] if dates else '?', len(dates))
 
 if __name__ == '__main__':
     base, out = sys.argv[1], sys.argv[2]

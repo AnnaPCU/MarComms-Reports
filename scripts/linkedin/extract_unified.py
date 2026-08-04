@@ -122,7 +122,8 @@ def extract(base):
                                       url=(r[ci_u] if ci_u is not None and ci_u<len(r) else '') or '',
                                       imp=int(imp_p), clk=int(clk_p), er=er_p, tp=tp))
         posts.sort(key=lambda p:p['imp'], reverse=True)
-        res[acc]=dict(imp=imp,clk=clk,er=er,vis=vis,fol=fol,posts=posts[:6])
+        # np = total de publicaciones del mes (la lista completa, antes del top 5)
+        res[acc]=dict(imp=imp,clk=clk,er=er,vis=vis,fol=fol,np=len(posts),posts=posts[:6])
     return res
 
 if __name__=='__main__':

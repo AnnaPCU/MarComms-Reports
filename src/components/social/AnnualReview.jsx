@@ -119,10 +119,17 @@ export function AnnualReview({ account }) {
       />
 
       <SectionHeader title="Indicadores del Año" note={`${agg.monthsCount} ${agg.monthsCount === 1 ? 'mes' : 'meses'} con datos`} />
-      <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className={`mb-5 grid grid-cols-2 gap-3 ${agg.totalPosts != null ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
         <KpiCard label="Impresiones acumuladas" value={numEs(agg.totalImp)} />
         <KpiCard label="Engagement Rate promedio" value={Number(agg.avgER).toFixed(1)} unit="%" footnote="Ponderado por impresiones" />
         <KpiCard label="Clics acumulados" value={numEs(agg.totalClk)} accent="green" />
+        {agg.totalPosts != null && (
+          <KpiCard
+            label="Publicaciones"
+            value={numEs(agg.totalPosts)}
+            footnote={`~${(agg.totalPosts / agg.monthsCount).toFixed(1)} por mes`}
+          />
+        )}
         <KpiCard label="Seguidores nuevos" value={numEs(agg.totalFol)} accent="amber" footnote={`${numEs(agg.totalVis)} visitas al perfil`} />
       </div>
 

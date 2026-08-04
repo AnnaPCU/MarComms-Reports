@@ -79,10 +79,13 @@ export function SocialApp({ account, period }) {
       <InsightsPanel subtitle={`${accName} · ${ML[period] || period}`} items={insights} />
 
       <SectionHeader title="Indicadores Clave" />
-      <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className={`mb-5 grid grid-cols-2 gap-3 ${mo.np != null ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
         <KpiCard label="Impresiones totales" value={fmt(mo.imp)} delta={computeDelta(mo.imp, prev?.imp)} />
         <KpiCard label="Engagement Rate" value={Number(mo.er).toFixed(1)} unit="%" delta={computeDelta(mo.er, prev?.er)} />
         <KpiCard label="Clics totales" value={fmt(mo.clk)} delta={computeDelta(mo.clk, prev?.clk)} />
+        {mo.np != null && (
+          <KpiCard label="Publicaciones" value={mo.np} delta={computeDelta(mo.np, prev?.np)} footnote="Posteos publicados en el mes" />
+        )}
         <KpiCard
           label="Visitas únicas al perfil"
           value={mo.vis}

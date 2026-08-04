@@ -52,8 +52,8 @@ def comp_js(c):
 def month_js(m):
     posts = m['posts'][:5]
     pj = ',\n'.join(post_js(p) for p in posts)
-    s = "{imp:%d,clk:%d,er:%.2f,vis:%d,fol:%d,posts:[\n%s%s]" % (
-        m['imp'], m['clk'], m['er'], m['vis'], m['fol'], pj, ('\n    ' if posts else ''))
+    s = "{imp:%d,clk:%d,er:%.2f,vis:%d,fol:%d,np:%d,posts:[\n%s%s]" % (
+        m['imp'], m['clk'], m['er'], m['vis'], m['fol'], m.get('np', 0), pj, ('\n    ' if posts else ''))
     if m.get('comp'):
         s += ",comp:[\n%s\n    ]" % ',\n'.join(comp_js(c) for c in m['comp'])
     return s + "}"

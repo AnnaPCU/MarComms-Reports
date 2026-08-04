@@ -13,6 +13,7 @@ export const GLOSSARIES = {
       { term: 'Clics', def: 'Cantidad total de clics sobre las publicaciones: enlaces, “ver más”, perfil o multimedia.' },
       { term: 'Visitas únicas al perfil', def: 'Visitantes únicos que entraron al perfil de la cuenta. Se usa como proxy de interés, ya que LinkedIn no exporta “conversiones”.' },
       { term: 'Seguidores nuevos', def: 'Seguidores netos ganados por la cuenta durante el período.' },
+      { term: 'Publicaciones', def: 'Cantidad de posteos publicados por la cuenta durante el período.' },
       { term: 'Pilar ESG', def: 'Clasificación de cada publicación según su eje: Ambiental (E), Social (S) o Gobernanza (G).' },
     ],
   },

@@ -21,6 +21,9 @@ export function yearAggregates(series = []) {
   const totalClk = sum(months, (m) => m.mo.clk);
   const totalFol = sum(months, (m) => m.mo.fol);
   const totalVis = sum(months, (m) => m.mo.vis);
+  // Total de publicaciones del período (solo si todos los meses traen el dato).
+  const hasPosts = months.every((m) => m.mo.np != null);
+  const totalPosts = hasPosts ? sum(months, (m) => m.mo.np) : null;
   // ER promedio ponderado por impresiones (representa mejor el año que un promedio simple).
   const avgER = totalImp ? sum(months, (m) => (m.mo.er || 0) * (m.mo.imp || 0)) / totalImp : 0;
   const bestByEr = months.reduce((a, b) => ((b.mo.er || 0) > (a.mo.er || 0) ? b : a), months[0]);
@@ -38,6 +41,7 @@ export function yearAggregates(series = []) {
     totalClk,
     totalFol,
     totalVis,
+    totalPosts,
     avgER,
     bestByEr,
     bestByImp,
