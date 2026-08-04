@@ -14,6 +14,7 @@ export const GLOSSARIES = {
       { term: 'Visitas únicas al perfil', def: 'Visitantes únicos que entraron al perfil de la cuenta. Se usa como proxy de interés, ya que LinkedIn no exporta “conversiones”.' },
       { term: 'Seguidores nuevos', def: 'Seguidores netos ganados por la cuenta durante el período.' },
       { term: 'Pilar ESG', def: 'Clasificación de cada publicación según su eje: Ambiental (E), Social (S) o Gobernanza (G).' },
+      { term: 'Set de competidores', def: 'Benchmark mensual que genera LinkedIn contra las páginas competidoras definidas para la cuenta: seguidores totales y nuevos, interacciones y publicaciones del mes de cada página.' },
     ],
   },
 

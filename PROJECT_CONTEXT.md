@@ -79,6 +79,7 @@ src/
   utils/
     paidInsights.js           insights/diagnóstico/próximos pasos + scoreCampaigns (Paid)
     socialInsights.js         insights/diagnóstico/próximos pasos (Social) + ESG
+    socialYearInsights.js     agregados e insights del "Resumen del Año" (Social)
     websiteInsights.js        insights/diagnóstico/próximos pasos (Website/SEO)
     emailInsights.js          insights/diagnóstico/próximos pasos (Email) + benchmarks B2B
     mailchimp/                lógica pura: leads (parseo/detección de columnas),
@@ -147,7 +148,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 | Módulo | Estado |
 |--------|--------|
-| Social Media | ✅ Completo (datos Mayo 2026) + comparativa |
+| Social Media | ✅ Completo (Mar–Jul 2026, 9 cuentas) + comparativa + benchmark de competidores + Resumen del Año (tooling: `scripts/linkedin/`) |
 | Paid Media | ✅ Completo (Feb–Jun 2026) + drill-down + comparativa |
 | Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas incl. CU Canada y CU United States) |
 | Email Marketing | ✅ Reporte armado (Mailchimp) — a la espera del 1er export real; NoData hasta cargar datos |
