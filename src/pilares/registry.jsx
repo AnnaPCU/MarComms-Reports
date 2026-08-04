@@ -17,13 +17,15 @@ import { EmailApp } from '@/components/email/EmailApp';
 import { WebinarsApp } from '@/components/webinars/WebinarsApp';
 
 const COMPARATIVE = { id: 'cmp', label: '⚡ Comparativa Multi-Cuenta' };
+// Vista temporal: resumen anual de progreso de una cuenta (pedido puntual).
+const YEAR_2026 = { id: 'year-2026', label: '📅 Resumen del Año 2026' };
 
 export const REGISTRY = {
   social: {
     Component: SocialApp,
     accounts: social.listAccounts(),
-    // meses (más reciente primero) + comparativa
-    periods: [...social.listPeriods()].reverse().concat(COMPARATIVE),
+    // meses (más reciente primero) + resumen anual + comparativa
+    periods: [...social.listPeriods()].reverse().concat(YEAR_2026, COMPARATIVE),
     defaultPeriod: 'm05',
     hasDataFor: social.hasDataFor,
   },

@@ -15,6 +15,7 @@ import { isExternalReport } from '@/utils/reportAudience';
 import { AudienceCharts } from '@/components/social/AudienceCharts';
 import { PostsTable } from '@/components/social/PostsTable';
 import { ComparativeView } from '@/components/social/ComparativeView';
+import { AnnualReview } from '@/components/social/AnnualReview';
 import { Glossary } from '@/components/shared/Glossary';
 
 // Vista del pilar Social Media (LinkedIn).
@@ -36,6 +37,9 @@ export function SocialApp({ account, period }) {
         <Glossary keys="social" />
       </>
     );
+
+  // Resumen del Año (progreso mes a mes de la cuenta).
+  if (period === 'year-2026') return <AnnualReview account={account} />;
 
   if (loading) {
     return (

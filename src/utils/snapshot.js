@@ -11,6 +11,10 @@ import * as email from '@/services/emailService';
 export function buildSnapshot(pilar, account, period) {
   if (pilar === 'social') {
     if (period === 'cmp') return { kind: 'social-cmp' }; // ComparativeView usa datos del bundle
+    if (period === 'year-2026') {
+      const { accName, series } = social.getYearSeries(account);
+      return { kind: 'social-year', accName, series, audience: social.getAudience(account) };
+    }
     return {
       mo: social.getMonthly(account, period),
       prev: social.getPrevMonthly(account, period),

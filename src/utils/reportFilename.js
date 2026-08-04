@@ -43,6 +43,7 @@ export function slugPart(s) {
 function periodPart(period, periodLabel) {
   if (!period) return '';
   if (period === 'cmp') return 'Comparativa';
+  if (period === 'year-2026') return 'Resumen_Anual_2026';
   const year = (String(periodLabel).match(/\d{4}/) || ['2026'])[0];
   const month = MONTHS[period];
   if (month) return `${month}_${year}`;

@@ -36,9 +36,27 @@ export function getPrevMonthly(accountId, periodId) {
   return monthHasData(prev) ? prev : null;
 }
 
+// ── Serie anual: todos los meses conocidos con su dato (o null si vacío) ──
+// Sirve para el "Resumen del Año" (progreso mes a mes de una cuenta).
+export function getYearSeries(accountId) {
+  const acc = DB[accountId];
+  if (!acc) return { accName: '', series: [] };
+  const series = MO.map((id) => {
+    const mo = getMonthly(accountId, id);
+    return { id, label: ML[id], short: (ML[id] || id).replace(/\s*20\d\d$/, ''), mo: monthHasData(mo) ? mo : null };
+  });
+  return { accName: acc.name, series };
+}
+
+// ¿La cuenta tiene al menos un mes con datos? (para habilitar el resumen anual)
+export function hasYearData(accountId) {
+  return getYearSeries(accountId).series.some((s) => s.mo);
+}
+
 // ── ¿Hay datos para (cuenta, período)? (para el badge del header) ──
 export function hasDataFor(account, period) {
   if (period === 'cmp') return true;
+  if (period === 'year-2026') return hasYearData(account);
   return monthHasData(getMonthly(account, period));
 }
 
