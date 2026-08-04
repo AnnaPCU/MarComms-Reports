@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════════
-//  DATOS MENSUALES 2026 — Social/LinkedIn (m07, m06, m05, m04, m03).
+//  DATOS MENSUALES 2026 — Social/LinkedIn (m07, m06, m05, m04, m03, m02).
 //  Generado con scripts/linkedin/build_monthly.py desde los exports de
 //  LinkedIn (crudos o unificados). Se mergea sobre DB en socialSeed.js.
 //  Métrica ER = (clics+reacciones+comentarios+compartidos)/impresiones,
@@ -100,6 +100,24 @@ export const SOCIAL_MONTHLY_2026 = {
       {name:'SGS Argentina',fol:43867,nfol:0,eng:0,posts:0},
       {name:'SGS',fol:3521879,nfol:74540,eng:25473,posts:432}
     ]},
+    m02: {imp:52994,clk:3601,er:7.96,vis:691,fol:356,posts:[
+      {t:'#ControlUnionGuatemala #Curso 🌿 Formación que fortalece la agricultura orgánica',imp:11662,er:5.41,clk:512,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7427062693938999297'},
+      {t:'#ControlUnionBrasil Auditoria ASI concluída com sucesso!',imp:5190,er:11.85,clk:503,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7430265183010312194'},
+      {t:'#ControlUnionGuatemala #Webinar #AquaUpdate 2026: Certifícate o quédate atrás',imp:3459,er:6.53,clk:159,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7424049364433571840'},
+      {t:'#WeAreHiring #Lima #Perú #ControlUnionServices',imp:2736,er:4.57,clk:105,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7426945612148789248'},
+      {t:'#ControlUnionColombia WEBINAR | GLOBALG.A.P.: Dominando criterios y acciones correctivas',imp:1912,er:5.28,clk:77,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7430657666345140224'}
+    ],comp:[
+      {name:'Bureau Veritas',fol:1739922,nfol:30419,eng:16597,posts:226},
+      {name:'Peterson Solutions (Iberia & Americas)',fol:7887,nfol:94,eng:245,posts:16},
+      {name:'Control Union Norte',fol:2313,nfol:21,eng:39,posts:2},
+      {name:'Control Union Latinoamérica',fol:26900,nfol:356,eng:618,posts:28,own:true},
+      {name:'Control Union UK',fol:1938,nfol:6,eng:0,posts:0},
+      {name:'Control Union',fol:50487,nfol:840,eng:1254,posts:7},
+      {name:'Groupe ECOCERT',fol:47552,nfol:387,eng:1136,posts:24},
+      {name:'Peterson Solutions',fol:4820,nfol:167,eng:164,posts:4},
+      {name:'SGS Argentina',fol:43869,nfol:0,eng:0,posts:0},
+      {name:'SGS',fol:3522321,nfol:74138,eng:27116,posts:332}
+    ]},
   },
   cue: {
     m07: {imp:1123,clk:122,er:13.00,vis:61,fol:19,posts:[
@@ -174,6 +192,24 @@ export const SOCIAL_MONTHLY_2026 = {
       {name:'Applus+',nfol:3804,eng:1240,posts:8},
       {name:'SGS',nfol:74540,eng:25160,posts:432}
     ]},
+    m02: {imp:5750,clk:439,er:9.03,vis:104,fol:72,posts:[
+      {t:'Buscamos personal, #hiring ¿Conoces a alguien a quien podría interesarle?',imp:2298,er:10.36,clk:217,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7430200139203424256'},
+      {t:'#WeAreHiring #Auditor Control Union España es una entidad de certificación multinacional con una larga trayect',imp:1519,er:7.97,clk:103,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7432028102333100032'},
+      {t:'#ControlUnionEspaña Si tu preocupación viene por los cambios que traen GOTS o Textile Exchange, tenemos buenas',imp:567,er:9.17,clk:35,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7427334723930107904'},
+      {t:'#ControlUnionEspaña Si estás siguiendo de cerca la evolución de la innovación e implantación del cuero recicla',imp:498,er:5.42,clk:11,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7429872386491015168'},
+      {t:'Buscamos personal (#hiring) para el cargo de Auditor de calidad en Spain. Solicita hoy el empleo o comparte es',imp:165,er:13.94,clk:23,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7430230150824386564'}
+    ],comp:[
+      {name:'OCA GLOBAL',nfol:2855,eng:1117,posts:13},
+      {name:'Intertek',nfol:6760,eng:7689,posts:315},
+      {name:'AENOR',nfol:1338,eng:2034,posts:38},
+      {name:'Control Union España',nfol:72,eng:78,posts:5,own:true},
+      {name:'TÜV SÜD',nfol:12434,eng:11232,posts:121},
+      {name:'DNV',nfol:6638,eng:3706,posts:53},
+      {name:'Bureau Veritas Spain',nfol:3,eng:0,posts:0},
+      {name:'RINA',nfol:5976,eng:3345,posts:20},
+      {name:'Applus+',nfol:3981,eng:601,posts:6},
+      {name:'SGS',nfol:74138,eng:26841,posts:332}
+    ]},
   },
   cup: {
     m07: {imp:715,clk:75,er:14.27,vis:27,fol:9,posts:[
@@ -219,6 +255,15 @@ export const SOCIAL_MONTHLY_2026 = {
       {name:'Control Union Portugal',nfol:43,eng:62,posts:7,own:true},
       {name:'SGS',nfol:74540,eng:25160,posts:432}
     ]},
+    m02: {imp:2824,clk:929,er:35.69,vis:42,fol:15,posts:[
+      {t:'A Control Union agradece a todos os profissionais que participaram no evento dedicado ao setor têxtil, realiza',imp:1455,er:65.77,clk:905,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7425527176944345088'},
+      {t:'Estamos muito entusiasmados por anunciar o nosso próximo evento:',imp:874,er:6.06,clk:24,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7427765569895985152'}
+    ],comp:[
+      {name:'Bureau Veritas',nfol:30419,eng:16374,posts:226},
+      {name:'APCER',nfol:141,eng:464,posts:19},
+      {name:'Control Union Portugal',nfol:15,eng:78,posts:2,own:true},
+      {name:'SGS',nfol:74138,eng:26841,posts:332}
+    ]},
   },
   cun: {
     m07: {imp:6016,clk:1129,er:20.55,vis:42,fol:14,posts:[
@@ -259,6 +304,12 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'En Control Union Norte brindamos servicios de Depósito Fiscal, acompañando a nuestros clientes en la gestión y',imp:462,er:13.20,clk:49,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7434945867733856257'}
     ],comp:[
       {name:'Control Union Norte',nfol:46,eng:59,posts:3,own:true}
+    ]},
+    m02: {imp:2363,clk:302,er:14.43,vis:60,fol:21,posts:[
+      {t:'Control Union Norte supervisó el embarque para exportación de 30.000 toneladas de azúcar orgánica, garantizand',imp:1106,er:19.89,clk:193,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7429880122339377152'},
+      {t:'En Control Union Norte, acompañamos a nuestros clientes con soluciones de abastecimiento que simplifican y opt',imp:482,er:2.70,clk:2,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7428047968525500416'}
+    ],comp:[
+      {name:'Control Union Norte',nfol:21,eng:39,posts:2,own:true}
     ]},
   },
   cuna: {
@@ -352,6 +403,24 @@ export const SOCIAL_MONTHLY_2026 = {
       {name:'Control Union North America',fol:1177,nfol:30,eng:136,posts:11,own:true},
       {name:'ECOCERT Canada',fol:1800,nfol:38,eng:103,posts:9}
     ]},
+    m02: {imp:2871,clk:121,er:8.36,vis:32,fol:21,posts:[
+      {t:'🌍 Control Union North America at TPM2026',imp:390,er:7.18,clk:11,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7431761721578422272'},
+      {t:'#ControlUnionUSA We will be present at the Southern Exposure: From Fields to Families.',imp:381,er:6.56,clk:13,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7430246033844039681'},
+      {t:'#ControlUnionCanada FSC certification with Control Union',imp:326,er:6.75,clk:7,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7427411132337975296'},
+      {t:'#ControlUnionUSA Did you know that your facility’s environmental and social performance can be measured intern',imp:275,er:7.64,clk:13,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7424816277900251137'},
+      {t:'#ControlUnionCanada PEFC certification supported by Control Union',imp:238,er:8.40,clk:9,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7430233040997486593'}
+    ],comp:[
+      {name:'NSF - Food and Nutrition',fol:77458,nfol:672,eng:1622,posts:68},
+      {name:'SCS Global Services',fol:47773,nfol:1044,eng:615,posts:35},
+      {name:'Intertek',fol:590011,nfol:6760,eng:7784,posts:315},
+      {name:'Oregon Tilth',fol:5380,nfol:120,eng:222,posts:16},
+      {name:'CCOF',fol:12209,nfol:106,eng:185,posts:14},
+      {name:'SGS Environment, Health and Safety (North America)',fol:21851,nfol:680,eng:512,posts:10},
+      {name:'IDFL Laboratory and Institute',fol:3742,nfol:37,eng:46,posts:2},
+      {name:'Bureau Veritas North America',fol:59538,nfol:2155,eng:1176,posts:49},
+      {name:'Control Union North America',fol:1177,nfol:21,eng:119,posts:14,own:true},
+      {name:'ECOCERT Canada',fol:1800,nfol:56,eng:167,posts:11}
+    ]},
   },
   ps: {
     m07: {imp:6103,clk:570,er:12.90,vis:260,fol:86,posts:[
@@ -444,6 +513,23 @@ export const SOCIAL_MONTHLY_2026 = {
       {name:'Koltiva',fol:27866,nfol:197,eng:368,posts:7},
       {name:'Justoken',fol:26495,nfol:66,eng:31,posts:1}
     ]},
+    m02: {imp:6861,clk:1095,er:18.35,vis:332,fol:167,posts:[
+      {t:'Meet our new Director of International Crop Consultancy',imp:1700,er:20.29,clk:281,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7424354979965997056'},
+      {t:'In SAF, innovation isn’t the bottleneck. Credibility is.',imp:1314,er:29.76,clk:360,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7425239214793015296'},
+      {t:'Where are fashion’s largest emissions hiding?',imp:824,er:41.26,clk:308,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7432779581490831361'},
+      {t:'New 𝗨𝗦 𝗱𝗶𝗲𝘁𝗮𝗿𝘆 𝗴𝘂𝗶𝗱𝗲𝗹𝗶𝗻𝗲𝘀 are raising the bar on food quality by naming highly processed foods and reinforcing',imp:564,er:1.42,clk:4,tp:'Artículo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7424059384206417920'}
+    ],comp:[
+      {name:'ucrop.it',fol:11274,nfol:80,eng:98,posts:5},
+      {name:'Circularise',fol:14154,nfol:121,eng:247,posts:11},
+      {name:'Vega Monitoramento',fol:38884,nfol:1016,eng:331,posts:17},
+      {name:'Agrotools',fol:37031,nfol:229,eng:287,posts:12},
+      {name:'Satelligence',fol:12379,nfol:122,eng:333,posts:12},
+      {name:'BanQu | Proven Traceability Tech & Expertise',fol:5879,nfol:10,eng:1,posts:0},
+      {name:'osapiens',fol:35166,nfol:1585,eng:1865,posts:33},
+      {name:'Peterson Solutions',fol:4820,nfol:167,eng:164,posts:4,own:true},
+      {name:'Koltiva',fol:27866,nfol:224,eng:314,posts:9},
+      {name:'Justoken',fol:26495,nfol:96,eng:110,posts:1}
+    ]},
   },
   pia: {
     m07: {imp:21340,clk:2657,er:15.43,vis:483,fol:202,posts:[
@@ -521,6 +607,21 @@ export const SOCIAL_MONTHLY_2026 = {
       {name:'Regenagri',fol:10019,nfol:44,eng:72,posts:1},
       {name:'SGS',fol:3521871,nfol:74540,eng:25473,posts:432}
     ]},
+    m02: {imp:11767,clk:980,er:10.41,vis:352,fol:94,posts:[
+      {t:'#PetersonArgentina #ExpoAgro Estaremos presentes en Expoagro, el punto de encuentro clave del agro argentino, ',imp:1362,er:3.60,clk:18,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7427335922989375488'},
+      {t:'#PetersonIberia #EUDR: 2026 está más cerca de lo que parece',imp:971,er:50.67,clk:465,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7425150072180613120'},
+      {t:'#Webinar A EUDR aproxima-se — e muitas empresas ainda não sabem se estão realmente preparadas.',imp:926,er:5.72,clk:24,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7429844713274445824'},
+      {t:'#PetersonIberia As 3 perguntas sobre a EUDR que toda empresa deveria fazer hoje',imp:864,er:37.15,clk:299,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7432772680308887552'},
+      {t:'#PetersonIberia Falta solo una semana para nuestro webinar sobre la nueva versión GOTS 8.0.',imp:854,er:5.27,clk:17,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7429843403825319936'}
+    ],comp:[
+      {name:'Bureau Veritas',fol:1739921,nfol:30419,eng:16597,posts:226},
+      {name:'SCS Global Services',fol:47773,nfol:1044,eng:615,posts:35},
+      {name:'Regenerative Organic Alliance',fol:45154,nfol:501,eng:1439,posts:28},
+      {name:'Peterson Solutions (Iberia & Americas)',fol:7887,nfol:94,eng:245,posts:16,own:true},
+      {name:'Peterson Solutions (Europe)',fol:5024,nfol:55,eng:0,posts:0},
+      {name:'Regenagri',fol:10023,nfol:74,eng:33,posts:1},
+      {name:'SGS',fol:3522320,nfol:74138,eng:27116,posts:332}
+    ]},
   },
   tlr: {
     m07: {imp:552,clk:84,er:17.03,vis:8,fol:7,posts:[
@@ -553,6 +654,11 @@ export const SOCIAL_MONTHLY_2026 = {
       {t:'¡Inicia la temporada de cosecha en Perú! Asegura la calidad de tu exportación con TLR. ☕🇵🇪',imp:248,er:20.16,clk:45,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7442628169926492160'}
     ],comp:[
       {name:'TLR International Laboratories Perú',nfol:12,eng:10,posts:3,own:true}
+    ]},
+    m02: {imp:382,clk:44,er:12.57,vis:11,fol:3,posts:[
+      {t:'🚨 Alerta Exportadores: Nuevas Restricciones Sanitarias en la Unión Europea (2026)',imp:300,er:6.33,clk:15,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7432119481658818560'}
+    ],comp:[
+      {name:'TLR International Laboratories Perú',nfol:3,eng:4,posts:1,own:true}
     ]},
   },
   bel: {
@@ -613,6 +719,22 @@ export const SOCIAL_MONTHLY_2026 = {
       {name:'Laidig Systems, Inc.',nfol:48,eng:285,posts:7},
       {name:'IMAL Srl',nfol:186,eng:206,posts:7},
       {name:'Advanced Woody Biomass Alliance',nfol:52,eng:98,posts:1}
+    ]},
+    m02: {imp:2475,clk:198,er:12.61,vis:12,fol:24,posts:[
+      {t:'ENplus Quality Manager Training – Hosted by BEL',imp:1027,er:22.78,clk:187,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7427322742925881344'},
+      {t:'Biomass Energy Lab VP, Chris Wiberg, was recently interviewed on a BBI International speaker preview podcast i',imp:891,er:8.98,clk:29,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7432393951900401664'},
+      {t:'We’re excited to be exhibiting at the BBI International Biomass Conference & Expo, co-located this year with t',imp:791,er:5.56,clk:14,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7430238492288282625'}
+    ],comp:[
+      {name:'BioMass Energy Techniques Inc',nfol:70,eng:152,posts:5},
+      {name:'Biomass Energy Lab',nfol:24,eng:113,posts:6,own:true},
+      {name:'Fagus GreCon, Inc.',nfol:16,eng:143,posts:3},
+      {name:'ANDRITZ Feed & Biofuel',nfol:180,eng:1038,posts:16},
+      {name:'AMANDUS KAHL',nfol:139,eng:666,posts:12},
+      {name:'Mondi Group',nfol:3488,eng:2252,posts:20},
+      {name:'Control Union Türkiye',nfol:213,eng:886,posts:42},
+      {name:'Laidig Systems, Inc.',nfol:33,eng:219,posts:6},
+      {name:'IMAL Srl',nfol:126,eng:90,posts:2},
+      {name:'Advanced Woody Biomass Alliance',nfol:4,eng:27,posts:1}
     ]},
   },
 };
