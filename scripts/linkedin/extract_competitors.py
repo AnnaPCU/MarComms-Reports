@@ -47,12 +47,22 @@ def parse_comp(rows, acc):
             return int(v) if isinstance(v, (int, float)) else 0
         nm = str(name).strip()
         own = any(p in nm.lower() for p in OWN[acc])
-        out.append(dict(name=nm, fol=g('Total de seguidores'), nfol=g('Nuevos seguidores'),
-                        eng=g('Total de interacciones en la publicación'), posts=g('Total de publicaciones'), own=own))
+        if 'Total de seguidores' in ci:
+            # Variante estándar (con totales del set).
+            out.append(dict(name=nm, fol=g('Total de seguidores'), nfol=g('Nuevos seguidores'),
+                            eng=g('Total de interacciones en la publicación'), posts=g('Total de publicaciones'), own=own))
+        else:
+            # Variante reducida (ej. set de competidores vacío): sin seguidores
+            # totales; interacciones = comentarios + reacciones. No se inventan totales.
+            out.append(dict(name=nm, nfol=g('Nuevos seguidores'),
+                            eng=g('Comentarios') + g('Reacciones'), posts=g('Publicaciones'), own=own))
     return out
 
 def from_unified(base):
-    xlsx = [f for f in os.listdir(base) if f.lower().endswith('.xlsx')]
+    # Los standalone *competitor*.xlsx no son consolidados por cuenta: se usan
+    # como fallback cuando el consolidado no trae la hoja COMPETITORS.
+    xlsx = [f for f in os.listdir(base) if f.lower().endswith('.xlsx') and 'competitor' not in f.lower()]
+    standalone = [f for f in os.listdir(base) if f.lower().endswith('.xlsx') and 'competitor' in f.lower()]
     res = {}
     for acc, pred in MATCHERS.items():
         hits = [f for f in xlsx if pred(f)]
@@ -60,7 +70,15 @@ def from_unified(base):
             res[acc] = []; continue
         wb = openpyxl.load_workbook(os.path.join(base, hits[0]), data_only=True)
         comp = [s for s in wb.sheetnames if 'compet' in s.lower()]
-        res[acc] = parse_comp(rows_of(wb[comp[0]]), acc) if comp else []
+        if comp:
+            res[acc] = parse_comp(rows_of(wb[comp[0]]), acc)
+            continue
+        alt = [f for f in standalone if pred(f)]
+        if len(alt) == 1:
+            wb2 = openpyxl.load_workbook(os.path.join(base, alt[0]), data_only=True)
+            res[acc] = parse_comp(rows_of(wb2[wb2.sheetnames[0]]), acc)
+        else:
+            res[acc] = []
     return res
 
 def from_raw(base):

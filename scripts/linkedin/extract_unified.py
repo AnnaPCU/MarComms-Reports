@@ -18,7 +18,8 @@ MATCHERS={
 }
 def resolve_files(base):
     import os as _os
-    xlsx=[f for f in _os.listdir(base) if f.lower().endswith('.xlsx')]
+    # Los standalone *competitor*.xlsx no son consolidados por cuenta.
+    xlsx=[f for f in _os.listdir(base) if f.lower().endswith('.xlsx') and 'competitor' not in f.lower()]
     out={}
     for acc,pred in MATCHERS.items():
         hits=[f for f in xlsx if pred(f)]

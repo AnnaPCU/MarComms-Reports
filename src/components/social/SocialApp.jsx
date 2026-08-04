@@ -16,7 +16,6 @@ import { AudienceCharts } from '@/components/social/AudienceCharts';
 import { PostsTable } from '@/components/social/PostsTable';
 import { ComparativeView } from '@/components/social/ComparativeView';
 import { AnnualReview } from '@/components/social/AnnualReview';
-import { CompetitorsTable, competitorSummary } from '@/components/social/CompetitorsTable';
 import { Glossary } from '@/components/shared/Glossary';
 
 // Vista del pilar Social Media (LinkedIn).
@@ -136,20 +135,11 @@ export function SocialApp({ account, period }) {
       <SectionHeader title="Top Publicaciones — Clasificadas por Pilar ESG" />
       <PostsTable posts={mo.posts} />
 
-      {mo.comp?.length > 0 && (
-        <>
-          <SectionHeader
-            title="Competencia — Benchmark del Mes"
-            note="Páginas del set de competidores de LinkedIn"
-          />
-          <CompetitorsTable comp={mo.comp} />
-        </>
-      )}
-
+      {/* Nota: mo.comp (benchmark de competidores) se almacena en el seed pero
+          NO se muestra: los competidores del set son cuentas globales y la
+          comparación no aplica. El dato queda disponible para uso futuro. */}
       <SectionHeader title="Lectura de Performance" />
-      <ConclusionsPanel
-        items={[...genSocialConclusions(mo, prev), ...(competitorSummary(mo.comp) ? [competitorSummary(mo.comp)] : [])]}
-      />
+      <ConclusionsPanel items={genSocialConclusions(mo, prev)} />
 
       {!isExternalReport() && (
         <>

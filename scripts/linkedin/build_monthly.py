@@ -44,8 +44,10 @@ def post_js(p):
         esc(p['t']), p['imp'], p['er'], p['clk'], esc(p['tp']), esc(p['url']))
 
 def comp_js(c):
-    return "      {name:'%s',fol:%d,nfol:%d,eng:%d,posts:%d%s}" % (
-        esc(c['name']), c['fol'], c['nfol'], c['eng'], c['posts'], ',own:true' if c.get('own') else '')
+    # 'fol' puede faltar (variante reducida del export) — no se inventan totales.
+    fol = "fol:%d," % c['fol'] if c.get('fol') is not None else ''
+    return "      {name:'%s',%snfol:%d,eng:%d,posts:%d%s}" % (
+        esc(c['name']), fol, c['nfol'], c['eng'], c['posts'], ',own:true' if c.get('own') else '')
 
 def month_js(m):
     posts = m['posts'][:5]
