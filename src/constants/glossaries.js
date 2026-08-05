@@ -36,6 +36,7 @@ export const GLOSSARIES = {
 
   paid: {
     title: 'Glosario — Paid Media',
+    note: '<strong>El presupuesto solo se consume cuando alguien hace clic en el anuncio.</strong> Que el anuncio se muestre (una "impresión") no cuesta nada: si un anuncio aparece 100 veces y una sola persona le hace clic, se paga únicamente ese clic. Por eso puede haber miles de impresiones con muy poco gasto.',
     entries: [
       { term: 'Impresiones', def: 'Cantidad de veces que los anuncios se mostraron en los resultados de búsqueda.' },
       { term: 'Clics', def: 'Cantidad de veces que los usuarios hicieron clic en un anuncio.' },
@@ -46,12 +47,17 @@ export const GLOSSARIES = {
       { term: 'Tasa de conversión', def: 'Porcentaje de clics que terminaron en una conversión.' },
       { term: 'Coste por conversión', def: 'Inversión promedio necesaria para generar una conversión (coste por lead).' },
       { term: 'Nivel de optimización', def: 'Indicador de salud de la campaña en Google Ads según buenas prácticas de configuración aplicadas.' },
+      { term: 'Palabra clave', def: 'Las palabras o frases que nosotros elegimos para decirle a Google "mostrá nuestro anuncio cuando alguien busque esto". Se definen por grupo de anuncios.' },
+      { term: 'Término de búsqueda', def: 'Lo que la persona escribió realmente en Google cuando se le mostró el anuncio. Puede coincidir con nuestra palabra clave o ser una variante (otro orden, errores de tipeo, palabras de más).' },
+      { term: 'Concordancia', def: 'Qué tan parecida debe ser la búsqueda a nuestra palabra clave para que el anuncio aparezca. Exacta: la búsqueda es igual (o casi igual) a la palabra clave. De frase: la búsqueda contiene la palabra clave dentro de una frase más larga. Amplia: Google muestra el anuncio en búsquedas relacionadas con el tema. IA Max: la inteligencia artificial de Google decide por intención de búsqueda.' },
+      { term: 'Cuota de búsqueda', def: 'De todas las veces que el anuncio PODRÍA haber aparecido, qué porcentaje apareció de verdad. El resto se reparte entre "perdida por ranking" (el anuncio compitió pero quedó afuera por calidad o puja baja) y "perdida por presupuesto" (no había más presupuesto para participar; en el reporte es estimada como el resto hasta 100%).' },
     ],
   },
 
   // Versión en inglés del glosario Paid — para el toggle EN del pilar.
   paidEn: {
     title: 'Glossary — Paid Media',
+    note: '<strong>Budget is only spent when someone clicks the ad.</strong> Being shown (an "impression") costs nothing: if an ad appears 100 times and only one person clicks it, we pay for that single click. That is why there can be thousands of impressions with very little spend.',
     entries: [
       { term: 'Impressions', def: 'Number of times the ads were shown in search results.' },
       { term: 'Clicks', def: 'Number of times users clicked on an ad.' },
@@ -62,6 +68,10 @@ export const GLOSSARIES = {
       { term: 'Conversion rate', def: 'Percentage of clicks that ended in a conversion.' },
       { term: 'Cost per conversion', def: 'Average spend needed to generate one conversion (cost per lead).' },
       { term: 'Optimization score', def: 'Campaign health indicator in Google Ads based on applied configuration best practices.' },
+      { term: 'Keyword', def: 'The words or phrases we choose to tell Google "show our ad when someone searches for this". Defined per ad group.' },
+      { term: 'Search term', def: 'What the person actually typed into Google when the ad was shown. It may match our keyword exactly or be a variant (different order, typos, extra words).' },
+      { term: 'Match type', def: 'How similar the search must be to our keyword for the ad to appear. Exact: the search equals (or nearly equals) the keyword. Phrase: the search contains the keyword within a longer phrase. Broad: Google shows the ad on searches related to the topic. AI Max: Google\'s AI decides based on search intent.' },
+      { term: 'Search impression share', def: 'Of all the times the ad COULD have appeared, the percentage it actually did. The rest splits into "lost to rank" (the ad competed but lost due to quality or low bid) and "lost to budget" (no budget left to compete; estimated in the report as the remainder up to 100%).' },
     ],
   },
 

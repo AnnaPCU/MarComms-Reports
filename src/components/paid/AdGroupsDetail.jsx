@@ -5,6 +5,19 @@ const money = (v, c) =>
   Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + (c || 'EUR');
 const pct0 = (v) => `${Math.round(v)}%`;
 
+// Normaliza el tipo de concordancia para mostrar: sin el prefijo "Concordancia"
+// ni la aclaración "(ligera variación)" (a pedido del cliente; el matiz se
+// explica en el glosario). En EN se traduce el tipo.
+const MATCH_EN = { exacta: 'Exact', 'de frase': 'Phrase', amplia: 'Broad' };
+function matchLabel(match, lang) {
+  const base = String(match || '')
+    .replace(/Concordancia\s*/i, '')
+    .replace(/\s*\(ligera variación\)/i, '')
+    .trim();
+  if (lang === 'en') return MATCH_EN[base.toLowerCase()] ?? base;
+  return base;
+}
+
 function MiniTable({ title, headers, rows, moreCount, L, emptyText }) {
   return (
     <div className="min-w-0">
@@ -98,7 +111,7 @@ export function AdGroupsDetail({ groups = [], currency = 'EUR', lang = 'es' }) {
               <MiniTable
                 title={L.termsTitle}
                 headers={[L.thTerm, L.thMatch, L.thImp, L.thClk]}
-                rows={g.terms.map((t) => [t.t, t.match.replace(/Concordancia /i, ''), numEs(t.imp), numEs(t.clk)])}
+                rows={g.terms.map((t) => [t.t, matchLabel(t.match, lang), numEs(t.imp), numEs(t.clk)])}
                 moreCount={Math.max(0, (g.nTerms || 0) - g.terms.length)}
                 L={L}
                 emptyText={L.noVisibleTerms}

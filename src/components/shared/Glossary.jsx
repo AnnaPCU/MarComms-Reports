@@ -20,6 +20,11 @@ export function Glossary({ keys }) {
               {g.title}
             </h3>
           </div>
+          {g.note && (
+            <div className="border-b border-cu-border2 border-l-4 border-l-cu-cyan bg-cu-cyan/[0.05] px-5 py-3.5 text-[12.5px] leading-relaxed text-cu-dgrey [&_strong]:font-bold [&_strong]:text-cu-dblue">
+              <span dangerouslySetInnerHTML={{ __html: g.note }} />
+            </div>
+          )}
           <dl className="grid grid-cols-1 md:grid-cols-2">
             {g.entries.map((e) => (
               <div
