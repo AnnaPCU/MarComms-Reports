@@ -22,7 +22,7 @@ export function buildSnapshot(pilar, account, period) {
     };
   }
   if (pilar === 'paid') {
-    return { mo: paid.getMonthly(account, period) };
+    return { mo: paid.getMonthly(account, period), detail: paid.getDetail(account, period) };
   }
   if (pilar === 'website') {
     return { quarter: website.getQuarter(account, period), handle: website.getHandle(account) };

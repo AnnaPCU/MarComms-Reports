@@ -1,6 +1,7 @@
 // SERVICE — Pilar Paid Media (Google Ads, Meta Ads). Mensual.
 // Fuente de datos: seed en código (src/data/paidSeed.js). Sin base de datos.
 import { PAID_CLIENTS, PAID_DB } from '@/data/paidSeed';
+import { PAID_DETAIL } from '@/data/paidDetail';
 import { MONTHS_2026 } from '@/constants/periods';
 
 export function listAccounts() {
@@ -17,4 +18,10 @@ export function getMonthly(accountId, periodId) {
 
 export function hasDataFor(account, period) {
   return Boolean(getMonthly(account, period));
+}
+
+// Detalle por grupo de anuncios (consumo semanal + términos/keywords).
+// Solo existe para los meses con los informes de detalle cargados.
+export function getDetail(accountId, periodId) {
+  return PAID_DETAIL[accountId]?.[periodId] ?? null;
 }

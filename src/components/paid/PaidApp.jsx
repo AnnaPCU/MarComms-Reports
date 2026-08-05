@@ -18,6 +18,8 @@ import { PaidCharts } from '@/components/paid/PaidCharts';
 import { CampaignsTable } from '@/components/paid/CampaignsTable';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { ComparativeCampaigns } from '@/components/paid/ComparativeCampaigns';
+import { BudgetWeekly } from '@/components/paid/BudgetWeekly';
+import { AdGroupsDetail } from '@/components/paid/AdGroupsDetail';
 import { isExternalReport } from '@/utils/reportAudience';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
@@ -57,7 +59,7 @@ function KpiRow({ d, currency, partial, t }) {
 }
 
 // Vista de UNA campaña (drill-down).
-function CampaignDetail({ c, currency, accName, periodLabel, t, lang }) {
+function CampaignDetail({ c, currency, accName, periodLabel, t, lang, detailGroups }) {
   const st = campaignStatus(c);
   return (
     <>
@@ -68,6 +70,21 @@ function CampaignDetail({ c, currency, accName, periodLabel, t, lang }) {
       <KpiRow d={c} currency={currency} t={t} />
       <SectionHeader title={t.funnelSection} note={t.funnelNote} />
       <PaidFunnel totals={{ ...c, currency }} campaigns={[c]} lang={lang} />
+
+      {/* Consumo semanal del presupuesto por grupo de anuncio — SOLO interno */}
+      {!isExternalReport() && detailGroups.length > 0 && (
+        <>
+          <SectionHeader title={t.budgetSection} note={t.budgetNoteGroup} />
+          <BudgetWeekly series={detailGroups.map((g) => ({ name: g.name, weeks: g.weeks }))} currency={currency} lang={lang} />
+        </>
+      )}
+
+      {detailGroups.length > 0 && (
+        <>
+          <SectionHeader title={t.adgSection} note={t.adgNote(detailGroups.length)} />
+          <AdGroupsDetail groups={detailGroups} currency={currency} lang={lang} />
+        </>
+      )}
     </>
   );
 }
@@ -75,7 +92,7 @@ function CampaignDetail({ c, currency, accName, periodLabel, t, lang }) {
 // Pilar Paid Media — reporte completo con selector global / campaña / comparativa.
 // Idioma base español; toggle EN disponible (también en el descargable).
 export function PaidApp({ account, period }) {
-  const { mo, loading } = usePaidMonthly(account, period);
+  const { mo, detail, loading } = usePaidMonthly(account, period);
   const [view, setView] = useState(ALL);
   const [lang, setLang] = useState('es');
   useEffect(() => setView(ALL), [account, period]);
@@ -150,7 +167,15 @@ export function PaidApp({ account, period }) {
       {view === CMP ? (
         <ComparativeCampaigns mo={mo} currency={c} lang={lang} />
       ) : selected ? (
-        <CampaignDetail c={selected} currency={c} accName={accName} periodLabel={periodLabel} t={t} lang={lang} />
+        <CampaignDetail
+          c={selected}
+          currency={c}
+          accName={accName}
+          periodLabel={periodLabel}
+          t={t}
+          lang={lang}
+          detailGroups={(detail?.groups ?? []).filter((g) => g.camp === selected.name)}
+        />
       ) : (
         <>
           <InsightsPanel
@@ -170,6 +195,27 @@ export function PaidApp({ account, period }) {
 
           <SectionHeader title={t.distSection} note={t.campaignsCount(mo.campaigns.length)} />
           <PaidCharts campaigns={mo.campaigns} currency={c} lang={lang} />
+
+          {!isExternalReport() && detail?.groups?.length > 0 && (
+            <>
+              <SectionHeader title={t.budgetSection} note={t.budgetNoteCamp} />
+              <BudgetWeekly
+                series={Object.values(
+                  detail.groups.reduce((acc, g) => {
+                    const e = (acc[g.camp] ??= { name: g.camp, weeks: [] });
+                    g.weeks.forEach((w) => {
+                      const found = e.weeks.find((x) => x.w === w.w);
+                      if (found) found.cost += w.cost;
+                      else e.weeks.push({ w: w.w, cost: w.cost });
+                    });
+                    return acc;
+                  }, {}),
+                )}
+                currency={c}
+                lang={lang}
+              />
+            </>
+          )}
 
           <SectionHeader title={t.tableSection} />
           <CampaignsTable campaigns={mo.campaigns} currency={c} title={t.tableTitle(mo.channel || 'Google Ads')} lang={lang} />
