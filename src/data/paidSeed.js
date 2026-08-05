@@ -101,6 +101,22 @@ export const PAID_DB = {
         analysis:
           'Junio completo. Textile lideró la actividad (29 clics, CTR 8,66%) y Plásticos destacó por CTR (13,33%) con bajo volumen. GMP+, Smeta y Bioenergía sumaron actividad menor. Forestal y Biomasa tuvieron impresiones pero ningún clic. Sin conversiones en el mes. Total: 838 impresiones, 62 clics y 83,97 EUR invertidos.',
       },
+      m07: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 1799, clicks: 116, ctr: 6.45, cpc: 1.94, cost: 225.29, currency: 'EUR', conversions: 1, convRate: 0.86, costPerConv: 225.29 },
+        campaigns: [
+          { name: 'GMP+', impressions: 776, clicks: 29, ctr: 3.74, cpc: 2.46, cost: 71.35, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Textile', impressions: 341, clicks: 26, ctr: 7.62, cpc: 1.83, cost: 47.58, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', impressions: 270, clicks: 22, ctr: 8.15, cpc: 1.7, cost: 37.33, conversions: 1, convRate: 4.55, costPerConv: 37.33 },
+          { name: 'Bioenergía', impressions: 205, clicks: 19, ctr: 9.27, cpc: 2.09, cost: 39.64, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Plásticos', impressions: 156, clicks: 15, ctr: 9.62, cpc: 1.62, cost: 24.31, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Forestal', impressions: 35, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Biomasa', impressions: 16, clicks: 5, ctr: 31.25, cpc: 1.02, cost: 5.08, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Julio completo. Smeta logró la única conversión del mes de toda la cartera (37,33 EUR/lead, tasa 4,55%): es la campaña a proteger. GMP+ tuvo la mayor actividad (29 clics) y Biomasa un CTR excepcional (31,25%) con volumen mínimo. Forestal quedó sin clics. Total: 1.799 impresiones, 116 clics y 225,29 EUR.',
+      },
     },
   },
 
@@ -136,6 +152,24 @@ export const PAID_DB = {
         analysis:
           'En junio, IFS volvió a ser la única campaña con conversión (1 conversión a 63,10 EUR) sobre 55 clics y un CTR del 15,03% — la mejor señal del mes. GMP+ concentró el mayor coste (90,72 EUR) con 31 clics pero sin conversiones. Forestal, Textile, Plásticos, Bioenergía, Smeta y Biomasa tuvieron actividad moderada sin conversiones, y "Car" quedó sin impresiones. Total: 2.692 impresiones, 196 clics y 301,65 EUR invertidos.',
       },
+      m07: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 3320, clicks: 246, ctr: 7.41, cpc: 1.74, cost: 428.91, currency: 'EUR', conversions: 0, convRate: 0, costPerConv: 0 },
+        campaigns: [
+          { name: 'GMP+', impressions: 619, clicks: 26, ctr: 4.2, cpc: 2.68, cost: 69.62, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Car', impressions: 590, clicks: 21, ctr: 3.56, cpc: 2.19, cost: 46.01, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Textile', impressions: 455, clicks: 30, ctr: 6.59, cpc: 1.58, cost: 47.26, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Forestal', impressions: 409, clicks: 33, ctr: 8.07, cpc: 1.51, cost: 49.97, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Plásticos', impressions: 366, clicks: 25, ctr: 6.83, cpc: 1.88, cost: 46.98, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Bioenergía', impressions: 303, clicks: 28, ctr: 9.24, cpc: 1.64, cost: 45.78, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', impressions: 271, clicks: 23, ctr: 8.49, cpc: 2.1, cost: 48.19, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'IFS', impressions: 206, clicks: 43, ctr: 20.87, cpc: 1.06, cost: 45.52, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Biomasa', impressions: 101, clicks: 17, ctr: 16.83, cpc: 1.74, cost: 29.58, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Julio completo. IFS volvió a liderar los clics (43, CTR 20,87%) y Biomasa mostró el mejor CTR del mes (16,83%) con poco volumen. GMP+ concentró el mayor coste (69,62 EUR) sin conversiones. Mes sin conversiones registradas en la cuenta: revisar landing pages y llamados a la acción. Total: 3.320 impresiones, 246 clics y 428,91 EUR invertidos.',
+      },
     },
   },
 
@@ -156,6 +190,21 @@ export const PAID_DB = {
         ],
         analysis:
           'Primer período cargado de CU Canadá. Canada Gap concentró la actividad (12 clics, 168 impresiones, CTR 7,14%) y Smeta aportó 2 clics. Forestry, GLOBALG.A.P. y Aqua / Fisheries tuvieron impresiones sin clics, y Cannabis quedó sin actividad. Sin conversiones en el mes. Total: 276 impresiones, 14 clics y 22,68 EUR invertidos.',
+      },
+      m07: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 1128, clicks: 65, ctr: 5.76, cpc: 2.2, cost: 142.9, currency: 'EUR', conversions: 0, convRate: 0, costPerConv: 0 },
+        campaigns: [
+          { name: 'Forestry', impressions: 535, clicks: 16, ctr: 2.99, cpc: 2.54, cost: 40.57, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', impressions: 276, clicks: 20, ctr: 7.25, cpc: 2.54, cost: 50.88, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Canada Gap', impressions: 227, clicks: 23, ctr: 10.13, cpc: 2.04, cost: 46.9, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'GLOBALG.A.P.', impressions: 84, clicks: 6, ctr: 7.14, cpc: 0.76, cost: 4.55, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Aqua / Fisheries', impressions: 6, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Cannabis', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Julio completo. Canada Gap lideró en clics (23, CTR 10,13%) y Smeta en coste (50,88 EUR) sin convertir. Forestry aportó el mayor alcance (535 impresiones) con CTR bajo (2,99%). Cannabis sin impresiones y Aqua/Fisheries casi sin actividad. Sin conversiones en el mes. Total: 1.128 impresiones, 65 clics y 142,90 EUR.',
       },
     },
   },
@@ -179,6 +228,23 @@ export const PAID_DB = {
         ],
         analysis:
           'Primer período cargado de PS Argentina. Las líneas SuSe (ESG / Reportes, Huella de agua y de carbono) y SuSo (Agricultura regenerativa) concentraron los clics; "ESG / Reportes" lideró con 47 clics sobre 1.227 impresiones. "Bioenergía / Biocombustibles" tuvo alto volumen de impresiones (1.069) pero bajo CTR (0,65%). Dos campañas SuSo tuvieron impresiones sin clics. Sin conversiones en el mes. Total: 3.912 impresiones, 119 clics y 112,57 EUR invertidos.',
+      },
+      m07: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 4091, clicks: 144, ctr: 3.52, cpc: 1.32, cost: 189.74, currency: 'EUR', conversions: 0, convRate: 0, costPerConv: 0 },
+        campaigns: [
+          { name: 'SuSe - ESG / Reportes', impressions: 1422, clicks: 37, ctr: 2.6, cpc: 1.15, cost: 42.62, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSo - Agricultura regenerativa', impressions: 937, clicks: 44, ctr: 4.7, cpc: 0.9, cost: 39.41, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSe - Huella de carbono / GEI', impressions: 668, clicks: 23, ctr: 3.44, cpc: 1.66, cost: 38.21, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Bioenergía / Biocombustibles', impressions: 531, clicks: 6, ctr: 1.13, cpc: 1.17, cost: 7.03, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSe - Huella de agua', impressions: 289, clicks: 24, ctr: 8.3, cpc: 1.91, cost: 45.77, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'CeSu - Preparacion para certificaciones', impressions: 217, clicks: 9, ctr: 4.15, cpc: 1.42, cost: 12.78, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSo - Trazabilidad / EUDR', impressions: 23, clicks: 1, ctr: 4.35, cpc: 3.92, cost: 3.92, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSo - Abastecimiento sostenible', impressions: 4, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Julio completo. Agricultura regenerativa lideró los clics (44, CPC 0,90 EUR) y ESG/Reportes el alcance (1.422 impresiones). Huella de agua sostuvo buen CTR (8,30%). Trazabilidad/EUDR y Abastecimiento sostenible casi sin actividad: revisar pujas y presupuesto. Sin conversiones en el mes. Total: 4.091 impresiones, 144 clics y 189,74 EUR.',
       },
     },
   },

@@ -34,7 +34,7 @@ export const REGISTRY = {
     accounts: paid.listAccounts(),
     // meses (más reciente primero) + trimestres → permite ver/importar por Q
     periods: [...paid.listPeriods()].reverse().concat(QUARTERS_2026),
-    defaultPeriod: 'm06', // Junio 2026: último mes completo cargado
+    defaultPeriod: 'm07', // Julio 2026: último mes completo cargado
     hasDataFor: paid.hasDataFor,
   },
   website: {
