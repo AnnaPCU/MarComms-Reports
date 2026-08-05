@@ -125,6 +125,7 @@ export async function exportViewAsHtml({ pilar, account, period, audience, brand
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
 <title>${title}</title>
 ${FONT_LINK}
 <style>${css}</style>
