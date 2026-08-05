@@ -26,7 +26,8 @@ import { Glossary } from '@/components/shared/Glossary';
 import { isExternalReport } from '@/utils/reportAudience';
 import { useSocialYear } from '@/hooks/useSocialYear';
 import { computeDelta } from '@/utils/format';
-import { ANNUAL_STR, ML_EN } from '@/utils/annualI18n';
+import { ANNUAL_STR, EXEC_STR, ML_EN } from '@/utils/annualI18n';
+import { ExecutiveReview } from '@/components/social/ExecutiveReview';
 import {
   yearAggregates,
   yearChartData,
@@ -83,8 +84,11 @@ export function AnnualReview({ account }) {
   const { accName, series } = useSocialYear(account);
   const [lang, setLang] = useState(() => (brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
   const [seg, setSeg] = useState(YEAR);
+  // Formato del reporte: 'std' (estándar) | 'exec' (narrativa ejecutiva).
+  const [mode, setMode] = useState('std');
   useEffect(() => {
     setSeg(YEAR);
+    setMode('std');
     setLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es');
   }, [account, accName]);
 
@@ -139,7 +143,20 @@ export function AnnualReview({ account }) {
   return (
     <div className="animate-fade-in">
       <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
-        <SegmentedControl label={t.segmentLabel} value={seg} onChange={setSeg} options={segOptions} />
+        <div className="flex flex-wrap items-end gap-4">
+          <SegmentedControl
+            label={EXEC_STR[lang].modeLabel}
+            value={mode}
+            onChange={setMode}
+            options={[
+              { id: 'std', label: EXEC_STR[lang].modeStd },
+              { id: 'exec', label: EXEC_STR[lang].modeExec },
+            ]}
+          />
+          {mode === 'std' && (
+            <SegmentedControl label={t.segmentLabel} value={seg} onChange={setSeg} options={segOptions} />
+          )}
+        </div>
         <SegmentedControl
           value={lang}
           onChange={setLang}
@@ -150,6 +167,11 @@ export function AnnualReview({ account }) {
           ]}
         />
       </div>
+
+      {mode === 'exec' ? (
+        <ExecutiveReview series={seriesT} accName={accName} lang={lang} />
+      ) : (
+        <>
 
       <SectionHeader title={t.title} note={accName} />
 
@@ -263,6 +285,8 @@ export function AnnualReview({ account }) {
       )}
 
       <Glossary keys={en ? 'socialEn' : 'social'} />
+        </>
+      )}
     </div>
   );
 }
