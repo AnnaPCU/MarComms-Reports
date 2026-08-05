@@ -5,6 +5,8 @@ export function InsightsPanel({
   items,
   label = 'Tendencia Mensual',
   title = '⚡ Plan de Acción — Insights ESG B2B',
+  actionLabel = 'Acción recomendada',
+  emptyText = 'Sin información suficiente para este período',
 }) {
   return (
     <div className="mb-5 overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
@@ -18,9 +20,7 @@ export function InsightsPanel({
       </div>
 
       {items.length === 0 ? (
-        <div className="px-5 py-4 text-[12px] text-cu-grey">
-          Sin información suficiente para este período
-        </div>
+        <div className="px-5 py-4 text-[12px] text-cu-grey">{emptyText}</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
           {items.map((x, i) => (
@@ -37,7 +37,7 @@ export function InsightsPanel({
               </div>
               <div className="mb-1.5 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.3px] text-cu-dblue">
                 <span className="h-[2px] w-3.5 rounded-sm bg-cu-cyan" />
-                Acción recomendada
+                {actionLabel}
               </div>
               <div
                 className="text-[11.5px] leading-relaxed text-cu-dgrey [&_strong]:font-bold [&_strong]:text-cu-dblue"

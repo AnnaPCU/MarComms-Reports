@@ -1,15 +1,19 @@
 import { classifyESG, ESG_LABEL, ESG_CHIP } from '@/utils/esg';
 import { num } from '@/utils/format';
 
+const ESG_LABEL_EN = { E: 'E — Environmental', S: 'S — Social', G: 'G — Governance', X: 'Other' };
+
 // Top publicaciones del mes, clasificadas por pilar ESG (ordenadas por impresiones).
-export function PostsTable({ posts }) {
+// `lang` ('es' | 'en') traduce la cabecera y los chips — lo usa el reporte anual.
+export function PostsTable({ posts, lang = 'es' }) {
+  const en = lang === 'en';
   const sorted = [...(posts || [])].sort((a, b) => b.imp - a.imp).slice(0, 5);
 
   return (
     <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
       <div className="mb-3.5 flex flex-wrap items-center gap-2.5">
         <h3 className="text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
-          Datos reales LinkedIn Analytics
+          {en ? 'Real LinkedIn Analytics data' : 'Datos reales LinkedIn Analytics'}
         </h3>
         <div className="ml-auto flex flex-wrap gap-1.5">
           {['E', 'S', 'G', 'X'].map((k) => (
@@ -17,7 +21,7 @@ export function PostsTable({ posts }) {
               key={k}
               className={`rounded px-2 py-0.5 text-[9px] font-bold tracking-[0.4px] ${ESG_CHIP[k]}`}
             >
-              {ESG_LABEL[k]}
+              {en ? ESG_LABEL_EN[k] : ESG_LABEL[k]}
             </span>
           ))}
         </div>
@@ -26,7 +30,10 @@ export function PostsTable({ posts }) {
       <table className="w-full min-w-[620px] border-collapse">
         <thead>
           <tr>
-            {['#', 'Publicación', 'Pilar', 'Impresiones', 'Eng. Rate', 'Clics', 'Tipo'].map(
+            {(en
+              ? ['#', 'Post', 'Pillar', 'Impressions', 'Eng. Rate', 'Clicks', 'Type']
+              : ['#', 'Publicación', 'Pilar', 'Impresiones', 'Eng. Rate', 'Clics', 'Tipo']
+            ).map(
               (h) => (
                 <th
                   key={h}

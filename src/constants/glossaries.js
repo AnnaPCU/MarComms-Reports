@@ -18,6 +18,22 @@ export const GLOSSARIES = {
     ],
   },
 
+  // Versión en inglés del glosario Social — para el Resumen del Año en EN
+  // (definiciones de Impressions/Reactions/Clicks tomadas del glosario oficial
+  // de los reportes en inglés del cliente).
+  socialEn: {
+    title: 'Glossary — Social Media',
+    entries: [
+      { term: 'Impressions', def: 'The total number of times posts were displayed on users’ feeds, including repeated views. It reflects content visibility and audience reach.' },
+      { term: 'Engagement Rate', def: 'Percentage of interactions (reactions, comments, clicks) over impressions. It measures how relevant the content is to the audience.' },
+      { term: 'Clicks', def: 'The total number of times users interacted with posts by clicking on content elements such as links, images, or “see more”.' },
+      { term: 'Unique page visitors', def: 'Unique visitors who accessed the page profile. Used as an interest proxy, since LinkedIn does not export “conversions”.' },
+      { term: 'New followers', def: 'Net followers gained by the page during the period.' },
+      { term: 'Posts', def: 'Number of posts published by the page during the period.' },
+      { term: 'ESG Pillar', def: 'Classification of each post by axis: Environmental (E), Social (S) or Governance (G).' },
+    ],
+  },
+
   paid: {
     title: 'Glosario — Paid Media',
     entries: [
