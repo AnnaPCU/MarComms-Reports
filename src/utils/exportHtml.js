@@ -40,10 +40,28 @@ function triggerDownload(html, filename) {
 
 async function fetchText(url) {
   try {
-    const r = await fetch(url);
+    const r = await fetch(url, { cache: 'no-store' });
     return await r.text();
   } catch {
     return '';
+  }
+}
+
+// Un asset JS/CSS pedido tras un deploy puede devolver el index.html (fallback
+// SPA de Vercel) si el hash ya no existe. Eso genera descargables rotos.
+const looksLikeHtml = (s) => /^\s*(<!doctype|<html|<head|<body|<)/i.test(s || '');
+
+// Resuelve las URLs del bundle VIGENTE releyendo el index.html del servidor
+// (sin caché). Así la descarga funciona aunque la pestaña abierta sea vieja
+// (deploy posterior): siempre se embebe el JS/CSS del deploy actual.
+async function resolveFreshBundle() {
+  try {
+    const html = await (await fetch('/', { cache: 'no-store' })).text();
+    const js = html.match(/<script[^>]+type="module"[^>]+src="([^"]*\/assets\/[^"]+\.js)"/i)?.[1] ?? null;
+    const css = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]*\/assets\/[^"]+\.css)"/gi)].map((m) => m[1]);
+    return { js, css };
+  } catch {
+    return { js: null, css: [] };
   }
 }
 
@@ -67,19 +85,37 @@ export async function exportViewAsHtml({ pilar, account, period, audience, brand
   // Logo de la marca como data URI (para que no se rompa en el archivo offline).
   const logoSrc = brand && BRAND_LOGOS[brand] ? await fetchAsDataUri(BRAND_LOGOS[brand].src) : null;
 
-  // Buscar el bundle de producción (Vite emite 1 JS + 1 CSS en /assets/).
-  const moduleSrc = [...document.querySelectorAll('script[type="module"][src]')]
-    .map((s) => s.src)
-    .find((src) => src.includes('/assets/'));
-  const cssHrefs = [...document.querySelectorAll('link[rel="stylesheet"][href]')]
-    .map((l) => l.href)
-    .filter((h) => h.includes('/assets/'));
+  // Bundle de producción: primero el del deploy VIGENTE (index.html fresco);
+  // si no se puede, el que referencia esta pestaña (puede haber quedado viejo).
+  const fresh = await resolveFreshBundle();
+  const moduleSrc =
+    fresh.js ??
+    [...document.querySelectorAll('script[type="module"][src]')]
+      .map((s) => s.src)
+      .find((src) => src.includes('/assets/'));
+  const cssHrefs = fresh.css.length
+    ? fresh.css
+    : [...document.querySelectorAll('link[rel="stylesheet"][href]')]
+        .map((l) => l.href)
+        .filter((h) => h.includes('/assets/'));
 
   // ── Modo interactivo (producción) ──
   if (moduleSrc) {
     const js = await fetchText(moduleSrc);
+    // Si en lugar de JS llegó el index.html (asset viejo tras un deploy),
+    // NO generar un archivo roto: pedir recargar la página.
+    if (!js || looksLikeHtml(js)) {
+      window.alert(
+        'La aplicación se actualizó desde que abriste esta pestaña.\n' +
+          'Recargá la página (F5) y volvé a intentar la descarga.',
+      );
+      return { interactive: false, stale: true };
+    }
     let css = '';
-    for (const href of cssHrefs) css += (await fetchText(href)) + '\n';
+    for (const href of cssHrefs) {
+      const c = await fetchText(href);
+      if (c && !looksLikeHtml(c)) css += c + '\n';
+    }
     if (!css) css = collectInlineCss();
 
     const embed = safeJson({ pilar, account, period, audience, brand, title, snapshot, logoSrc });
