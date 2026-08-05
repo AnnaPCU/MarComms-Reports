@@ -18,6 +18,7 @@ import { ChartCard } from '@/components/shared/ChartCard';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { scoreCampaigns } from '@/utils/paidInsights';
+import { PAID_STR } from '@/utils/paidI18n';
 import { isExternalReport } from '@/utils/reportAudience';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
@@ -29,7 +30,7 @@ const short = (s, n = 14) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
 
 const RANK_BORDER = ['border-t-cu-cyan', 'border-t-[#6dc8f2]', 'border-t-[#9ab5b6]'];
 
-function RankCard({ c, rank, currency, maxScore }) {
+function RankCard({ c, rank, currency, maxScore, L }) {
   return (
     <div className={`relative overflow-hidden rounded-cu border border-cu-border ${rank < 3 ? 'border-t-[3px] ' + RANK_BORDER[rank] : ''} bg-white px-4 py-3.5 shadow-cu transition-shadow hover:shadow-cu-h`}>
       <span className={`absolute right-3 top-2.5 rounded-[3px] px-1.5 py-0.5 text-[10px] font-bold ${rank === 0 ? 'bg-cu-cyan/10 text-cu-cyan' : 'bg-cu-bg text-cu-grey'}`}>
@@ -39,8 +40,8 @@ function RankCard({ c, rank, currency, maxScore }) {
       <div className="grid grid-cols-2 gap-1.5">
         <Metric label="CTR" value={pct(c.ctr)} />
         <Metric label="CPC" value={(c.cpc || 0) > 0 ? money(c.cpc, currency) : '—'} />
-        <Metric label="Conv." value={numEs(c.conversions)} />
-        <Metric label="Coste" value={money(c.cost, currency)} />
+        <Metric label={L.mConv} value={numEs(c.conversions)} />
+        <Metric label={L.mCost} value={money(c.cost, currency)} />
       </div>
       <div className="mt-2.5 flex items-center gap-2 border-t border-cu-border2 pt-2.5">
         <span className="text-[9px] font-medium uppercase tracking-[0.4px] text-cu-grey">Score</span>
@@ -86,12 +87,14 @@ function BarByCampaign({ title, subtitle, data, unit, currency, color = CU.cyan 
   );
 }
 
-export function ComparativeCampaigns({ mo, currency = 'EUR' }) {
+export function ComparativeCampaigns({ mo, currency = 'EUR', lang = 'es' }) {
+  const L = PAID_STR[lang];
+  const en = lang === 'en';
   const ranked = scoreCampaigns(mo);
   if (!ranked.length) {
     return (
       <div className="rounded-cu border border-cu-border bg-white px-5 py-8 text-center text-[13px] text-cu-grey shadow-cu">
-        No hay campañas con actividad suficiente para comparar en este período.
+        {L.cmpEmpty}
       </div>
     );
   }
@@ -107,11 +110,11 @@ export function ComparativeCampaigns({ mo, currency = 'EUR' }) {
   // Radar: top campañas por score, dimensiones normalizadas 0-100.
   const top = ranked.slice(0, Math.min(4, ranked.length));
   const radarAxes = [
-    { dim: 'CTR', key: 'ctrN' },
-    { dim: 'Tasa conv.', key: 'cvrN' },
-    { dim: 'Efic. CPC', key: 'cpcEff' },
-    { dim: 'Efic. lead', key: 'cplEff' },
-    { dim: 'Score', key: 'score' },
+    { dim: L.radarAxes.ctr, key: 'ctrN' },
+    { dim: L.radarAxes.cvr, key: 'cvrN' },
+    { dim: L.radarAxes.cpcEff, key: 'cpcEff' },
+    { dim: L.radarAxes.cplEff, key: 'cplEff' },
+    { dim: L.radarAxes.score, key: 'score' },
   ];
   const radarData = radarAxes.map((ax) => {
     const row = { dim: ax.dim };
@@ -123,31 +126,30 @@ export function ComparativeCampaigns({ mo, currency = 'EUR' }) {
 
   return (
     <div className="animate-fade-in">
-      <SectionHeader title="Comparativa de Campañas — Efectividad" note="Campañas con actividad" />
-      <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3.5 text-[12.5px] leading-relaxed text-cu-dgrey shadow-cu">
-        Compara las campañas <strong className="text-cu-dblue">con actividad</strong> por efectividad, no por volumen. El{' '}
-        <strong className="text-cu-dblue">score</strong> pondera tasa de conversión (45%), CTR (30%) y eficiencia de coste por
-        lead (25%). Si en el mes no hubo conversiones, el peso recae en CTR y eficiencia de CPC.
-      </div>
+      <SectionHeader title={L.cmpSection} note={L.cmpNote} />
+      <div
+        className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3.5 text-[12.5px] leading-relaxed text-cu-dgrey shadow-cu [&_strong]:text-cu-dblue"
+        dangerouslySetInnerHTML={{ __html: L.cmpIntro }}
+      />
 
       <div className="mb-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
         {ranked.map((c, i) => (
-          <RankCard key={c.name} c={c} rank={i} currency={currency} maxScore={maxScore} />
+          <RankCard key={c.name} c={c} rank={i} currency={currency} maxScore={maxScore} L={L} />
         ))}
       </div>
 
       <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
-        <BarByCampaign title="CTR por Campaña" subtitle="% de clics sobre impresiones — mayor es mejor" data={ctrData} unit="pct" />
-        <BarByCampaign title="Coste por Clic (CPC medio)" subtitle="EUR por clic — menor es mejor" data={cpcData} unit="money" currency={currency} color={CU.dblue} />
+        <BarByCampaign title={L.chCtrTitle} subtitle={L.chCtrSub} data={ctrData} unit="pct" />
+        <BarByCampaign title={L.chCpcTitle} subtitle={L.chCpcSub} data={cpcData} unit="money" currency={currency} color={CU.dblue} />
       </div>
       <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
-        <BarByCampaign title="Tasa de Conversión" subtitle="Conversiones sobre clics" data={cvrData} unit="pct" color="#2d8a4e" />
+        <BarByCampaign title={L.chCvrTitle} subtitle={L.chCvrSub} data={cvrData} unit="pct" color="#2d8a4e" />
         {cplData.length ? (
-          <BarByCampaign title="Coste por Lead" subtitle="EUR por conversión — menor es mejor" data={cplData} unit="money" currency={currency} color="#d4a72c" />
+          <BarByCampaign title={L.chCplTitle} subtitle={L.chCplSub} data={cplData} unit="money" currency={currency} color="#d4a72c" />
         ) : (
-          <ChartCard title="Coste por Lead" subtitle="EUR por conversión — menor es mejor">
+          <ChartCard title={L.chCplTitle} subtitle={L.chCplSub}>
             <div className="flex h-full items-center justify-center text-center text-[12px] text-cu-grey">
-              Sin conversiones en el período — no hay coste por lead que comparar.
+              {L.chCplEmpty}
             </div>
           </ChartCard>
         )}
@@ -156,9 +158,9 @@ export function ComparativeCampaigns({ mo, currency = 'EUR' }) {
       <div className="mb-5 rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
         <div className="mb-0.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
           <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
-          Radar de Efectividad — Top {top.length} campañas
+          {L.radarTitle(top.length)}
         </div>
-        <div className="mb-3 text-[10px] text-cu-grey">Vista multidimensional (0-100): CTR · Tasa de conversión · Eficiencia de coste · Score</div>
+        <div className="mb-3 text-[10px] text-cu-grey">{L.radarSub}</div>
         <div className="relative h-[340px]">
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart data={radarData} outerRadius="72%">
@@ -176,15 +178,26 @@ export function ComparativeCampaigns({ mo, currency = 'EUR' }) {
 
       {!isExternalReport() && (
         <>
-          <SectionHeader title="Conclusión — Próximos Pasos" />
+          <SectionHeader title={L.nextSection} />
           <NextStepsPanel
-            steps={[
-              `<strong>Priorizar ${ranked[0].name}</strong>: es la campaña más efectiva del período (score ${ranked[0].score}). Sostener y escalar su presupuesto.`,
-              ranked.length > 1
-                ? `<strong>Optimizar las de menor score</strong>: revisar anuncios, palabras clave y landing pages de ${ranked[ranked.length - 1].name} y similares.`
-                : `<strong>Ampliar la base</strong>: activar más campañas para tener con qué comparar el próximo mes.`,
-              `<strong>Comparar mes a mes</strong>: seguir la evolución del score para confirmar si las optimizaciones mejoran la efectividad relativa.`,
-            ]}
+            title={L.nextTitle}
+            steps={
+              en
+                ? [
+                    `<strong>Prioritize ${ranked[0].name}</strong>: the most effective campaign of the period (score ${ranked[0].score}). Sustain and scale its budget.`,
+                    ranked.length > 1
+                      ? `<strong>Optimize the lowest-scoring ones</strong>: review ads, keywords and landing pages of ${ranked[ranked.length - 1].name} and similar.`
+                      : `<strong>Broaden the base</strong>: activate more campaigns to have something to compare next month.`,
+                    `<strong>Compare month over month</strong>: track score evolution to confirm whether optimizations improve relative effectiveness.`,
+                  ]
+                : [
+                    `<strong>Priorizar ${ranked[0].name}</strong>: es la campaña más efectiva del período (score ${ranked[0].score}). Sostener y escalar su presupuesto.`,
+                    ranked.length > 1
+                      ? `<strong>Optimizar las de menor score</strong>: revisar anuncios, palabras clave y landing pages de ${ranked[ranked.length - 1].name} y similares.`
+                      : `<strong>Ampliar la base</strong>: activar más campañas para tener con qué comparar el próximo mes.`,
+                    `<strong>Comparar mes a mes</strong>: seguir la evolución del score para confirmar si las optimizaciones mejoran la efectividad relativa.`,
+                  ]
+            }
           />
         </>
       )}

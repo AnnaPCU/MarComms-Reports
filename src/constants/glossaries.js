@@ -49,6 +49,22 @@ export const GLOSSARIES = {
     ],
   },
 
+  // Versión en inglés del glosario Paid — para el toggle EN del pilar.
+  paidEn: {
+    title: 'Glossary — Paid Media',
+    entries: [
+      { term: 'Impressions', def: 'Number of times the ads were shown in search results.' },
+      { term: 'Clicks', def: 'Number of times users clicked on an ad.' },
+      { term: 'CTR', def: 'Click-Through Rate: percentage of clicks over impressions. Measures how attractive the ad is for the search.' },
+      { term: 'Avg. CPC', def: 'Average cost paid per click during the period.' },
+      { term: 'Cost', def: 'Total spend executed on the campaign during the period.' },
+      { term: 'Conversions', def: 'Valuable actions completed after the click (e.g. form submission or contact request) according to the campaign objective.' },
+      { term: 'Conversion rate', def: 'Percentage of clicks that ended in a conversion.' },
+      { term: 'Cost per conversion', def: 'Average spend needed to generate one conversion (cost per lead).' },
+      { term: 'Optimization score', def: 'Campaign health indicator in Google Ads based on applied configuration best practices.' },
+    ],
+  },
+
   email: {
     title: 'Glosario — Email Marketing',
     entries: [

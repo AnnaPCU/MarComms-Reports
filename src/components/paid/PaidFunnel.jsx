@@ -2,6 +2,8 @@
 // + tarjetas de coste (Coste, CPC medio, Coste/lead, Optimización).
 // El texto de cada etapa se centra y se acota al ancho de la forma, para que
 // NUNCA sobresalga del color del embudo.
+import { PAID_STR } from '@/utils/paidI18n';
+
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct = (v) =>
   Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
@@ -68,7 +70,8 @@ function CostCard({ dot, label, value, unit, sub }) {
   );
 }
 
-export function PaidFunnel({ totals: t, campaigns = [] }) {
+export function PaidFunnel({ totals: t, campaigns = [], lang = 'es' }) {
+  const L = PAID_STR[lang];
   const imp = t.impressions || 0;
   const clk = t.clicks || 0;
   const conv = t.conversions || 0;
@@ -92,53 +95,53 @@ export function PaidFunnel({ totals: t, campaigns = [] }) {
             gradient="linear-gradient(135deg,#1b1e42,#343c7d)"
             topW={100}
             botW={76}
-            name="Impresiones"
+            name={L.fImp}
             value={numEs(imp)}
-            desc={`El anuncio se mostró ${numEs(imp)} veces`}
+            desc={L.fImpDesc(numEs(imp))}
             retention="100 %"
           />
           <Drop>
-            CTR&nbsp;<b className="font-bold text-cu-cyan">{pct(t.ctr)}</b>&nbsp;· impresión → clic
+            CTR&nbsp;<b className="font-bold text-cu-cyan">{pct(t.ctr)}</b>&nbsp;· {L.dropCtr}
           </Drop>
           <Stage
             gradient="linear-gradient(135deg,#2069a8,#3eb2ed)"
             topW={76}
             botW={54}
-            name="Clics"
+            name={L.fClk}
             value={numEs(clk)}
             desc={`CPC ${money(t.cpc, currency)}`}
             retention={pct(retClk)}
           />
           <Drop>
-            Conversión&nbsp;<b className="font-bold text-cu-cyan">{pct(retConv)}</b>&nbsp;· clic → lead
+            {L.convWord}&nbsp;<b className="font-bold text-cu-cyan">{pct(retConv)}</b>&nbsp;· {L.dropConv}
           </Drop>
           <Stage
             gradient="linear-gradient(135deg,#247a44,#3fb86a)"
             topW={54}
             botW={40}
-            name="Conversiones"
+            name={L.fConv}
             value={numEs(conv)}
-            desc={conv > 0 ? `Coste/lead ${money(t.costPerConv, currency)}` : 'Sin leads en el período'}
+            desc={conv > 0 ? `${L.fCostLead} ${money(t.costPerConv, currency)}` : L.fNoLeads}
             retention={pct(retConv)}
           />
         </div>
 
         {/* Cost cards */}
         <div className="flex flex-col gap-3">
-          <CostCard dot="#1b1e42" label="Coste total" value={money(t.cost, currency)} sub="Inversión ejecutada en el período" />
-          <CostCard dot="#3eb2ed" label="CPC medio" value={money(t.cpc, currency)} sub="Coste promedio por clic" />
+          <CostCard dot="#1b1e42" label={L.cCostTotal} value={money(t.cost, currency)} sub={L.cCostSub} />
+          <CostCard dot="#3eb2ed" label={L.cCpc} value={money(t.cpc, currency)} sub={L.cCpcSub} />
           <CostCard
             dot="#2d8a4e"
-            label="Coste por lead"
+            label={L.cCpl}
             value={conv > 0 ? money(t.costPerConv, currency) : '—'}
-            sub={conv > 0 ? `${numEs(conv)} conversión/es` : 'Sin conversiones en el período'}
+            sub={conv > 0 ? L.cCplSub(numEs(conv)) : L.cCplNo}
           />
           <CostCard
             dot="#d4a72c"
-            label="Optimización media"
+            label={L.cOpt}
             value={optAvg != null ? optAvg.toFixed(1) : '—'}
             unit={optAvg != null ? '%' : ''}
-            sub={optAvg != null ? 'Nivel de optimización (Google Ads)' : 'Sin dato de optimización en el export'}
+            sub={optAvg != null ? L.cOptSub : L.cOptNo}
           />
         </div>
       </div>

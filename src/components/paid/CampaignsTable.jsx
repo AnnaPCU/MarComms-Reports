@@ -1,4 +1,5 @@
 import { campaignStatus } from '@/utils/paidInsights';
+import { PAID_STR } from '@/utils/paidI18n';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct = (v) =>
@@ -13,13 +14,14 @@ const BADGE = {
   none: 'bg-cu-bg text-cu-grey border border-cu-border',
 };
 
-function StatusChip({ c }) {
+function StatusChip({ c, L }) {
   const s = campaignStatus(c);
-  return <span className={`whitespace-nowrap rounded-[3px] px-2 py-0.5 text-[9px] font-bold tracking-[0.4px] ${BADGE[s.key]}`}>● {s.label}</span>;
+  return <span className={`whitespace-nowrap rounded-[3px] px-2 py-0.5 text-[9px] font-bold tracking-[0.4px] ${BADGE[s.key]}`}>● {L.status[s.key]}</span>;
 }
 
 // Tabla de detalle por campaña (ordenada por impresiones desc).
-export function CampaignsTable({ campaigns = [], currency = 'EUR', title = 'Google Ads — Search' }) {
+export function CampaignsTable({ campaigns = [], currency = 'EUR', title = 'Google Ads — Search', lang = 'es' }) {
+  const L = PAID_STR[lang];
   const rows = campaigns.slice().sort((a, b) => (b.impressions || 0) - (a.impressions || 0));
 
   return (
@@ -27,15 +29,15 @@ export function CampaignsTable({ campaigns = [], currency = 'EUR', title = 'Goog
       <div className="mb-3.5 flex flex-wrap items-center gap-2.5">
         <h3 className="text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{title}</h3>
         <div className="ml-auto flex flex-wrap gap-1.5">
-          <span className="rounded-[3px] border border-[#2d8a4e]/30 bg-[#2d8a4e]/10 px-2 py-0.5 text-[9px] font-bold text-[#1d6e3a]">● Convierte</span>
-          <span className="rounded-[3px] border border-[#d4a72c]/40 bg-[#d4a72c]/12 px-2 py-0.5 text-[9px] font-bold text-[#8a6d12]">● Optimizar</span>
-          <span className="rounded-[3px] border border-cu-grey/30 bg-cu-grey/10 px-2 py-0.5 text-[9px] font-bold text-[#3e5a5b]">● Baja actividad</span>
+          <span className="rounded-[3px] border border-[#2d8a4e]/30 bg-[#2d8a4e]/10 px-2 py-0.5 text-[9px] font-bold text-[#1d6e3a]">● {L.status.win}</span>
+          <span className="rounded-[3px] border border-[#d4a72c]/40 bg-[#d4a72c]/12 px-2 py-0.5 text-[9px] font-bold text-[#8a6d12]">● {L.status.opt}</span>
+          <span className="rounded-[3px] border border-cu-grey/30 bg-cu-grey/10 px-2 py-0.5 text-[9px] font-bold text-[#3e5a5b]">● {L.status.low}</span>
         </div>
       </div>
       <table className="w-full min-w-[760px] border-collapse">
         <thead>
           <tr>
-            {['Campaña', 'Estado', 'Impresiones', 'Clics', 'CTR', 'CPC medio', 'Coste', 'Conv.', 'Tasa conv.', 'Coste/lead'].map((h) => (
+            {L.tHeaders.map((h) => (
               <th
                 key={h}
                 className="whitespace-nowrap border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey"
@@ -49,7 +51,7 @@ export function CampaignsTable({ campaigns = [], currency = 'EUR', title = 'Goog
           {rows.map((c) => (
             <tr key={c.name} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
               <td className="px-3 py-2 text-[12px] font-semibold text-cu-dblue">{c.name}</td>
-              <td className="px-3 py-2"><StatusChip c={c} /></td>
+              <td className="px-3 py-2"><StatusChip c={c} L={L} /></td>
               <td className="px-3 py-2 text-[12px] text-cu-dgrey">{numEs(c.impressions)}</td>
               <td className="px-3 py-2 text-[12px] text-cu-dgrey">{numEs(c.clicks)}</td>
               <td className="px-3 py-2 text-[12px] text-cu-dgrey">{pct(c.ctr)}</td>
