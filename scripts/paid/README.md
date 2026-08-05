@@ -11,7 +11,7 @@ envío por mail):
 2. **Semanal por grupo de anuncios**: filas Campaña → Grupo → Semana;
    columnas Impresiones, Clics, CTR, CPC medio, Coste, Conversiones,
    Cuota de impr. de búsqueda, Cuota impr. perd. (ranking).
-   Alimenta "Consumo del Presupuesto — Semana a Semana" (solo interno).
+   Alimenta "Consumo del Presupuesto — Semana a Semana".
 3. **Términos de búsqueda + Palabras Clave**: filas Campaña → Grupo →
    Palabra clave → Término; columnas Concordancia, Impr., Clics, Coste,
    Conversiones. Alimenta "Detalle por Grupo de Anuncio".

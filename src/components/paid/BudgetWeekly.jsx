@@ -24,7 +24,7 @@ const wkLabel = (w) => {
 
 const MAX_SERIES = 6;
 
-// Consumo semanal del presupuesto (SOLO uso interno): barras apiladas por
+// Consumo semanal del presupuesto: barras apiladas por
 // serie (campañas o grupos de anuncio) + línea de acumulado del mes.
 //
 // Leyenda interactiva: clic en una serie → se muestra SOLO esa; con una vista

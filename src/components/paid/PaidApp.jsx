@@ -71,8 +71,8 @@ function CampaignDetail({ c, currency, accName, periodLabel, t, lang, detailGrou
       <SectionHeader title={t.funnelSection} note={t.funnelNote} />
       <PaidFunnel totals={{ ...c, currency }} campaigns={[c]} lang={lang} />
 
-      {/* Consumo semanal del presupuesto por grupo de anuncio — SOLO interno */}
-      {!isExternalReport() && detailGroups.length > 0 && (
+      {/* Consumo semanal del presupuesto por grupo de anuncio */}
+      {detailGroups.length > 0 && (
         <>
           <SectionHeader title={t.budgetSection} note={t.budgetNoteGroup} />
           <BudgetWeekly series={detailGroups.map((g) => ({ name: g.name, weeks: g.weeks }))} currency={currency} lang={lang} />
@@ -196,7 +196,7 @@ export function PaidApp({ account, period }) {
           <SectionHeader title={t.distSection} note={t.campaignsCount(mo.campaigns.length)} />
           <PaidCharts campaigns={mo.campaigns} currency={c} lang={lang} />
 
-          {!isExternalReport() && detail?.groups?.length > 0 && (
+          {detail?.groups?.length > 0 && (
             <>
               <SectionHeader title={t.budgetSection} note={t.budgetNoteCamp} />
               <BudgetWeekly
