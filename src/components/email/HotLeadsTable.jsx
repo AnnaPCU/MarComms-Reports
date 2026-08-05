@@ -1,4 +1,5 @@
 import { Flame } from 'lucide-react';
+import { BrandIcon } from '@/components/shared/BrandIcon';
 import { priorityOf } from '@/utils/mailchimp/aggregate';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
@@ -30,7 +31,7 @@ export function HotLeadsTable({ leads = [] }) {
     <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
       <div className="mb-3.5 flex flex-wrap items-center gap-2.5">
         <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
-          <Flame className="h-3.5 w-3.5 text-[#e06a2c]" />
+          <BrandIcon icon={Flame} tone="accent" size="sm" />
           {numEs(leads.length)} hot leads — contactos con clic
         </div>
         <div className="ml-auto flex flex-wrap gap-1.5">

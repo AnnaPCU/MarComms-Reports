@@ -1,16 +1,20 @@
 // Panel de insights / plan de acción (cabecera dark blue + grid de tarjetas).
 // Cada item: { m: tendencia, a: acción recomendada (HTML inline permitido) }.
+import { Zap } from 'lucide-react';
+import { BrandIcon } from '@/components/shared/BrandIcon';
+
 export function InsightsPanel({
   subtitle,
   items,
   label = 'Tendencia Mensual',
-  title = '⚡ Plan de Acción — Insights ESG B2B',
+  title = 'Plan de Acción — Insights ESG B2B',
   actionLabel = 'Acción recomendada',
   emptyText = 'Sin información suficiente para este período',
 }) {
   return (
     <div className="mb-5 overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
       <div className="flex flex-wrap items-center gap-2.5 bg-cu-dblue px-5 py-3">
+        <BrandIcon icon={Zap} tone="onDark" size="md" />
         <h2 className="text-[11px] font-bold uppercase tracking-[0.6px] text-white">
           {title}
         </h2>

@@ -1,12 +1,14 @@
 // Panel de diagnóstico (grid 2-col) y panel de próximos pasos (lista numerada).
 // Genéricos: los usan los pilares Paid, Social y Website. Cabecera dark blue.
+import { ClipboardList, Target } from 'lucide-react';
+import { BrandIcon } from '@/components/shared/BrandIcon';
 
 export function ConclusionsPanel({ items = [], title = 'Diagnóstico y recomendaciones' }) {
   if (!items.length) return null;
   return (
     <div className="mb-5 overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
       <div className="flex items-center gap-2.5 bg-cu-dblue px-5 py-3">
-        <span className="text-[14px]">📌</span>
+        <BrandIcon icon={ClipboardList} tone="onDark" size="md" />
         <h3 className="text-[11px] font-bold uppercase tracking-[0.5px] text-white">{title}</h3>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -29,7 +31,7 @@ export function NextStepsPanel({ steps = [], subtitle, title = 'Próximos pasos'
   return (
     <div className="mb-5 overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
       <div className="flex items-center gap-2.5 bg-cu-dblue px-5 py-3">
-        <span className="text-[14px]">🎯</span>
+        <BrandIcon icon={Target} tone="onDark" size="md" />
         <h3 className="text-[11px] font-bold uppercase tracking-[0.5px] text-white">{title}</h3>
         {subtitle && <span className="ml-auto text-[10px] text-white/50">{subtitle}</span>}
       </div>

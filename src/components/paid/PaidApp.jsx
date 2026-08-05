@@ -115,9 +115,9 @@ export function PaidApp({ account, period }) {
   const selected = mo.campaigns.find((x) => x.name === view);
 
   const campOptions = [
-    { id: ALL, label: '⚡ Todas las campañas — Vista global' },
+    { id: ALL, label: 'Todas las campañas — Vista global' },
     ...mo.campaigns.map((x) => ({ id: x.name, label: x.name })),
-    { id: CMP, label: '📊 Comparativa de campañas' },
+    { id: CMP, label: 'Comparativa de campañas' },
   ];
 
   return (
@@ -143,7 +143,7 @@ export function PaidApp({ account, period }) {
       ) : (
         <>
           <InsightsPanel
-            title="⚡ Plan de Acción — Insights Paid Media"
+            title="Plan de Acción — Insights Paid Media"
             label="Insight"
             subtitle={[accName, periodLabel, mo.channel].filter(Boolean).join(' · ')}
             items={genPaidInsights(mo)}

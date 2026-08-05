@@ -16,7 +16,8 @@ import { CU, CHART_TOOLTIP, brandOf } from '@/constants/brand';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
-import { Select } from '@/components/shared/Select';
+import { SegmentedControl } from '@/components/shared/SegmentedControl';
+import { BrandIcon } from '@/components/shared/BrandIcon';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
@@ -39,14 +40,15 @@ const pct1 = (v) => Number(v || 0).toFixed(1) + '%';
 const YEAR = 'year';
 
 // Banner de progreso: variación de ER entre el primer y el último mes con datos.
+// Ícono según manual de marca: blanco sobre CU Cyan (sube) / CU Grey (baja).
 function ProgressHero({ agg, t }) {
   if (agg.monthsCount < 2) return null;
   const up = agg.erDelta >= 0;
   const Icon = up ? TrendingUp : TrendingDown;
   return (
     <div className="mb-5 flex flex-wrap items-center gap-5 rounded-cu border border-cu-border bg-gradient-to-r from-cu-dblue to-[#2d3a8a] px-6 py-5 shadow-cu">
-      <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${up ? 'bg-[#3fb86a]/20' : 'bg-[#e0703c]/20'}`}>
-        <Icon className={`h-6 w-6 ${up ? 'text-[#7ef0a6]' : 'text-[#ffb38a]'}`} />
+      <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full ${up ? 'bg-cu-cyan' : 'bg-cu-grey'}`}>
+        <BrandIcon icon={Icon} tone="onDark" size="lg" />
       </div>
       <div className="min-w-[180px]">
         <div className="text-[10px] font-bold uppercase tracking-[0.6px] text-white/55">{t.heroLabel}</div>
@@ -71,25 +73,6 @@ function ProgressHero({ agg, t }) {
           <div className="text-[16px] font-bold">{agg.monthsCount}</div>
         </div>
       </div>
-    </div>
-  );
-}
-
-// Toggle ES/EN del reporte (persiste en el HTML descargado — es interactivo).
-function LangToggle({ lang, onChange }) {
-  return (
-    <div className="flex overflow-hidden rounded-sm border border-cu-border">
-      {['es', 'en'].map((l) => (
-        <button
-          key={l}
-          onClick={() => onChange(l)}
-          className={`px-3 py-[6px] text-[10px] font-bold uppercase tracking-[0.5px] transition-colors ${
-            lang === l ? 'bg-cu-dblue text-white' : 'bg-white text-cu-grey hover:text-cu-dblue'
-          }`}
-        >
-          {l === 'es' ? 'ES' : 'EN'}
-        </button>
-      ))}
     </div>
   );
 }
@@ -155,9 +138,17 @@ export function AnnualReview({ account }) {
 
   return (
     <div className="animate-fade-in">
-      <div className="mb-1 flex flex-wrap items-end justify-between gap-3">
-        <Select label={t.segmentLabel} value={seg} onChange={setSeg} options={segOptions} />
-        <LangToggle lang={lang} onChange={setLang} />
+      <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+        <SegmentedControl label={t.segmentLabel} value={seg} onChange={setSeg} options={segOptions} />
+        <SegmentedControl
+          value={lang}
+          onChange={setLang}
+          size="sm"
+          options={[
+            { id: 'es', label: 'ES' },
+            { id: 'en', label: 'EN' },
+          ]}
+        />
       </div>
 
       <SectionHeader title={t.title} note={accName} />

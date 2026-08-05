@@ -70,7 +70,7 @@ export function EmailApp({ account, period }) {
   return (
     <div className="animate-fade-in">
       <InsightsPanel
-        title="⚡ Plan de Acción — Insights Email Marketing"
+        title="Plan de Acción — Insights Email Marketing"
         label="Insight"
         subtitle={subtitle}
         items={genEmailInsights(campaign)}

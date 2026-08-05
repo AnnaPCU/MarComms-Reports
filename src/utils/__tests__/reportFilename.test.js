@@ -38,7 +38,7 @@ describe('reportFilename', () => {
       reportFilename({ pilarLabel: 'Website', accountName: 'Control Union Argentina', period: 'q1-2026', periodLabel: 'Q1 2026' }),
     ).toBe('Control_Union_Argentina__Reporte_Website_Q1_2026.html');
     expect(
-      reportFilename({ pilarLabel: 'Social Media', accountName: 'Control Union Norte', period: 'cmp', periodLabel: '⚡ Comparativa Multi-Cuenta' }),
+      reportFilename({ pilarLabel: 'Social Media', accountName: 'Control Union Norte', period: 'cmp', periodLabel: 'Comparativa Multi-Cuenta' }),
     ).toBe('Control_Union_Norte__Reporte_Social_Media_Comparativa.html');
   });
 

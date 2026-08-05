@@ -104,7 +104,7 @@ function SiteView({ data, accName, periodLabel }) {
 
   return (
     <>
-      <InsightsPanel title="⚡ Plan de Acción — Insights Website" label="Insight" subtitle={`${accName} · ${periodLabel}`} items={genSiteInsights(data)} />
+      <InsightsPanel title="Plan de Acción — Insights Website" label="Insight" subtitle={`${accName} · ${periodLabel}`} items={genSiteInsights(data)} />
 
       <SectionHeader title={`Website — ${periodLabel}`} note={accName} />
       <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -216,7 +216,7 @@ function SeoView({ data, accName, periodLabel }) {
 
   return (
     <>
-      <InsightsPanel title="⚡ Plan de Acción — Insights SEO" label="Insight" subtitle={`${accName} · ${periodLabel}`} items={genSeoInsights(data)} />
+      <InsightsPanel title="Plan de Acción — Insights SEO" label="Insight" subtitle={`${accName} · ${periodLabel}`} items={genSeoInsights(data)} />
 
       <SectionHeader title={`SEO — ${periodLabel}`} note={accName} />
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">

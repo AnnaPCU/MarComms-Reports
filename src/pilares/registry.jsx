@@ -16,9 +16,9 @@ import { WebsiteApp } from '@/components/website/WebsiteApp';
 import { EmailApp } from '@/components/email/EmailApp';
 import { WebinarsApp } from '@/components/webinars/WebinarsApp';
 
-const COMPARATIVE = { id: 'cmp', label: '⚡ Comparativa Multi-Cuenta' };
+const COMPARATIVE = { id: 'cmp', label: 'Comparativa Multi-Cuenta' };
 // Vista temporal: resumen anual de progreso de una cuenta (pedido puntual).
-const YEAR_2026 = { id: 'year-2026', label: '📅 Resumen del Año 2026' };
+const YEAR_2026 = { id: 'year-2026', label: 'Resumen del Año 2026' };
 
 export const REGISTRY = {
   social: {
