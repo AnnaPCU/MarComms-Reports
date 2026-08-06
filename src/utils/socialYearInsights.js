@@ -1,4 +1,8 @@
 // ════════════════════════════════════════════════════════════════
+//  [LEGADO] Vista ESTÁNDAR del Resumen del Año — retirada del producto
+//  (el reporte anual usa el formato ejecutivo, ver execReview.js).
+//  Se conserva para poder restaurar la vista anterior (commit 2c2d10f).
+// ════════════════════════════════════════════════════════════════
 //  RESUMEN DEL AÑO — Social (LinkedIn).
 //  Consolida la serie mensual de una cuenta y genera los agregados y
 //  las lecturas (insights / diagnóstico / próximos pasos) del progreso
