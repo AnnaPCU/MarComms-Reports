@@ -36,12 +36,12 @@ export const GLOSSARIES = {
 
   paid: {
     title: 'Glosario — Paid Media',
-    note: '<strong>El presupuesto solo se consume cuando alguien hace clic en el anuncio.</strong> Que el anuncio se muestre (una "impresión") no cuesta nada: si un anuncio aparece 100 veces y una sola persona le hace clic, se paga únicamente ese clic. Por eso puede haber miles de impresiones con muy poco gasto.',
+    note: '<strong>El presupuesto solo se consume cuando alguien hace clic en el anuncio.</strong> Que el anuncio se muestre (una "impresión") no cuesta nada: si un anuncio aparece 100 veces y una sola persona le hace clic, se paga únicamente ese clic. Por eso puede haber miles de impresiones con muy poco gasto.<br /><strong>¿Y cuánto cuesta cada clic?</strong> No es un precio fijo: funciona como una subasta. El precio depende de cuántos anunciantes están pagando por la misma palabra clave. Si nadie más la paga, el clic sale barato; cuantos más competidores compran esa misma palabra, más caro se vuelve el clic. Por eso el CPC varía entre campañas y entre meses.',
     entries: [
       { term: 'Impresiones', def: 'Cantidad de veces que los anuncios se mostraron en los resultados de búsqueda.' },
       { term: 'Clics', def: 'Cantidad de veces que los usuarios hicieron clic en un anuncio.' },
       { term: 'CTR', def: 'Click-Through Rate: porcentaje de clics sobre impresiones. Mide qué tan atractivo es el anuncio frente a la búsqueda.' },
-      { term: 'CPC medio', def: 'Costo promedio por clic pagado durante el período.' },
+      { term: 'CPC medio', def: 'Costo promedio por clic pagado durante el período. El precio de cada clic se define por subasta: depende de cuántos anunciantes compiten por la misma palabra clave (a más competencia, más caro el clic).' },
       { term: 'Coste', def: 'Inversión total ejecutada en la campaña durante el período.' },
       { term: 'Conversiones', def: 'Acciones de valor completadas tras el clic (por ej. envío de formulario o solicitud de contacto) según el objetivo de la campaña.' },
       { term: 'Tasa de conversión', def: 'Porcentaje de clics que terminaron en una conversión.' },
@@ -57,12 +57,12 @@ export const GLOSSARIES = {
   // Versión en inglés del glosario Paid — para el toggle EN del pilar.
   paidEn: {
     title: 'Glossary — Paid Media',
-    note: '<strong>Budget is only spent when someone clicks the ad.</strong> Being shown (an "impression") costs nothing: if an ad appears 100 times and only one person clicks it, we pay for that single click. That is why there can be thousands of impressions with very little spend.',
+    note: '<strong>Budget is only spent when someone clicks the ad.</strong> Being shown (an "impression") costs nothing: if an ad appears 100 times and only one person clicks it, we pay for that single click. That is why there can be thousands of impressions with very little spend.<br /><strong>And how much does each click cost?</strong> It is not a fixed price: it works like an auction. The price depends on how many advertisers are paying for the same keyword. If nobody else pays for it, the click is cheap; the more competitors buying that same word, the more expensive the click becomes. That is why CPC varies across campaigns and months.',
     entries: [
       { term: 'Impressions', def: 'Number of times the ads were shown in search results.' },
       { term: 'Clicks', def: 'Number of times users clicked on an ad.' },
       { term: 'CTR', def: 'Click-Through Rate: percentage of clicks over impressions. Measures how attractive the ad is for the search.' },
-      { term: 'Avg. CPC', def: 'Average cost paid per click during the period.' },
+      { term: 'Avg. CPC', def: 'Average cost paid per click during the period. Each click\'s price is set by auction: it depends on how many advertisers compete for the same keyword (more competition, more expensive clicks).' },
       { term: 'Cost', def: 'Total spend executed on the campaign during the period.' },
       { term: 'Conversions', def: 'Valuable actions completed after the click (e.g. form submission or contact request) according to the campaign objective.' },
       { term: 'Conversion rate', def: 'Percentage of clicks that ended in a conversion.' },
