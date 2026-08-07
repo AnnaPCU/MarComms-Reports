@@ -55,6 +55,46 @@ export function genMonthlyInsights(mo, prev) {
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct1 = (v) => Number(v || 0).toFixed(1) + '%';
 
+// ── Insights del reporte POR PAÍS de CU Latinoamérica ──
+// Todo computado de datos reales: participación del país en el mes,
+// tendencia vs mes anterior y mejor post del país.
+export function genLatamInsights(d, prev, tot, countryName) {
+  if (!d || !d.np) return [];
+  const ins = [];
+
+  if (tot?.imp) {
+    const share = (d.imp / tot.imp) * 100;
+    ins.push({
+      m: `${countryName} concentró el ${share.toFixed(0)}% de las impresiones del contenido del mes (${d.np} de ${tot.np} publicaciones)`,
+      a:
+        share >= 30
+          ? `El país es un motor de alcance de la cuenta ➜ <strong>Sostener la frecuencia de publicación para ${countryName}</strong> y sumar CTA a la landing local en los posts top.`
+          : `Hay espacio para crecer en participación ➜ <strong>Aumentar la cadencia de posts etiquetados para ${countryName}</strong>, priorizando los formatos que ya funcionan en la cuenta.`,
+    });
+  }
+
+  if (prev?.imp) {
+    const di = ((d.imp - prev.imp) / prev.imp) * 100;
+    ins.push({
+      m: `Impresiones del contenido de ${countryName}: ${di > 0 ? '+' : ''}${di.toFixed(0)}% vs mes anterior`,
+      a:
+        di > 0
+          ? 'El interés local está en crecimiento ➜ <strong>Capitalizar con contenido de servicios específicos del país</strong> mientras la tendencia acompaña.'
+          : 'El alcance local bajó ➜ <strong>Revisar mix y horarios de los posts del país</strong> y replicar el formato del mejor post del mes.',
+    });
+  }
+
+  const tp = topPost(d);
+  if (tp) {
+    ins.push({
+      m: `Mejor post de ${countryName}: pilar ${ESG_NAME[classifyESG(tp.t)] || 'General'} — ER ${pct1(tp.er)}`,
+      a: `Ese formato marca el estándar local ➜ <strong>Producir 2 piezas más del mismo eje para ${countryName}</strong> el próximo mes.`,
+    });
+  }
+
+  return ins;
+}
+
 function topPost(mo) {
   if (!mo?.posts?.length) return null;
   return mo.posts.reduce((a, b) => ((b.er || 0) > (a.er || 0) ? b : a), mo.posts[0]);

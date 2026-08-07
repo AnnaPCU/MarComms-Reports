@@ -9,6 +9,7 @@
 // ════════════════════════════════════════════════════════════════
 
 import { DB, ML, MO } from '@/data/socialSeed';
+import { LATAM_DB, LATAM_COUNTRIES } from '@/data/socialLatam';
 import { monthHasData } from '@/utils/hasData';
 
 // ── Cuentas (clientes del pilar Social) ──
@@ -74,3 +75,37 @@ export function prevPeriodId(period) {
 
 // ── Comparativa multi-cuenta (efectividad, Mayo 2026) ──
 export { CMP_DATA, TOP_ENG_POSTS } from '@/data/socialSeed';
+
+// ════════════════════════════════════════════════════════════════
+//  Segmentación POR PAÍS de CU Latinoamérica (cuenta 'cul').
+//  Datos generados por scripts/linkedin/build_latam.py — ver la nota de
+//  metodología en src/data/socialLatam.js (posts por hashtag de país +
+//  hojas de Ubicación del export de LinkedIn).
+// ════════════════════════════════════════════════════════════════
+export { LATAM_COUNTRIES };
+
+export function getLatamCountry(countryId, periodId) {
+  return LATAM_DB[periodId]?.[countryId] ?? null;
+}
+
+// Mes anterior del país, solo si tuvo publicaciones (para los deltas).
+export function getPrevLatamCountry(countryId, periodId) {
+  const i = MO.indexOf(periodId);
+  if (i <= 0) return null;
+  const prev = getLatamCountry(countryId, MO[i - 1]);
+  return prev && prev.np > 0 ? prev : null;
+}
+
+// Base de cálculo del mes (todas las publicaciones, con y sin país).
+export function getLatamMonthTotals(periodId) {
+  return LATAM_DB[periodId]?._tot ?? null;
+}
+
+// Seguidores del país: foto acumulada del export más reciente disponible.
+export function getLatamFolBase(countryId) {
+  for (let i = MO.length - 1; i >= 0; i--) {
+    const d = LATAM_DB[MO[i]]?.[countryId];
+    if (d?.folBase) return d.folBase;
+  }
+  return 0;
+}

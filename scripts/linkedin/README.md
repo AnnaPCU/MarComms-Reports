@@ -37,6 +37,34 @@ Cada ruta acepta dos formatos (se detectan solos):
 - `comp`: benchmark de competidores (seguidores, nuevos, interacciones, posts
   por página del set; `own:true` marca la fila propia).
 
+## Segmentación por país de CU Latinoamérica
+
+`build_latam.py` genera `src/data/socialLatam.js` con los reportes por país
+(Argentina, Brasil, Chile, Perú, México, Ecuador) de la cuenta `cul`:
+
+```bash
+python3 scripts/linkedin/build_latam.py \
+  m03="/ruta/Metricas mensuales LKD Marzo" \
+  m07="/ruta/.../Control_Union_Latinoamerica_unified.xlsx" ...
+```
+
+Cada arg acepta la carpeta cruda del mes (resuelve sola la subcarpeta de
+CU Latinoamérica) o el `.xlsx` unificado de la cuenta. Metodología:
+
+- **Posts por país**: se atribuyen por hashtag (`#ControlUnionArgentina`,
+  `#ControlUnionMéxico`, …) o país nombrado en la primera línea. Posts sin
+  marcador (p. ej. `#ControlUnion` regional) quedan sin atribuir — el conteo
+  va en `_tot.un` y se transparenta en la vista.
+- Las métricas por post son **acumuladas al momento del export**, por eso la
+  base de cálculo del mes (`_tot`) difiere de los totales de la cuenta.
+- **vis**: visualizaciones de página por ubicación (hoja `visitors -
+  Ubicación`) agregadas por país. **folBase**: seguidores por ubicación
+  (foto acumulada al export — NO es serie mensual; la vista muestra la del
+  export más reciente).
+
+Al cargar un mes nuevo, correr **ambos** scripts (`build_monthly.py` y
+`build_latam.py`).
+
 ## Cuentas reconocidas
 
 `cul` CU Latinoamérica · `cue` CU España · `cup` CU Portugal · `cun` CU Norte ·

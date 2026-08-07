@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { listAccounts } from '@/services/socialService';
+import { useMemo, useState, useEffect } from 'react';
+import { listAccounts, LATAM_COUNTRIES } from '@/services/socialService';
 import { useSocialMonthly } from '@/hooks/useSocialMonthly';
 import { ML } from '@/data/socialSeed';
 import { monthHasData } from '@/utils/hasData';
@@ -16,6 +16,8 @@ import { AudienceCharts } from '@/components/social/AudienceCharts';
 import { PostsTable } from '@/components/social/PostsTable';
 import { ComparativeView } from '@/components/social/ComparativeView';
 import { AnnualReview } from '@/components/social/AnnualReview';
+import { LatamCountryView } from '@/components/social/LatamCountryView';
+import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { Glossary } from '@/components/shared/Glossary';
 
 // Vista del pilar Social Media (LinkedIn).
@@ -28,6 +30,30 @@ export function SocialApp({ account, period }) {
   // Hook reactivo (seed local o Supabase + realtime). Se llama siempre,
   // antes de cualquier return, por las reglas de hooks.
   const { mo, prev, audience, loading } = useSocialMonthly(account, period);
+
+  // Segmentación por país de CU Latinoamérica: el reporte mensual de la
+  // cuenta se mantiene igual ('all') y se puede abrir el reporte de cada
+  // país (posts por hashtag + audiencia por ubicación).
+  const [country, setCountry] = useState('all');
+  useEffect(() => {
+    setCountry('all');
+  }, [account]);
+  const isLatamMonth = account === 'cul' && /^m\d\d$/.test(period);
+
+  const countrySelector = isLatamMonth ? (
+    <div className="mb-4">
+      <SegmentedControl
+        label="Reporte"
+        value={country}
+        onChange={setCountry}
+        size="sm"
+        options={[
+          { id: 'all', label: 'CU Latinoamérica' },
+          ...LATAM_COUNTRIES.map((c) => ({ id: c.id, label: c.name })),
+        ]}
+      />
+    </div>
+  ) : null;
 
   // Vista comparativa multi-cuenta.
   if (period === 'cmp')
@@ -45,6 +71,16 @@ export function SocialApp({ account, period }) {
     return (
       <div className="flex animate-fade-in items-center justify-center py-24 text-[13px] text-cu-grey">
         Cargando datos…
+      </div>
+    );
+  }
+
+  // Reporte por país dentro de CU Latinoamérica.
+  if (isLatamMonth && country !== 'all') {
+    return (
+      <div className="animate-fade-in">
+        {countrySelector}
+        <LatamCountryView country={country} period={period} />
       </div>
     );
   }
@@ -76,6 +112,7 @@ export function SocialApp({ account, period }) {
 
   return (
     <div className="animate-fade-in">
+      {countrySelector}
       <InsightsPanel subtitle={`${accName} · ${ML[period] || period}`} items={insights} />
 
       <SectionHeader title="Indicadores Clave" />
