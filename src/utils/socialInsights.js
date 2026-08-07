@@ -100,6 +100,42 @@ function topPost(mo) {
   return mo.posts.reduce((a, b) => ((b.er || 0) > (a.er || 0) ? b : a), mo.posts[0]);
 }
 
+// ── Insights del Resumen del Año POR PAÍS de CU Latinoamérica ──
+// agg viene de LatamCountryYearView (acumulados del año del país);
+// series es la serie mensual completa. Todo computado, nada inventado.
+export function genLatamYearInsights(agg, series, countryName) {
+  if (!agg?.withData?.length) return [];
+  const ins = [];
+
+  const totImp = series.reduce((a, s) => a + (s.tot?.imp || 0), 0);
+  if (totImp) {
+    const share = (agg.imp / totImp) * 100;
+    ins.push({
+      m: `${countryName} concentró el ${share.toFixed(0)}% de las impresiones del contenido del año (${agg.np} publicaciones en ${agg.withData.length} ${agg.withData.length === 1 ? 'mes' : 'meses'})`,
+      a:
+        share >= 30
+          ? `El país es un motor de alcance de la cuenta ➜ <strong>Sostener la cadencia de contenido para ${countryName}</strong> y sumar CTA a la landing local en los posts top.`
+          : `Hay espacio para crecer en participación ➜ <strong>Aumentar la cadencia de posts etiquetados para ${countryName}</strong>, priorizando los formatos que ya funcionan.`,
+    });
+  }
+
+  const best = agg.withData.reduce((a, s) => (s.d.imp > a.d.imp ? s : a), agg.withData[0]);
+  ins.push({
+    m: `Mejor mes de ${countryName}: ${best.short} — ${numEs(best.d.imp)} impresiones con ${best.d.np} ${best.d.np === 1 ? 'publicación' : 'publicaciones'}`,
+    a: `Revisar qué se publicó ese mes ➜ <strong>Replicar los formatos y temas de ${best.short}</strong> en la planificación de los próximos meses.`,
+  });
+
+  const tp = topPost({ posts: agg.posts });
+  if (tp) {
+    ins.push({
+      m: `Mejor post del año de ${countryName}: pilar ${ESG_NAME[classifyESG(tp.t)] || 'General'} — ER ${pct1(tp.er)}`,
+      a: `Ese formato marca el estándar local ➜ <strong>Convertirlo en una serie recurrente para ${countryName}</strong> con CTA a recurso descargable.`,
+    });
+  }
+
+  return ins;
+}
+
 // ── Diagnóstico (Lectura de Performance) para Social ──
 export function genSocialConclusions(mo, prev) {
   if (!mo) return [];

@@ -101,6 +101,18 @@ export function getLatamMonthTotals(periodId) {
   return LATAM_DB[periodId]?._tot ?? null;
 }
 
+// Serie anual del país: todos los meses conocidos con su dato (o null).
+// Alimenta el "Resumen del Año" segmentado por país.
+export function getLatamCountryYearSeries(countryId) {
+  return MO.map((id) => ({
+    id,
+    label: ML[id],
+    short: (ML[id] || id).replace(/\s*20\d\d$/, ''),
+    d: LATAM_DB[id]?.[countryId] ?? null,
+    tot: LATAM_DB[id]?._tot ?? null,
+  }));
+}
+
 // Seguidores del país: foto acumulada del export más reciente disponible.
 export function getLatamFolBase(countryId) {
   for (let i = MO.length - 1; i >= 0; i--) {
