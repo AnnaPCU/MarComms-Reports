@@ -75,6 +75,44 @@ export const GLOSSARIES = {
     ],
   },
 
+  // Glosario específico de campañas Meta Ads (GEO por evento).
+  paidMeta: {
+    title: 'Glosario — Paid Media (Meta Ads)',
+    note: '<strong>El presupuesto se consume por mostrar los anuncios (impresiones), a diferencia de Google Ads.</strong> En Meta se paga por salir a competir en el feed de las personas de la audiencia elegida — acá, las que estaban dentro del radio del evento. Por eso el CPM (costo por mil impresiones) es la referencia de costo base, y el CPC resulta de cuántas de esas impresiones terminaron en clic.',
+    entries: [
+      { term: 'Alcance', def: 'Cantidad estimada de personas únicas que vieron los anuncios. En este reporte es diario: el total del período no se puede sumar porque una misma persona cuenta en varios días.' },
+      { term: 'Impresiones', def: 'Cantidad total de veces que se mostraron los anuncios.' },
+      { term: 'Frecuencia', def: 'Promedio de veces que cada persona alcanzada vio el anuncio. Frecuencias altas en una audiencia chica (como un radio de 1 km) indican saturación.' },
+      { term: 'CPM', def: 'Costo promedio por cada 1.000 impresiones.' },
+      { term: 'Clics en enlace', def: 'Clics en los enlaces incluidos en el anuncio.' },
+      { term: 'Clics salientes', def: 'Clics que llevaron a la persona FUERA de las plataformas de Meta (por ej. al Typeform). Es la mejor lectura del tráfico que efectivamente salió del anuncio.' },
+      { term: 'CTR', def: 'Porcentaje de impresiones que generaron un clic en enlace. El "CTR saliente" usa los clics salientes.' },
+      { term: 'CPC', def: 'Costo promedio por clic en enlace.' },
+      { term: 'Resultados', def: 'Acciones obtenidas según el objetivo configurado de la campaña (acá: conversaciones de WhatsApp iniciadas).' },
+      { term: 'Costo por resultado', def: 'Inversión promedio necesaria para conseguir cada resultado.' },
+      { term: 'Ventana de atribución', def: 'Plazo en el que Meta sigue contando resultados después de ver o cliquear el anuncio (por ej. "7-day click": la conversación puede registrarse días después del clic).' },
+    ],
+  },
+
+  // Versión en inglés del glosario Meta — para el toggle EN del pilar.
+  paidMetaEn: {
+    title: 'Glossary — Paid Media (Meta Ads)',
+    note: '<strong>Budget is spent on showing the ads (impressions), unlike Google Ads.</strong> On Meta you pay to compete for the feed of the people in the chosen audience — here, those within the event radius. That is why CPM (cost per 1,000 impressions) is the base cost reference, and CPC results from how many of those impressions turned into clicks.',
+    entries: [
+      { term: 'Reach', def: 'Estimated number of unique people who saw the ads. In this report it is daily: the period total cannot be added up because the same person counts on several days.' },
+      { term: 'Impressions', def: 'Total number of times the ads were shown.' },
+      { term: 'Frequency', def: 'Average number of times each person reached saw the ad. High frequency on a small audience (like a 1 km radius) signals saturation.' },
+      { term: 'CPM', def: 'Average cost per 1,000 impressions.' },
+      { term: 'Link clicks', def: 'Clicks on links included in the ad.' },
+      { term: 'Outbound clicks', def: 'Clicks that took the person OUTSIDE Meta platforms (e.g. to the Typeform). The best reading of the traffic that actually left the ad.' },
+      { term: 'CTR', def: 'Percentage of impressions that generated a link click. "Outbound CTR" uses outbound clicks.' },
+      { term: 'CPC', def: 'Average cost per link click.' },
+      { term: 'Results', def: 'Actions obtained according to the campaign objective (here: WhatsApp conversations started).' },
+      { term: 'Cost per result', def: 'Average spend needed to obtain each result.' },
+      { term: 'Attribution window', def: 'Period during which Meta keeps counting results after seeing or clicking the ad (e.g. "7-day click": the conversation may register days after the click).' },
+    ],
+  },
+
   email: {
     title: 'Glosario — Email Marketing',
     entries: [

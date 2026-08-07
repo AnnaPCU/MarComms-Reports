@@ -20,6 +20,7 @@ import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/Performanc
 import { ComparativeCampaigns } from '@/components/paid/ComparativeCampaigns';
 import { BudgetWeekly } from '@/components/paid/BudgetWeekly';
 import { AdGroupsDetail } from '@/components/paid/AdGroupsDetail';
+import { MetaGeoReport } from '@/components/paid/MetaGeoReport';
 import { isExternalReport } from '@/utils/reportAudience';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
@@ -103,6 +104,11 @@ export function PaidApp({ account, period }) {
     lang === 'en'
       ? MONTHS_EN[period] ?? period
       : MONTHS_2026.find((p) => p.id === period)?.label ?? period;
+
+  // Períodos-evento GEO (Meta Ads): reporte propio, fuera del flujo mensual.
+  if (String(period).startsWith('geo-')) {
+    return <MetaGeoReport account={account} period={period} />;
+  }
 
   if (loading) {
     return (

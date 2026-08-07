@@ -12,6 +12,8 @@ export const PAID_CLIENTS = [
   { id: 'es', name: 'CU España' },
   { id: 'cuc', name: 'CU Canadá' },
   { id: 'psar', name: 'PS Argentina' },
+  // Solo Meta Ads GEO por ahora (ver src/data/paidMetaGeo.js).
+  { id: 'cuar', name: 'CU Argentina' },
 ];
 
 // Helper para no repetir campañas en cero.

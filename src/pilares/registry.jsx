@@ -32,8 +32,8 @@ export const REGISTRY = {
   paid: {
     Component: PaidApp,
     accounts: paid.listAccounts(),
-    // meses (más reciente primero) + trimestres → permite ver/importar por Q
-    periods: [...paid.listPeriods()].reverse().concat(QUARTERS_2026),
+    // meses (más reciente primero) + eventos GEO (Meta) + trimestres
+    periods: [...paid.listPeriods()].reverse().concat(paid.listGeoPeriods(), QUARTERS_2026),
     defaultPeriod: 'm07', // Julio 2026: último mes completo cargado
     hasDataFor: paid.hasDataFor,
   },

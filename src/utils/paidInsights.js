@@ -252,3 +252,113 @@ export function genPaidNextSteps(mo, lang = 'es') {
 
   return steps;
 }
+
+// ════════════════════════════════════════════════════════════════
+//  Insights del reporte Meta Ads GEO (evento) — todo computado de los
+//  agregados reales; nada estimado.
+// ════════════════════════════════════════════════════════════════
+import { aggCampaign } from '@/data/paidMetaGeo';
+
+const pctG = (v) => Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+
+export function genGeoInsights(geo, moneyFmt, lang = 'es') {
+  const en = lang === 'en';
+  const per = geo.campaigns.map((c) => ({ c, t: aggCampaign(c) }));
+  const tf = per.find((x) => x.c.kind === 'typeform');
+  const wa = per.find((x) => x.c.kind === 'whatsapp');
+  const ins = [];
+
+  if (tf && wa && wa.t.outCtr > 0) {
+    const ratio = tf.t.outCtr / wa.t.outCtr;
+    ins.push({
+      m: en
+        ? `Typeform moved traffic ${ratio.toFixed(0)}× more efficiently: outbound CTR ${pctG(tf.t.outCtr)} vs ${pctG(wa.t.outCtr)} for WhatsApp`
+        : `Typeform movió tráfico ${ratio.toFixed(0)}× más eficiente: CTR saliente de ${pctG(tf.t.outCtr)} vs ${pctG(wa.t.outCtr)} de WhatsApp`,
+      a: en
+        ? `Different jobs, different metrics: WhatsApp is judged by conversations, Typeform by traffic ➜ <strong>Use Typeform-style creatives when the goal is taking people out of Meta</strong>.`
+        : `Cada campaña se juzga por su objetivo: WhatsApp por conversaciones, Typeform por tráfico ➜ <strong>Usar creatividades tipo Typeform cuando el objetivo sea sacar gente de Meta</strong>.`,
+    });
+  }
+
+  if (wa?.t.results) {
+    ins.push({
+      m: en
+        ? `WhatsApp met its objective: ${wa.t.results} conversations started at ${moneyFmt(wa.t.costPerResult)} each`
+        : `WhatsApp cumplió su objetivo: ${wa.t.results} conversaciones iniciadas a ${moneyFmt(wa.t.costPerResult)} cada una`,
+      a: en
+        ? `The export does not say how those chats went ➜ <strong>Cross-check with the sales log</strong> (real conversations, valid leads) to compute cost per lead.`
+        : `El export no dice cómo siguieron esos chats ➜ <strong>Cruzar con el registro comercial</strong> (conversaciones reales, leads válidos) para calcular el costo por lead.`,
+    });
+  }
+
+  // Día pico de clics salientes (sobre el total de la cuenta).
+  const dayTotals = {};
+  per.forEach(({ c }) => c.days.forEach((d) => { dayTotals[d.d] = (dayTotals[d.d] || 0) + d.out; }));
+  const totalOut = Object.values(dayTotals).reduce((a, b) => a + b, 0);
+  const best = Object.entries(dayTotals).sort((a, b) => b[1] - a[1])[0];
+  if (best && totalOut) {
+    const dLabel = en ? best[0].replace(/(\d+) Ago/, 'Aug $1') : best[0].replace('Ago', 'de agosto');
+    ins.push({
+      m: en
+        ? `${dLabel} concentrated ${((best[1] / totalOut) * 100).toFixed(0)}% of outbound clicks (${best[1]} of ${totalOut})`
+        : `El ${dLabel} concentró el ${((best[1] / totalOut) * 100).toFixed(0)}% de los clics salientes (${best[1]} de ${totalOut})`,
+      a: en
+        ? `For the next event GEO ➜ <strong>export the hourly breakdown</strong> to match response peaks with the event agenda and concentrate budget there.`
+        : `Para el próximo GEO de evento ➜ <strong>exportar el desglose por hora</strong> para cruzar los picos de respuesta con la agenda del evento y concentrar presupuesto ahí.`,
+    });
+  }
+
+  // Saturación: frecuencia diaria máxima de la cuenta.
+  const maxFreq = Math.max(...per.map(({ t }) => t.maxFreq));
+  ins.push(
+    maxFreq >= 3
+      ? {
+          m: en
+            ? `Daily frequency reached ${maxFreq.toFixed(1)}: each person saw the ad ~${Math.round(maxFreq)} times per day`
+            : `La frecuencia diaria llegó a ${maxFreq.toFixed(1)}: cada persona vio el anuncio ~${Math.round(maxFreq)} veces por día`,
+          a: en
+            ? `A 1 km radius is a small audience and it saturates fast ➜ <strong>Add creative variations or a frequency cap</strong> on the next hyperlocal GEO.`
+            : `Un radio de 1 km es una audiencia chica y se satura rápido ➜ <strong>Sumar variantes de creativos o tope de frecuencia</strong> en el próximo GEO hiperlocal.`,
+        }
+      : {
+          m: en
+            ? `No saturation: daily frequency stayed at or below ${maxFreq.toFixed(1)} views per person`
+            : `Sin saturación: la frecuencia diaria se mantuvo en ${maxFreq.toFixed(1)} o menos vistas por persona`,
+          a: en
+            ? `The audience still had room ➜ <strong>A longer flight or higher budget</strong> could be tested on the next event without burning the audience.`
+            : `La audiencia todavía tenía margen ➜ <strong>Se puede probar más días o más presupuesto</strong> en el próximo evento sin quemar a la audiencia.`,
+        },
+  );
+
+  return ins;
+}
+
+export function genGeoNextSteps(geo, lang = 'es') {
+  const en = lang === 'en';
+  const hasWa = geo.campaigns.some((c) => c.kind === 'whatsapp');
+  const steps = [];
+  steps.push(
+    en
+      ? '<strong>Complete the Typeform funnel</strong>: pull visits, starts and completions from the Typeform panel to compute click → form conversion (the most valuable number of the experiment).'
+      : '<strong>Completar el funnel de Typeform</strong>: bajar del panel de Typeform las visitas, formularios iniciados y completados para calcular la conversión clic → formulario (el número más valioso del experimento).',
+  );
+  if (hasWa) {
+    steps.push(
+      en
+        ? '<strong>Qualify the WhatsApp conversations</strong>: log which of the started conversations became real chats, valid leads or business to get a true cost per lead.'
+        : '<strong>Calificar las conversaciones de WhatsApp</strong>: registrar cuáles de las conversaciones iniciadas fueron chats reales, leads válidos o negocio, para llegar al costo por lead verdadero.',
+    );
+  }
+  steps.push(
+    en
+      ? '<strong>Re-export with breakdowns</strong>: hour of day, age/gender, placement/platform and per-ad results — that is where the "which creative/moment worked" answers live.'
+      : '<strong>Re-exportar con desgloses</strong>: hora del día, edad/género, placement/plataforma y resultados por anuncio — ahí están las respuestas de "qué creativo/momento funcionó".',
+    en
+      ? '<strong>Export the period without daily breakdown</strong> to get true unique reach and frequency for the whole flight.'
+      : '<strong>Exportar el período sin desglose diario</strong> para obtener el alcance único y la frecuencia reales de toda la campaña.',
+    en
+      ? '<strong>Document the setup</strong>: exact radius/address, audience restrictions, placements, creatives and CTAs from Ads Manager, so the experiment is reproducible at the next event.'
+      : '<strong>Documentar el setup</strong>: radio/dirección exactos, restricciones de audiencia, placements, creativos y CTA desde el Administrador de Anuncios, para que el experimento sea reproducible en el próximo evento.',
+  );
+  return steps;
+}
