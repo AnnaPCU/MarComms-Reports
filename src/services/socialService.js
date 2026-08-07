@@ -10,6 +10,7 @@
 
 import { DB, ML, MO } from '@/data/socialSeed';
 import { LATAM_DB, LATAM_COUNTRIES } from '@/data/socialLatam';
+import { NA_DB, NA_COUNTRIES } from '@/data/socialNorthAm';
 import { monthHasData } from '@/utils/hasData';
 
 // ── Cuentas (clientes del pilar Social) ──
@@ -77,46 +78,56 @@ export function prevPeriodId(period) {
 export { CMP_DATA, TOP_ENG_POSTS } from '@/data/socialSeed';
 
 // ════════════════════════════════════════════════════════════════
-//  Segmentación POR PAÍS de CU Latinoamérica (cuenta 'cul').
-//  Datos generados por scripts/linkedin/build_latam.py — ver la nota de
-//  metodología en src/data/socialLatam.js (posts por hashtag de país +
-//  hojas de Ubicación del export de LinkedIn).
+//  Segmentación POR PAÍS de cuentas LinkedIn (CU Latinoamérica y
+//  CU North America). Datos generados por
+//  scripts/linkedin/build_country_seg.py — ver la nota de metodología en
+//  los seeds (posts por hashtag de país + hojas de Ubicación del export).
 // ════════════════════════════════════════════════════════════════
-export { LATAM_COUNTRIES };
+const SEG = {
+  cul: { label: 'CU Latinoamérica', countries: LATAM_COUNTRIES, db: LATAM_DB },
+  cuna: { label: 'CU North America', countries: NA_COUNTRIES, db: NA_DB },
+};
 
-export function getLatamCountry(countryId, periodId) {
-  return LATAM_DB[periodId]?.[countryId] ?? null;
+// Config de segmentación de la cuenta (o null si no segmenta por país).
+export function getSegConfig(accountId) {
+  return SEG[accountId] ?? null;
+}
+
+export function getSegCountry(accountId, countryId, periodId) {
+  return SEG[accountId]?.db[periodId]?.[countryId] ?? null;
 }
 
 // Mes anterior del país, solo si tuvo publicaciones (para los deltas).
-export function getPrevLatamCountry(countryId, periodId) {
+export function getPrevSegCountry(accountId, countryId, periodId) {
   const i = MO.indexOf(periodId);
   if (i <= 0) return null;
-  const prev = getLatamCountry(countryId, MO[i - 1]);
+  const prev = getSegCountry(accountId, countryId, MO[i - 1]);
   return prev && prev.np > 0 ? prev : null;
 }
 
 // Base de cálculo del mes (todas las publicaciones, con y sin país).
-export function getLatamMonthTotals(periodId) {
-  return LATAM_DB[periodId]?._tot ?? null;
+export function getSegMonthTotals(accountId, periodId) {
+  return SEG[accountId]?.db[periodId]?._tot ?? null;
 }
 
 // Serie anual del país: todos los meses conocidos con su dato (o null).
 // Alimenta el "Resumen del Año" segmentado por país.
-export function getLatamCountryYearSeries(countryId) {
+export function getSegCountryYearSeries(accountId, countryId) {
+  const db = SEG[accountId]?.db ?? {};
   return MO.map((id) => ({
     id,
     label: ML[id],
     short: (ML[id] || id).replace(/\s*20\d\d$/, ''),
-    d: LATAM_DB[id]?.[countryId] ?? null,
-    tot: LATAM_DB[id]?._tot ?? null,
+    d: db[id]?.[countryId] ?? null,
+    tot: db[id]?._tot ?? null,
   }));
 }
 
 // Seguidores del país: foto acumulada del export más reciente disponible.
-export function getLatamFolBase(countryId) {
+export function getSegFolBase(accountId, countryId) {
+  const db = SEG[accountId]?.db ?? {};
   for (let i = MO.length - 1; i >= 0; i--) {
-    const d = LATAM_DB[MO[i]]?.[countryId];
+    const d = db[MO[i]]?.[countryId];
     if (d?.folBase) return d.folBase;
   }
   return 0;

@@ -1,18 +1,18 @@
 // ════════════════════════════════════════════════════════════════
-//  GENERADO por scripts/linkedin/build_latam.py — NO editar a mano.
-//  Segmentación por país de CU Latinoamérica (LinkedIn):
+//  GENERADO por scripts/linkedin/build_country_seg.py — NO editar a mano.
+//  Segmentación por país de la cuenta LinkedIn "cul":
 //  posts atribuidos por hashtag/mención de país; visualizaciones y
 //  seguidores agregados desde las hojas de Ubicación del export.
 //  folBase es una foto acumulada al momento del export (no serie).
 // ════════════════════════════════════════════════════════════════
 
 export const LATAM_COUNTRIES = [
-  {id:'ar', name:'Argentina'},
-  {id:'br', name:'Brasil'},
-  {id:'cl', name:'Chile'},
-  {id:'pe', name:'Perú'},
-  {id:'mx', name:'México'},
-  {id:'ec', name:'Ecuador'},
+  {id:'ar', name:"Argentina", tag:"#ControlUnionArgentina"},
+  {id:'br', name:"Brasil", tag:"#ControlUnionBrasil"},
+  {id:'cl', name:"Chile", tag:"#ControlUnionChile"},
+  {id:'pe', name:"Perú", tag:"#ControlUnionPerú"},
+  {id:'mx', name:"México", tag:"#ControlUnionMéxico"},
+  {id:'ec', name:"Ecuador", tag:"#ControlUnionEcuador"},
 ];
 
 export const LATAM_DB = {

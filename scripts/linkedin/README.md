@@ -37,22 +37,25 @@ Cada ruta acepta dos formatos (se detectan solos):
 - `comp`: benchmark de competidores (seguidores, nuevos, interacciones, posts
   por página del set; `own:true` marca la fila propia).
 
-## Segmentación por país de CU Latinoamérica
+## Segmentación por país (CU Latinoamérica y CU North America)
 
-`build_latam.py` genera `src/data/socialLatam.js` con los reportes por país
-(Argentina, Brasil, Chile, Perú, México, Ecuador) de la cuenta `cul`:
+`build_country_seg.py` genera los seeds de reportes por país:
+
+- `acc=cul` → `src/data/socialLatam.js` (Argentina, Brasil, Chile, Perú,
+  México, Ecuador)
+- `acc=cuna` → `src/data/socialNorthAm.js` (USA, Canadá)
 
 ```bash
-python3 scripts/linkedin/build_latam.py \
+python3 scripts/linkedin/build_country_seg.py acc=cuna \
   m03="/ruta/Metricas mensuales LKD Marzo" \
-  m07="/ruta/.../Control_Union_Latinoamerica_unified.xlsx" ...
+  m07="/ruta/.../Control_Union_North_America_unified.xlsx" ...
 ```
 
-Cada arg acepta la carpeta cruda del mes (resuelve sola la subcarpeta de
-CU Latinoamérica) o el `.xlsx` unificado de la cuenta. Metodología:
+Cada arg de mes acepta la carpeta cruda del mes (resuelve sola la subcarpeta
+de la cuenta) o el `.xlsx` unificado de la cuenta. Metodología:
 
 - **Posts por país**: se atribuyen por hashtag (`#ControlUnionArgentina`,
-  `#ControlUnionMéxico`, …) o país nombrado en la primera línea. Posts sin
+  `#ControlUnionUSA`, …) o país nombrado en la primera línea. Posts sin
   marcador (p. ej. `#ControlUnion` regional) quedan sin atribuir — el conteo
   va en `_tot.un` y se transparenta en la vista.
 - Las métricas por post son **acumuladas al momento del export**, por eso la
@@ -61,9 +64,12 @@ CU Latinoamérica) o el `.xlsx` unificado de la cuenta. Metodología:
   Ubicación`) agregadas por país. **folBase**: seguidores por ubicación
   (foto acumulada al export — NO es serie mensual; la vista muestra la del
   export más reciente).
+- **USA**: LinkedIn no agrega ", Estados Unidos" a sus áreas metro; se
+  detectan por estado de EE. UU. como sufijo ("Austin ..., Texas") o metro
+  sin país ("Miami-Fort Lauderdale y alrededores").
 
-Al cargar un mes nuevo, correr **ambos** scripts (`build_monthly.py` y
-`build_latam.py`).
+Al cargar un mes nuevo, correr `build_monthly.py` y `build_country_seg.py`
+**una vez por cuenta segmentada** (`acc=cul` y `acc=cuna`).
 
 ## Cuentas reconocidas
 

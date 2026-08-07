@@ -55,10 +55,10 @@ export function genMonthlyInsights(mo, prev) {
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct1 = (v) => Number(v || 0).toFixed(1) + '%';
 
-// ── Insights del reporte POR PAÍS de CU Latinoamérica ──
+// ── Insights del reporte POR PAÍS (CU Latinoamérica, CU North America) ──
 // Todo computado de datos reales: participación del país en el mes,
 // tendencia vs mes anterior y mejor post del país.
-export function genLatamInsights(d, prev, tot, countryName) {
+export function genCountryInsights(d, prev, tot, countryName) {
   if (!d || !d.np) return [];
   const ins = [];
 
@@ -100,10 +100,10 @@ function topPost(mo) {
   return mo.posts.reduce((a, b) => ((b.er || 0) > (a.er || 0) ? b : a), mo.posts[0]);
 }
 
-// ── Insights del Resumen del Año POR PAÍS de CU Latinoamérica ──
-// agg viene de LatamCountryYearView (acumulados del año del país);
+// ── Insights del Resumen del Año POR PAÍS ──
+// agg viene de CountryYearView (acumulados del año del país);
 // series es la serie mensual completa. Todo computado, nada inventado.
-export function genLatamYearInsights(agg, series, countryName) {
+export function genCountryYearInsights(agg, series, countryName) {
   if (!agg?.withData?.length) return [];
   const ins = [];
 

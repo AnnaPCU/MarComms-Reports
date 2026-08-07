@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { listAccounts, LATAM_COUNTRIES } from '@/services/socialService';
+import { listAccounts, getSegConfig } from '@/services/socialService';
 import { useSocialMonthly } from '@/hooks/useSocialMonthly';
 import { ML } from '@/data/socialSeed';
 import { monthHasData } from '@/utils/hasData';
@@ -16,8 +16,8 @@ import { AudienceCharts } from '@/components/social/AudienceCharts';
 import { PostsTable } from '@/components/social/PostsTable';
 import { ComparativeView } from '@/components/social/ComparativeView';
 import { AnnualReview } from '@/components/social/AnnualReview';
-import { LatamCountryView } from '@/components/social/LatamCountryView';
-import { LatamCountryYearView } from '@/components/social/LatamCountryYearView';
+import { CountryView } from '@/components/social/CountryView';
+import { CountryYearView } from '@/components/social/CountryYearView';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { Glossary } from '@/components/shared/Glossary';
 
@@ -32,17 +32,18 @@ export function SocialApp({ account, period }) {
   // antes de cualquier return, por las reglas de hooks.
   const { mo, prev, audience, loading } = useSocialMonthly(account, period);
 
-  // Segmentación por país de CU Latinoamérica: el reporte de la cuenta se
-  // mantiene igual ('all') y se puede abrir el reporte de cada país (posts
-  // por hashtag + audiencia por ubicación), tanto en la vista mensual como
-  // en el Resumen del Año.
+  // Segmentación por país (CU Latinoamérica, CU North America): el reporte
+  // de la cuenta se mantiene igual ('all') y se puede abrir el reporte de
+  // cada país (posts por hashtag + audiencia por ubicación), tanto en la
+  // vista mensual como en el Resumen del Año.
   const [country, setCountry] = useState('all');
   useEffect(() => {
     setCountry('all');
   }, [account]);
-  const isLatamSeg = account === 'cul' && (/^m\d\d$/.test(period) || period === 'year-2026');
+  const segCfg = getSegConfig(account);
+  const isSeg = !!segCfg && (/^m\d\d$/.test(period) || period === 'year-2026');
 
-  const countrySelector = isLatamSeg ? (
+  const countrySelector = isSeg ? (
     <div className="mb-4">
       <SegmentedControl
         label="Reporte"
@@ -50,8 +51,8 @@ export function SocialApp({ account, period }) {
         onChange={setCountry}
         size="sm"
         options={[
-          { id: 'all', label: 'CU Latinoamérica' },
-          ...LATAM_COUNTRIES.map((c) => ({ id: c.id, label: c.name })),
+          { id: 'all', label: segCfg.label },
+          ...segCfg.countries.map((c) => ({ id: c.id, label: c.name })),
         ]}
       />
     </div>
@@ -66,13 +67,13 @@ export function SocialApp({ account, period }) {
       </>
     );
 
-  // Resumen del Año (progreso mes a mes de la cuenta o de un país de Latam).
+  // Resumen del Año (progreso mes a mes de la cuenta o de un país).
   if (period === 'year-2026') {
     return (
       <div className="animate-fade-in">
         {countrySelector}
-        {isLatamSeg && country !== 'all' ? (
-          <LatamCountryYearView country={country} />
+        {isSeg && country !== 'all' ? (
+          <CountryYearView account={account} country={country} />
         ) : (
           <AnnualReview account={account} />
         )}
@@ -88,12 +89,12 @@ export function SocialApp({ account, period }) {
     );
   }
 
-  // Reporte mensual por país dentro de CU Latinoamérica.
-  if (isLatamSeg && country !== 'all') {
+  // Reporte mensual por país dentro de la cuenta segmentada.
+  if (isSeg && country !== 'all') {
     return (
       <div className="animate-fade-in">
         {countrySelector}
-        <LatamCountryView country={country} period={period} />
+        <CountryView account={account} country={country} period={period} />
       </div>
     );
   }

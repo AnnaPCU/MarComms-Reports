@@ -11,11 +11,11 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import {
-  getLatamCountryYearSeries,
-  getLatamFolBase,
-  LATAM_COUNTRIES,
+  getSegConfig,
+  getSegCountryYearSeries,
+  getSegFolBase,
 } from '@/services/socialService';
-import { genLatamYearInsights } from '@/utils/socialInsights';
+import { genCountryYearInsights } from '@/utils/socialInsights';
 import { fmt, num } from '@/utils/format';
 import { CU, CHART_TOOLTIP } from '@/constants/brand';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
@@ -28,14 +28,17 @@ import { PostsTable } from '@/components/social/PostsTable';
 import { Glossary } from '@/components/shared/Glossary';
 
 // ════════════════════════════════════════════════════════════════
-//  Resumen del Año POR PAÍS de CU Latinoamérica — misma metodología que
-//  la vista mensual por país (posts por hashtag + Ubicación del export):
-//  acumula los meses cargados y muestra la evolución mes a mes.
+//  Resumen del Año POR PAÍS de una cuenta LinkedIn segmentada
+//  (CU Latinoamérica, CU North America) — misma metodología que la vista
+//  mensual por país (posts por hashtag + Ubicación del export): acumula
+//  los meses cargados y muestra la evolución mes a mes.
 // ════════════════════════════════════════════════════════════════
-export function LatamCountryYearView({ country }) {
-  const name = LATAM_COUNTRIES.find((c) => c.id === country)?.name ?? country;
-  const series = useMemo(() => getLatamCountryYearSeries(country), [country]);
-  const folBase = useMemo(() => getLatamFolBase(country), [country]);
+export function CountryYearView({ account, country }) {
+  const cfg = getSegConfig(account);
+  const cInfo = cfg?.countries.find((c) => c.id === country);
+  const name = cInfo?.name ?? country;
+  const series = useMemo(() => getSegCountryYearSeries(account, country), [account, country]);
+  const folBase = useMemo(() => getSegFolBase(account, country), [account, country]);
 
   const agg = useMemo(() => {
     const withData = series.filter((s) => s.d && s.d.np > 0);
@@ -63,10 +66,10 @@ export function LatamCountryYearView({ country }) {
           detail={
             <>
               No hay publicaciones etiquetadas para <strong>{name}</strong> en ningún mes
-              cargado de 2026 en la cuenta de CU Latinoamérica.
+              cargado de 2026 en la cuenta de {cfg?.label}.
             </>
           }
-          hint={<>La atribución por país se hace por hashtag (#ControlUnion{name.replace(/\s/g, '')})</>}
+          hint={<>La atribución por país se hace por hashtag ({cInfo?.tag})</>}
         />
         <Glossary keys="social" />
       </>
@@ -80,10 +83,10 @@ export function LatamCountryYearView({ country }) {
   return (
     <div className="animate-fade-in">
       <InsightsPanel
-        subtitle={`CU Latinoamérica · ${name} · Año 2026`}
+        subtitle={`${cfg.label} · ${name} · Año 2026`}
         title="Progreso del Año — Insights"
         label="Lectura anual"
-        items={genLatamYearInsights(agg, series, name)}
+        items={genCountryYearInsights(agg, series, name)}
       />
 
       <SectionHeader
@@ -159,15 +162,15 @@ export function LatamCountryYearView({ country }) {
 
       <div className="mb-5 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-cu-cyan/[0.05] px-5 py-3.5 text-[11.5px] leading-relaxed text-cu-dgrey">
         <strong className="text-cu-dblue">Cómo se arma este resumen por país:</strong>{' '}
-        acumula mes a mes las publicaciones atribuidas a {name} por hashtag o mención de
-        país (métricas al momento del export de cada mes)
+        acumula mes a mes las publicaciones atribuidas a {name} por hashtag ({cInfo?.tag})
+        o mención de país (métricas al momento del export de cada mes)
         {agg.empty.length ? (
           <>
             . Meses sin publicaciones etiquetadas para {name}: {agg.empty.join(', ')}
           </>
         ) : null}
         . LinkedIn no segmenta por país los seguidores nuevos ni los visitantes únicos,
-        por eso esos indicadores solo existen a nivel CU Latinoamérica.
+        por eso esos indicadores solo existen a nivel {cfg.label}.
       </div>
 
       <Glossary keys="social" />
