@@ -286,8 +286,8 @@ export function genGeoInsights(geo, moneyFmt, lang = 'es') {
         ? `WhatsApp met its objective: ${wa.t.results} conversations started at ${moneyFmt(wa.t.costPerResult)} each`
         : `WhatsApp cumplió su objetivo: ${wa.t.results} conversaciones iniciadas a ${moneyFmt(wa.t.costPerResult)} cada una`,
       a: en
-        ? `The export does not say how those chats went ➜ <strong>Cross-check with the sales log</strong> (real conversations, valid leads) to compute cost per lead.`
-        : `El export no dice cómo siguieron esos chats ➜ <strong>Cruzar con el registro comercial</strong> (conversaciones reales, leads válidos) para calcular el costo por lead.`,
+        ? `In an event GEO the interest window lasts as long as the event ➜ <strong>Reply to those chats fast</strong>; Meta only counts the start of each conversation, not how it went.`
+        : `En un GEO de evento la ventana de interés dura lo que dura el evento ➜ <strong>Responder esos chats rápido</strong>; Meta solo cuenta el inicio de cada conversación, no cómo siguió.`,
     });
   }
 
@@ -333,20 +333,62 @@ export function genGeoInsights(geo, moneyFmt, lang = 'es') {
   return ins;
 }
 
+// Insights adicionales del funnel de conversión (Typeform / HubSpot).
+export function genGeoFunnelInsights(geo, moneyFmt, lang = 'es') {
+  const en = lang === 'en';
+  const ins = [];
+
+  if (geo.typeform) {
+    const leads = geo.typeform.forms.flatMap((f) => f.leads);
+    const tfCamp = geo.campaigns.find((c) => c.kind === 'typeform');
+    const tfSpend = tfCamp ? aggCampaign(tfCamp).spend : 0;
+    if (leads.length) {
+      ins.push({
+        m: en
+          ? `The funnel closed with ${leads.length} real leads with full details — ${moneyFmt(tfSpend / leads.length)} per lead on the traffic campaign spend`
+          : `El funnel cerró con ${leads.length} leads reales con datos completos — ${moneyFmt(tfSpend / leads.length)} por lead sobre la inversión de la campaña de tráfico`,
+        a: en
+          ? 'In an event GEO the interest window is short ➜ <strong>Contact both leads while Aapresid is still fresh</strong> (details in the Conversion Funnel section).'
+          : 'En un GEO de evento la ventana de interés es corta ➜ <strong>Contactar a los leads mientras Aapresid siga fresco</strong> (datos en la sección Funnel de Conversión).',
+      });
+    }
+  }
+
+  if (geo.hsForm) {
+    const f = geo.hsForm;
+    const out = geo.campaigns.reduce((a, c) => a + aggCampaign(c).out, 0);
+    ins.push({
+      m: en
+        ? `The ad did its job: ${f.views} form visits matching the ${out} outbound clicks — but ${f.submissions} submissions (${f.interactions} interactions)`
+        : `El anuncio cumplió: ${f.views} visitas al formulario, calcadas a los ${out} clics salientes — pero ${f.submissions} envíos (${f.interactions} interacciones)`,
+      a: en
+        ? 'The drop is inside the form, not the ad ➜ <strong>Shorten the form or move the value promise up</strong> before reusing it on the next GEO.'
+        : 'El drop está dentro del formulario, no en el anuncio ➜ <strong>Acortar el formulario o subir la promesa de valor</strong> antes de reutilizarlo en el próximo GEO.',
+    });
+  }
+
+  return ins;
+}
+
 export function genGeoNextSteps(geo, lang = 'es') {
   const en = lang === 'en';
-  const hasWa = geo.campaigns.some((c) => c.kind === 'whatsapp');
   const steps = [];
-  steps.push(
-    en
-      ? '<strong>Complete the Typeform funnel</strong>: pull visits, starts and completions from the Typeform panel to compute click → form conversion (the most valuable number of the experiment).'
-      : '<strong>Completar el funnel de Typeform</strong>: bajar del panel de Typeform las visitas, formularios iniciados y completados para calcular la conversión clic → formulario (el número más valioso del experimento).',
-  );
-  if (hasWa) {
+  const leads = geo.typeform ? geo.typeform.forms.flatMap((f) => f.leads) : [];
+  if (leads.length) {
     steps.push(
       en
-        ? '<strong>Qualify the WhatsApp conversations</strong>: log which of the started conversations became real chats, valid leads or business to get a true cost per lead.'
-        : '<strong>Calificar las conversaciones de WhatsApp</strong>: registrar cuáles de las conversaciones iniciadas fueron chats reales, leads válidos o negocio, para llegar al costo por lead verdadero.',
+        ? `<strong>Follow up the ${leads.length} captured leads</strong> (${leads.map((l) => l.company).join(', ')}): in an event GEO the interest window closes fast.`
+        : `<strong>Contactar a los ${leads.length} leads captados</strong> (${leads.map((l) => l.company).join(', ')}): en un GEO de evento la ventana de interés se cierra rápido.`,
+      en
+        ? '<strong>Add UTMs to the ad links</strong> so every Typeform response is attributable to campaign/ad without inferring by dates.'
+        : '<strong>Agregar UTMs a los links de los anuncios</strong> para que cada respuesta de Typeform sea atribuible a campaña/anuncio sin inferir por fechas.',
+    );
+  }
+  if (geo.hsForm && geo.hsForm.submissions === 0) {
+    steps.push(
+      en
+        ? '<strong>Rework the HubSpot form</strong>: 37 visits and 0 submissions says the drop is in the form — fewer fields, clearer value promise, and test again.'
+        : '<strong>Rearmar el formulario de HubSpot</strong>: 37 visitas y 0 envíos indican que el drop está en el form — menos campos, promesa de valor más clara, y volver a probar.',
     );
   }
   steps.push(

@@ -4,7 +4,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { listAccounts, getGeo } from '@/services/paidService';
 import { aggAccount } from '@/data/paidMetaGeo';
 import { GEO_STR } from '@/utils/paidI18n';
-import { genGeoInsights, genGeoNextSteps } from '@/utils/paidInsights';
+import { genGeoInsights, genGeoFunnelInsights, genGeoNextSteps } from '@/utils/paidInsights';
+import { Funnel } from '@/components/shared/Funnel';
 import { PAL, CU, CHART_TOOLTIP } from '@/constants/brand';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
@@ -173,7 +174,7 @@ export function MetaGeoReport({ account, period }) {
         title={t.insightsTitle}
         label={t.insightsLabel}
         subtitle={`${accName} · ${geo.event}`}
-        items={genGeoInsights(geo, money, lang)}
+        items={[...genGeoFunnelInsights(geo, money, lang), ...genGeoInsights(geo, money, lang)]}
         actionLabel={lang === 'en' ? 'Recommended action' : 'Acción recomendada'}
       />
 
@@ -222,6 +223,175 @@ export function MetaGeoReport({ account, period }) {
                 ))}
               </tbody>
             </table>
+          </div>
+        </>
+      )}
+
+      {/* ── Funnel de conversión: Meta → Typeform (CU) ── */}
+      {geo.typeform && tf && (() => {
+        const starts = geo.typeform.forms.reduce((a, f) => a + f.starts, 0);
+        const completed = geo.typeform.forms.reduce((a, f) => a + f.completed, 0);
+        const leads = geo.typeform.forms.flatMap((f) => f.leads);
+        return (
+          <>
+            <SectionHeader title={t.funnelSection} note={t.funnelNoteTf} />
+            <div className="mb-4 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">
+              <div className="mx-auto max-w-[640px]">
+                <Funnel
+                  stages={[
+                    { name: t.fsOut, value: numEs(tf.t.out), desc: t.fsOutDesc, retention: '100 %' },
+                    {
+                      name: t.fsStarts,
+                      value: numEs(starts),
+                      desc: t.fsStartsDesc(geo.typeform.forms.length),
+                      retention: pct((starts / tf.t.out) * 100),
+                      drop: <><b className="font-bold text-cu-cyan">{pct((starts / tf.t.out) * 100)}</b>&nbsp;· {t.ofStarts}</>,
+                    },
+                    {
+                      name: t.fsCompleted,
+                      value: numEs(completed),
+                      desc: t.fsCompletedDesc,
+                      retention: pct(starts ? (completed / starts) * 100 : 0),
+                      drop: <><b className="font-bold text-cu-cyan">{pct(starts ? (completed / starts) * 100 : 0)}</b>&nbsp;· {t.ofInit}</>,
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+
+            {/* Detalle por Typeform */}
+            <div className="mb-4 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
+              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{t.formsTableTitle}</h3>
+              <table className="w-full min-w-[480px] border-collapse">
+                <thead>
+                  <tr>
+                    {[t.thForm, t.thStarts, t.thCompleted, t.thCompletion].map((h) => (
+                      <th key={h} className="border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {geo.typeform.forms.map((f) => (
+                    <tr key={f.name} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
+                      <td className="px-3 py-2.5 text-[11.5px] font-medium text-cu-dblue">{f.name}</td>
+                      <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{f.starts}</td>
+                      <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{f.completed}</td>
+                      <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{f.starts ? pct((f.completed / f.starts) * 100) : '—'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Leads captados */}
+            {leads.length > 0 && (
+              <div className="mb-4 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
+                <div className="mb-3 flex flex-wrap items-baseline gap-2">
+                  <h3 className="text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{t.leadsTitle}</h3>
+                  <span className="text-[10px] text-cu-grey">{t.leadsNote}</span>
+                </div>
+                <table className="w-full min-w-[720px] border-collapse">
+                  <thead>
+                    <tr>
+                      {[t.thLead, t.thCompany, t.thRole, t.thGoal, t.thDate].map((h) => (
+                        <th key={h} className="border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {leads.map((l) => (
+                      <tr key={l.email} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
+                        <td className="px-3 py-2.5">
+                          <div className="text-[11.5px] font-medium text-cu-dblue">{l.name}</div>
+                          <div className="text-[10.5px] text-cu-grey">{l.email}</div>
+                        </td>
+                        <td className="px-3 py-2.5 text-[11.5px] font-medium text-cu-dblue">{l.company}</td>
+                        <td className="px-3 py-2.5 text-[11px] text-cu-dgrey">{l.role}</td>
+                        <td className="px-3 py-2.5 text-[11px] text-cu-dgrey">
+                          {l.goal}
+                          <div className="text-[10px] italic text-cu-grey">{l.extra}</div>
+                        </td>
+                        <td className="px-3 py-2.5 text-[11px] text-cu-dgrey">{dayLabel(l.d, en)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
+              {t.tfNote}
+            </div>
+          </>
+        );
+      })()}
+
+      {/* ── Funnel de conversión: Meta → formulario HubSpot (PS) ── */}
+      {geo.hsForm && (
+        <>
+          <SectionHeader title={t.funnelSection} note={t.funnelNoteHs} />
+          <div className="mb-4 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">
+            <div className="mx-auto max-w-[640px]">
+              <Funnel
+                stages={[
+                  { name: t.fsOut, value: numEs(acc.out), desc: t.fsOutDesc, retention: '100 %' },
+                  {
+                    name: t.fsViews,
+                    value: numEs(geo.hsForm.views),
+                    desc: t.fsViewsDesc,
+                    retention: pct((geo.hsForm.views / acc.out) * 100),
+                    drop: <><b className="font-bold text-cu-cyan">{pct((geo.hsForm.views / acc.out) * 100)}</b>&nbsp;· {t.ofStarts}</>,
+                  },
+                  {
+                    name: t.fsInter,
+                    value: numEs(geo.hsForm.interactions),
+                    desc: t.fsInterDesc,
+                    retention: pct((geo.hsForm.interactions / geo.hsForm.views) * 100),
+                    drop: <><b className="font-bold text-cu-cyan">{pct((geo.hsForm.interactions / geo.hsForm.views) * 100)}</b>&nbsp;· {t.ofViews}</>,
+                  },
+                  {
+                    name: t.fsSubs,
+                    value: numEs(geo.hsForm.submissions),
+                    desc: t.fsSubsDesc,
+                    retention: pct(0),
+                  },
+                ]}
+              />
+            </div>
+          </div>
+
+          <div className="mb-4 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
+            <div className="mb-3 flex flex-wrap items-baseline gap-2">
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{t.hsSourcesTitle}</h3>
+              <span className="text-[10px] text-cu-grey">{t.hsSourcesNote}</span>
+            </div>
+            <table className="w-full min-w-[360px] border-collapse">
+              <thead>
+                <tr>
+                  {[t.thSource, t.thViews].map((h) => (
+                    <th key={h} className="border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey">
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {geo.hsForm.sources.map((s) => (
+                  <tr key={s.s} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
+                    <td className="px-3 py-2.5 text-[11.5px] font-medium text-cu-dblue">{s.s}</td>
+                    <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{s.v}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
+            {t.hsNote}
           </div>
         </>
       )}
@@ -301,7 +471,7 @@ export function MetaGeoReport({ account, period }) {
       <div className="mb-5 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-cu-cyan/[0.05] px-5 py-3.5 text-[11.5px] leading-relaxed text-cu-dgrey">
         <p className="mb-2">{t.missingIntro}</p>
         <ul className="list-disc space-y-1 pl-5">
-          {t.missing.map((m, i) => (
+          {(geo.hsForm ? t.missingPs : t.missingCu).map((m, i) => (
             <li key={i}>{m}</li>
           ))}
         </ul>

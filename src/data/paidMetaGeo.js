@@ -55,6 +55,31 @@ export const META_GEO = {
           ],
         },
       ],
+      // Funnel de Typeform (export de respuestas, ventana 4–7 Ago).
+      // Se excluyen las respuestas del 31 Jul: pruebas internas previas al
+      // vuelo (incluidos 2 envíos "test"). El export no trae views ni UTM.
+      typeform: {
+        forms: [
+          { name: 'Certificaciones', starts: 4, completed: 0, leads: [] },
+          {
+            name: 'Huella de Carbono',
+            starts: 8,
+            completed: 2,
+            leads: [
+              {
+                name: 'Luis Gervasoni', company: 'Terratech', email: 'gervasoni.luis@gmail.com',
+                role: 'Productor · Agricultura', goal: 'Acceder a nuevos mercados',
+                extra: 'Huella de carbono: aún no calculada', d: '6 Ago',
+              },
+              {
+                name: 'Roberto Daniel Domínguez', company: 'BIO ROAD', email: 'rdominguezbr@gmail.com',
+                role: 'Agricultura · Otro rol', goal: 'Generar bonos verdes',
+                extra: 'Huella de carbono: aún no calculada', d: '5 Ago',
+              },
+            ],
+          },
+        ],
+      },
     },
   },
 
@@ -62,12 +87,13 @@ export const META_GEO = {
     'geo-aapresid-2026': {
       currency: 'USD',
       event: 'Congreso Aapresid 2026',
-      // El export de PS Argentina es a nivel conjunto de anuncios y solo
-      // incluye Typeform (presupuesto administrado a nivel campaña / CBO).
+      // El export de PS Argentina es a nivel conjunto de anuncios; PS no
+      // corrió WhatsApp. El destino del anuncio es un formulario de HubSpot
+      // (el conjunto se llama "Typeform" pero el link es hsforms.com).
       campaigns: [
         {
           id: 'tf',
-          kind: 'typeform',
+          kind: 'hsform',
           name: 'Peterson - Aapresid - Typeform',
           budgetDaily: null,
           attribution: '7-day click · 1-day view · 1-day engaged-view',
@@ -78,6 +104,20 @@ export const META_GEO = {
           ],
         },
       ],
+      // Funnel del formulario HubSpot "PS Argentina Congreso Aapresid - ES"
+      // (panel de Performance, rango 9 Jul – 7 Ago).
+      hsForm: {
+        views: 37,
+        visible: 35,
+        interactions: 2,
+        submissions: 0,
+        sources: [
+          { s: 'Other campaigns', v: 27 },
+          { s: 'Direct traffic', v: 7 },
+          { s: 'Referrals', v: 2 },
+          { s: 'Organic social', v: 1 },
+        ],
+      },
     },
   },
 };
