@@ -354,6 +354,26 @@ export function genGeoFunnelInsights(geo, moneyFmt, lang = 'es') {
     }
   }
 
+  // Demanda latente: mayoría sin el servicio resuelto en la 1ra pregunta.
+  if (geo.typeform) {
+    const huella = geo.typeform.forms.find((f) => f.intent && /huella/i.test(f.name));
+    if (huella) {
+      const total = huella.intent.dist.reduce((a, x) => a + x.v, 0);
+      const no = huella.intent.dist.find((x) => x.l === 'No')?.v ?? 0;
+      const yes = huella.intent.dist.find((x) => x.l === 'Sí')?.v ?? 0;
+      if (total && no / total >= 0.5) {
+        ins.push({
+          m: en
+            ? `Latent demand: ${no} of ${total} who started the Carbon Footprint form have not calculated it yet (${yes} already had it)`
+            : `Demanda latente: ${no} de ${total} que empezaron el Typeform de Huella aún no la calcularon (${yes} ya la tenían)`,
+          a: en
+            ? 'The event audience needs the service ➜ <strong>Lead the next creative with that question</strong> ("Haven’t calculated your footprint yet?") and reuse it in the lead follow-up.'
+            : 'La audiencia del evento necesita el servicio ➜ <strong>Abrir el próximo creativo con esa pregunta</strong> ("¿Todavía no calculaste tu huella?") y reutilizarla en el seguimiento de los leads.',
+        });
+      }
+    }
+  }
+
   if (geo.hsForm) {
     const f = geo.hsForm;
     const out = geo.campaigns.reduce((a, c) => a + aggCampaign(c).out, 0);

@@ -285,6 +285,43 @@ export function MetaGeoReport({ account, period }) {
               </table>
             </div>
 
+            {/* Intención de la audiencia (1ra pregunta de cada Typeform) */}
+            {geo.typeform.forms.some((f) => f.intent) && (
+              <div className="mb-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
+                {geo.typeform.forms.filter((f) => f.intent).map((f) => {
+                  const total = f.intent.dist.reduce((a, x) => a + x.v, 0);
+                  const max = Math.max(...f.intent.dist.map((x) => x.v), 1);
+                  return (
+                    <div key={f.name} className="rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
+                      <div className="mb-0.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+                        <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
+                        {t.intentTitle} — {f.name}
+                      </div>
+                      <div className="mb-3 text-[10px] text-cu-grey">
+                        “{f.intent.q}” · {t.intentAnswers(total)}
+                      </div>
+                      <div className="space-y-2">
+                        {f.intent.dist.map((x) => (
+                          <div key={x.l} className="flex items-center gap-2">
+                            <div className="w-[46%] truncate text-[11px] text-cu-dgrey" title={x.l}>{x.l}</div>
+                            <div className="h-[14px] flex-1 overflow-hidden rounded-sm bg-cu-bg">
+                              <div
+                                className="h-full rounded-sm bg-cu-cyan/80"
+                                style={{ width: `${(x.v / max) * 100}%` }}
+                              />
+                            </div>
+                            <div className="w-14 text-right text-[11px] font-bold text-cu-dblue">
+                              {x.v}{total ? ` · ${Math.round((x.v / total) * 100)}%` : ''}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
             {/* Leads captados */}
             {leads.length > 0 && (
               <div className="mb-4 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">

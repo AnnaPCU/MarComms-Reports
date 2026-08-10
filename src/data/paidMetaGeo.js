@@ -60,11 +60,36 @@ export const META_GEO = {
       // vuelo (incluidos 2 envíos "test"). El export no trae views ni UTM.
       typeform: {
         forms: [
-          { name: 'Certificaciones', starts: 4, completed: 0, leads: [] },
+          {
+            name: 'Certificaciones',
+            starts: 4,
+            completed: 0,
+            leads: [],
+            // Primera pregunta del Typeform — distribución de las respuestas
+            // del 4–7 Ago (recalculada del export de respuestas; el resumen
+            // oficial de Typeform incluye las pruebas del 31 Jul).
+            intent: {
+              q: '¿Qué querés lograr?',
+              dist: [
+                { l: 'Acceder a nuevos mercados', v: 2 },
+                { l: 'Cumplir requisitos de un cliente', v: 1 },
+                { l: 'Diferenciar mi producción', v: 1 },
+                { l: 'Estoy explorando opciones', v: 0 },
+              ],
+            },
+          },
           {
             name: 'Huella de Carbono',
             starts: 8,
             completed: 2,
+            intent: {
+              q: '¿Tu organización ya calculó su Huella de Carbono?',
+              dist: [
+                { l: 'No', v: 6 },
+                { l: 'Estamos en proceso', v: 2 },
+                { l: 'Sí', v: 0 },
+              ],
+            },
             leads: [
               {
                 name: 'Luis Gervasoni', company: 'Terratech', email: 'gervasoni.luis@gmail.com',
