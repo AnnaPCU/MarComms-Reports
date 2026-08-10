@@ -40,6 +40,41 @@ function moneyFor(currency) {
 
 const dayLabel = (d, en) => (en ? d.replace(/(\d+) Ago/, 'Aug $1') : d);
 
+// Tabla genérica de desglose (creativos / plataforma / género).
+function DataTable({ title, note, headers, rows, foot }) {
+  return (
+    <div className="mb-4 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
+      <div className="mb-3 flex flex-wrap items-baseline gap-2">
+        <h3 className="text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{title}</h3>
+        {note && <span className="text-[10px] text-cu-grey">{note}</span>}
+      </div>
+      <table className="w-full min-w-[640px] border-collapse">
+        <thead>
+          <tr>
+            {headers.map((h) => (
+              <th key={h} className="border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey">
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={i} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
+              {r.map((cell, j) => (
+                <td key={j} className={`px-3 py-2.5 text-[11.5px] ${j === 0 ? 'font-medium text-cu-dblue' : 'text-cu-dgrey'}`}>
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {foot && <div className="mt-2 text-[10px] italic text-cu-grey">{foot}</div>}
+    </div>
+  );
+}
+
 // Celda de la ficha del experimento.
 function FichaCell({ label, value, foot, highlight = false }) {
   return (
@@ -537,6 +572,132 @@ export function MetaGeoReport({ account, period }) {
         </table>
         <div className="mt-2 text-[10px] italic text-cu-grey">{t.dailyReachFoot}</div>
       </div>
+
+      {/* ── Alcance único del período (export sin desglose diario) ── */}
+      {per.some(({ c }) => c.periodReach) && (
+        <>
+          <SectionHeader title={t.reachSection} note={t.reachNote} />
+          <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {per.filter(({ c }) => c.periodReach).map(({ c }) => (
+              <KpiCard
+                key={c.id}
+                label={`${t.reachKpi} — ${kindOf(c)}`}
+                value={numEs(c.periodReach.reach)}
+                delta={
+                  c.periodReach.freq >= 3
+                    ? { dir: 'down', label: `${en ? 'Freq.' : 'Frec.'} ${c.periodReach.freq.toFixed(1)}` }
+                    : { dir: 'flat', label: `${en ? 'Freq.' : 'Frec.'} ${c.periodReach.freq.toFixed(1)}` }
+                }
+                footnote={t.reachFootFreq(c.periodReach.freq.toFixed(1))}
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* ── Resultados por anuncio (creativos) ── */}
+      {per.some(({ c }) => c.ads?.length) && (
+        <>
+          <SectionHeader title={t.adsSection} />
+          {per.filter(({ c }) => c.ads?.length).map(({ c }) => {
+            const ads = [...c.ads].sort((a, b) => b.lc / b.imp - a.lc / a.imp);
+            const eligible = ads.filter((a) => a.lc >= 5);
+            const bestCtr = eligible[0];
+            const bestCpc = eligible.length
+              ? eligible.reduce((a, b) => (b.spend / b.lc < a.spend / a.lc ? b : a), eligible[0])
+              : null;
+            return (
+              <DataTable
+                key={c.id}
+                title={kindOf(c)}
+                note={t.adsCount(ads.length)}
+                headers={[t.thAd, t.thSpend, t.thReach, t.thImp, t.thLc, t.thCtr, t.cpcShort]}
+                rows={ads.map((a) => [
+                  a.name,
+                  money(a.spend),
+                  a.reach != null ? numEs(a.reach) : '—',
+                  numEs(a.imp),
+                  numEs(a.lc),
+                  pct((a.lc / a.imp) * 100),
+                  a.lc ? money(a.spend / a.lc) : '—',
+                ])}
+                foot={
+                  bestCtr && bestCpc
+                    ? t.adsRead(
+                        bestCtr.name,
+                        pct((bestCtr.lc / bestCtr.imp) * 100),
+                        bestCpc.name,
+                        money(bestCpc.spend / bestCpc.lc),
+                      )
+                    : null
+                }
+              />
+            );
+          })}
+        </>
+      )}
+
+      {/* ── Desglose por plataforma ── */}
+      {per.some(({ c }) => c.platforms?.length) && (
+        <>
+          <SectionHeader title={t.platSection} />
+          {per.filter(({ c }) => c.platforms?.length).map(({ c }) => {
+            const hasResults = c.platforms.some((r) => r.results != null);
+            const anTop =
+              c.platforms.filter((r) => r.imp >= 250).sort((a, b) => b.lc / b.imp - a.lc / a.imp)[0]?.p ===
+              'Audience Network';
+            return (
+              <DataTable
+                key={c.id}
+                title={kindOf(c)}
+                headers={[t.thPlat, t.thReach, t.thImp, t.thSpend, t.thLc, t.thCtr, ...(hasResults ? [t.thConvs] : [])]}
+                rows={c.platforms.map((r) => [
+                  r.p,
+                  numEs(r.reach),
+                  numEs(r.imp),
+                  money(r.spend),
+                  numEs(r.lc),
+                  r.imp ? pct((r.lc / r.imp) * 100) : '—',
+                  ...(hasResults ? [r.results ?? '—'] : []),
+                ])}
+                foot={anTop ? t.platAnNote : null}
+              />
+            );
+          })}
+        </>
+      )}
+
+      {/* ── Desglose por género ── */}
+      {per.some(({ c }) => c.gender?.length) && (
+        <>
+          <SectionHeader title={t.genderSection} />
+          {per.filter(({ c }) => c.gender?.length).map(({ c }) => {
+            const hasResults = c.gender.some((r) => r.results != null);
+            const convParts = hasResults
+              ? c.gender
+                  .filter((r) => r.results)
+                  .map((r) => `${t.genderLabels[r.g] ?? r.g} (${r.results})`)
+                  .join(' · ')
+              : null;
+            return (
+              <DataTable
+                key={c.id}
+                title={kindOf(c)}
+                headers={[t.thGender, t.thImp, t.thSpend, t.thLc, t.thCtr, ...(hasResults ? [t.thConvs] : [])]}
+                rows={c.gender.map((r) => [
+                  t.genderLabels[r.g] ?? r.g,
+                  numEs(r.imp),
+                  money(r.spend),
+                  numEs(r.lc),
+                  r.imp ? pct((r.lc / r.imp) * 100) : '—',
+                  ...(hasResults ? [r.results ?? 0] : []),
+                ])}
+                foot={convParts ? t.genderConvRead(convParts) : null}
+              />
+            );
+          })}
+        </>
+      )}
 
       {/* ── Alcance del reporte (qué falta y de dónde sale) ── */}
       <SectionHeader title={t.missingSection} />

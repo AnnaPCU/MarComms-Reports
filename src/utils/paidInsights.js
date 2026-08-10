@@ -308,22 +308,25 @@ export function genGeoInsights(geo, moneyFmt, lang = 'es') {
     });
   }
 
-  // Saturación: frecuencia diaria máxima de la cuenta.
-  const maxFreq = Math.max(...per.map(({ t }) => t.maxFreq));
+  // Saturación: frecuencia REAL del período (export sin desglose diario)
+  // si está disponible; si no, la diaria máxima.
+  const pFreqs = geo.campaigns.map((c) => c.periodReach?.freq).filter(Boolean);
+  const freq = pFreqs.length ? Math.max(...pFreqs) : Math.max(...per.map(({ t }) => t.maxFreq));
+  const period = pFreqs.length > 0;
   ins.push(
-    maxFreq >= 3
+    freq >= 3
       ? {
           m: en
-            ? `Daily frequency reached ${maxFreq.toFixed(1)}: each person saw the ad ~${Math.round(maxFreq)} times per day`
-            : `La frecuencia diaria llegó a ${maxFreq.toFixed(1)}: cada persona vio el anuncio ~${Math.round(maxFreq)} veces por día`,
+            ? `Real saturation: across the whole flight each person saw the ads ~${freq.toFixed(1)} times${period ? ' (period frequency)' : ' per day'}`
+            : `Saturación real: en todo el vuelo cada persona vio los anuncios ~${freq.toFixed(1).replace('.', ',')} veces${period ? ' (frecuencia del período)' : ' por día'}`,
           a: en
             ? `A 1 km radius is a small audience and it saturates fast ➜ <strong>Add creative variations or a frequency cap</strong> on the next hyperlocal GEO.`
             : `Un radio de 1 km es una audiencia chica y se satura rápido ➜ <strong>Sumar variantes de creativos o tope de frecuencia</strong> en el próximo GEO hiperlocal.`,
         }
       : {
           m: en
-            ? `No saturation: daily frequency stayed at or below ${maxFreq.toFixed(1)} views per person`
-            : `Sin saturación: la frecuencia diaria se mantuvo en ${maxFreq.toFixed(1)} o menos vistas por persona`,
+            ? `No saturation: ${period ? 'period' : 'daily'} frequency stayed at ${freq.toFixed(1)} views per person`
+            : `Sin saturación: la frecuencia ${period ? 'del período' : 'diaria'} se mantuvo en ${freq.toFixed(1).replace('.', ',')} vistas por persona`,
           a: en
             ? `The audience still had room ➜ <strong>A longer flight or higher budget</strong> could be tested on the next event without burning the audience.`
             : `La audiencia todavía tenía margen ➜ <strong>Se puede probar más días o más presupuesto</strong> en el próximo evento sin quemar a la audiencia.`,
@@ -410,11 +413,8 @@ export function genGeoNextSteps(geo, lang = 'es') {
   }
   steps.push(
     en
-      ? '<strong>Re-export with breakdowns</strong>: hour of day, age/gender, placement/platform and per-ad results — that is where the "which creative/moment worked" answers live.'
-      : '<strong>Re-exportar con desgloses</strong>: hora del día, edad/género, placement/plataforma y resultados por anuncio — ahí están las respuestas de "qué creativo/momento funcionó".',
-    en
-      ? '<strong>Export the period without daily breakdown</strong> to get true unique reach and frequency for the whole flight.'
-      : '<strong>Exportar el período sin desglose diario</strong> para obtener el alcance único y la frecuencia reales de toda la campaña.',
+      ? '<strong>Export the two remaining breakdowns</strong>: hour of day (key to match response peaks with the event agenda) and age — gender, platform and creatives are already integrated.'
+      : '<strong>Exportar los dos desgloses restantes</strong>: hora del día (clave para cruzar los picos de respuesta con la agenda del evento) y edad — género, plataforma y creativos ya están integrados.',
     en
       ? '<strong>Document the setup</strong>: exact radius/address, audience restrictions, placements, creatives and CTAs from Ads Manager, so the experiment is reproducible at the next event.'
       : '<strong>Documentar el setup</strong>: radio/dirección exactos, restricciones de audiencia, placements, creativos y CTA desde el Administrador de Anuncios, para que el experimento sea reproducible en el próximo evento.',

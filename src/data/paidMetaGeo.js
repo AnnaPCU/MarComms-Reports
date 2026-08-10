@@ -34,6 +34,34 @@ export const META_GEO = {
             { d: '5 Ago', spend: 27838.82, imp: 3290, reach: 1789, freq: 1.84, lc: 109, ulc: 90, out: 109 },
             { d: '6 Ago', spend: 9255.27, imp: 1328, reach: 760, freq: 1.75, lc: 54, ulc: 46, out: 54 },
           ],
+          // Alcance único de TODO el vuelo (export sin desglose diario).
+          periodReach: { reach: 4629, freq: 1.72 },
+          platforms: [
+            { p: 'Audience Network', reach: 650, imp: 1535, spend: 20321.61, lc: 168 },
+            { p: 'Instagram', reach: 2337, imp: 4160, spend: 23415.43, lc: 44 },
+            { p: 'Facebook', reach: 1641, imp: 2016, spend: 4686.43, lc: 16 },
+            { p: 'Threads', reach: 243, imp: 250, spend: 545.94, lc: 3 },
+          ],
+          // Agregado del desglose diario por género del export.
+          gender: [
+            { g: 'male', imp: 4901, spend: 27715.63, lc: 122 },
+            { g: 'female', imp: 3013, spend: 21054.1, lc: 109 },
+            { g: 'unknown', imp: 47, spend: 199.68, lc: 0 },
+          ],
+          ads: [
+            { name: 'Anuncio Typeform 1 - Huella de carbono', spend: 2498.43, imp: 354, reach: 243, lc: 12 },
+            { name: 'Anuncio Typeform 2 - Huella de carbono', spend: 6095.14, imp: 692, reach: 307, lc: 47 },
+            { name: 'Anuncio Typeform 3 - Huella de carbono', spend: 3775.5, imp: 583, reach: 368, lc: 19 },
+            { name: 'Anuncio Typeform 4 - Huella de carbono', spend: 9336.8, imp: 1595, reach: 1063, lc: 28 },
+            { name: 'Anuncio Typeform 5 - Huella de carbono', spend: 1735.59, imp: 132, reach: 90, lc: 7 },
+            { name: 'Anuncio Typeform 6 - Huella de carbono', spend: 982.76, imp: 189, reach: 139, lc: 8 },
+            { name: 'Anuncio Typeform 1 - General', spend: 3824.75, imp: 752, reach: 631, lc: 18 },
+            { name: 'Anuncio Typeform 2 - General', spend: 6415.85, imp: 1219, reach: 906, lc: 38 },
+            { name: 'Anuncio Typeform 3 - General', spend: 1881.64, imp: 408, reach: 361, lc: 5 },
+            { name: 'Anuncio Typeform 4 - General', spend: 5000.36, imp: 646, reach: 503, lc: 13 },
+            { name: 'Anuncio Typeform 5 - General', spend: 5671.86, imp: 1056, reach: 900, lc: 27 },
+            { name: 'Anuncio Typeform 6 - General', spend: 1750.73, imp: 335, reach: 256, lc: 9 },
+          ],
         },
         {
           id: 'wa',
@@ -52,6 +80,25 @@ export const META_GEO = {
             { d: '4 Ago', spend: 2896.35, imp: 773, reach: 617, freq: 1.25, lc: 4, ulc: 4, out: 2 },
             { d: '5 Ago', spend: 38087.78, imp: 6159, reach: 3516, freq: 1.75, lc: 16, ulc: 16, out: 8 },
             { d: '6 Ago', spend: 65074.37, imp: 10512, reach: 5919, freq: 1.78, lc: 45, ulc: 44, out: 20 },
+          ],
+          periodReach: { reach: 8030, freq: 2.17 },
+          platforms: [
+            { p: 'Instagram', reach: 4561, imp: 9927, spend: 61642.56, lc: 30, results: 2 },
+            { p: 'Facebook', reach: 4102, imp: 7518, spend: 44417.6, lc: 35, results: 4 },
+          ],
+          gender: [
+            { g: 'male', imp: 12146, spend: 72003.37, lc: 40, results: 5 },
+            { g: 'female', imp: 5214, spend: 32823.4, lc: 24, results: 0 },
+            { g: 'unknown', imp: 85, spend: 1233.39, lc: 1, results: 1 },
+          ],
+          // Los anuncios de WhatsApp vinieron desglosados por plataforma:
+          // acá se agregan FB+IG por anuncio (sin alcance, no sumable).
+          ads: [
+            { name: 'Anuncio Whatsapp 1 - Qué certificación necesito', spend: 18276.83, imp: 2136, lc: 12 },
+            { name: 'Anuncio Whatsapp 2 - Certificaciones', spend: 36327.9, imp: 6311, lc: 17 },
+            { name: 'Anuncio Whatsapp 3 - ¿Estás pensando en certificar?', spend: 31882.44, imp: 5663, lc: 20 },
+            { name: 'Anuncio Whatsapp 4 - Certificaciones', spend: 11719.03, imp: 1843, lc: 10 },
+            { name: 'Anuncio Whatsapp 5 - Huella de Carbono 2', spend: 7853.96, imp: 1492, lc: 6 },
           ],
         },
       ],
@@ -130,6 +177,25 @@ export const META_GEO = {
             { d: '4 Ago', spend: 4.45, imp: 706, reach: 252, freq: 2.8, lc: 4, ulc: 4, out: 4 },
             { d: '5 Ago', spend: 16.8, imp: 3620, reach: 667, freq: 5.43, lc: 17, ulc: 14, out: 17 },
             { d: '6 Ago', spend: 21.11, imp: 3884, reach: 724, freq: 5.36, lc: 16, ulc: 15, out: 16 },
+          ],
+          periodReach: { reach: 1286, freq: 6.38 },
+          platforms: [
+            { p: 'Instagram', reach: 855, imp: 5508, spend: 30.51, lc: 16 },
+            { p: 'Facebook', reach: 743, imp: 2380, spend: 10.4, lc: 11 },
+            { p: 'Audience Network', reach: 42, imp: 307, spend: 1.38, lc: 10 },
+            { p: 'Threads', reach: 10, imp: 13, spend: 0.07, lc: 0 },
+            { p: 'WhatsApp', reach: 2, imp: 2, spend: 0, lc: 0 },
+          ],
+          gender: [
+            { g: 'male', imp: 6155, spend: 31.37, lc: 27 },
+            { g: 'female', imp: 2023, spend: 10.91, lc: 10 },
+            { g: 'unknown', imp: 32, spend: 0.08, lc: 0 },
+          ],
+          ads: [
+            { name: 'Peterson - Aapresid - Typeform - Carbono', spend: 21.75, imp: 4239, reach: 942, lc: 20 },
+            { name: 'Peterson - Aapresid - Typeform - Claims', spend: 9.13, imp: 1679, reach: 592, lc: 9 },
+            { name: 'Peterson - Aapresid - Typeform - Certificaciones', spend: 4.55, imp: 849, reach: 355, lc: 5 },
+            { name: 'Peterson - Aapresid - Typeform - Sourcing y supply chain', spend: 6.93, imp: 1443, reach: 548, lc: 3 },
           ],
         },
       ],
