@@ -358,6 +358,15 @@ export const GEO_STR = {
     intentTitle: 'Qué respondió la audiencia',
     intentNote: 'Primera pregunta de cada Typeform · respuestas del 4–7 Ago',
     intentAnswers: (n) => `${n} ${n === 1 ? 'respuesta' : 'respuestas'}`,
+    tfPanelTitle: 'Panel de Typeform — todo el período',
+    tfPanelNote: 'Insights oficiales ("Big picture") · sin filtro de fechas',
+    thViewsTf: 'Views',
+    thStartsAll: 'Iniciados',
+    thViewStart: 'View → inicio',
+    thSubs: 'Envíos',
+    thTime: 'Tiempo promedio',
+    tfPanelFoot:
+      'Los Insights de Typeform cubren toda la vida del formulario: incluyen las pruebas del 31/7 y accesos fuera de la ventana de la campaña (directos, QR, etc.). Por eso las views superan a los clics salientes de la campaña y estos números no se integran al embudo del 4–7 Ago.',
     tfNote:
       'Se excluyen las respuestas del 31 de julio (pruebas internas previas al vuelo, incluidos 2 envíos "test"); por eso estas distribuciones difieren levemente del resumen oficial de Typeform, que las incluye. El export de respuestas no trae visitas ni fuente/UTM: los inicios del 4–7 de agosto coinciden con la ventana de la campaña, pero el origen no se puede confirmar sin UTMs.',
     hsSourcesTitle: 'Visitas al formulario por fuente',
@@ -370,11 +379,10 @@ export const GEO_STR = {
     missingIntro:
       'Este reporte usa el export diario de Meta más el funnel del formulario. Para completar el análisis faltan estas fuentes (no se estima ningún dato):',
     missingCu: [
-      'Visitas (views) de los Typeforms: el export de respuestas no las trae — están en el panel de Typeform y permiten medir el drop visita → inicio.',
-      'UTMs en los links de los anuncios, para confirmar que cada respuesta vino de la campaña (hoy se infiere por fechas).',
       'Desgloses de Meta por hora del día, edad/género, placement/plataforma y creativo (exports adicionales de Ads Manager).',
       'Alcance único del período completo (requiere re-exportar sin desglose diario).',
       'Ficha fina de configuración: radio/dirección exactos, audiencia, placements, creativos y CTA (Administrador de Anuncios).',
+      'Las views de Typeform no tienen filtro de fechas: el panel cubre toda la vida del formulario, no solo la campaña.',
     ],
     missingPs: [
       'Desgloses de Meta por hora del día, edad/género, placement/plataforma y creativo (exports adicionales de Ads Manager).',
@@ -489,6 +497,15 @@ export const GEO_STR = {
     intentTitle: 'What the audience answered',
     intentNote: 'First question of each Typeform · Aug 4–7 responses',
     intentAnswers: (n) => `${n} ${n === 1 ? 'response' : 'responses'}`,
+    tfPanelTitle: 'Typeform panel — all time',
+    tfPanelNote: 'Official Insights ("Big picture") · no date filter',
+    thViewsTf: 'Views',
+    thStartsAll: 'Started',
+    thViewStart: 'View → start',
+    thSubs: 'Submissions',
+    thTime: 'Avg. time',
+    tfPanelFoot:
+      'Typeform Insights cover the form’s entire life: they include the Jul 31 tests and accesses outside the campaign window (direct, QR, etc.). That is why views exceed the campaign’s outbound clicks and these numbers are not merged into the Aug 4–7 funnel.',
     tfNote:
       'July 31 responses are excluded (internal pre-flight tests, including 2 "test" submissions); that is why these distributions differ slightly from Typeform’s official summary, which includes them. The responses export has no visits or source/UTM: the Aug 4–7 starts match the campaign window, but origin cannot be confirmed without UTMs.',
     hsSourcesTitle: 'Form visits by source',
@@ -501,11 +518,10 @@ export const GEO_STR = {
     missingIntro:
       'This report uses the daily Meta export plus the form funnel. To complete the analysis these sources are missing (nothing is estimated):',
     missingCu: [
-      'Typeform visits (views): the responses export does not include them — they live in the Typeform panel and measure the visit → start drop.',
-      'UTMs on the ad links, to confirm each response came from the campaign (today inferred by dates).',
       'Meta breakdowns by hour of day, age/gender, placement/platform and creative (extra Ads Manager exports).',
       'Unique reach for the full period (requires re-exporting without daily breakdown).',
       'Fine-grained setup: exact radius/address, audience, placements, creatives and CTAs (Ads Manager).',
+      'Typeform views have no date filter: the panel covers the form’s entire life, not just the campaign.',
     ],
     missingPs: [
       'Meta breakdowns by hour of day, age/gender, placement/platform and creative (extra Ads Manager exports).',

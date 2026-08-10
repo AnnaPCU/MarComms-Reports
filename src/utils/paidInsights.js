@@ -399,9 +399,6 @@ export function genGeoNextSteps(geo, lang = 'es') {
       en
         ? `<strong>Follow up the ${leads.length} captured leads</strong> (${leads.map((l) => l.company).join(', ')}): in an event GEO the interest window closes fast.`
         : `<strong>Contactar a los ${leads.length} leads captados</strong> (${leads.map((l) => l.company).join(', ')}): en un GEO de evento la ventana de interés se cierra rápido.`,
-      en
-        ? '<strong>Add UTMs to the ad links</strong> so every Typeform response is attributable to campaign/ad without inferring by dates.'
-        : '<strong>Agregar UTMs a los links de los anuncios</strong> para que cada respuesta de Typeform sea atribuible a campaña/anuncio sin inferir por fechas.',
     );
   }
   if (geo.hsForm && geo.hsForm.submissions === 0) {

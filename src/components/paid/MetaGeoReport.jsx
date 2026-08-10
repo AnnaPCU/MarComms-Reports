@@ -285,6 +285,41 @@ export function MetaGeoReport({ account, period }) {
               </table>
             </div>
 
+            {/* Panel oficial de Typeform (todo el período, sin filtro de fechas) */}
+            {geo.typeform.forms.some((f) => f.panel) && (
+              <div className="mb-4 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
+                <div className="mb-3 flex flex-wrap items-baseline gap-2">
+                  <h3 className="text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{t.tfPanelTitle}</h3>
+                  <span className="text-[10px] text-cu-grey">{t.tfPanelNote}</span>
+                </div>
+                <table className="w-full min-w-[640px] border-collapse">
+                  <thead>
+                    <tr>
+                      {[t.thForm, t.thViewsTf, t.thStartsAll, t.thViewStart, t.thSubs, t.thCompletion, t.thTime].map((h) => (
+                        <th key={h} className="border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {geo.typeform.forms.filter((f) => f.panel).map((f) => (
+                      <tr key={f.name} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
+                        <td className="px-3 py-2.5 text-[11.5px] font-medium text-cu-dblue">{f.name}</td>
+                        <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{numEs(f.panel.views)}</td>
+                        <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{f.panel.starts}</td>
+                        <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{pct((f.panel.starts / f.panel.views) * 100)}</td>
+                        <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{f.panel.subs}</td>
+                        <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{pct(f.panel.completion)}</td>
+                        <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{f.panel.time}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="mt-2 text-[10px] italic text-cu-grey">{t.tfPanelFoot}</div>
+              </div>
+            )}
+
             {/* Intención de la audiencia (1ra pregunta de cada Typeform) */}
             {geo.typeform.forms.some((f) => f.intent) && (
               <div className="mb-4 grid grid-cols-1 gap-3 lg:grid-cols-2">

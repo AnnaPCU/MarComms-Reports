@@ -65,6 +65,9 @@ export const META_GEO = {
             starts: 4,
             completed: 0,
             leads: [],
+            // Insights oficiales de Typeform ("Big picture", sin filtro de
+            // fechas): cubren toda la vida del form, incl. pruebas del 31/7.
+            panel: { views: 158, starts: 16, subs: 1, completion: 6.3, time: '00:39' },
             // Primera pregunta del Typeform — distribución de las respuestas
             // del 4–7 Ago (recalculada del export de respuestas; el resumen
             // oficial de Typeform incluye las pruebas del 31 Jul).
@@ -82,6 +85,7 @@ export const META_GEO = {
             name: 'Huella de Carbono',
             starts: 8,
             completed: 2,
+            panel: { views: 173, starts: 20, subs: 4, completion: 20, time: '01:10' },
             intent: {
               q: '¿Tu organización ya calculó su Huella de Carbono?',
               dist: [
