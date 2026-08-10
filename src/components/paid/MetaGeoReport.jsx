@@ -573,6 +573,67 @@ export function MetaGeoReport({ account, period }) {
         <div className="mt-2 text-[10px] italic text-cu-grey">{t.dailyReachFoot}</div>
       </div>
 
+      {/* ── Performance por hora del día ── */}
+      {per.some(({ c }) => c.hourly?.length) && (() => {
+        const withHourly = per.filter(({ c }) => c.hourly?.length);
+        const hours = Array.from({ length: 24 }, (_, h) => h);
+        const data = hours.map((h) => {
+          const row = { h: `${h}` };
+          withHourly.forEach(({ c }) => {
+            row[kindOf(c)] = c.hourly.find((x) => x.h === h)?.lc ?? 0;
+          });
+          return row;
+        });
+        // Lectura: mejor bloque de 4 h y mejor hora puntual (clics combinados).
+        const comb = hours.map((h) => withHourly.reduce((a, { c }) => a + (c.hourly.find((x) => x.h === h)?.lc ?? 0), 0));
+        const total = comb.reduce((a, b) => a + b, 0);
+        let best = { start: 0, sum: -1 };
+        for (let s = 0; s <= 20; s++) {
+          const sum = comb.slice(s, s + 4).reduce((a, b) => a + b, 0);
+          if (sum > best.sum) best = { start: s, sum };
+        }
+        const bestHour = comb.indexOf(Math.max(...comb));
+        const convHours = withHourly
+          .flatMap(({ c }) => c.hourly.filter((x) => x.r))
+          .map((x) => x.h)
+          .sort((a, b) => a - b);
+        return (
+          <>
+            <SectionHeader title={t.hourlySection} note={t.hourlyNote} />
+            <ChartCard title={t.chHourTitle} subtitle={t.chHourSub} className="mb-4">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
+                  <CartesianGrid vertical={false} stroke={CU.border2} />
+                  <XAxis dataKey="h" tick={{ fontSize: 9, fill: CU.grey }} interval={1} />
+                  <YAxis tick={{ fontSize: 10, fill: CU.grey }} width={30} allowDecimals={false} />
+                  <Tooltip
+                    {...CHART_TOOLTIP}
+                    cursor={{ fill: 'rgba(62,178,237,.06)' }}
+                    labelFormatter={(h) => `${h}:00 – ${h}:59`}
+                    formatter={(v, n) => [numEs(v), n]}
+                  />
+                  <Legend wrapperStyle={{ fontSize: 10, color: CU.dgrey }} />
+                  {withHourly.map(({ c }, i) => (
+                    <Bar key={c.id} dataKey={kindOf(c)} stackId="h" fill={PAL[i % PAL.length]} radius={i === withHourly.length - 1 ? [2, 2, 0, 0] : [0, 0, 0, 0]} />
+                  ))}
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartCard>
+            <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
+              {total
+                ? t.hourlyRead(
+                    `${best.start}–${best.start + 4} h`,
+                    Math.round((best.sum / total) * 100),
+                    bestHour,
+                    comb[bestHour],
+                  )
+                : null}
+              {convHours.length ? t.waHoursRead(convHours.join(', ')) : null}
+            </div>
+          </>
+        );
+      })()}
+
       {/* ── Alcance único del período (export sin desglose diario) ── */}
       {per.some(({ c }) => c.periodReach) && (
         <>
@@ -683,9 +744,10 @@ export function MetaGeoReport({ account, period }) {
               <DataTable
                 key={c.id}
                 title={kindOf(c)}
-                headers={[t.thGender, t.thImp, t.thSpend, t.thLc, t.thCtr, ...(hasResults ? [t.thConvs] : [])]}
+                headers={[t.thGender, t.thReach, t.thImp, t.thSpend, t.thLc, t.thCtr, ...(hasResults ? [t.thConvs] : [])]}
                 rows={c.gender.map((r) => [
                   t.genderLabels[r.g] ?? r.g,
+                  r.reach != null ? numEs(r.reach) : '—',
                   numEs(r.imp),
                   money(r.spend),
                   numEs(r.lc),

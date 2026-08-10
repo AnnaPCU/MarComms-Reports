@@ -375,6 +375,13 @@ export const GEO_STR = {
     thViews: 'Visitas',
     hsNote:
       'El panel de HubSpot cubre el rango 9 Jul – 7 Ago (más amplio que la campaña), pero las 37 visitas coinciden exactamente con los 37 clics salientes de Meta: el anuncio entregó todo su tráfico al formulario. Ninguna visita terminó en envío.',
+    hourlySection: 'Performance por Hora del Día',
+    hourlyNote: 'Todo el vuelo (3–7 Ago) · hora de Argentina',
+    chHourTitle: 'Clics en enlace por hora',
+    chHourSub: 'Suma del período, por campaña — ¿en qué momento del evento respondió la gente?',
+    hourlyRead: (band, share, hour, clicks) =>
+      `Lectura: el bloque de ${band} concentró el ${share}% de los clics del vuelo; la mejor hora puntual fue a las ${hour} h (${clicks} clics).`,
+    waHoursRead: (hs) => ` Las 6 conversaciones de WhatsApp se registraron a las ${hs} h.`,
     reachSection: 'Alcance Único del Período',
     reachNote: 'Personas reales de todo el vuelo — export sin desglose diario',
     reachKpi: 'Alcance único',
@@ -396,13 +403,11 @@ export const GEO_STR = {
     missingIntro:
       'Este reporte usa los exports de Meta (diario, período completo, plataforma, género y creativos) más el funnel del formulario. Lo único que falta (no se estima ningún dato):',
     missingCu: [
-      'Desglose por hora del día — la respuesta a "¿en qué momento del evento respondió la gente?" (export de Ads Manager).',
       'Desglose por edad (del export vino solo género).',
       'Ficha fina de configuración: radio/dirección exactos, audiencia, placements y CTA (Administrador de Anuncios).',
       'Las views de Typeform no tienen filtro de fechas: el panel cubre toda la vida del formulario, no solo la campaña.',
     ],
     missingPs: [
-      'Desglose por hora del día — la respuesta a "¿en qué momento del evento respondió la gente?" (export de Ads Manager).',
       'Desglose por edad (del export vino solo género).',
       'Ficha fina de configuración: radio/dirección exactos, audiencia, placements y CTA (Administrador de Anuncios).',
       'Panel de HubSpot acotado a la ventana exacta de la campaña (4–7 Ago) para aislar las visitas del vuelo.',
@@ -531,6 +536,13 @@ export const GEO_STR = {
     thViews: 'Views',
     hsNote:
       'The HubSpot panel covers Jul 9 – Aug 7 (wider than the campaign), but the 37 visits match exactly the 37 outbound clicks from Meta: the ad delivered all of its traffic to the form. No visit ended in a submission.',
+    hourlySection: 'Hour-of-Day Performance',
+    hourlyNote: 'Whole flight (Aug 3–7) · Argentina time',
+    chHourTitle: 'Link clicks per hour',
+    chHourSub: 'Period total, per campaign — when during the event did people respond?',
+    hourlyRead: (band, share, hour, clicks) =>
+      `Reading: the ${band} block concentrated ${share}% of the flight’s clicks; the single best hour was ${hour}:00 (${clicks} clicks).`,
+    waHoursRead: (hs) => ` The 6 WhatsApp conversations registered at ${hs} h.`,
     reachSection: 'Unique Reach for the Period',
     reachNote: 'Real people across the whole flight — export without daily breakdown',
     reachKpi: 'Unique reach',
@@ -552,13 +564,11 @@ export const GEO_STR = {
     missingIntro:
       'This report uses the Meta exports (daily, full period, platform, gender and creatives) plus the form funnel. The only things missing (nothing is estimated):',
     missingCu: [
-      'Hour-of-day breakdown — the answer to "when during the event did people respond?" (Ads Manager export).',
       'Age breakdown (the export only included gender).',
       'Fine-grained setup: exact radius/address, audience, placements and CTAs (Ads Manager).',
       'Typeform views have no date filter: the panel covers the form’s entire life, not just the campaign.',
     ],
     missingPs: [
-      'Hour-of-day breakdown — the answer to "when during the event did people respond?" (Ads Manager export).',
       'Age breakdown (the export only included gender).',
       'Fine-grained setup: exact radius/address, audience, placements and CTAs (Ads Manager).',
       'HubSpot panel narrowed to the exact campaign window (Aug 4–7) to isolate the flight’s visits.',

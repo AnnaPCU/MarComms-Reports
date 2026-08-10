@@ -413,8 +413,8 @@ export function genGeoNextSteps(geo, lang = 'es') {
   }
   steps.push(
     en
-      ? '<strong>Export the two remaining breakdowns</strong>: hour of day (key to match response peaks with the event agenda) and age — gender, platform and creatives are already integrated.'
-      : '<strong>Exportar los dos desgloses restantes</strong>: hora del día (clave para cruzar los picos de respuesta con la agenda del evento) y edad — género, plataforma y creativos ya están integrados.',
+      ? '<strong>Export the age breakdown</strong> — the only Meta cut still missing; gender, platform, hour of day and creatives are already integrated.'
+      : '<strong>Exportar el desglose por edad</strong> — el único corte de Meta que falta; género, plataforma, hora del día y creativos ya están integrados.',
     en
       ? '<strong>Document the setup</strong>: exact radius/address, audience restrictions, placements, creatives and CTAs from Ads Manager, so the experiment is reproducible at the next event.'
       : '<strong>Documentar el setup</strong>: radio/dirección exactos, restricciones de audiencia, placements, creativos y CTA desde el Administrador de Anuncios, para que el experimento sea reproducible en el próximo evento.',
