@@ -349,7 +349,7 @@ export const GEO_STR = {
     thCompleted: 'Completados',
     thCompletion: 'Tasa de finalización',
     leadsTitle: 'Leads captados',
-    leadsNote: 'Datos completos del Typeform — para seguimiento comercial',
+    leadsNote: 'Datos completos del Typeform — origen confirmado por UTM (campaña Meta) · para seguimiento comercial',
     thLead: 'Lead',
     thCompany: 'Empresa',
     thRole: 'Rol / Actividad',
@@ -368,7 +368,7 @@ export const GEO_STR = {
     tfPanelFoot:
       'Los Insights de Typeform cubren toda la vida del formulario: incluyen las pruebas del 31/7 y accesos fuera de la ventana de la campaña (directos, QR, etc.). Por eso las views superan a los clics salientes de la campaña y estos números no se integran al embudo del 4–7 Ago.',
     tfNote:
-      'Se excluyen las respuestas del 31 de julio (pruebas internas previas al vuelo, incluidos 2 envíos "test"); por eso estas distribuciones difieren levemente del resumen oficial de Typeform, que las incluye. El export de respuestas no trae visitas ni fuente/UTM: los inicios del 4–7 de agosto coinciden con la ventana de la campaña, pero el origen no se puede confirmar sin UTMs.',
+      'Se excluyen las respuestas del 31 de julio (pruebas internas previas al vuelo, incluidos 2 envíos "test"); por eso estas distribuciones difieren levemente del resumen oficial de Typeform, que las incluye. Los 2 formularios completados están confirmados como tráfico de la campaña: sus registros en HubSpot traen los UTM de "CU ARG - Aapresid - GEO - Agosto 2026" y el identificador de clic de Meta. Los inicios parciales no dejan UTM en el export, por lo que su origen se infiere por coincidencia con la ventana de la campaña.',
     hsSourcesTitle: 'Visitas al formulario por fuente',
     hsSourcesNote: 'Panel de HubSpot · rango 9 Jul – 7 Ago',
     thSource: 'Fuente',
@@ -512,7 +512,7 @@ export const GEO_STR = {
     thCompleted: 'Completed',
     thCompletion: 'Completion rate',
     leadsTitle: 'Captured leads',
-    leadsNote: 'Full details from Typeform — for sales follow-up',
+    leadsNote: 'Full details from Typeform — origin confirmed by UTM (Meta campaign) · for sales follow-up',
     thLead: 'Lead',
     thCompany: 'Company',
     thRole: 'Role / Activity',
@@ -531,7 +531,7 @@ export const GEO_STR = {
     tfPanelFoot:
       'Typeform Insights cover the form’s entire life: they include the Jul 31 tests and accesses outside the campaign window (direct, QR, etc.). That is why views exceed the campaign’s outbound clicks and these numbers are not merged into the Aug 4–7 funnel.',
     tfNote:
-      'July 31 responses are excluded (internal pre-flight tests, including 2 "test" submissions); that is why these distributions differ slightly from Typeform’s official summary, which includes them. The responses export has no visits or source/UTM: the Aug 4–7 starts match the campaign window, but origin cannot be confirmed without UTMs.',
+      'July 31 responses are excluded (internal pre-flight tests, including 2 "test" submissions); that is why these distributions differ slightly from Typeform’s official summary, which includes them. Both completed forms are confirmed as campaign traffic: their HubSpot records carry the "CU ARG - Aapresid - GEO - Agosto 2026" UTMs and Meta’s click identifier. Partial starts leave no UTM in the export, so their origin is inferred from the campaign window.',
     hsSourcesTitle: 'Form visits by source',
     hsSourcesNote: 'HubSpot panel · Jul 9 – Aug 7 range',
     thSource: 'Source',
