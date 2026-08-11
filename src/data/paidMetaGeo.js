@@ -47,6 +47,13 @@ export const META_GEO = {
             { g: 'female', reach: 2004, imp: 3013, spend: 21054.1, lc: 109 },
             { g: 'unknown', reach: 29, imp: 47, spend: 199.68, lc: 0 },
           ],
+          age: [
+            { a: '25-34', reach: 1171, imp: 2041, spend: 8803.35, lc: 46 },
+            { a: '35-44', reach: 1063, imp: 1863, spend: 11579.82, lc: 50 },
+            { a: '45-54', reach: 883, imp: 1402, spend: 10705.27, lc: 52 },
+            { a: '55-64', reach: 632, imp: 1135, spend: 8350.6, lc: 29 },
+            { a: '65+', reach: 900, imp: 1520, spend: 9530.37, lc: 54 },
+          ],
           // Desglose por hora del día (hora de la cuenta publicitaria),
           // todo el vuelo — suma exactamente los totales del período.
           hourly: [
@@ -117,6 +124,13 @@ export const META_GEO = {
             { g: 'male', reach: 5603, imp: 12146, spend: 72003.37, lc: 40, results: 5 },
             { g: 'female', reach: 2581, imp: 5214, spend: 32823.4, lc: 24, results: 0 },
             { g: 'unknown', reach: 49, imp: 85, spend: 1233.39, lc: 1, results: 1 },
+          ],
+          age: [
+            { a: '25-34', reach: 1901, imp: 4433, spend: 24935.61, lc: 13, results: 1 },
+            { a: '35-44', reach: 1923, imp: 4456, spend: 23690.51, lc: 14, results: 3 },
+            { a: '45-54', reach: 1739, imp: 3551, spend: 24746.54, lc: 16, results: 1 },
+            { a: '55-64', reach: 1273, imp: 2561, spend: 17193.47, lc: 10, results: 0 },
+            { a: '65+', reach: 1258, imp: 2441, spend: 15490.49, lc: 12, results: 1 },
           ],
           hourly: [
             { h: 0, spend: 439.55, imp: 117, lc: 0 },
@@ -243,6 +257,14 @@ export const META_GEO = {
             { g: 'male', reach: 889, imp: 6155, spend: 31.37, lc: 27 },
             { g: 'female', reach: 360, imp: 2023, spend: 10.91, lc: 10 },
             { g: 'unknown', reach: 6, imp: 32, spend: 0.08, lc: 0 },
+          ],
+          age: [
+            { a: '18-24', reach: 69, imp: 552, spend: 1.45, lc: 5 },
+            { a: '25-34', reach: 409, imp: 3195, spend: 12.07, lc: 12 },
+            { a: '35-44', reach: 397, imp: 2659, spend: 15.03, lc: 7 },
+            { a: '45-54', reach: 227, imp: 1052, spend: 5.65, lc: 3 },
+            { a: '55-64', reach: 114, imp: 511, spend: 5.37, lc: 2 },
+            { a: '65+', reach: 47, imp: 241, spend: 2.79, lc: 8 },
           ],
           hourly: [
             { h: 0, spend: 0.08, imp: 46, lc: 1 },

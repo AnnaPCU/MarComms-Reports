@@ -761,6 +761,48 @@ export function MetaGeoReport({ account, period }) {
         </>
       )}
 
+      {/* ── Desglose por edad ── */}
+      {per.some(({ c }) => c.age?.length) && (
+        <>
+          <SectionHeader title={t.ageSection} />
+          {per.filter(({ c }) => c.age?.length).map(({ c }) => {
+            const hasResults = c.age.some((r) => r.results != null);
+            const eligible = c.age.filter((r) => r.imp >= 200 && r.lc > 0);
+            const bestAge = eligible.length
+              ? eligible.reduce((a, b) => (b.lc / b.imp > a.lc / a.imp ? b : a), eligible[0])
+              : null;
+            const convParts = hasResults
+              ? c.age
+                  .filter((r) => r.results)
+                  .map((r) => `${r.a} (${r.results})`)
+                  .join(' · ')
+              : null;
+            return (
+              <DataTable
+                key={c.id}
+                title={kindOf(c)}
+                headers={[t.thAge, t.thReach, t.thImp, t.thSpend, t.thLc, t.thCtr, ...(hasResults ? [t.thConvs] : [])]}
+                rows={c.age.map((r) => [
+                  r.a,
+                  numEs(r.reach),
+                  numEs(r.imp),
+                  money(r.spend),
+                  numEs(r.lc),
+                  r.imp ? pct((r.lc / r.imp) * 100) : '—',
+                  ...(hasResults ? [r.results ?? 0] : []),
+                ])}
+                foot={
+                  <>
+                    {bestAge ? t.ageRead(bestAge.a, pct((bestAge.lc / bestAge.imp) * 100)) : null}
+                    {convParts ? t.ageConvRead(convParts) : null}
+                  </>
+                }
+              />
+            );
+          })}
+        </>
+      )}
+
       {/* ── Alcance del reporte (qué falta y de dónde sale) ── */}
       <SectionHeader title={t.missingSection} />
       <div className="mb-5 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-cu-cyan/[0.05] px-5 py-3.5 text-[11.5px] leading-relaxed text-cu-dgrey">

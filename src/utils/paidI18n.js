@@ -399,16 +399,18 @@ export const GEO_STR = {
     genderLabels: { male: 'Hombres', female: 'Mujeres', unknown: 'Sin especificar' },
     thConvs: 'Conversaciones',
     genderConvRead: (txt) => `Lectura: las conversaciones de WhatsApp vinieron de ${txt}.`,
+    ageSection: 'Desglose por Edad',
+    thAge: 'Edad',
+    ageRead: (bracket, ctr) => `Lectura: el mejor CTR fue del grupo ${bracket} (${ctr}).`,
+    ageConvRead: (txt) => ` Conversaciones de WhatsApp por edad: ${txt}.`,
     missingSection: 'Alcance de este Reporte',
     missingIntro:
-      'Este reporte usa los exports de Meta (diario, período completo, plataforma, género y creativos) más el funnel del formulario. Lo único que falta (no se estima ningún dato):',
+      'Este reporte usa los exports completos de Meta (diario, período, plataforma, género, edad, hora del día y creativos) más el funnel del formulario. Lo único que queda afuera (no se estima ningún dato):',
     missingCu: [
-      'Desglose por edad (del export vino solo género).',
       'Ficha fina de configuración: radio/dirección exactos, audiencia, placements y CTA (Administrador de Anuncios).',
       'Las views de Typeform no tienen filtro de fechas: el panel cubre toda la vida del formulario, no solo la campaña.',
     ],
     missingPs: [
-      'Desglose por edad (del export vino solo género).',
       'Ficha fina de configuración: radio/dirección exactos, audiencia, placements y CTA (Administrador de Anuncios).',
       'Panel de HubSpot acotado a la ventana exacta de la campaña (4–7 Ago) para aislar las visitas del vuelo.',
     ],
@@ -560,16 +562,18 @@ export const GEO_STR = {
     genderLabels: { male: 'Men', female: 'Women', unknown: 'Unknown' },
     thConvs: 'Conversations',
     genderConvRead: (txt) => `Reading: WhatsApp conversations came from ${txt}.`,
+    ageSection: 'Age Breakdown',
+    thAge: 'Age',
+    ageRead: (bracket, ctr) => `Reading: the best CTR came from the ${bracket} group (${ctr}).`,
+    ageConvRead: (txt) => ` WhatsApp conversations by age: ${txt}.`,
     missingSection: 'Scope of this Report',
     missingIntro:
-      'This report uses the Meta exports (daily, full period, platform, gender and creatives) plus the form funnel. The only things missing (nothing is estimated):',
+      'This report uses the complete Meta exports (daily, period, platform, gender, age, hour of day and creatives) plus the form funnel. The only things left out (nothing is estimated):',
     missingCu: [
-      'Age breakdown (the export only included gender).',
       'Fine-grained setup: exact radius/address, audience, placements and CTAs (Ads Manager).',
       'Typeform views have no date filter: the panel covers the form’s entire life, not just the campaign.',
     ],
     missingPs: [
-      'Age breakdown (the export only included gender).',
       'Fine-grained setup: exact radius/address, audience, placements and CTAs (Ads Manager).',
       'HubSpot panel narrowed to the exact campaign window (Aug 4–7) to isolate the flight’s visits.',
     ],

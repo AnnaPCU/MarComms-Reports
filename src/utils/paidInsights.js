@@ -413,8 +413,8 @@ export function genGeoNextSteps(geo, lang = 'es') {
   }
   steps.push(
     en
-      ? '<strong>Export the age breakdown</strong> — the only Meta cut still missing; gender, platform, hour of day and creatives are already integrated.'
-      : '<strong>Exportar el desglose por edad</strong> — el único corte de Meta que falta; género, plataforma, hora del día y creativos ya están integrados.',
+      ? '<strong>Reuse the winning formula on the next event GEO</strong>: Carbon Footprint message, 10–19 h window and the best creatives — every Meta cut is now integrated in this report.'
+      : '<strong>Reutilizar la fórmula ganadora en el próximo GEO de evento</strong>: mensaje de Huella de Carbono, franja 10–19 h y los creativos top — todos los cortes de Meta ya están integrados en este reporte.',
     en
       ? '<strong>Document the setup</strong>: exact radius/address, audience restrictions, placements, creatives and CTAs from Ads Manager, so the experiment is reproducible at the next event.'
       : '<strong>Documentar el setup</strong>: radio/dirección exactos, restricciones de audiencia, placements, creativos y CTA desde el Administrador de Anuncios, para que el experimento sea reproducible en el próximo evento.',
