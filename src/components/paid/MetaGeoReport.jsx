@@ -200,10 +200,11 @@ export function MetaGeoReport({ account, period }) {
           foot={wa?.c.results?.note[lang]}
         />
       </div>
-      <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
-        {geo.hsForm && <span className="font-medium not-italic text-cu-dgrey">{t.hsNameNote} </span>}
-        {t.fichaMissing}
-      </div>
+      {!geo.hsForm && (
+        <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
+          {t.fichaMissing}
+        </div>
+      )}
 
       {/* ── Insights ── */}
       <InsightsPanel

@@ -274,8 +274,6 @@ export const GEO_STR = {
     fMainResult: 'Resultado principal',
     fichaMissing:
       'La configuración fina (edades y restricciones de audiencia, placements utilizados, cantidad de creativos y CTA de cada anuncio) no viene en el export de métricas: se completa desde el Administrador de Anuncios.',
-    hsNameNote:
-      'Aclaración: en Meta Ads la campaña y los anuncios figuran nombrados como "Typeform" por nomenclatura interna, pero en PS Argentina nunca hubo un Typeform — el destino fue siempre el formulario nativo de HubSpot. En este reporte se muestran como "Hubspot Form".',
     kindLabel: { typeform: 'Tráfico — Typeform', whatsapp: 'Conversaciones — WhatsApp', hsform: 'Tráfico — Formulario (HubSpot)' },
     insightsTitle: 'Lectura del Experimento GEO',
     insightsLabel: 'Insight',
@@ -439,8 +437,6 @@ export const GEO_STR = {
     fMainResult: 'Main result',
     fichaMissing:
       'Fine-grained setup (age/audience restrictions, placements used, number of creatives and each ad’s CTA) is not part of the metrics export: it is completed from Ads Manager.',
-    hsNameNote:
-      'Note: in Meta Ads the campaign and ads are named "Typeform" due to internal nomenclature, but PS Argentina never used a Typeform — the destination was always the native HubSpot form. In this report they are shown as "Hubspot Form".',
     kindLabel: { typeform: 'Traffic — Typeform', whatsapp: 'Conversations — WhatsApp', hsform: 'Traffic — Form (HubSpot)' },
     insightsTitle: 'GEO Experiment Reading',
     insightsLabel: 'Insight',
