@@ -231,13 +231,15 @@ export const META_GEO = {
       currency: 'USD',
       event: 'Congreso Aapresid 2026',
       // El export de PS Argentina es a nivel conjunto de anuncios; PS no
-      // corrió WhatsApp. El destino del anuncio es un formulario de HubSpot
-      // (el conjunto se llama "Typeform" pero el link es hsforms.com).
+      // corrió WhatsApp. El destino fue siempre el formulario nativo de
+      // HubSpot: en Meta la campaña/anuncios figuran como "Typeform" por
+      // nomenclatura interna, acá se muestran como "Hubspot Form" a pedido
+      // del cliente (la vista lo aclara).
       campaigns: [
         {
           id: 'tf',
           kind: 'hsform',
-          name: 'Peterson - Aapresid - Typeform',
+          name: 'Peterson - Aapresid - Hubspot Form',
           budgetDaily: null,
           attribution: '7-day click · 1-day view · 1-day engaged-view',
           days: [
@@ -293,10 +295,10 @@ export const META_GEO = {
             { h: 23, spend: 0.64, imp: 150, lc: 1 },
           ],
           ads: [
-            { name: 'Peterson - Aapresid - Typeform - Carbono', spend: 21.75, imp: 4239, reach: 942, lc: 20 },
-            { name: 'Peterson - Aapresid - Typeform - Claims', spend: 9.13, imp: 1679, reach: 592, lc: 9 },
-            { name: 'Peterson - Aapresid - Typeform - Certificaciones', spend: 4.55, imp: 849, reach: 355, lc: 5 },
-            { name: 'Peterson - Aapresid - Typeform - Sourcing y supply chain', spend: 6.93, imp: 1443, reach: 548, lc: 3 },
+            { name: 'Peterson - Aapresid - Hubspot Form - Carbono', spend: 21.75, imp: 4239, reach: 942, lc: 20 },
+            { name: 'Peterson - Aapresid - Hubspot Form - Claims', spend: 9.13, imp: 1679, reach: 592, lc: 9 },
+            { name: 'Peterson - Aapresid - Hubspot Form - Certificaciones', spend: 4.55, imp: 849, reach: 355, lc: 5 },
+            { name: 'Peterson - Aapresid - Hubspot Form - Sourcing y supply chain', spend: 6.93, imp: 1443, reach: 548, lc: 3 },
           ],
         },
       ],
