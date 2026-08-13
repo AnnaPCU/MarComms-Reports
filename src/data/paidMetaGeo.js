@@ -27,7 +27,7 @@ export const META_GEO = {
           id: 'tf',
           kind: 'typeform',
           name: 'CU ARG - Aapresid - GEO - Agosto 2026',
-          budgetDaily: 50000,
+          budget: 50000,
           attribution: '7-day click · 1-day view · 1-day engaged-view',
           days: [
             { d: '4 Ago', spend: 11875.32, imp: 3343, reach: 2710, freq: 1.23, lc: 67, ulc: 57, out: 67 },
@@ -101,7 +101,7 @@ export const META_GEO = {
           id: 'wa',
           kind: 'whatsapp',
           name: 'CU ARG - Aapresid - GEO - Agosto 2026 - Whatsapp',
-          budgetDaily: 110000,
+          budget: 110000,
           attribution: '7-day click · 1-day view',
           results: {
             value: 6,
@@ -240,7 +240,7 @@ export const META_GEO = {
           id: 'tf',
           kind: 'hsform',
           name: 'Peterson - Aapresid - Hubspot Form',
-          budgetDaily: null,
+          budget: null,
           attribution: '7-day click · 1-day view · 1-day engaged-view',
           days: [
             { d: '4 Ago', spend: 4.45, imp: 706, reach: 252, freq: 2.8, lc: 4, ulc: 4, out: 4 },

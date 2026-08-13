@@ -134,20 +134,24 @@ export function MetaGeoReport({ account, period }) {
       return row;
     });
 
-  const cmpRows = tf && wa
-    ? [
-        ['spend', (x) => money(x.spend)],
-        ['imp', (x) => numEs(x.imp)],
-        ['lc', (x) => numEs(x.lc)],
-        ['out', (x) => numEs(x.out)],
-        ['ctr', (x) => pct(x.ctr)],
-        ['outCtr', (x) => pct(x.outCtr)],
-        ['cpc', (x) => money(x.cpc)],
-        ['cpm', (x) => money(x.cpm)],
-        ['results', (x) => (x.results ? t.resultsVal(x.results) : t.noResults)],
-        ['cpr', (x) => (x.costPerResult ? money(x.costPerResult) : '—')],
-      ]
-    : null;
+  // Comparativa simplificada Typeform vs WhatsApp: los "leads" del Typeform
+  // son los formularios COMPLETOS; los de WhatsApp, las conversaciones.
+  const tfLeads = geo.typeform ? geo.typeform.forms.reduce((a, f) => a + f.completed, 0) : 0;
+  const cmpRows =
+    tf && wa
+      ? [
+          [t.rows.spend, money(tf.t.spend), money(wa.t.spend)],
+          [t.rows.imp, numEs(tf.t.imp), numEs(wa.t.imp)],
+          [t.rows.lc, numEs(tf.t.lc), numEs(wa.t.lc)],
+          [t.rows.ctr, pct(tf.t.ctr), pct(wa.t.ctr)],
+          [t.rows.leads, numEs(tfLeads), numEs(wa.t.results ?? 0)],
+          [
+            t.rows.cpl,
+            tfLeads ? money(tf.t.spend / tfLeads) : '—',
+            wa.t.costPerResult ? money(wa.t.costPerResult) : '—',
+          ],
+        ]
+      : null;
 
   return (
     <div className="animate-fade-in">
@@ -188,7 +192,7 @@ export function MetaGeoReport({ account, period }) {
             <>
               {per.map(({ c }) => (
                 <div key={c.id}>
-                  {c.budgetDaily ? `${kindOf(c)}: ${t.fBudgetDaily(money(c.budgetDaily))}` : t.fBudgetCbo}
+                  {c.budget ? `${kindOf(c)}: ${money(c.budget)}` : t.fBudgetCbo}
                 </div>
               ))}
               <div className="mt-1 font-bold text-cu-dblue">{t.fBudgetTotal(money(acc.spend))}</div>
@@ -268,11 +272,11 @@ export function MetaGeoReport({ account, period }) {
                 </tr>
               </thead>
               <tbody>
-                {cmpRows.map(([key, fmt]) => (
-                  <tr key={key} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
-                    <td className="px-3 py-2.5 text-[11px] font-medium text-cu-dgrey">{t.rows[key]}</td>
-                    <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{fmt(tf.t)}</td>
-                    <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{fmt(wa.t)}</td>
+                {cmpRows.map(([label, a, b]) => (
+                  <tr key={label} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
+                    <td className="px-3 py-2.5 text-[11px] font-medium text-cu-dgrey">{label}</td>
+                    <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{a}</td>
+                    <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{b}</td>
                   </tr>
                 ))}
               </tbody>
@@ -288,9 +292,13 @@ export function MetaGeoReport({ account, period }) {
         const leads = geo.typeform.forms.flatMap((f) => f.leads);
         return (
           <>
-            <SectionHeader title={t.funnelSection} note={t.funnelNoteTf} />
-            <div className="mb-4 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">
-              <div className="mx-auto max-w-[640px]">
+            <SectionHeader title={t.funnelSection} note={wa ? t.funnelNoteCu : t.funnelNoteTf} />
+            <div className="mb-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
+              <div className="rounded-cu border border-cu-border bg-white px-6 pb-5 pt-5 shadow-cu">
+                <div className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+                  <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
+                  {kindOf(tf.c)}
+                </div>
                 <Funnel
                   stages={[
                     { name: t.fsOut, value: numEs(tf.t.out), desc: t.fsOutDesc, retention: '100 %' },
@@ -311,32 +319,33 @@ export function MetaGeoReport({ account, period }) {
                   ]}
                 />
               </div>
-            </div>
-
-            {/* Detalle por Typeform */}
-            <div className="mb-4 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
-              <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{t.formsTableTitle}</h3>
-              <table className="w-full min-w-[480px] border-collapse">
-                <thead>
-                  <tr>
-                    {[t.thForm, t.thStarts, t.thCompleted, t.thCompletion].map((h) => (
-                      <th key={h} className="border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey">
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {geo.typeform.forms.map((f) => (
-                    <tr key={f.name} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
-                      <td className="px-3 py-2.5 text-[11.5px] font-medium text-cu-dblue">{f.name}</td>
-                      <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{f.starts}</td>
-                      <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{f.completed}</td>
-                      <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{f.starts ? pct((f.completed / f.starts) * 100) : '—'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              {wa && (
+                <div className="rounded-cu border border-cu-border bg-white px-6 pb-5 pt-5 shadow-cu">
+                  <div className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+                    <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
+                    {kindOf(wa.c)}
+                  </div>
+                  <Funnel
+                    stages={[
+                      { name: t.fsImp, value: numEs(wa.t.imp), desc: t.fsImpDesc, retention: '100 %' },
+                      {
+                        name: t.fsClk,
+                        value: numEs(wa.t.lc),
+                        desc: t.fsClkDesc,
+                        retention: pct(wa.t.ctr),
+                        drop: <><b className="font-bold text-cu-cyan">{pct(wa.t.ctr)}</b>&nbsp;· {t.ofImp}</>,
+                      },
+                      {
+                        name: t.fsConv,
+                        value: numEs(wa.t.results ?? 0),
+                        desc: t.fsConvDesc,
+                        retention: pct(wa.t.lc ? ((wa.t.results ?? 0) / wa.t.lc) * 100 : 0),
+                        drop: <><b className="font-bold text-cu-cyan">{pct(wa.t.lc ? ((wa.t.results ?? 0) / wa.t.lc) * 100 : 0)}</b>&nbsp;· {t.ofClk}</>,
+                      },
+                    ]}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Panel oficial de Typeform (todo el período, sin filtro de fechas) */}
@@ -349,7 +358,7 @@ export function MetaGeoReport({ account, period }) {
                 <table className="w-full min-w-[640px] border-collapse">
                   <thead>
                     <tr>
-                      {[t.thForm, t.thViewsTf, t.thStartsAll, t.thViewStart, t.thSubs, t.thCompletion, t.thTime].map((h) => (
+                      {[t.thForm, t.thViewsTf, t.thStartsAll, t.thSubs, t.thLeads, t.thCompletion, t.thTime].map((h) => (
                         <th key={h} className="border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey">
                           {h}
                         </th>
@@ -362,8 +371,8 @@ export function MetaGeoReport({ account, period }) {
                         <td className="px-3 py-2.5 text-[11.5px] font-medium text-cu-dblue">{f.name}</td>
                         <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{numEs(f.panel.views)}</td>
                         <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{f.panel.starts}</td>
-                        <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{pct((f.panel.starts / f.panel.views) * 100)}</td>
-                        <td className="px-3 py-2.5 text-[12px] font-medium text-cu-dblue">{f.panel.subs}</td>
+                        <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{f.panel.subs}</td>
+                        <td className="px-3 py-2.5 text-[12px] font-bold text-cu-dblue">{f.completed}</td>
                         <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{pct(f.panel.completion)}</td>
                         <td className="px-3 py-2.5 text-[12px] text-cu-dgrey">{f.panel.time}</td>
                       </tr>
@@ -592,67 +601,6 @@ export function MetaGeoReport({ account, period }) {
         <div className="mt-2 text-[10px] italic text-cu-grey">{t.dailyReachFoot}</div>
       </div>
 
-      {/* ── Performance por hora del día ── */}
-      {per.some(({ c }) => c.hourly?.length) && (() => {
-        const withHourly = per.filter(({ c }) => c.hourly?.length);
-        const hours = Array.from({ length: 24 }, (_, h) => h);
-        const data = hours.map((h) => {
-          const row = { h: `${h}` };
-          withHourly.forEach(({ c }) => {
-            row[kindOf(c)] = c.hourly.find((x) => x.h === h)?.lc ?? 0;
-          });
-          return row;
-        });
-        // Lectura: mejor bloque de 4 h y mejor hora puntual (clics combinados).
-        const comb = hours.map((h) => withHourly.reduce((a, { c }) => a + (c.hourly.find((x) => x.h === h)?.lc ?? 0), 0));
-        const total = comb.reduce((a, b) => a + b, 0);
-        let best = { start: 0, sum: -1 };
-        for (let s = 0; s <= 20; s++) {
-          const sum = comb.slice(s, s + 4).reduce((a, b) => a + b, 0);
-          if (sum > best.sum) best = { start: s, sum };
-        }
-        const bestHour = comb.indexOf(Math.max(...comb));
-        const convHours = withHourly
-          .flatMap(({ c }) => c.hourly.filter((x) => x.r))
-          .map((x) => x.h)
-          .sort((a, b) => a - b);
-        return (
-          <>
-            <SectionHeader title={t.hourlySection} note={t.hourlyNote} />
-            <ChartCard title={t.chHourTitle} subtitle={t.chHourSub} className="mb-4">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
-                  <CartesianGrid vertical={false} stroke={CU.border2} />
-                  <XAxis dataKey="h" tick={{ fontSize: 9, fill: CU.grey }} interval={1} />
-                  <YAxis tick={{ fontSize: 10, fill: CU.grey }} width={30} allowDecimals={false} />
-                  <Tooltip
-                    {...CHART_TOOLTIP}
-                    cursor={{ fill: 'rgba(62,178,237,.06)' }}
-                    labelFormatter={(h) => `${h}:00 – ${h}:59`}
-                    formatter={(v, n) => [numEs(v), n]}
-                  />
-                  <Legend wrapperStyle={{ fontSize: 10, color: CU.dgrey }} />
-                  {withHourly.map(({ c }, i) => (
-                    <Bar key={c.id} dataKey={kindOf(c)} stackId="h" fill={PAL[i % PAL.length]} radius={i === withHourly.length - 1 ? [2, 2, 0, 0] : [0, 0, 0, 0]} />
-                  ))}
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartCard>
-            <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
-              {total
-                ? t.hourlyRead(
-                    `${best.start}–${best.start + 4} h`,
-                    Math.round((best.sum / total) * 100),
-                    bestHour,
-                    comb[bestHour],
-                  )
-                : null}
-              {convHours.length ? t.waHoursRead(convHours.join(', ')) : null}
-            </div>
-          </>
-        );
-      })()}
-
       {/* ── Alcance único del período (export sin desglose diario) ── */}
       {per.some(({ c }) => c.periodReach) && (
         <>
@@ -672,6 +620,10 @@ export function MetaGeoReport({ account, period }) {
               />
             ))}
           </div>
+          <div
+            className="mb-5 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-cu-cyan/[0.05] px-5 py-3.5 text-[11.5px] leading-relaxed text-cu-dgrey [&_strong]:text-cu-dblue"
+            dangerouslySetInnerHTML={{ __html: t.reachExplain }}
+          />
         </>
       )}
 
