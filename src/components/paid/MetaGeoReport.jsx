@@ -4,10 +4,9 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { listAccounts, getGeo } from '@/services/paidService';
 import { aggAccount } from '@/data/paidMetaGeo';
 import { GEO_STR } from '@/utils/paidI18n';
-import { genGeoInsights, genGeoFunnelInsights, genGeoNextSteps } from '@/utils/paidInsights';
+import { genGeoNextSteps } from '@/utils/paidInsights';
 import { Funnel } from '@/components/shared/Funnel';
 import { PAL, CU, CHART_TOOLTIP } from '@/constants/brand';
-import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
@@ -185,9 +184,16 @@ export function MetaGeoReport({ account, period }) {
         />
         <FichaCell
           label={t.fBudget}
-          value={per
-            .map(({ c }) => (c.budgetDaily ? t.fBudgetDaily(money(c.budgetDaily)) : t.fBudgetCbo))
-            .join(' · ')}
+          value={
+            <>
+              {per.map(({ c }) => (
+                <div key={c.id}>
+                  {c.budgetDaily ? `${kindOf(c)}: ${t.fBudgetDaily(money(c.budgetDaily))}` : t.fBudgetCbo}
+                </div>
+              ))}
+              <div className="mt-1 font-bold text-cu-dblue">{t.fBudgetTotal(money(acc.spend))}</div>
+            </>
+          }
           foot={per.map(({ c }) => c.attribution)[0] ? `${t.fAttribution}: ${per[0].c.attribution}` : null}
         />
         <FichaCell
@@ -206,23 +212,14 @@ export function MetaGeoReport({ account, period }) {
         </div>
       )}
 
-      {/* ── Insights ── */}
-      <InsightsPanel
-        title={t.insightsTitle}
-        label={t.insightsLabel}
-        subtitle={`${accName} · ${geo.event}`}
-        items={[...genGeoFunnelInsights(geo, money, lang), ...genGeoInsights(geo, money, lang)]}
-        actionLabel={lang === 'en' ? 'Recommended action' : 'Acción recomendada'}
-      />
-
       {/* ── Resultados generales ── */}
       <SectionHeader title={t.kpiSection} note={`${accName} · ${t.channel}`} />
-      <div className={`mb-5 grid grid-cols-2 gap-3 ${wa ? 'lg:grid-cols-3' : 'lg:grid-cols-5'}`}>
+      <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-3">
         <KpiCard label={t.kSpend} value={money(acc.spend)} accent="amber" />
         <KpiCard label={t.kImp} value={numEs(acc.imp)} delta={{ dir: 'flat', label: `${t.kCpm} ${money(acc.cpm)}` }} />
         <KpiCard label={t.kLc} value={numEs(acc.lc)} delta={{ dir: 'flat', label: `${t.ctrShort} ${pct(acc.ctr)}` }} footnote={`${t.cpcShort}: ${money(acc.cpc)}`} />
         <KpiCard label={t.kOut} value={numEs(acc.out)} delta={{ dir: 'flat', label: `${t.outCtrShort} ${pct(acc.outCtr)}` }} footnote={t.kOutFoot} />
-        {wa ? (
+        {wa && (
           <KpiCard
             label={t.kConv}
             value={wa.t.results ?? 0}
@@ -230,8 +227,28 @@ export function MetaGeoReport({ account, period }) {
             delta={{ dir: 'up', label: `▲ ${t.resultsVal(wa.t.results ?? 0)}` }}
             footnote={wa.t.costPerResult ? t.kConvFoot(money(wa.t.costPerResult)) : null}
           />
-        ) : (
-          <KpiCard label={t.kCpm} value={money(acc.cpm)} footnote={t.kCpmFoot} />
+        )}
+        {geo.typeform && tf && (() => {
+          const starts = geo.typeform.forms.reduce((a, f) => a + f.starts, 0);
+          const completed = geo.typeform.forms.reduce((a, f) => a + f.completed, 0);
+          return (
+            <KpiCard
+              label={t.kTf}
+              value={completed}
+              accent="green"
+              delta={{ dir: 'up', label: t.kTfDelta(starts) }}
+              footnote={completed ? t.kTfFoot(money(tf.t.spend / completed)) : null}
+            />
+          );
+        })()}
+        {geo.hsForm && (
+          <KpiCard
+            label={t.kHs}
+            value={geo.hsForm.submissions}
+            accent="green"
+            delta={{ dir: geo.hsForm.submissions > 0 ? 'up' : 'down', label: t.kHsDelta(geo.hsForm.views) }}
+            footnote={t.kHsFoot(geo.hsForm.interactions)}
+          />
         )}
       </div>
 
