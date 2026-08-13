@@ -327,8 +327,10 @@ export const GEO_STR = {
     dailyTableTitle: 'Detalle día por día',
     dailyReachFoot:
       'El alcance es diario: una misma persona puede contar en varios días, por eso no se suma un total del período.',
+    viewLabel: 'Campaña',
     funnelSection: 'Funnel de Conversión',
     funnelNoteTf: 'Meta → Typeform (respuestas del 4–7 Ago)',
+    funnelNoteWa: 'Meta → WhatsApp (4–7 Ago)',
     funnelNoteCu: 'Meta → Typeform · Meta → WhatsApp (4–7 Ago)',
     funnelNoteHs: 'Meta → Formulario HubSpot',
     fsImp: 'Impresiones',
@@ -340,7 +342,7 @@ export const GEO_STR = {
     ofImp: 'de las impresiones',
     ofClk: 'de los clics',
     fsOut: 'Clics salientes',
-    fsOutDesc: 'Personas que salieron del anuncio',
+    fsOutDesc: 'Personas que hicieron clic en el anuncio',
     fsStarts: 'Formularios iniciados',
     fsStartsDesc: (n) => `En ${n} Typeforms`,
     fsCompleted: 'Formularios completados',
@@ -408,6 +410,8 @@ export const GEO_STR = {
     thPlat: 'Plataforma',
     platAnNote:
       'El CTR alto de Audience Network se lee con cautela: esa red (apps de terceros) suele generar clics de menor calidad que Facebook/Instagram — conviene cruzarlo con los inicios del formulario.',
+    platNoConvNote:
+      'Las conversiones no se pueden atribuir por plataforma: el formulario de destino no registra desde qué plataforma llegó cada persona — por eso la columna muestra "—".',
     genderSection: 'Desglose por Género',
     thGender: 'Género',
     genderLabels: { male: 'Hombres', female: 'Mujeres', unknown: 'Sin especificar' },
@@ -504,8 +508,10 @@ export const GEO_STR = {
     dailyTableTitle: 'Day-by-day detail',
     dailyReachFoot:
       'Reach is daily: the same person can count on several days, so no period total is added up.',
+    viewLabel: 'Campaign',
     funnelSection: 'Conversion Funnel',
     funnelNoteTf: 'Meta → Typeform (responses Aug 4–7)',
+    funnelNoteWa: 'Meta → WhatsApp (Aug 4–7)',
     funnelNoteCu: 'Meta → Typeform · Meta → WhatsApp (Aug 4–7)',
     funnelNoteHs: 'Meta → HubSpot Form',
     fsImp: 'Impressions',
@@ -517,7 +523,7 @@ export const GEO_STR = {
     ofImp: 'of impressions',
     ofClk: 'of clicks',
     fsOut: 'Outbound clicks',
-    fsOutDesc: 'People who left the ad',
+    fsOutDesc: 'People who clicked the ad',
     fsStarts: 'Forms started',
     fsStartsDesc: (n) => `Across ${n} Typeforms`,
     fsCompleted: 'Forms completed',
@@ -585,6 +591,8 @@ export const GEO_STR = {
     thPlat: 'Platform',
     platAnNote:
       'Audience Network’s high CTR should be read with caution: that network (third-party apps) tends to produce lower-quality clicks than Facebook/Instagram — best cross-checked against form starts.',
+    platNoConvNote:
+      'Conversions cannot be attributed per platform: the destination form does not record which platform each person came from — that is why the column shows "—".',
     genderSection: 'Gender Breakdown',
     thGender: 'Gender',
     genderLabels: { male: 'Men', female: 'Women', unknown: 'Unknown' },

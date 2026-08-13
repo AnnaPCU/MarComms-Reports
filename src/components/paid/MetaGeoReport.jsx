@@ -15,7 +15,7 @@ import { ChartCard } from '@/components/shared/ChartCard';
 import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { BrandIcon } from '@/components/shared/BrandIcon';
 import { Glossary } from '@/components/shared/Glossary';
-import { isExternalReport } from '@/utils/reportAudience';
+import { isExternalReport, isEmbedReport } from '@/utils/reportAudience';
 
 // ════════════════════════════════════════════════════════════════
 //  Reporte Meta Ads GEO — campaña corta atada a un evento físico
@@ -94,6 +94,9 @@ function FichaCell({ label, value, foot, highlight = false }) {
 
 export function MetaGeoReport({ account, period }) {
   const [lang, setLang] = useState('es');
+  // Vista por campaña (CU tiene 2): en la app se navega de a una para no
+  // saturar; el HTML descargado trae SIEMPRE las dos vistas completas.
+  const [view, setView] = useState('tf');
   const t = GEO_STR[lang];
   const en = lang === 'en';
   const accName = listAccounts().find((a) => a.id === account)?.name ?? '';
@@ -123,12 +126,34 @@ export function MetaGeoReport({ account, period }) {
   const wa = per.find((x) => x.c.kind === 'whatsapp');
   const kindOf = (c) => t.kindLabel[c.kind] ?? c.kind;
 
-  // Datos para los charts diarios (una serie por campaña).
-  const days = [...new Set(per.flatMap(({ c }) => c.days.map((d) => d.d)))];
+  // Vista activa: en la app con 2 campañas se muestra UNA por vez; el
+  // embed (descargable) muestra todo junto. La ficha, la comparativa y el
+  // glosario son comunes a ambas vistas.
+  const multi = per.length > 1;
+  const showAll = isEmbedReport() || !multi;
+  const visible = showAll ? per : per.filter((x) => x.c.id === view);
+  const showTfBlocks = Boolean(geo.typeform && tf) && (showAll || view === 'tf');
+  const showWaFunnel = Boolean(wa) && (showAll || view === 'wa');
+
+  // Agregados de las campañas visibles (Resultados Generales).
+  const sums = visible.reduce(
+    (a, { t: x }) => ({ spend: a.spend + x.spend, imp: a.imp + x.imp, lc: a.lc + x.lc, out: a.out + x.out }),
+    { spend: 0, imp: 0, lc: 0, out: 0 },
+  );
+  const visAgg = {
+    ...sums,
+    ctr: sums.imp ? (sums.lc / sums.imp) * 100 : 0,
+    outCtr: sums.imp ? (sums.out / sums.imp) * 100 : 0,
+    cpc: sums.lc ? sums.spend / sums.lc : 0,
+    cpm: sums.imp ? (sums.spend / sums.imp) * 1000 : 0,
+  };
+
+  // Datos para los charts diarios (una serie por campaña visible).
+  const days = [...new Set(visible.flatMap(({ c }) => c.days.map((d) => d.d)))];
   const chart = (field) =>
     days.map((d) => {
       const row = { d: dayLabel(d, en) };
-      per.forEach(({ c }) => {
+      visible.forEach(({ c }) => {
         row[kindOf(c)] = c.days.find((x) => x.d === d)?.[field] ?? 0;
       });
       return row;
@@ -155,7 +180,17 @@ export function MetaGeoReport({ account, period }) {
 
   return (
     <div className="animate-fade-in">
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        {multi && !showAll ? (
+          <SegmentedControl
+            label={t.viewLabel}
+            value={view}
+            onChange={setView}
+            options={per.map(({ c }) => ({ id: c.id, label: kindOf(c) }))}
+          />
+        ) : (
+          <span />
+        )}
         <SegmentedControl
           value={lang}
           onChange={setLang}
@@ -216,14 +251,17 @@ export function MetaGeoReport({ account, period }) {
         </div>
       )}
 
-      {/* ── Resultados generales ── */}
-      <SectionHeader title={t.kpiSection} note={`${accName} · ${t.channel}`} />
+      {/* ── Resultados generales (de la vista activa) ── */}
+      <SectionHeader
+        title={t.kpiSection}
+        note={[accName, t.channel, !showAll ? kindOf(visible[0].c) : null].filter(Boolean).join(' · ')}
+      />
       <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-3">
-        <KpiCard label={t.kSpend} value={money(acc.spend)} accent="amber" />
-        <KpiCard label={t.kImp} value={numEs(acc.imp)} delta={{ dir: 'flat', label: `${t.kCpm} ${money(acc.cpm)}` }} />
-        <KpiCard label={t.kLc} value={numEs(acc.lc)} delta={{ dir: 'flat', label: `${t.ctrShort} ${pct(acc.ctr)}` }} footnote={`${t.cpcShort}: ${money(acc.cpc)}`} />
-        <KpiCard label={t.kOut} value={numEs(acc.out)} delta={{ dir: 'flat', label: `${t.outCtrShort} ${pct(acc.outCtr)}` }} footnote={t.kOutFoot} />
-        {wa && (
+        <KpiCard label={t.kSpend} value={money(visAgg.spend)} accent="amber" />
+        <KpiCard label={t.kImp} value={numEs(visAgg.imp)} delta={{ dir: 'flat', label: `${t.kCpm} ${money(visAgg.cpm)}` }} />
+        <KpiCard label={t.kLc} value={numEs(visAgg.lc)} delta={{ dir: 'flat', label: `${t.ctrShort} ${pct(visAgg.ctr)}` }} footnote={`${t.cpcShort}: ${money(visAgg.cpc)}`} />
+        <KpiCard label={t.kOut} value={numEs(visAgg.out)} delta={{ dir: 'flat', label: `${t.outCtrShort} ${pct(visAgg.outCtr)}` }} footnote={t.kOutFoot} />
+        {showWaFunnel && wa && (
           <KpiCard
             label={t.kConv}
             value={wa.t.results ?? 0}
@@ -232,7 +270,7 @@ export function MetaGeoReport({ account, period }) {
             footnote={wa.t.costPerResult ? t.kConvFoot(money(wa.t.costPerResult)) : null}
           />
         )}
-        {geo.typeform && tf && (() => {
+        {showTfBlocks && (() => {
           const starts = geo.typeform.forms.reduce((a, f) => a + f.starts, 0);
           const completed = geo.typeform.forms.reduce((a, f) => a + f.completed, 0);
           return (
@@ -285,23 +323,36 @@ export function MetaGeoReport({ account, period }) {
         </>
       )}
 
-      {/* ── Funnel de conversión: Meta → Typeform (CU) ── */}
-      {geo.typeform && tf && (() => {
+      {/* ── Funnel de conversión (CU): Typeform y/o WhatsApp según vista ── */}
+      {(showTfBlocks || showWaFunnel) && geo.typeform && tf && (() => {
         const starts = geo.typeform.forms.reduce((a, f) => a + f.starts, 0);
         const completed = geo.typeform.forms.reduce((a, f) => a + f.completed, 0);
         const leads = geo.typeform.forms.flatMap((f) => f.leads);
+        const both = showTfBlocks && showWaFunnel;
         return (
           <>
-            <SectionHeader title={t.funnelSection} note={wa ? t.funnelNoteCu : t.funnelNoteTf} />
-            <div className="mb-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
+            <SectionHeader
+              title={t.funnelSection}
+              note={both ? t.funnelNoteCu : showTfBlocks ? t.funnelNoteTf : t.funnelNoteWa}
+            />
+            <div className={`mb-4 grid grid-cols-1 gap-3 ${both ? 'lg:grid-cols-2' : ''}`}>
+              {showTfBlocks && (
               <div className="rounded-cu border border-cu-border bg-white px-6 pb-5 pt-5 shadow-cu">
                 <div className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
                   <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
                   {kindOf(tf.c)}
                 </div>
+                <div className={both ? '' : 'mx-auto max-w-[640px]'}>
                 <Funnel
                   stages={[
-                    { name: t.fsOut, value: numEs(tf.t.out), desc: t.fsOutDesc, retention: '100 %' },
+                    { name: t.fsImp, value: numEs(tf.t.imp), desc: t.fsImpDesc, retention: '100 %' },
+                    {
+                      name: t.fsOut,
+                      value: numEs(tf.t.out),
+                      desc: t.fsOutDesc,
+                      retention: pct(tf.t.outCtr),
+                      drop: <><b className="font-bold text-cu-cyan">{pct(tf.t.outCtr)}</b>&nbsp;· {t.ofImp}</>,
+                    },
                     {
                       name: t.fsStarts,
                       value: numEs(starts),
@@ -318,13 +369,16 @@ export function MetaGeoReport({ account, period }) {
                     },
                   ]}
                 />
+                </div>
               </div>
-              {wa && (
+              )}
+              {showWaFunnel && wa && (
                 <div className="rounded-cu border border-cu-border bg-white px-6 pb-5 pt-5 shadow-cu">
                   <div className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
                     <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
                     {kindOf(wa.c)}
                   </div>
+                  <div className={both ? '' : 'mx-auto max-w-[640px]'}>
                   <Funnel
                     stages={[
                       { name: t.fsImp, value: numEs(wa.t.imp), desc: t.fsImpDesc, retention: '100 %' },
@@ -344,12 +398,13 @@ export function MetaGeoReport({ account, period }) {
                       },
                     ]}
                   />
+                  </div>
                 </div>
               )}
             </div>
 
             {/* Panel oficial de Typeform (todo el período, sin filtro de fechas) */}
-            {geo.typeform.forms.some((f) => f.panel) && (
+            {showTfBlocks && geo.typeform.forms.some((f) => f.panel) && (
               <div className="mb-4 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
                 <div className="mb-3 flex flex-wrap items-baseline gap-2">
                   <h3 className="text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{t.tfPanelTitle}</h3>
@@ -384,7 +439,7 @@ export function MetaGeoReport({ account, period }) {
             )}
 
             {/* Intención de la audiencia (1ra pregunta de cada Typeform) */}
-            {geo.typeform.forms.some((f) => f.intent) && (
+            {showTfBlocks && geo.typeform.forms.some((f) => f.intent) && (
               <div className="mb-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
                 {geo.typeform.forms.filter((f) => f.intent).map((f) => {
                   const total = f.intent.dist.reduce((a, x) => a + x.v, 0);
@@ -421,7 +476,7 @@ export function MetaGeoReport({ account, period }) {
             )}
 
             {/* Leads captados */}
-            {leads.length > 0 && (
+            {showTfBlocks && leads.length > 0 && (
               <div className="mb-4 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
                 <div className="mb-3 flex flex-wrap items-baseline gap-2">
                   <h3 className="text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{t.leadsTitle}</h3>
@@ -458,9 +513,6 @@ export function MetaGeoReport({ account, period }) {
               </div>
             )}
 
-            <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
-              {t.tfNote}
-            </div>
           </>
         );
       })()}
@@ -542,7 +594,7 @@ export function MetaGeoReport({ account, period }) {
               <YAxis tick={{ fontSize: 10, fill: CU.grey }} width={36} />
               <Tooltip {...CHART_TOOLTIP} cursor={{ fill: 'rgba(62,178,237,.06)' }} formatter={(v, n) => [numEs(v), n]} />
               <Legend wrapperStyle={{ fontSize: 10, color: CU.dgrey }} />
-              {per.map(({ c }, i) => (
+              {visible.map(({ c }, i) => (
                 <Bar key={c.id} dataKey={kindOf(c)} fill={PAL[i % PAL.length]} radius={[3, 3, 0, 0]} />
               ))}
             </BarChart>
@@ -556,7 +608,7 @@ export function MetaGeoReport({ account, period }) {
               <YAxis tick={{ fontSize: 10, fill: CU.grey }} width={56} tickFormatter={(v) => numEs(v)} />
               <Tooltip {...CHART_TOOLTIP} cursor={{ fill: 'rgba(62,178,237,.06)' }} formatter={(v, n) => [money(v), n]} />
               <Legend wrapperStyle={{ fontSize: 10, color: CU.dgrey }} />
-              {per.map(({ c }, i) => (
+              {visible.map(({ c }, i) => (
                 <Bar key={c.id} dataKey={kindOf(c)} fill={PAL[i % PAL.length]} radius={[3, 3, 0, 0]} />
               ))}
             </BarChart>
@@ -579,7 +631,7 @@ export function MetaGeoReport({ account, period }) {
           </thead>
           <tbody>
             {days.flatMap((d) =>
-              per
+              visible
                 .map(({ c }) => ({ c, x: c.days.find((r) => r.d === d) }))
                 .filter(({ x }) => x)
                 .map(({ c, x }) => (
@@ -602,11 +654,11 @@ export function MetaGeoReport({ account, period }) {
       </div>
 
       {/* ── Alcance único del período (export sin desglose diario) ── */}
-      {per.some(({ c }) => c.periodReach) && (
+      {visible.some(({ c }) => c.periodReach) && (
         <>
           <SectionHeader title={t.reachSection} note={t.reachNote} />
           <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {per.filter(({ c }) => c.periodReach).map(({ c }) => (
+            {visible.filter(({ c }) => c.periodReach).map(({ c }) => (
               <KpiCard
                 key={c.id}
                 label={`${t.reachKpi} — ${kindOf(c)}`}
@@ -627,11 +679,11 @@ export function MetaGeoReport({ account, period }) {
         </>
       )}
 
-      {/* ── Resultados por anuncio (creativos) ── */}
-      {per.some(({ c }) => c.ads?.length) && (
+      {/* ── Resultados por anuncio (creativos) — solo uso interno ── */}
+      {!isExternalReport() && visible.some(({ c }) => c.ads?.length) && (
         <>
           <SectionHeader title={t.adsSection} />
-          {per.filter(({ c }) => c.ads?.length).map(({ c }) => {
+          {visible.filter(({ c }) => c.ads?.length).map(({ c }) => {
             const ads = [...c.ads].sort((a, b) => b.lc / b.imp - a.lc / a.imp);
             const eligible = ads.filter((a) => a.lc >= 5);
             const bestCtr = eligible[0];
@@ -670,10 +722,10 @@ export function MetaGeoReport({ account, period }) {
       )}
 
       {/* ── Desglose por plataforma ── */}
-      {per.some(({ c }) => c.platforms?.length) && (
+      {visible.some(({ c }) => c.platforms?.length) && (
         <>
           <SectionHeader title={t.platSection} />
-          {per.filter(({ c }) => c.platforms?.length).map(({ c }) => {
+          {visible.filter(({ c }) => c.platforms?.length).map(({ c }) => {
             const hasResults = c.platforms.some((r) => r.results != null);
             const anTop =
               c.platforms.filter((r) => r.imp >= 250).sort((a, b) => b.lc / b.imp - a.lc / a.imp)[0]?.p ===
@@ -682,7 +734,7 @@ export function MetaGeoReport({ account, period }) {
               <DataTable
                 key={c.id}
                 title={kindOf(c)}
-                headers={[t.thPlat, t.thReach, t.thImp, t.thSpend, t.thLc, t.thCtr, ...(hasResults ? [t.thConvs] : [])]}
+                headers={[t.thPlat, t.thReach, t.thImp, t.thSpend, t.thLc, t.thCtr, t.thConvs]}
                 rows={c.platforms.map((r) => [
                   r.p,
                   numEs(r.reach),
@@ -690,9 +742,11 @@ export function MetaGeoReport({ account, period }) {
                   money(r.spend),
                   numEs(r.lc),
                   r.imp ? pct((r.lc / r.imp) * 100) : '—',
-                  ...(hasResults ? [r.results ?? '—'] : []),
+                  r.results ?? '—',
                 ])}
-                foot={anTop ? t.platAnNote : null}
+                foot={[anTop ? t.platAnNote : null, !hasResults ? t.platNoConvNote : null]
+                  .filter(Boolean)
+                  .join(' ')}
               />
             );
           })}
@@ -700,10 +754,10 @@ export function MetaGeoReport({ account, period }) {
       )}
 
       {/* ── Desglose por género ── */}
-      {per.some(({ c }) => c.gender?.length) && (
+      {visible.some(({ c }) => c.gender?.length) && (
         <>
           <SectionHeader title={t.genderSection} />
-          {per.filter(({ c }) => c.gender?.length).map(({ c }) => {
+          {visible.filter(({ c }) => c.gender?.length).map(({ c }) => {
             const hasResults = c.gender.some((r) => r.results != null);
             const convParts = hasResults
               ? c.gender
@@ -733,10 +787,10 @@ export function MetaGeoReport({ account, period }) {
       )}
 
       {/* ── Desglose por edad ── */}
-      {per.some(({ c }) => c.age?.length) && (
+      {visible.some(({ c }) => c.age?.length) && (
         <>
           <SectionHeader title={t.ageSection} />
-          {per.filter(({ c }) => c.age?.length).map(({ c }) => {
+          {visible.filter(({ c }) => c.age?.length).map(({ c }) => {
             const hasResults = c.age.some((r) => r.results != null);
             const eligible = c.age.filter((r) => r.imp >= 200 && r.lc > 0);
             const bestAge = eligible.length
