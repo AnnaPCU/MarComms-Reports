@@ -14,6 +14,7 @@ export function Header({
   periods,
   period,
   onPeriodChange,
+  periodFilterLabel = 'Período',
   badge,
   onDownload,
   onLogout,
@@ -39,7 +40,7 @@ export function Header({
         {showFilters && (
           <>
             <Select label="Cuenta / Región" value={account} onChange={onAccountChange} options={accounts} />
-            <Select label="Período" value={period} onChange={onPeriodChange} options={periods} />
+            <Select label={periodFilterLabel} value={period} onChange={onPeriodChange} options={periods} />
           </>
         )}
         {badge && <StatusBadge variant={badge.variant}>{badge.text}</StatusBadge>}

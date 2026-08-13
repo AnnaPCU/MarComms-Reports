@@ -32,8 +32,17 @@ export const REGISTRY = {
   paid: {
     Component: PaidApp,
     accounts: paid.listAccounts(),
-    // meses (más reciente primero) + eventos GEO (Meta) + trimestres
+    // Fallback estático (el header usa periodsFor, dependiente de la cuenta).
     periods: [...paid.listPeriods()].reverse().concat(paid.listGeoPeriods(), QUARTERS_2026),
+    // El filtro muestra SOLO los períodos/campañas con datos de la cuenta:
+    // eventos GEO de Meta (Ago, lo más reciente) + meses descendentes.
+    // Sin opciones vacías.
+    periodsFor: (account) =>
+      paid
+        .listGeoPeriods()
+        .concat([...paid.listPeriods()].reverse())
+        .filter((p) => paid.hasDataFor(account, p.id)),
+    periodFilterLabel: 'Período/Campaña',
     defaultPeriod: 'm07', // Julio 2026: último mes completo cargado
     hasDataFor: paid.hasDataFor,
   },

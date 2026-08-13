@@ -23,12 +23,31 @@ export default function App() {
   const [period, setPeriod] = useState(initial.defaultPeriod ?? '');
   const [showDownload, setShowDownload] = useState(false);
 
+  // Períodos visibles: si el pilar define periodsFor (dependiente de la
+  // cuenta, ej. Paid), solo se listan los que tienen datos.
+  function periodsOf(cfg, accountId) {
+    return cfg.periodsFor ? cfg.periodsFor(accountId) : cfg.periods;
+  }
+
   // Al cambiar de pilar, reseteamos cuenta/período a los defaults del pilar.
   function changePilar(id) {
     setPilar(id);
     const cfg = getPilarConfig(id);
-    setAccount(cfg.accounts[0]?.id ?? '');
-    setPeriod(cfg.defaultPeriod ?? '');
+    const firstAccount = cfg.accounts[0]?.id ?? '';
+    setAccount(firstAccount);
+    const list = periodsOf(cfg, firstAccount);
+    setPeriod(
+      list.some((p) => p.id === cfg.defaultPeriod) ? cfg.defaultPeriod : (list[0]?.id ?? cfg.defaultPeriod ?? ''),
+    );
+  }
+
+  // Al cambiar de cuenta, si el período actual no existe para esa cuenta,
+  // saltamos al más reciente disponible.
+  function changeAccount(id) {
+    setAccount(id);
+    const cfg = getPilarConfig(pilar);
+    const list = periodsOf(cfg, id);
+    if (!list.some((p) => p.id === period)) setPeriod(list[0]?.id ?? '');
   }
 
   if (!authed) return <LoginScreen onLogin={login} />;
@@ -36,7 +55,8 @@ export default function App() {
   const cfg = getPilarConfig(pilar);
   const Pilar = cfg.Component;
   const accountName = cfg.accounts.find((a) => a.id === account)?.name ?? '';
-  const periodLabel = cfg.periods.find((p) => p.id === period)?.label ?? period;
+  const periods = periodsOf(cfg, account);
+  const periodLabel = periods.find((p) => p.id === period)?.label ?? period;
 
   // audience: 'internal' (reporte completo) | 'external' (sin "Próximos Pasos")
   async function doDownload(audience) {
@@ -58,11 +78,10 @@ export default function App() {
 
   // Badge de estado de datos (regla de honestidad).
   let badge = null;
-  if (cfg.periods.length && cfg.hasDataFor) {
+  if (periods.length && cfg.hasDataFor) {
     const has = cfg.hasDataFor(account, period);
     if (has) {
-      const label =
-        period === 'cmp' ? 'Mayo 2026' : cfg.periods.find((p) => p.id === period)?.label ?? period;
+      const label = period === 'cmp' ? 'Mayo 2026' : periodLabel;
       badge = { variant: 'real', text: `Datos reales — ${label}` };
     } else {
       badge = { variant: 'nodata', text: 'Sin datos para este período' };
@@ -76,10 +95,11 @@ export default function App() {
         pilarLabel={PILAR_BY_ID[pilar].label}
         accounts={cfg.accounts.map((a) => ({ id: a.id, label: a.name }))}
         account={account}
-        onAccountChange={setAccount}
-        periods={cfg.periods}
+        onAccountChange={changeAccount}
+        periods={periods}
         period={period}
         onPeriodChange={setPeriod}
+        periodFilterLabel={cfg.periodFilterLabel}
         badge={badge}
         onDownload={() => setShowDownload(true)}
         onLogout={logout}
