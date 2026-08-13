@@ -225,11 +225,11 @@ export function MetaGeoReport({ account, period }) {
           label={t.fBudget}
           value={
             <>
-              {per.map(({ c }) => (
-                <div key={c.id}>
-                  {c.budget ? `${kindOf(c)}: ${money(c.budget)}` : t.fBudgetCbo}
-                </div>
-              ))}
+              {per
+                .filter(({ c }) => c.budget)
+                .map(({ c }) => (
+                  <div key={c.id}>{`${kindOf(c)}: ${money(c.budget)}`}</div>
+                ))}
               <div className="mt-1 font-bold text-cu-dblue">{t.fBudgetTotal(money(acc.spend))}</div>
             </>
           }
@@ -824,17 +824,6 @@ export function MetaGeoReport({ account, period }) {
           })}
         </>
       )}
-
-      {/* ── Alcance del reporte (qué falta y de dónde sale) ── */}
-      <SectionHeader title={t.missingSection} />
-      <div className="mb-5 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-cu-cyan/[0.05] px-5 py-3.5 text-[11.5px] leading-relaxed text-cu-dgrey">
-        <p className="mb-2">{t.missingIntro}</p>
-        <ul className="list-disc space-y-1 pl-5">
-          {(geo.hsForm ? t.missingPs : t.missingCu).map((m, i) => (
-            <li key={i}>{m}</li>
-          ))}
-        </ul>
-      </div>
 
       {!isExternalReport() && (
         <>
