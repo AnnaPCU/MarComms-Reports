@@ -275,6 +275,7 @@ export const GEO_STR = {
     fichaMissing:
       'La configuración fina (edades y restricciones de audiencia, placements utilizados, cantidad de creativos y CTA de cada anuncio) no viene en el export de métricas: se completa desde el Administrador de Anuncios.',
     kindLabel: { typeform: 'Tráfico — Typeform', whatsapp: 'Conversaciones — WhatsApp', hsform: 'Tráfico — Formulario (HubSpot)' },
+    kindShort: { typeform: 'Typeform', whatsapp: 'WhatsApp', hsform: 'Hubspot Form' },
     insightsTitle: 'Lectura del Experimento GEO',
     insightsLabel: 'Insight',
     kpiSection: 'Resultados Generales',
@@ -410,8 +411,6 @@ export const GEO_STR = {
     thPlat: 'Plataforma',
     platAnNote:
       'El CTR alto de Audience Network se lee con cautela: esa red (apps de terceros) suele generar clics de menor calidad que Facebook/Instagram — conviene cruzarlo con los inicios del formulario.',
-    platNoConvNote:
-      'Las conversiones no se pueden atribuir por plataforma: el formulario de destino no registra desde qué plataforma llegó cada persona — por eso la columna muestra "—".',
     genderSection: 'Desglose por Género',
     thGender: 'Género',
     genderLabels: { male: 'Hombres', female: 'Mujeres', unknown: 'Sin especificar' },
@@ -456,6 +455,7 @@ export const GEO_STR = {
     fichaMissing:
       'Fine-grained setup (age/audience restrictions, placements used, number of creatives and each ad’s CTA) is not part of the metrics export: it is completed from Ads Manager.',
     kindLabel: { typeform: 'Traffic — Typeform', whatsapp: 'Conversations — WhatsApp', hsform: 'Traffic — Form (HubSpot)' },
+    kindShort: { typeform: 'Typeform', whatsapp: 'WhatsApp', hsform: 'Hubspot Form' },
     insightsTitle: 'GEO Experiment Reading',
     insightsLabel: 'Insight',
     kpiSection: 'Overall Results',
@@ -591,8 +591,6 @@ export const GEO_STR = {
     thPlat: 'Platform',
     platAnNote:
       'Audience Network’s high CTR should be read with caution: that network (third-party apps) tends to produce lower-quality clicks than Facebook/Instagram — best cross-checked against form starts.',
-    platNoConvNote:
-      'Conversions cannot be attributed per platform: the destination form does not record which platform each person came from — that is why the column shows "—".',
     genderSection: 'Gender Breakdown',
     thGender: 'Gender',
     genderLabels: { male: 'Men', female: 'Women', unknown: 'Unknown' },

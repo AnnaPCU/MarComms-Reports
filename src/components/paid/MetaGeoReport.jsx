@@ -186,7 +186,7 @@ export function MetaGeoReport({ account, period }) {
             label={t.viewLabel}
             value={view}
             onChange={setView}
-            options={per.map(({ c }) => ({ id: c.id, label: kindOf(c) }))}
+            options={per.map(({ c }) => ({ id: c.id, label: t.kindShort[c.kind] ?? kindOf(c) }))}
           />
         ) : (
           <span />
@@ -726,7 +726,6 @@ export function MetaGeoReport({ account, period }) {
         <>
           <SectionHeader title={t.platSection} />
           {visible.filter(({ c }) => c.platforms?.length).map(({ c }) => {
-            const hasResults = c.platforms.some((r) => r.results != null);
             const anTop =
               c.platforms.filter((r) => r.imp >= 250).sort((a, b) => b.lc / b.imp - a.lc / a.imp)[0]?.p ===
               'Audience Network';
@@ -734,7 +733,7 @@ export function MetaGeoReport({ account, period }) {
               <DataTable
                 key={c.id}
                 title={kindOf(c)}
-                headers={[t.thPlat, t.thReach, t.thImp, t.thSpend, t.thLc, t.thCtr, t.thConvs]}
+                headers={[t.thPlat, t.thReach, t.thImp, t.thSpend, t.thLc, t.thCtr, t.thLeads]}
                 rows={c.platforms.map((r) => [
                   r.p,
                   numEs(r.reach),
@@ -744,9 +743,7 @@ export function MetaGeoReport({ account, period }) {
                   r.imp ? pct((r.lc / r.imp) * 100) : '—',
                   r.results ?? '—',
                 ])}
-                foot={[anTop ? t.platAnNote : null, !hasResults ? t.platNoConvNote : null]
-                  .filter(Boolean)
-                  .join(' ')}
+                foot={anTop ? t.platAnNote : null}
               />
             );
           })}
