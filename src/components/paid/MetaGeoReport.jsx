@@ -15,7 +15,7 @@ import { ChartCard } from '@/components/shared/ChartCard';
 import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { BrandIcon } from '@/components/shared/BrandIcon';
 import { Glossary } from '@/components/shared/Glossary';
-import { isExternalReport, isEmbedReport } from '@/utils/reportAudience';
+import { isExternalReport } from '@/utils/reportAudience';
 
 // ════════════════════════════════════════════════════════════════
 //  Reporte Meta Ads GEO — campaña corta atada a un evento físico
@@ -126,11 +126,12 @@ export function MetaGeoReport({ account, period }) {
   const wa = per.find((x) => x.c.kind === 'whatsapp');
   const kindOf = (c) => t.kindLabel[c.kind] ?? c.kind;
 
-  // Vista activa: en la app con 2 campañas se muestra UNA por vez; el
-  // embed (descargable) muestra todo junto. La ficha, la comparativa y el
-  // glosario son comunes a ambas vistas.
+  // Vista activa: con 2 campañas se muestra UNA por vez, también en el
+  // HTML descargado (interno o externo): el archivo trae las dos vistas y
+  // la botonera "Campaña" funciona offline para alternarlas. La ficha, la
+  // comparativa y el glosario son comunes a ambas vistas.
   const multi = per.length > 1;
-  const showAll = isEmbedReport() || !multi;
+  const showAll = !multi;
   const visible = showAll ? per : per.filter((x) => x.c.id === view);
   const showTfBlocks = Boolean(geo.typeform && tf) && (showAll || view === 'tf');
   const showWaFunnel = Boolean(wa) && (showAll || view === 'wa');
