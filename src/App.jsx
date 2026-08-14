@@ -13,6 +13,8 @@ import { exportViewAsHtml } from '@/utils/exportHtml';
 import { buildSnapshot } from '@/utils/snapshot';
 import { reportFilename, expandAccountName } from '@/utils/reportFilename';
 import { brandOf } from '@/constants/brand';
+import { getSegConfig } from '@/services/socialService';
+import { viewState } from '@/utils/viewState';
 
 export default function App() {
   const { authed, login, logout } = useAuth();
@@ -61,8 +63,27 @@ export default function App() {
   // audience: 'internal' (reporte completo) | 'external' (sin "Próximos Pasos")
   async function doDownload(audience) {
     setShowDownload(false);
-    const title = [PILAR_BY_ID[pilar].label, expandAccountName(accountName), periodLabel].filter(Boolean).join(' — ');
-    const filename = reportFilename({ pilarLabel: PILAR_BY_ID[pilar].label, accountName, period, periodLabel, audience });
+    // Social segmentado: si hay un país seleccionado, la descarga es el
+    // reporte de ESE país (queda fijo en el archivo, sin botonera).
+    let socialCountry = null;
+    let countryName = '';
+    if (pilar === 'social' && viewState.socialCountry !== 'all') {
+      const cInfo = getSegConfig(account)?.countries.find((c) => c.id === viewState.socialCountry);
+      if (cInfo) {
+        socialCountry = viewState.socialCountry;
+        countryName = cInfo.name;
+      }
+    }
+    const title = [PILAR_BY_ID[pilar].label, expandAccountName(accountName), countryName || null, periodLabel]
+      .filter(Boolean)
+      .join(' — ');
+    const filename = reportFilename({
+      pilarLabel: PILAR_BY_ID[pilar].label,
+      accountName: countryName ? `${accountName} ${countryName}` : accountName,
+      period,
+      periodLabel,
+      audience,
+    });
     const snapshot = await buildSnapshot(pilar, account, period);
     await exportViewAsHtml({
       pilar,
@@ -73,6 +94,7 @@ export default function App() {
       title,
       filename,
       snapshot,
+      socialCountry,
     });
   }
 

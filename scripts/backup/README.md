@@ -10,15 +10,16 @@ automáticamente.
 ```
 backups/
   Social Media/<Cuenta>/<reporte>__interno.html · __externo.html
+  Social Media/<Cuenta>/<País>/...   ← cuentas segmentadas (Latam, North America)
   Paid Media/<Cuenta>/...
   Website/<Cuenta>/...
 ```
 
 - Cada período con datos genera **dos archivos**: uso interno (completo)
   y uso externo (sin "Próximos Pasos" ni secciones internas).
-- Los HTML son autónomos e interactivos offline: los selectores internos
-  (países de Social, campañas del GEO, toggles ES/EN) funcionan en el
-  archivo descargado.
+- Los HTML son autónomos e interactivos offline (campañas del GEO,
+  toggles ES/EN). En Social cada archivo queda FIJO en su selección:
+  la cuenta completa por un lado y cada país como reporte propio.
 - Solo se exportan períodos **con datos** (regla de honestidad); la
   comparativa multi-cuenta de Social se guarda una sola vez.
 - Email y Webinars se suman solos cuando tengan datos (el script recorre

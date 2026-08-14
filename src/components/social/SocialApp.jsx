@@ -11,7 +11,8 @@ import { KpiCard } from '@/components/shared/KpiCard';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { Funnel } from '@/components/shared/Funnel';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
-import { isExternalReport } from '@/utils/reportAudience';
+import { isExternalReport, isEmbedReport } from '@/utils/reportAudience';
+import { viewState } from '@/utils/viewState';
 import { AudienceCharts } from '@/components/social/AudienceCharts';
 import { PostsTable } from '@/components/social/PostsTable';
 import { ComparativeView } from '@/components/social/ComparativeView';
@@ -36,14 +37,26 @@ export function SocialApp({ account, period }) {
   // de la cuenta se mantiene igual ('all') y se puede abrir el reporte de
   // cada país (posts por hashtag + audiencia por ubicación), tanto en la
   // vista mensual como en el Resumen del Año.
-  const [country, setCountry] = useState('all');
+  // A diferencia del GEO de Paid, acá CADA PAÍS se descarga por su cuenta:
+  // el HTML descargado queda fijo en la selección hecha (sin botonera) y
+  // el país elegido viaja en window.__REPORT_EMBED__.socialCountry.
+  const embedCountry =
+    (typeof window !== 'undefined' && window.__REPORT_EMBED__?.socialCountry) || 'all';
+  const [country, setCountry] = useState(embedCountry);
   useEffect(() => {
-    setCountry('all');
+    setCountry(embedCountry);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account]);
+  useEffect(() => {
+    viewState.socialCountry = country;
+    return () => {
+      viewState.socialCountry = 'all';
+    };
+  }, [country]);
   const segCfg = getSegConfig(account);
   const isSeg = !!segCfg && (/^m\d\d$/.test(period) || period === 'year-2026');
 
-  const countrySelector = isSeg ? (
+  const countrySelector = isSeg && !isEmbedReport() ? (
     <div className="mb-4">
       <SegmentedControl
         label="Reporte"

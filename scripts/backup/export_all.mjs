@@ -38,6 +38,23 @@ await page.click('button[type="submit"]');
 await page.waitForTimeout(800);
 
 let total = 0;
+
+async function descargarAmbas(dir) {
+  fs.mkdirSync(dir, { recursive: true });
+  for (const aud of AUDIENCIAS) {
+    await page.click('header >> text=Descargar');
+    await page.waitForTimeout(350);
+    const [download] = await Promise.all([
+      page.waitForEvent('download'),
+      page.click(`button:has-text("${aud}")`),
+    ]);
+    await download.saveAs(path.join(dir, download.suggestedFilename()));
+    total++;
+  }
+}
+
+const COUNTRY_BTNS = 'xpath=//main//span[normalize-space()="Reporte"]/following-sibling::div//button';
+
 for (const pilar of PILARES) {
   await page.click(`nav >> text=${pilar}`);
   await page.waitForTimeout(600);
@@ -62,19 +79,32 @@ for (const pilar of PILARES) {
       }
 
       const dir = path.join(outDir, pilar, account.replace(/[/\\:]/g, '-'));
-      fs.mkdirSync(dir, { recursive: true });
-      for (const aud of AUDIENCIAS) {
-        await page.click('header >> text=Descargar');
-        await page.waitForTimeout(350);
-        const [download] = await Promise.all([
-          page.waitForEvent('download'),
-          page.click(`button:has-text("${aud}")`),
-        ]);
-        const dest = path.join(dir, download.suggestedFilename());
-        await download.saveAs(dest);
-        total++;
-      }
+      await descargarAmbas(dir);
       console.log(`  ✓ ${pilar} / ${account} / ${period}`);
+
+      // Social segmentado (CU Latinoamérica / North America): cada país se
+      // descarga como reporte PROPIO (el archivo queda fijo en ese país).
+      const countryBtns = await page.$$(COUNTRY_BTNS);
+      if (countryBtns.length > 1) {
+        const labels = [];
+        for (const btn of countryBtns) labels.push((await btn.textContent()).trim());
+        for (let ci = 1; ci < labels.length; ci++) {
+          const btns = await page.$$(COUNTRY_BTNS);
+          await btns[ci].click();
+          await page.waitForTimeout(800);
+          const body = await page.$eval('main', (m) => m.innerText);
+          if (body.includes('Sin información suficiente')) {
+            console.log(`  · skip país sin datos: ${account} / ${period} / ${labels[ci]}`);
+            continue;
+          }
+          await descargarAmbas(path.join(dir, labels[ci]));
+          console.log(`  ✓ ${pilar} / ${account} / ${period} / ${labels[ci]}`);
+        }
+        // Volver a la cuenta completa para el próximo período.
+        const btns0 = await page.$$(COUNTRY_BTNS);
+        await btns0[0].click();
+        await page.waitForTimeout(400);
+      }
     }
   }
 }
