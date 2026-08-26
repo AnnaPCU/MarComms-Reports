@@ -21,6 +21,8 @@ import { ComparativeCampaigns } from '@/components/paid/ComparativeCampaigns';
 import { BudgetWeekly } from '@/components/paid/BudgetWeekly';
 import { AdGroupsDetail } from '@/components/paid/AdGroupsDetail';
 import { MetaGeoReport } from '@/components/paid/MetaGeoReport';
+import { PaidAnnualReview } from '@/components/paid/PaidAnnualReview';
+import { PaidComparative } from '@/components/paid/PaidComparative';
 import { isExternalReport } from '@/utils/reportAudience';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
@@ -109,6 +111,10 @@ export function PaidApp({ account, period }) {
   if (String(period).startsWith('geo-')) {
     return <MetaGeoReport account={account} period={period} />;
   }
+
+  // Resumen anual (acumulado Google Ads) y comparativa multi-cuenta.
+  if (period === 'year-2026') return <PaidAnnualReview account={account} />;
+  if (period === 'cmp') return <PaidComparative />;
 
   if (loading) {
     return (

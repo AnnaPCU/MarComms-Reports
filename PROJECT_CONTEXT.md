@@ -244,3 +244,7 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 - Paid: drill-down por campaña + comparativa (ranking/score/radar).
 - Limpieza: baja del andamiaje de import/autoimport y deps sin uso (xlsx,
   papaparse, @supabase/supabase-js); services/hooks seed-only.
+- **Paid: Resumen del Año 2026 + Comparativa Multi-Cuenta** (acumulado Google
+  Ads por meses con datos; GEO de Meta transparentado aparte, con nota).
+- **Descarga multi-período**: el diálogo de descarga lista los períodos con
+  datos de la cuenta y permite tildar varios — un HTML por período.

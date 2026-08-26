@@ -615,3 +615,78 @@ export const GEO_STR = {
     glossaryKey: 'paidMetaEn',
   },
 };
+
+// ── Resumen del Año / Comparativa Multi-Cuenta ────────────────────
+export const YEAR_STR = {
+  es: {
+    title: 'Resumen del Año 2026',
+    subtitle: (acc, ch) => [acc, ch, 'Acumulado de los meses con datos'].filter(Boolean).join(' · '),
+    activeMonths: (labels) => `Meses con datos: ${labels}`,
+    partialMark: ' (parcial)',
+    kpiSection: 'Indicadores del Año — Acumulado',
+    evolSection: 'Evolución Mensual',
+    evolNote: 'Solo meses con datos importados',
+    chCost: 'Inversión por mes',
+    chClicks: 'Clics y conversiones por mes',
+    chCtr: 'CTR por mes (%)',
+    monthTable: 'Detalle por Mes',
+    campSection: 'Campañas del Año — Acumulado',
+    campNote: (n) => `${n} campañas · ordenadas por inversión`,
+    thMonth: 'Mes', thCamp: 'Campaña', thMonths: 'Meses activos',
+    thImp: 'Impresiones', thClk: 'Clics', thCtr: 'CTR', thCpc: 'CPC',
+    thCost: 'Inversión', thConv: 'Conversiones', thCpl: 'Costo/conv.',
+    geoNote: (labels) =>
+      `Además de Google Ads, esta cuenta corrió campañas GEO de Meta Ads (${labels}). Tienen su reporte propio en el filtro «Período/Campaña» y no se suman a este acumulado.`,
+    clicksLbl: 'Clics', convLbl: 'Conversiones', costLbl: 'Inversión',
+  },
+  en: {
+    title: '2026 Annual Review',
+    subtitle: (acc, ch) => [acc, ch, 'Accumulated over months with data'].filter(Boolean).join(' · '),
+    activeMonths: (labels) => `Months with data: ${labels}`,
+    partialMark: ' (partial)',
+    kpiSection: 'Year Indicators — Accumulated',
+    evolSection: 'Monthly Evolution',
+    evolNote: 'Only months with imported data',
+    chCost: 'Spend per month',
+    chClicks: 'Clicks & conversions per month',
+    chCtr: 'CTR per month (%)',
+    monthTable: 'Detail by Month',
+    campSection: 'Campaigns of the Year — Accumulated',
+    campNote: (n) => `${n} campaigns · sorted by spend`,
+    thMonth: 'Month', thCamp: 'Campaign', thMonths: 'Active months',
+    thImp: 'Impressions', thClk: 'Clicks', thCtr: 'CTR', thCpc: 'CPC',
+    thCost: 'Spend', thConv: 'Conversions', thCpl: 'Cost/conv.',
+    geoNote: (labels) =>
+      `Besides Google Ads, this account ran Meta Ads GEO campaigns (${labels}). They have their own report under the "Period/Campaign" filter and are not added to this total.`,
+    clicksLbl: 'Clicks', convLbl: 'Conversions', costLbl: 'Spend',
+  },
+};
+
+export const CMP_STR = {
+  es: {
+    title: 'Comparativa Multi-Cuenta — Año 2026',
+    note: 'Google Ads · acumulado de los meses con datos de cada cuenta',
+    disclaimer:
+      'Cada cuenta estuvo activa en meses distintos: la comparación es sobre el acumulado del año de cada una, con sus meses activos a la vista. No es una comparación mes a mes.',
+    cardMonths: (labels) => `Meses: ${labels}`,
+    chCost: 'Inversión acumulada', chClicks: 'Clics acumulados',
+    chConv: 'Conversiones acumuladas', chCpc: 'CPC promedio',
+    tableTitle: 'Tabla Comparativa',
+    geoNote: (names) =>
+      `Campañas GEO de Meta Ads (reporte propio, fuera de esta comparativa): ${names}.`,
+    thAcc: 'Cuenta',
+  },
+  en: {
+    title: 'Multi-Account Comparison — Year 2026',
+    note: 'Google Ads · accumulated over each account\'s months with data',
+    disclaimer:
+      'Each account was active in different months: the comparison is over each one\'s accumulated year, with its active months in sight. It is not a month-by-month comparison.',
+    cardMonths: (labels) => `Months: ${labels}`,
+    chCost: 'Accumulated spend', chClicks: 'Accumulated clicks',
+    chConv: 'Accumulated conversions', chCpc: 'Average CPC',
+    tableTitle: 'Comparison Table',
+    geoNote: (names) =>
+      `Meta Ads GEO campaigns (own report, outside this comparison): ${names}.`,
+    thAcc: 'Account',
+  },
+};

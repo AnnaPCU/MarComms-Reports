@@ -37,11 +37,16 @@ export const REGISTRY = {
     // El filtro muestra SOLO los períodos/campañas con datos de la cuenta:
     // eventos GEO de Meta (Ago, lo más reciente) + meses descendentes.
     // Sin opciones vacías.
-    periodsFor: (account) =>
-      paid
+    periodsFor: (account) => {
+      const list = paid
         .listGeoPeriods()
         .concat([...paid.listPeriods()].reverse())
-        .filter((p) => paid.hasDataFor(account, p.id)),
+        .filter((p) => paid.hasDataFor(account, p.id));
+      // Resumen anual (si la cuenta tiene meses de Google Ads) + comparativa.
+      if (paid.hasDataFor(account, 'year-2026')) list.push(YEAR_2026);
+      list.push(COMPARATIVE);
+      return list;
+    },
     periodFilterLabel: 'Período/Campaña',
     defaultPeriod: 'm07', // Julio 2026: último mes completo cargado
     hasDataFor: paid.hasDataFor,

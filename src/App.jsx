@@ -60,9 +60,11 @@ export default function App() {
   const periods = periodsOf(cfg, account);
   const periodLabel = periods.find((p) => p.id === period)?.label ?? period;
 
-  // audience: 'internal' (reporte completo) | 'external' (sin "Próximos Pasos")
-  async function doDownload(audience) {
+  // audience: 'internal' (reporte completo) | 'external' (sin "Próximos Pasos").
+  // periodIds: períodos elegidos en el diálogo (cada uno baja su propio HTML).
+  async function doDownload(audience, periodIds) {
     setShowDownload(false);
+    const ids = periodIds?.length ? periodIds : [period];
     // Social segmentado: si hay un país seleccionado, la descarga es el
     // reporte de ESE país (queda fijo en el archivo, sin botonera).
     let socialCountry = null;
@@ -74,28 +76,35 @@ export default function App() {
         countryName = cInfo.name;
       }
     }
-    const title = [PILAR_BY_ID[pilar].label, expandAccountName(accountName), countryName || null, periodLabel]
-      .filter(Boolean)
-      .join(' — ');
-    const filename = reportFilename({
-      pilarLabel: PILAR_BY_ID[pilar].label,
-      accountName: countryName ? `${accountName} ${countryName}` : accountName,
-      period,
-      periodLabel,
-      audience,
-    });
-    const snapshot = await buildSnapshot(pilar, account, period);
-    await exportViewAsHtml({
-      pilar,
-      account,
-      period,
-      audience,
-      brand: brandOf(account, accountName),
-      title,
-      filename,
-      snapshot,
-      socialCountry,
-    });
+    for (const pid of ids) {
+      const pLabel = periods.find((p) => p.id === pid)?.label ?? pid;
+      // El país aplica a los períodos segmentables (no a la comparativa).
+      const withCountry = socialCountry && pid !== 'cmp';
+      const title = [PILAR_BY_ID[pilar].label, expandAccountName(accountName), withCountry ? countryName : null, pLabel]
+        .filter(Boolean)
+        .join(' — ');
+      const filename = reportFilename({
+        pilarLabel: PILAR_BY_ID[pilar].label,
+        accountName: withCountry ? `${accountName} ${countryName}` : accountName,
+        period: pid,
+        periodLabel: pLabel,
+        audience,
+      });
+      const snapshot = await buildSnapshot(pilar, account, pid);
+      await exportViewAsHtml({
+        pilar,
+        account,
+        period: pid,
+        audience,
+        brand: brandOf(account, accountName),
+        title,
+        filename,
+        snapshot,
+        socialCountry: withCountry ? socialCountry : null,
+      });
+      // Pausa corta entre descargas para que el navegador no las agrupe mal.
+      if (ids.length > 1) await new Promise((r) => setTimeout(r, 400));
+    }
   }
 
   // Badge de estado de datos (regla de honestidad).
@@ -103,7 +112,8 @@ export default function App() {
   if (periods.length && cfg.hasDataFor) {
     const has = cfg.hasDataFor(account, period);
     if (has) {
-      const label = period === 'cmp' ? 'Mayo 2026' : periodLabel;
+      // La comparativa de Social compara sobre Mayo 2026 (dato fijo del seed).
+      const label = pilar === 'social' && period === 'cmp' ? 'Mayo 2026' : periodLabel;
       badge = { variant: 'real', text: `Datos reales — ${label}` };
     } else {
       badge = { variant: 'nodata', text: 'Sin datos para este período' };
@@ -142,7 +152,14 @@ export default function App() {
         <Tagline />
       </footer>
 
-      {showDownload && <DownloadDialog onClose={() => setShowDownload(false)} onChoose={doDownload} />}
+      {showDownload && (
+        <DownloadDialog
+          onClose={() => setShowDownload(false)}
+          onChoose={doDownload}
+          periods={cfg.hasDataFor ? periods.filter((p) => cfg.hasDataFor(account, p.id)) : periods}
+          currentPeriod={period}
+        />
+      )}
     </div>
   );
 }

@@ -22,6 +22,8 @@ export function buildSnapshot(pilar, account, period) {
     };
   }
   if (pilar === 'paid') {
+    if (period === 'cmp') return { kind: 'paid-cmp' }; // la comparativa usa datos del bundle
+    if (period === 'year-2026') return { kind: 'paid-year', year: paid.getYear(account) };
     return { mo: paid.getMonthly(account, period), detail: paid.getDetail(account, period) };
   }
   if (pilar === 'website') {
