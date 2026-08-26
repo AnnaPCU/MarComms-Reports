@@ -113,13 +113,18 @@ Nunca inventar, estimar ni rellenar números.**
 
 ## Los 5 pilares y sus fuentes
 
-| Pilar | Fuentes de datos |
-|-------|------------------|
-| **Social Media** | LinkedIn |
-| **Paid Media** | Google Ads, Meta Ads |
-| **Email Marketing** | Mailchimp, Apollo |
-| **Webinars** | Livestorm |
-| **Website** | Google Analytics (GA4), Google Search Console |
+| Pilar | Fuentes de datos | Cómo llegan los archivos |
+|-------|------------------|--------------------------|
+| **Social Media** | LinkedIn | Carpeta **`metricas/social-media/`** (ver su README) |
+| **Paid Media** | Google Ads, Meta Ads | Adjuntos en la conversación (Tomás) |
+| **Email Marketing** | Mailchimp, Apollo | Carpeta **`metricas/email-marketing/`** |
+| **Webinars** | Livestorm | Carpeta **`metricas/webinars/`** |
+| **Website** | Google Analytics (GA4), Google Search Console | Adjuntos en la conversación (Tomás) |
+
+> **Ingesta por carpeta:** ante «procesá las métricas nuevas de <pilar>»,
+> buscar en `metricas/<pilar>/` las carpetas `AAAA-MM` fuera de
+> `_procesados/`, correr el tooling del pilar, verificar, deployar y mover la
+> carpeta a `_procesados/`. Reglas completas en `metricas/README.md`.
 
 Cada pilar tiene su propia vista, sus propios filtros (cliente / período) y sus
 propias tablas de métricas y de clientes en Supabase. El pilar **Social Media** es

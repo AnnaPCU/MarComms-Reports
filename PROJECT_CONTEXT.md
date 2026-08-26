@@ -38,6 +38,18 @@ los Excel/CSV que provee el usuario → commit → deploy. **No hay import por l
 ni base de datos.** Cualquiera que abra la URL ve los mismos datos (van en el
 bundle publicado).
 
+**Dos canales de entrega de archivos (desde Ago 2026):**
+
+1. **Paid Media y Website** → Tomás adjunta los archivos directamente en su
+   conversación de Claude (como siempre).
+2. **Social Media, Email Marketing y Webinars** → los responsables de cada
+   pilar dejan los exports crudos en la carpeta **`metricas/`** del repo
+   (una subcarpeta por pilar, una carpeta `AAAA-MM` por mes). Ver
+   `metricas/README.md` para reglas y nomenclatura. Al procesar un mes,
+   Claude corre el tooling del pilar, verifica, deploya y mueve la carpeta
+   a `metricas/<pilar>/_procesados/`. Las carpetas de mes que NO están en
+   `_procesados/` son las pendientes.
+
 ## 4. Arquitectura y stack
 
 - **React 18 + Vite 5**, **Tailwind 3**, **Recharts**, **lucide-react**. Sin
@@ -207,6 +219,12 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 - **No reintroducir Supabase ni import por UI** salvo pedido explícito. Los datos
   van en `src/data/*Seed.js`.
+- **Ingesta por carpeta (`metricas/`)**: si piden «procesá las métricas nuevas
+  de <pilar>», buscar en `metricas/<pilar>/` las carpetas `AAAA-MM` que no
+  estén en `_procesados/`, correr el tooling correspondiente (Social:
+  `scripts/linkedin/build_monthly.py` + `build_country_seg.py acc=cul|cuna`;
+  Email/Webinars: construir el parser con el primer drop real), verificar,
+  deployar, y mover la carpeta procesada a `_procesados/` en el mismo commit.
 - Para sumar datos nuevos de Paid: parsear el CSV de Google Ads, separar por
   prefijo de mercado, agregar al seed (respetando el shape existente), y actualizar
   este archivo (§6). Verificar con `npm run build` + captura (Playwright headless,
