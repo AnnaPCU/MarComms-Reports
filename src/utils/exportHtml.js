@@ -81,9 +81,20 @@ function collectInlineCss() {
 const safeForScript = (s) => s.replace(/<\/script>/gi, '<\\/script>');
 const safeJson = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c');
 
+// Favicon por marca para los descargables (pestaña del navegador).
+const BRAND_FAVICONS = {
+  cu: '/favicon-cu.png',
+  peterson: '/favicon-peterson.png',
+};
+
 export async function exportViewAsHtml({ pilar, account, period, audience, brand, title, filename, snapshot, socialCountry = null, periods = null }) {
   // Logo de la marca como data URI (para que no se rompa en el archivo offline).
   const logoSrc = brand && BRAND_LOGOS[brand] ? await fetchAsDataUri(BRAND_LOGOS[brand].src) : null;
+  // Favicon de la empresa de la cuenta (CU / Peterson); genérico si no hay marca.
+  const faviconSrc = await fetchAsDataUri(BRAND_FAVICONS[brand] ?? '/favicon.svg');
+  const faviconTag = faviconSrc
+    ? `<link rel="icon" type="${faviconSrc.startsWith('data:image/svg') ? 'image/svg+xml' : 'image/png'}" href="${faviconSrc}" />`
+    : '';
 
   // Bundle de producción: primero el del deploy VIGENTE (index.html fresco);
   // si no se puede, el que referencia esta pestaña (puede haber quedado viejo).
@@ -127,6 +138,7 @@ export async function exportViewAsHtml({ pilar, account, period, audience, brand
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
 <title>${title}</title>
+${faviconTag}
 ${FONT_LINK}
 <style>${css}</style>
 </head>
@@ -145,7 +157,7 @@ ${FONT_LINK}
   const css = collectInlineCss();
   const content = node ? node.outerHTML : '<p>Vista no encontrada</p>';
   const doc = `<!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8" />${FONT_LINK}<title>${title}</title>
+<html lang="es"><head><meta charset="UTF-8" />${faviconTag}${FONT_LINK}<title>${title}</title>
 <style>${css}
 body{margin:0;background:#f0f4f5;font-family:'Ubuntu',Calibri,sans-serif;color:#4f6566;}
 .cu-wrap{max-width:1440px;margin:0 auto;padding:24px 36px 44px;}
