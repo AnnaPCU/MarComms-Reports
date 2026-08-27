@@ -27,6 +27,8 @@ export function buildSnapshot(pilar, account, period) {
     return { mo: paid.getMonthly(account, period), detail: paid.getDetail(account, period) };
   }
   if (pilar === 'website') {
+    if (period === 'cmp') return { kind: 'website-cmp' }; // la comparativa usa datos del bundle
+    if (period === 'year-2026') return { kind: 'website-year', year: website.getYear(account) };
     return { quarter: website.getQuarter(account, period), handle: website.getHandle(account) };
   }
   if (pilar === 'email') {

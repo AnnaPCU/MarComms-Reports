@@ -248,3 +248,8 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   Ads por meses con datos; GEO de Meta transparentado aparte, con nota).
 - **Descarga multi-período**: el diálogo de descarga lista los períodos con
   datos de la cuenta y permite tildar varios — un HTML por período.
+- **Website: Resumen del Año + Comparativa Multi-Cuenta** (acumulado de
+  trimestres con datos; Peterson sin Search Console muestra «—» en SEO).
+- **Descarga multi-período en UN archivo**: los períodos tildados van en un
+  solo HTML con botonera «Período» interna (EmbedApp remonta la vista con el
+  snapshot del período elegido).

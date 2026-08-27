@@ -54,7 +54,8 @@ export const REGISTRY = {
   website: {
     Component: WebsiteApp,
     accounts: website.listAccounts(),
-    periods: website.listPeriods(),
+    // trimestres + resumen anual + comparativa
+    periods: [...website.listPeriods(), YEAR_2026, COMPARATIVE],
     defaultPeriod: 'q2-2026', // último trimestre cargado
     hasDataFor: website.hasDataFor,
   },

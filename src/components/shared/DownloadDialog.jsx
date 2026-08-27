@@ -60,7 +60,8 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
                 ))}
               </div>
               <p className="mb-4 text-[10.5px] leading-snug text-cu-grey">
-                Cada período seleccionado se descarga como su propio archivo HTML.
+                Si tildás varios, se descarga <strong className="text-cu-dgrey">un solo HTML</strong> con
+                una botonera para filtrar entre los períodos elegidos.
               </p>
             </>
           )}

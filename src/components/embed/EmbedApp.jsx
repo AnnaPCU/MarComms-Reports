@@ -1,16 +1,33 @@
+import { useState } from 'react';
 import { getPilarConfig } from '@/pilares/registry';
 import { BarTop, BarBottom } from '@/components/brand/BrandBars';
 import { Logo } from '@/components/brand/Logo';
 import { Tagline } from '@/components/brand/Tagline';
+import { SegmentedControl } from '@/components/shared/SegmentedControl';
 
 // ════════════════════════════════════════════════════════════════
-//  EMBED — render de UNA sola vista (la descargada), interactiva, sin
-//  header de filtros, nav ni login. Los hooks/services leen el snapshot
-//  embebido (window.__REPORT_EMBED__) en vez de Supabase.
+//  EMBED — render de la vista descargada, interactiva, sin header de
+//  filtros, nav ni login. Los hooks/services leen el snapshot embebido
+//  (window.__REPORT_EMBED__) en vez del seed.
+//  Multi-período: si el archivo trae varios períodos (embed.periods),
+//  se muestra una botonera para filtrar entre ellos — el snapshot del
+//  período elegido se activa y la vista se remonta con esos datos.
 // ════════════════════════════════════════════════════════════════
 export function EmbedApp({ embed }) {
   const cfg = getPilarConfig(embed.pilar);
   const Pilar = cfg.Component;
+  const multi = Array.isArray(embed.periods) && embed.periods.length > 1;
+  const [pid, setPid] = useState(embed.period);
+
+  function changePeriod(id) {
+    const p = embed.periods.find((x) => x.id === id);
+    if (!p) return;
+    // Los hooks leen window.__REPORT_EMBED__.snapshot al montar: activamos
+    // el snapshot del período elegido y remontamos la vista (key={pid}).
+    window.__REPORT_EMBED__.snapshot = p.snapshot;
+    window.__REPORT_EMBED__.period = p.id;
+    setPid(id);
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -29,7 +46,18 @@ export function EmbedApp({ embed }) {
       </header>
 
       <main className="mx-auto w-full max-w-[1440px] flex-1 px-9 pb-11 pt-6">
-        <Pilar account={embed.account} period={embed.period} />
+        {multi && (
+          <div className="mb-4">
+            <SegmentedControl
+              label="Período"
+              value={pid}
+              onChange={changePeriod}
+              size="sm"
+              options={embed.periods.map((p) => ({ id: p.id, label: p.label }))}
+            />
+          </div>
+        )}
+        <Pilar key={pid} account={embed.account} period={pid} />
       </main>
 
       <BarBottom />

@@ -31,6 +31,8 @@ import { Funnel } from '@/components/shared/Funnel';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { isExternalReport } from '@/utils/reportAudience';
+import { WebsiteAnnualReview } from '@/components/website/WebsiteAnnualReview';
+import { WebsiteComparative } from '@/components/website/WebsiteComparative';
 
 const pctv = (v) => Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
 
@@ -43,6 +45,10 @@ const FunnelCard = ({ children }) => (
 // Pilar Website — trimestral, con dos sub-reportes: Website (GA) y SEO (GSC).
 export function WebsiteApp({ account, period }) {
   const [tab, setTab] = useState('site');
+
+  // Resumen anual (acumulado de trimestres) y comparativa multi-cuenta.
+  if (period === 'year-2026') return <WebsiteAnnualReview account={account} />;
+  if (period === 'cmp') return <WebsiteComparative />;
   const data = getQuarter(account, period);
   const accName = listAccounts().find((a) => a.id === account)?.name ?? '';
   const periodLabel = QUARTERS_2026.find((p) => p.id === period)?.label ?? period;

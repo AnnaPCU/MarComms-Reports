@@ -76,35 +76,44 @@ export default function App() {
         countryName = cInfo.name;
       }
     }
-    for (const pid of ids) {
-      const pLabel = periods.find((p) => p.id === pid)?.label ?? pid;
-      // El país aplica a los períodos segmentables (no a la comparativa).
-      const withCountry = socialCountry && pid !== 'cmp';
-      const title = [PILAR_BY_ID[pilar].label, expandAccountName(accountName), withCountry ? countryName : null, pLabel]
-        .filter(Boolean)
-        .join(' — ');
-      const filename = reportFilename({
-        pilarLabel: PILAR_BY_ID[pilar].label,
-        accountName: withCountry ? `${accountName} ${countryName}` : accountName,
-        period: pid,
-        periodLabel: pLabel,
-        audience,
-      });
-      const snapshot = await buildSnapshot(pilar, account, pid);
-      await exportViewAsHtml({
-        pilar,
-        account,
-        period: pid,
-        audience,
-        brand: brandOf(account, accountName),
-        title,
-        filename,
-        snapshot,
-        socialCountry: withCountry ? socialCountry : null,
-      });
-      // Pausa corta entre descargas para que el navegador no las agrupe mal.
-      if (ids.length > 1) await new Promise((r) => setTimeout(r, 400));
-    }
+    const labelOf = (pid) => periods.find((p) => p.id === pid)?.label ?? pid;
+    // El país aplica a los períodos segmentables (no a la comparativa).
+    const withCountry = socialCountry && ids.some((pid) => pid !== 'cmp');
+    // Varios períodos → UN solo archivo con botonera interna de período.
+    const multi = ids.length > 1;
+    const multiPeriods = multi
+      ? await Promise.all(
+          ids.map(async (pid) => ({ id: pid, label: labelOf(pid), snapshot: await buildSnapshot(pilar, account, pid) })),
+        )
+      : null;
+    const periodsLabel = multi
+      ? ids.length <= 3
+        ? ids.map(labelOf).join(' · ')
+        : `${ids.length} períodos`
+      : labelOf(ids[0]);
+    const title = [PILAR_BY_ID[pilar].label, expandAccountName(accountName), withCountry ? countryName : null, periodsLabel]
+      .filter(Boolean)
+      .join(' — ');
+    const filename = reportFilename({
+      pilarLabel: PILAR_BY_ID[pilar].label,
+      // 'multi' evita que el nombre salga como el 1er período: cae al label.
+      accountName: withCountry ? `${accountName} ${countryName}` : accountName,
+      period: multi ? 'multi' : ids[0],
+      periodLabel: multi ? `Multi-Periodo (${ids.length})` : periodsLabel,
+      audience,
+    });
+    await exportViewAsHtml({
+      pilar,
+      account,
+      period: ids[0],
+      audience,
+      brand: brandOf(account, accountName),
+      title,
+      filename,
+      snapshot: multi ? multiPeriods[0].snapshot : await buildSnapshot(pilar, account, ids[0]),
+      socialCountry: withCountry ? socialCountry : null,
+      periods: multiPeriods,
+    });
   }
 
   // Badge de estado de datos (regla de honestidad).

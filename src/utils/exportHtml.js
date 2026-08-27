@@ -81,7 +81,7 @@ function collectInlineCss() {
 const safeForScript = (s) => s.replace(/<\/script>/gi, '<\\/script>');
 const safeJson = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c');
 
-export async function exportViewAsHtml({ pilar, account, period, audience, brand, title, filename, snapshot, socialCountry = null }) {
+export async function exportViewAsHtml({ pilar, account, period, audience, brand, title, filename, snapshot, socialCountry = null, periods = null }) {
   // Logo de la marca como data URI (para que no se rompa en el archivo offline).
   const logoSrc = brand && BRAND_LOGOS[brand] ? await fetchAsDataUri(BRAND_LOGOS[brand].src) : null;
 
@@ -118,7 +118,7 @@ export async function exportViewAsHtml({ pilar, account, period, audience, brand
     }
     if (!css) css = collectInlineCss();
 
-    const embed = safeJson({ pilar, account, period, audience, brand, title, snapshot, logoSrc, socialCountry });
+    const embed = safeJson({ pilar, account, period, audience, brand, title, snapshot, logoSrc, socialCountry, periods });
 
     const doc = `<!DOCTYPE html>
 <html lang="es">
