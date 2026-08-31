@@ -253,3 +253,8 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 - **Descarga multi-período en UN archivo**: los períodos tildados van en un
   solo HTML con botonera «Período» interna (EmbedApp remonta la vista con el
   snapshot del período elegido).
+- **Webinars: primer contenido real — reporte MIXTO por evento** (ISO 14064,
+  Jul 2026): Livestorm + Mailchimp + LinkedIn + HubSpot en un solo reporte
+  (key insights, embudo, email, social, hot leads con scoring 0-100,
+  diagnóstico de madurez, oportunidad comercial POTENCIAL). Inputs manuales
+  por evento: pipeline HubSpot, costo de producción, duración total.

@@ -134,6 +134,13 @@ export const GLOSSARIES = {
       { term: 'Duración promedio', def: 'Tiempo promedio que los asistentes permanecieron conectados.' },
       { term: 'Reproducciones del replay', def: 'Visualizaciones de la grabación después del evento en vivo.' },
       { term: 'Leads generados', def: 'Contactos comerciales calificados originados a partir del webinar.' },
+      { term: 'Show rate', def: 'Porcentaje de registrados que asistieron en vivo (asistentes ÷ registrados).' },
+      { term: 'Deal (HubSpot)', def: 'Oportunidad comercial creada en HubSpot por cada asistente externo del webinar. Los asistentes internos (Control Union) no generan deals.' },
+      { term: 'Score de lead (0-100)', def: 'Suma de: necesidad declarada (0-50, respuestas de diagnóstico), engagement en vivo (0-30, % de asistencia × 30) e interacción proactiva (0-20, encuestas + preguntas). Metodología vigente desde julio 2026.' },
+      { term: 'Hot lead', def: 'Deal con score ≥ 70: pasa a contacto comercial directo esa misma semana. Es un lead calificado, no contenido de nurturing.' },
+      { term: 'Warm / Cold lead', def: 'Warm (score 40-69): nurturing activo con contenido de mitad de funnel. Cold (< 40): secuencia educativa larga; no pasa a Ventas todavía.' },
+      { term: 'Open rate / Click rate', def: 'Porcentaje de destinatarios que abrieron el email / que hicieron click en algún enlace, sobre los entregados de cada envío.' },
+      { term: 'Pipeline potencial', def: 'Proyección del valor comercial de los deals del evento sobre benchmarks de mercado (ticket promedio y tasa de cierre B2B). Es un potencial, no un resultado: depende de la gestión comercial posterior.' },
     ],
   },
 

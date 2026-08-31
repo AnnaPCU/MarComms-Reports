@@ -7,6 +7,7 @@ import * as social from '@/services/socialService';
 import * as paid from '@/services/paidService';
 import * as website from '@/services/websiteService';
 import * as email from '@/services/emailService';
+import * as webinars from '@/services/webinarsService';
 
 export function buildSnapshot(pilar, account, period) {
   if (pilar === 'social') {
@@ -33,6 +34,9 @@ export function buildSnapshot(pilar, account, period) {
   }
   if (pilar === 'email') {
     return { campaign: email.getCampaign(account, period), handle: email.getHandle(account) };
+  }
+  if (pilar === 'webinars') {
+    return { event: webinars.getEvent(account, period) };
   }
   return {}; // webinars: sin datos, solo glosario
 }

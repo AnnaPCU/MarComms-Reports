@@ -8,6 +8,7 @@ import * as social from '@/services/socialService';
 import * as paid from '@/services/paidService';
 import * as website from '@/services/websiteService';
 import * as email from '@/services/emailService';
+import * as webinars from '@/services/webinarsService';
 import { QUARTERS_2026 } from '@/constants/periods';
 
 import { SocialApp } from '@/components/social/SocialApp';
@@ -67,7 +68,15 @@ export const REGISTRY = {
     defaultPeriod: email.listPeriods().slice(-1)[0]?.id ?? null,
     hasDataFor: email.hasDataFor,
   },
-  webinars: { Component: WebinarsApp, accounts: [], periods: [], defaultPeriod: null, hasDataFor: null },
+  webinars: {
+    Component: WebinarsApp,
+    accounts: webinars.listAccounts(),
+    // Un período por EVENTO (reporte mixto: Livestorm+Mailchimp+LinkedIn+HubSpot)
+    periods: [...webinars.listPeriods()].reverse(),
+    periodFilterLabel: 'Evento',
+    defaultPeriod: webinars.listPeriods().slice(-1)[0]?.id ?? null,
+    hasDataFor: webinars.hasDataFor,
+  },
 };
 
 export function getPilarConfig(id) {

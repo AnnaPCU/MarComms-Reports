@@ -22,3 +22,16 @@ webinars/
 - Formato preferido: **CSV**; si la plataforma solo da Excel, subir el `.xlsx`.
 
 Pedido típico: **«Procesá las métricas nuevas de Webinars»**.
+
+## El reporte mixto (Webinars + Email + Social + HubSpot)
+
+Cada webinar genera un **reporte mixto** en el pilar Webinars (un período por
+evento), pensado para entrega al cliente: key insights, campaña de email,
+posteos de LinkedIn, hot leads (metodología de scoring de julio 2026) y
+oportunidad comercial **potencial**. Los reportes por pilar siguen existiendo
+para mejora interna.
+
+**Inputs manuales que provee el equipo por cada evento** (no salen de los
+exports): link al pipeline de HubSpot con los hot leads, costo de producción
+del webinar, y duración total del evento. Hasta que se pasen, el reporte los
+muestra como pendientes (nunca los inventa).

@@ -37,9 +37,9 @@ export const PILARES = [
   {
     id: 'webinars',
     label: 'Webinars',
-    sources: ['Livestorm'],
+    sources: ['Livestorm', 'Mailchimp', 'LinkedIn', 'HubSpot'],
     icon: Video,
-    ready: false,
+    ready: true,
   },
   {
     id: 'website',
