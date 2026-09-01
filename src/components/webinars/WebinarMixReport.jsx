@@ -44,7 +44,9 @@ export function WebinarMixReport({ ev, accName }) {
   // Vistas del reporte: general (todo) o por canal. El descargable mantiene
   // la botonera funcionando (mismo patrón que las campañas GEO de Paid).
   const [view, setView] = useState('general');
-  const show = (v) => view === 'general' || view === v;
+  // General = resumen conciso (key insights + resumen por canal + comercial).
+  // El detalle completo de cada canal vive en su propia vista.
+  const isGeneral = view === 'general';
   const glossaryKey = view === 'email' ? 'email' : view === 'social' ? 'social' : 'webinars';
   const scoring = getScoring();
   const evScoring = ev.scoring ?? null; // scoring propio del evento (si lo hay)
@@ -63,7 +65,6 @@ export function WebinarMixReport({ ev, accName }) {
       <div className="mb-5 grid gap-3 lg:grid-cols-3">
         <div className="overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu lg:col-span-2">
           <FichaRow k="Tema" v={ev.tema ?? ev.subtitle} />
-          {ev.tema && <FichaRow k="Título" v={ev.subtitle} />}
           <FichaRow k="Fecha" v={`${ev.date}${ev.reagendado ? ' (reagendado desde una fecha anterior)' : ''}`} />
           <FichaRow k="Idioma" v={ev.idioma} />
           <FichaRow k="Audiencia objetivo" v={ev.audiencia} />
@@ -95,8 +96,8 @@ export function WebinarMixReport({ ev, accName }) {
         />
       </div>
 
-      {/* ── Key insights ── */}
-      {show('webinar') && (
+      {/* ── Key insights (general + webinar) ── */}
+      {(isGeneral || view === 'webinar') && (
       <>
       <SectionHeader title="Key Insights del Evento" note="Livestorm + Mailchimp + LinkedIn + HubSpot" />
       <Note>
@@ -133,7 +134,58 @@ export function WebinarMixReport({ ev, accName }) {
         />
         <KpiCard label="Alto engagement" value={num(ev.engagement.high)} footnote={`Asistentes que se quedaron ≥80% del webinar`} />
       </div>
+      </>
+      )}
 
+      {/* Resumen por canal (solo vista General) */}
+      {isGeneral && (
+        <div className="mb-5 grid gap-3 lg:grid-cols-3">
+          <div className="flex flex-col rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
+            <div className="mb-2.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+              <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
+              Email Marketing
+            </div>
+            <ul className="mb-3 flex flex-col gap-1.5 text-[12px] text-cu-dgrey">
+              <li><strong className="text-cu-dblue">{num(ev.email.totalSent)}</strong> emails · {ev.email.sends.length} envíos</li>
+              <li><strong className="text-cu-dblue">{p1(ev.email.openedOncePct)} %</strong> abrió al menos un email</li>
+              <li><strong className="text-cu-dblue">{num(ev.email.regFromEmail)}</strong> registrados en la base ({ev.email.regFromEmailPct}%)</li>
+            </ul>
+            <button onClick={() => setView('email')} className="mt-auto self-start text-[11px] font-bold text-cu-cyan hover:underline">Ver vista completa →</button>
+          </div>
+          <div className="flex flex-col rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
+            <div className="mb-2.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+              <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
+              Social Media
+            </div>
+            <ul className="mb-3 flex flex-col gap-1.5 text-[12px] text-cu-dgrey">
+              <li><strong className="text-cu-dblue">{ev.social.posts.length}</strong> posteos · <strong className="text-cu-dblue">{num(ev.social.totals.imp)}</strong> impresiones</li>
+              <li><strong className="text-cu-dblue">{num(ev.social.totals.clicks)}</strong> clics · {p1(ev.social.totals.ctr)} % CTR</li>
+              {ev.social.regFromSocial != null ? (
+                <li><strong className="text-cu-dblue">{num(ev.social.regFromSocial)}</strong> registrados vía LinkedIn</li>
+              ) : ev.social.regOutsideEmail != null ? (
+                <li><strong className="text-cu-dblue">{num(ev.social.regOutsideEmail)}</strong> registros fuera de la base de email</li>
+              ) : null}
+            </ul>
+            <button onClick={() => setView('social')} className="mt-auto self-start text-[11px] font-bold text-cu-cyan hover:underline">Ver vista completa →</button>
+          </div>
+          <div className="flex flex-col rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
+            <div className="mb-2.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+              <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
+              Webinar
+            </div>
+            <ul className="mb-3 flex flex-col gap-1.5 text-[12px] text-cu-dgrey">
+              <li><strong className="text-cu-dblue">{num(ev.registered)}</strong> registrados → <strong className="text-cu-dblue">{num(ev.attended)}</strong> asistentes ({p1(ev.showRate)} %)</li>
+              <li><strong className="text-cu-dblue">{num(ev.deals.total)}</strong> deals en HubSpot</li>
+              <li><strong className="text-cu-dblue">{ev.deals.hot}</strong> hot {ev.deals.hot === 1 ? 'lead' : 'leads'}{ev.deals.warm != null ? ` + ${ev.deals.warm} warm` : ''}</li>
+            </ul>
+            <button onClick={() => setView('webinar')} className="mt-auto self-start text-[11px] font-bold text-cu-cyan hover:underline">Ver vista completa →</button>
+          </div>
+        </div>
+      )}
+
+      {/* ── Detalle del evento (solo vista Webinar) ── */}
+      {view === 'webinar' && (
+      <>
       {/* Países + interno/externo + empresas */}
       <div className="mb-5 grid gap-3 lg:grid-cols-2">
         <div className="rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
@@ -220,7 +272,7 @@ export function WebinarMixReport({ ev, accName }) {
       )}
 
       {/* ── Sección 1: Email Marketing ── */}
-      {show('email') && (
+      {view === 'email' && (
       <>
       <SectionHeader title="Sección 1 — Email Marketing" note="Mailchimp · campaña previa al webinar" />
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -267,7 +319,7 @@ export function WebinarMixReport({ ev, accName }) {
       )}
 
       {/* ── Sección 2: Social Media ── */}
-      {show('social') && (
+      {view === 'social' && (
       <>
       <SectionHeader title="Sección 2 — Social Media" note="LinkedIn orgánico" />
       <div className={`mb-3 grid gap-3 ${ev.social.posts.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
@@ -312,8 +364,8 @@ export function WebinarMixReport({ ev, accName }) {
       </>
       )}
 
-      {/* ── Sección 3: Hot Leads ── */}
-      {show('webinar') && (
+      {/* ── Sección 3: Hot Leads (solo vista Webinar) ── */}
+      {view === 'webinar' && (
       <>
       <SectionHeader title="Sección 3 — Hot Leads" note="HubSpot · deals generados por el evento" />
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -443,7 +495,12 @@ export function WebinarMixReport({ ev, accName }) {
       </>
       )}
 
-      {/* ── Oportunidad comercial (potencial) ── */}
+      </>
+      )}
+
+      {/* ── Oportunidad comercial (general + webinar) ── */}
+      {(isGeneral || view === 'webinar') && (
+      <>
       <SectionHeader title="Oportunidad Comercial — Cuánto Podría Traerle Este Webinar a Control Union" note="Proyección sobre benchmarks · no es una certeza" />
       <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-3">
         <KpiCard
