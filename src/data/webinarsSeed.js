@@ -33,6 +33,7 @@ export const WEBINARS_DB = {
   cu: {
     'wbn-iso14064': {
       title: 'Webinar ISO 14064 en Acción',
+      tema: 'ISO 14064',
       subtitle: '«Validación y Verificación de Huella de Carbono»',
       date: '8 de julio de 2026',
       reagendado: true,
@@ -153,13 +154,14 @@ export const WEBINARS_DB = {
 
     'wbn-eudr': {
       title: 'Webinar EUDR y Evidencia Verificable',
+      tema: 'EUDR',
       subtitle: '«Certificaciones, tecnología y soluciones disponibles para la cadena de suministro»',
       date: '26 de agosto de 2026',
       reagendado: false,
       idioma: 'Español',
       audiencia: 'Exportadores al mercado europeo (soja, café, cacao, palma, madera, ganado, caucho) — LATAM',
       canales: 'Email marketing (8 envíos) + LinkedIn orgánico (4 posteos) · Plataforma: Microsoft Teams',
-      serieEmails: ['Emails 1-4 + resends (26/8)', 'Email 5 post-webinar: registrados y participantes (31/8)', 'Base total: 4.966 contactos únicos'],
+      serieEmails: ['Emails 1-4 (26/8)', 'Email 5 post-webinar: registrados y participantes (31/8)', 'Base total: 4.966 contactos únicos'],
 
       // ── Key insights ──
       registered: 295,
@@ -184,21 +186,24 @@ export const WEBINARS_DB = {
         unique: 87, // empresas únicas entre asistentes externos (213 entre registrados)
         uniqueNote: 'Entre asistentes externos · 213 entre los registrados',
         featured: ['Pantaleon S.A.', 'Ecom', 'Olam Agro Peru', 'Oleaginosas San Marcos', 'TEAM FOODS', 'INTEROC S.A.', 'LAR PY', 'Cooperativa Unicafec', 'Ochosur', 'Agroindustria Palmera San Roman'],
+        others: ['ADM Paraguay', 'ALLPA SAC', 'AMAGGI', 'Amazonas Trading Perú', 'Arcos Dorados', 'Asoc. de Cacaoteros Tecnificados del Ucayali', 'Asoc. de Productores Agrarios Alto Kivinaki', 'Asoc. de Productores Agroecológicos Origin Coffee Lab', 'Asociación Rural del Paraguay', 'Barry Callebaut', 'BioAp', 'Biocertus', 'Biomar', 'Biopa', 'C.O.U.S.A.', 'Cacao de Colombia', 'Cafés de Especialidad de Chiapas', 'CAMSA', 'Cargill SACI', 'CARVIMSA', 'CEREGEO — UADER', 'Citrison', 'COFCO International Argentina', 'Colegio de Ing. Agrónomos de Santa Elena', 'Comercializadora Cumbres', 'COOPEAGRI R.L.', 'Daabon', 'Dole Perú', 'Dos Beta', 'Dos Hermanos', 'El Recuerdo', 'Evid-AI', 'Facultad de Ciencia y Tecnología — UADER', 'Farms Group', 'FSC México', 'Fundación Local Partners', 'Fundación Solidaridad', 'Funglode', 'INTA-FCA', 'Letis', 'MER Seafood Trading', 'Oleomex', 'Perfiles Coffee', 'PL Abogados', 'Proforest', 'PROSERIN', 'ProTerra', 'PUMA by Regrow', 'Qualabs', 'Service Corp Trading', 'SIMA', 'Smurfit Westrock', 'Solidaridad', 'Somax Agro', 'Terra Nostra Organics', 'Universidad Nacional de Córdoba', 'UNOCACE', 'Yazoo Investment'],
       },
       internos: { total: 41, attended: 33 },
       externos: { registered: 254, attended: 117 },
       deals: {
-        total: 27,
+        total: 117, // todos los asistentes externos identificados generan deal
         hot: 1,
-        leads: 26,
-        note: 'Leads priorizados por el scoring del evento (1 hot + 26 warm); 90 asistentes externos quedaron como cold en nurturing.',
+        warm: 26,
+        cold: 90,
+        leads: 116,
+        note: '1 hot + 26 warm + 90 cold — cada asistente externo identificado genera un deal en HubSpot.',
       },
       durationTotalLabel: '48 min 11 s',
       durationAvgMin: 34.4,
       durationMedianMin: 40.2,
       engagement: { high: 78, mid: 25, low: 47 }, // sobre 48:11 de evento · 150 identificados
       highlight:
-        '150 asistentes identificados de 295 registrados (50,8% de show rate) desde 27 países — el webinar más grande de la serie. La mediana de permanencia fue de 40 minutos sobre un evento de 48, y el scoring del evento priorizó 27 leads (1 hot + 26 warm) entre los 117 asistentes externos. La base de emails explica la mayor parte del registro: 229 de los 295 registrados estaban en la campaña de Mailchimp.',
+        '150 asistentes identificados de 295 registrados (50,8% de show rate) desde 27 países — el webinar más grande de la serie. Los 117 asistentes externos generan 117 deals en HubSpot, y el scoring del evento priorizó 27 (1 hot + 26 warm; el resto queda cold en nurturing). La mediana de permanencia fue de 40 minutos sobre un evento de 48, y la base de emails explica la mayor parte del registro: 229 de los 295 registrados estaban en la campaña de Mailchimp.',
 
       // Scoring propio de este evento (Teams, sin encuestas de diagnóstico).
       scoring: {
@@ -311,6 +316,7 @@ export const WEBINARS_DB = {
 };
 
 export const WEBINAR_PERIODS = [
-  { id: 'wbn-iso14064', label: 'Webinar ISO 14064 · Jul 2026' },
+  // ISO 14064 oculto a pedido del equipo (los datos siguen en el seed):
+  // { id: 'wbn-iso14064', label: 'Webinar ISO 14064 · Jul 2026' },
   { id: 'wbn-eudr', label: 'Webinar EUDR · Ago 2026' },
 ];
