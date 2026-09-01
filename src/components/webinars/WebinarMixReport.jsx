@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { ExternalLink, Flame } from 'lucide-react';
+import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { getScoring } from '@/services/webinarsService';
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { SectionHeader } from '@/components/shared/SectionHeader';
@@ -39,6 +41,11 @@ function FichaRow({ k, v }) {
 // entrega al cliente (vista externa) además de la mejora interna.
 export function WebinarMixReport({ ev, accName }) {
   const external = isExternalReport();
+  // Vistas del reporte: general (todo) o por canal. El descargable mantiene
+  // la botonera funcionando (mismo patrón que las campañas GEO de Paid).
+  const [view, setView] = useState('general');
+  const show = (v) => view === 'general' || view === v;
+  const glossaryKey = view === 'email' ? 'email' : view === 'social' ? 'social' : 'webinars';
   const scoring = getScoring();
   const evScoring = ev.scoring ?? null; // scoring propio del evento (si lo hay)
   const classes = evScoring?.classes ?? scoring.classes;
@@ -72,7 +79,25 @@ export function WebinarMixReport({ ev, accName }) {
         </div>
       </div>
 
+      {/* Botonera de vistas */}
+      <div className="mb-4">
+        <SegmentedControl
+          label="Vista"
+          value={view}
+          onChange={setView}
+          size="sm"
+          options={[
+            { id: 'general', label: 'General' },
+            { id: 'webinar', label: 'Webinar' },
+            { id: 'email', label: 'Email Marketing' },
+            { id: 'social', label: 'Social Media' },
+          ]}
+        />
+      </div>
+
       {/* ── Key insights ── */}
+      {show('webinar') && (
+      <>
       <SectionHeader title="Key Insights del Evento" note="Livestorm + Mailchimp + LinkedIn + HubSpot" />
       <Note>
         <strong className="text-cu-dblue">Principal hallazgo:</strong> {ev.highlight}
@@ -162,19 +187,6 @@ export function WebinarMixReport({ ev, accName }) {
                 <span key={c} className="rounded-full bg-cu-bg px-2.5 py-1 text-[10.5px] font-medium text-cu-dgrey">{c}</span>
               ))}
             </div>
-            {ev.companies.others?.length > 0 && (
-              <>
-                <div className="mb-2 mt-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-grey">
-                  <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-border" />
-                  Resto de empresas
-                </div>
-                <div className="flex flex-wrap gap-1">
-                  {ev.companies.others.map((c) => (
-                    <span key={c} className="rounded-full border border-cu-border2 px-2 py-0.5 text-[9.5px] text-cu-grey">{c}</span>
-                  ))}
-                </div>
-              </>
-            )}
           </div>
         </div>
       </div>
@@ -204,7 +216,12 @@ export function WebinarMixReport({ ev, accName }) {
         <KpiCard label="Engagement bajo (<50%)" value={num(ev.engagement.low)} footnote={`${p1((ev.engagement.low / ev.attended) * 100)} % de los asistentes`} />
       </div>
 
+      </>
+      )}
+
       {/* ── Sección 1: Email Marketing ── */}
+      {show('email') && (
+      <>
       <SectionHeader title="Sección 1 — Email Marketing" note="Mailchimp · campaña previa al webinar" />
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard label="Emails enviados" value={num(ev.email.totalSent)} footnote={`${ev.email.sends.length} envíos · ${num(ev.email.uniqueContacts)} contactos únicos`} />
@@ -241,8 +258,17 @@ export function WebinarMixReport({ ev, accName }) {
         </table>
       </div>
       <Note>{ev.email.nota}</Note>
+      {ev.email.notaClics && (
+        <Note>
+          <strong className="text-cu-dblue">Cómo leer estos números:</strong> {ev.email.notaClics}
+        </Note>
+      )}
+      </>
+      )}
 
       {/* ── Sección 2: Social Media ── */}
+      {show('social') && (
+      <>
       <SectionHeader title="Sección 2 — Social Media" note="LinkedIn orgánico" />
       <div className={`mb-3 grid gap-3 ${ev.social.posts.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
         {ev.social.posts.map((po) => (
@@ -270,13 +296,25 @@ export function WebinarMixReport({ ev, accName }) {
             delta={{ dir: 'up', label: `▲ ${ev.social.regFromSocialPct}% de los registros` }}
             footnote="Métrica final del canal"
           />
+        ) : ev.social.regOutsideEmail != null ? (
+          <KpiCard
+            label="Registros fuera de la base de email"
+            value={num(ev.social.regOutsideEmail)}
+            accent="green"
+            delta={{ dir: 'up', label: `▲ ${ev.social.regOutsideEmailPct}% de los registros` }}
+            footnote="LinkedIn u otros canales — el registro de este evento (Teams) no trae atribución por canal; Livestorm sí la tendría"
+          />
         ) : (
-          <KpiCard label="Registrados vía LinkedIn" value="—" footnote="LinkedIn no permite atribuir registros directamente en este evento" />
+          <KpiCard label="Registrados vía LinkedIn" value="—" footnote="Sin atribución por canal en este evento" />
         )}
       </div>
       <Note>{ev.social.lectura}</Note>
+      </>
+      )}
 
       {/* ── Sección 3: Hot Leads ── */}
+      {show('webinar') && (
+      <>
       <SectionHeader title="Sección 3 — Hot Leads" note="HubSpot · deals generados por el evento" />
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard label={ev.scoring ? 'Leads priorizados' : 'Deals totales'} value={num(ev.scoring ? prioritized : ev.deals.total)} footnote={ev.scoring ? `${ev.deals.hot} hot + ${ev.deals.warm} warm sobre ${num(ev.deals.total)} deals` : (ev.deals.note ?? 'Asistentes externos con deal real en HubSpot')} />
@@ -341,7 +379,7 @@ export function WebinarMixReport({ ev, accName }) {
       <div className="mb-5 grid gap-3 lg:grid-cols-2">
         <div className="overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
           <div className="bg-cu-dblue px-5 py-3 text-[11px] font-bold uppercase tracking-[0.5px] text-white">
-            {evScoring ? 'Cómo se calificó un lead en este evento' : 'Cómo se califica un lead (score 0-100)'}
+            Cómo se califica un lead
           </div>
           {evScoring ? (
             <p className="px-5 py-4 text-[12px] leading-relaxed text-cu-dgrey">{evScoring.desc}</p>
@@ -407,11 +445,40 @@ export function WebinarMixReport({ ev, accName }) {
 
       {/* ── Oportunidad comercial (potencial) ── */}
       <SectionHeader title="Oportunidad Comercial — Cuánto Podría Traerle Este Webinar a Control Union" note="Proyección sobre benchmarks · no es una certeza" />
-      <Note tone="amber">
-        <strong className="text-cu-dblue">Estos números son potenciales, no resultados.</strong> Muestran cuánto
-        podría generar este webinar si los deals avanzan — nada está asegurado hasta que el equipo comercial haga
-        su parte del trabajo.
-      </Note>
+      <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-3">
+        <KpiCard
+          label="Costo de producción"
+          value={ev.commercial.productionCost != null ? usd(ev.commercial.productionCost) : '—'}
+          accent="amber"
+          footnote={ev.commercial.productionCost == null ? 'Pendiente' : undefined}
+        />
+        <div className="relative overflow-hidden rounded-cu border border-cu-border bg-white px-5 pb-3.5 pt-4 shadow-cu">
+          <span className="absolute inset-y-0 left-0 w-[3px] bg-cu-cyan" />
+          <div className="mb-2 text-[9px] font-bold uppercase tracking-[0.6px] text-cu-grey">Pipeline en HubSpot</div>
+          {ev.hotLeads.pipelineUrl ? (
+            <a
+              href={ev.hotLeads.pipelineUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 inline-flex items-center gap-2 rounded-cu bg-cu-dblue px-3.5 py-2 text-[12px] font-bold text-white transition-opacity hover:opacity-90"
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              Ver pipeline
+            </a>
+          ) : (
+            <>
+              <div className="mb-2 text-[30px] font-bold leading-none tracking-tight text-cu-dblue">—</div>
+              <div className="text-[9.5px] italic text-cu-grey">Link al pipeline pendiente</div>
+            </>
+          )}
+        </div>
+        <KpiCard
+          label="Leads priorizados"
+          value={num(prioritized)}
+          accent="green"
+          footnote={`${ev.deals.hot} hot + ${ev.deals.warm ?? dealsOnly} warm sobre ${num(ev.deals.total)} deals`}
+        />
+      </div>
       {ev.commercial.pipelinePotential != null ? (
         <>
           <div className="mb-3 grid gap-3 lg:grid-cols-2">
@@ -437,18 +504,7 @@ export function WebinarMixReport({ ev, accName }) {
             />
           </div>
         </>
-      ) : (
-        <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-3">
-          <KpiCard label="Leads priorizados (base del cálculo)" value={num(prioritized)} footnote={`${ev.deals.hot} hot + ${ev.deals.warm ?? dealsOnly} warm sobre ${num(ev.deals.total)} deals externos`} />
-          <KpiCard label="Costo de producción" value={usd(ev.commercial.productionCost)} accent="amber" />
-          <KpiCard label="Pipeline / ROI potencial" value="—" footnote="Pendiente del ticket promedio del servicio" />
-        </div>
-      )}
-      {ev.commercial.pendingNote && !external && (
-        <Note tone="amber">
-          <strong className="text-cu-dblue">Pendiente:</strong> {ev.commercial.pendingNote}
-        </Note>
-      )}
+      ) : null}
       <p className="mb-5 text-[10.5px] italic leading-relaxed text-cu-grey">
         Metodología: {ev.commercial.metodologia}
       </p>
@@ -461,7 +517,10 @@ export function WebinarMixReport({ ev, accName }) {
         </>
       )}
 
-      <Glossary keys="webinars" />
+      </>
+      )}
+
+      <Glossary keys={glossaryKey} />
     </div>
   );
 }

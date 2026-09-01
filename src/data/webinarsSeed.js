@@ -186,7 +186,6 @@ export const WEBINARS_DB = {
         unique: 87, // empresas únicas entre asistentes externos (213 entre registrados)
         uniqueNote: 'Entre asistentes externos · 213 entre los registrados',
         featured: ['Pantaleon S.A.', 'Ecom', 'Olam Agro Peru', 'Oleaginosas San Marcos', 'TEAM FOODS', 'INTEROC S.A.', 'LAR PY', 'Cooperativa Unicafec', 'Ochosur', 'Agroindustria Palmera San Roman'],
-        others: ['ADM Paraguay', 'ALLPA SAC', 'AMAGGI', 'Amazonas Trading Perú', 'Arcos Dorados', 'Asoc. de Cacaoteros Tecnificados del Ucayali', 'Asoc. de Productores Agrarios Alto Kivinaki', 'Asoc. de Productores Agroecológicos Origin Coffee Lab', 'Asociación Rural del Paraguay', 'Barry Callebaut', 'BioAp', 'Biocertus', 'Biomar', 'Biopa', 'C.O.U.S.A.', 'Cacao de Colombia', 'Cafés de Especialidad de Chiapas', 'CAMSA', 'Cargill SACI', 'CARVIMSA', 'CEREGEO — UADER', 'Citrison', 'COFCO International Argentina', 'Colegio de Ing. Agrónomos de Santa Elena', 'Comercializadora Cumbres', 'COOPEAGRI R.L.', 'Daabon', 'Dole Perú', 'Dos Beta', 'Dos Hermanos', 'El Recuerdo', 'Evid-AI', 'Facultad de Ciencia y Tecnología — UADER', 'Farms Group', 'FSC México', 'Fundación Local Partners', 'Fundación Solidaridad', 'Funglode', 'INTA-FCA', 'Letis', 'MER Seafood Trading', 'Oleomex', 'Perfiles Coffee', 'PL Abogados', 'Proforest', 'PROSERIN', 'ProTerra', 'PUMA by Regrow', 'Qualabs', 'Service Corp Trading', 'SIMA', 'Smurfit Westrock', 'Solidaridad', 'Somax Agro', 'Terra Nostra Organics', 'Universidad Nacional de Córdoba', 'UNOCACE', 'Yazoo Investment'],
       },
       internos: { total: 41, attended: 33 },
       externos: { registered: 254, attended: 117 },
@@ -237,6 +236,8 @@ export const WEBINARS_DB = {
         regFromEmailPct: 78,
         regFromEmailNote: 'Registrados presentes en la base de la campaña (229 de 295)',
         nota: 'El mejor click rate llegó después del evento: el email post-webinar a registrados que no asistieron hizo 7,7% de clics (el replay como segunda oportunidad). Los 66 registrados que no estaban en la base de emails llegaron por LinkedIn u otros canales.',
+        notaClics:
+          '¿Por qué hay más registrados (295) que personas con clic en los emails (137)? Porque el clic en el email no es la única puerta de entrada: muchos se registran desde un link reenviado, desde LinkedIn o entrando directo al formulario, y Mailchimp solo cuenta los clics que puede rastrear (los proxies de privacidad y los clientes de correo en texto plano se pierden). Por eso el dato honesto del canal es «registrados presentes en la base» (229), no «registrados por clic».',
       },
 
       // ── Sección 2: Social Media (LinkedIn CU Latinoamérica) ──
@@ -248,8 +249,10 @@ export const WEBINARS_DB = {
           { name: 'Post 4 · «¡Es mañana!» (25/8)', imp: 1992, inter: 104, rate: 5.22, clicks: 69, ctr: 3.46, reactions: 30 },
         ],
         totals: { imp: 6975, inter: 448, rate: 6.4, clicks: 282, ctr: 4.0, reactions: 134, shares: 32 },
-        regFromSocial: null, // LinkedIn no permite atribuir registros directamente en este evento
+        regFromSocial: null, // sin atribución directa: el registro corrió por Teams (Livestorm sí la tendría)
         regFromSocialPct: null,
+        regOutsideEmail: 66, // registrados que NO estaban en la base de emails → LinkedIn u otros canales
+        regOutsideEmailPct: 22,
         lectura:
           'El posteo del evento (4/8) fue el más efectivo: 7,93% de tasa de interacción y 5,56% de CTR — el público que agenda temprano es el más calificado. El «¡Es mañana!» del 25/8 logró el mayor alcance (1.992 impresiones) como empujón final. 66 de los 295 registros no estaban en la base de emails: LinkedIn es el origen más probable.',
       },
@@ -277,8 +280,6 @@ export const WEBINARS_DB = {
           { empresa: 'Ochosur', pais: 'Perú', det: '47,5 min', score: 5, tier: 'WARM' },
         ],
         rowsNote: '17 de los 27 leads priorizados (el resto de los warm, con score 5 y menor permanencia, está en el tracker completo).',
-        universeNote:
-          '16 interacciones de Q&A anónimas quedaron excluidas del scoring por no ser identificables — si Comercial quiere, se pueden revisar aparte contra el chat del evento.',
         pipelineUrl: null, // pendiente: lo pasa el equipo
         scoreNote: 'Scoring propio del evento (Teams): HOT ≥ 8 · WARM 5-7. Detalle completo por persona, sin defaults.',
       },
@@ -297,8 +298,6 @@ export const WEBINARS_DB = {
         closeHigh: null,
         closeHighNote: null,
         roi: null,
-        pendingNote:
-          'El pipeline potencial de este webinar se calcula cuando se defina el ticket promedio del servicio EUDR (benchmark de mercado o dato comercial). Con 27 leads priorizados sobre 117 asistentes externos, la base para el cálculo ya está lista.',
         metodologia:
           'Se excluyen los 33 asistentes internos (CU/Peterson) — solo los 117 externos cuentan como oportunidad. El scoring es el del evento (HOT ≥ 8, WARM 5-7), calculado con el detalle por persona de Microsoft Teams.',
       },
