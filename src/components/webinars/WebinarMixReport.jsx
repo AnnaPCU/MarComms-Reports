@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { ExternalLink, Flame } from 'lucide-react';
 import { getScoring } from '@/services/webinarsService';
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
@@ -40,11 +40,13 @@ function FichaRow({ k, v }) {
 export function WebinarMixReport({ ev, accName }) {
   const external = isExternalReport();
   const scoring = getScoring();
+  const evScoring = ev.scoring ?? null; // scoring propio del evento (si lo hay)
+  const classes = evScoring?.classes ?? scoring.classes;
+  const hotRange = classes[0].range;
   const dealsOnly = ev.deals.total - ev.deals.hot;
-  const avgScore = ev.hotLeads.rows.length
-    ? ev.hotLeads.rows.reduce((a, r) => a + r.score, 0) / ev.hotLeads.rows.length
-    : 0;
-  const attData = ev.attCountries.map((c) => ({ name: c.name, v: c.v }));
+  const hotRows = ev.hotLeads.rows.filter((r) => (r.tier ?? 'HOT') === 'HOT');
+  const avgScore = hotRows.length ? hotRows.reduce((a, r) => a + r.score, 0) / hotRows.length : 0;
+  const hasRegByCountry = ev.countries.some((c) => c.reg != null);
 
   return (
     <div className="animate-fade-in">
@@ -75,27 +77,27 @@ export function WebinarMixReport({ ev, accName }) {
       </Note>
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard label="Registrados" value={num(ev.registered)} footnote={`${ev.regCountries} países · ${ev.externos.registered} externos`} />
-        <KpiCard label="Asistentes" value={num(ev.attended)} delta={{ dir: 'up', label: `${p1(ev.showRate)} % show rate` }} footnote={`${ev.externos.attended} externos · ${ev.internos.attended} internos`} />
+        <KpiCard label="Asistentes" value={num(ev.attended)} delta={{ dir: 'up', label: `${p1(ev.showRate)} % show rate` }} footnote={ev.attendedNote ?? `${ev.externos.attended} externos · ${ev.internos.attended} internos`} />
         <KpiCard label="Emails enviados" value={num(ev.email.totalSent)} footnote={`${ev.email.sends.length} envíos · ${num(ev.email.uniqueContacts)} contactos únicos`} />
         <KpiCard
           label="Deals en HubSpot"
           value={num(ev.deals.total)}
           accent="green"
           delta={{ dir: 'up', label: `▲ ${ev.deals.hot} hot leads` }}
-          footnote={`${ev.deals.hot} hot leads + ${dealsOnly} leads (score < ${scoring.hotMin})`}
+          footnote={ev.deals.note ?? `${ev.deals.hot} hot leads + ${dealsOnly} leads (score ${hotRange} solo los hot)`}
         />
       </div>
       <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard
           label="Duración total del evento"
-          value={ev.durationTotalMin != null ? `${num(ev.durationTotalMin)} min` : '—'}
-          footnote={ev.durationTotalMin == null ? 'Dato no disponible para este evento' : undefined}
+          value={ev.durationTotalLabel ?? (ev.durationTotalMin != null ? `${p1(ev.durationTotalMin)} min` : '—')}
+          footnote={ev.durationTotalLabel == null && ev.durationTotalMin == null ? 'Dato no disponible para este evento' : undefined}
         />
         <KpiCard label="Duración media de asistentes" value={`${p1(ev.durationAvgMin)} min`} footnote={`Mediana: ${p1(ev.durationMedianMin)} min`} />
         <KpiCard
           label="Empresas únicas"
           value={ev.companies.unique != null ? num(ev.companies.unique) : '—'}
-          footnote={ev.companies.unique == null ? `${ev.companies.featured.length} empresas destacadas identificadas` : undefined}
+          footnote={ev.companies.uniqueNote ?? (ev.companies.unique == null ? `${ev.companies.featured.length} empresas destacadas identificadas` : undefined)}
         />
         <KpiCard label="Alto engagement" value={num(ev.engagement.high)} footnote={`Asistentes que se quedaron ≥80% del webinar`} />
       </div>
@@ -107,17 +109,19 @@ export function WebinarMixReport({ ev, accName }) {
             <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
             Países de los asistentes
           </div>
-          <div className="mb-3.5 text-[10px] text-cu-grey">Entre los registrados hubo {ev.regCountries} países en total</div>
-          <div className="relative" style={{ height: attData.length * 30 + 30 }}>
+          <div className="mb-3.5 text-[10px] text-cu-grey">Entre los registrados hubo {ev.regCountries} países en total{hasRegByCountry ? ' · top por registros (externos)' : ''}</div>
+          <div className="relative" style={{ height: ev.countries.length * (hasRegByCountry ? 38 : 30) + 40 }}>
             <ResponsiveContainer>
-              <BarChart data={attData} layout="vertical" margin={{ top: 0, right: 24, left: 8, bottom: 0 }}>
+              <BarChart data={ev.countries} layout="vertical" margin={{ top: 0, right: 24, left: 8, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="0" stroke={CU.border2} horizontal={false} />
                 <XAxis type="number" tick={{ fontSize: 10, fill: CU.grey }} axisLine={false} tickLine={false} allowDecimals={false} />
                 <YAxis type="category" dataKey="name" width={104} tick={{ fontSize: 10.5, fill: CU.dgrey }} axisLine={false} tickLine={false} />
-                <Tooltip {...CHART_TOOLTIP} formatter={(v) => [num(v), 'Asistentes']} />
-                <Bar dataKey="v" radius={[0, 4, 4, 0]} maxBarSize={16}>
-                  {attData.map((_, i) => (
-                    <Cell key={i} fill={PAL[i % PAL.length]} />
+                <Tooltip {...CHART_TOOLTIP} />
+                {hasRegByCountry && <Legend wrapperStyle={{ fontSize: 11 }} />}
+                {hasRegByCountry && <Bar dataKey="reg" name="Registrados" fill={CU.dblue} radius={[0, 4, 4, 0]} maxBarSize={12} />}
+                <Bar dataKey="att" name="Asistentes" radius={[0, 4, 4, 0]} maxBarSize={12}>
+                  {ev.countries.map((_, i) => (
+                    <Cell key={i} fill={hasRegByCountry ? CU.cyan : PAL[i % PAL.length]} />
                   ))}
                 </Bar>
               </BarChart>
@@ -185,7 +189,7 @@ export function WebinarMixReport({ ev, accName }) {
           value={num(ev.email.regFromEmail)}
           accent="green"
           delta={{ dir: 'up', label: `▲ ${ev.email.regFromEmailPct}% de los registros` }}
-          footnote="Métrica final del canal"
+          footnote={ev.email.regFromEmailNote ?? 'Métrica final del canal'}
         />
       </div>
       <div className="mb-3 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
@@ -214,7 +218,7 @@ export function WebinarMixReport({ ev, accName }) {
 
       {/* ── Sección 2: Social Media ── */}
       <SectionHeader title="Sección 2 — Social Media" note="LinkedIn orgánico" />
-      <div className="mb-3 grid gap-3 lg:grid-cols-3">
+      <div className={`mb-3 grid gap-3 ${ev.social.posts.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
         {ev.social.posts.map((po) => (
           <div key={po.name} className="rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
             <div className="mb-2 text-[11px] font-bold text-cu-dblue">{po.name}</div>
@@ -232,23 +236,27 @@ export function WebinarMixReport({ ev, accName }) {
         <KpiCard label="Posteos publicados" value={ev.social.posts.length} />
         <KpiCard label="Impresiones totales" value={num(ev.social.totals.imp)} delta={{ dir: 'flat', label: `${p1(ev.social.totals.rate)} % tasa promedio` }} />
         <KpiCard label="Clics totales" value={num(ev.social.totals.clicks)} delta={{ dir: 'flat', label: `${p1(ev.social.totals.ctr)} % CTR promedio` }} footnote={`${num(ev.social.totals.reactions)} reacciones · ${num(ev.social.totals.shares)} veces compartido`} />
-        <KpiCard
-          label="Registrados vía LinkedIn"
-          value={num(ev.social.regFromSocial)}
-          accent="green"
-          delta={{ dir: 'up', label: `▲ ${ev.social.regFromSocialPct}% de los registros` }}
-          footnote="Métrica final del canal"
-        />
+        {ev.social.regFromSocial != null ? (
+          <KpiCard
+            label="Registrados vía LinkedIn"
+            value={num(ev.social.regFromSocial)}
+            accent="green"
+            delta={{ dir: 'up', label: `▲ ${ev.social.regFromSocialPct}% de los registros` }}
+            footnote="Métrica final del canal"
+          />
+        ) : (
+          <KpiCard label="Registrados vía LinkedIn" value="—" footnote="LinkedIn no permite atribuir registros directamente en este evento" />
+        )}
       </div>
       <Note>{ev.social.lectura}</Note>
 
       {/* ── Sección 3: Hot Leads ── */}
       <SectionHeader title="Sección 3 — Hot Leads" note="HubSpot · deals generados por el evento" />
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <KpiCard label="Deals totales" value={num(ev.deals.total)} footnote="Asistentes externos con deal real en HubSpot" />
-        <KpiCard label="Hot leads" value={num(ev.deals.hot)} accent="green" delta={{ dir: 'up', label: `▲ score ≥ ${scoring.hotMin}` }} footnote="Contacto comercial directo esta semana" />
-        <KpiCard label="Leads (resto)" value={num(dealsOnly)} footnote={`Score < ${scoring.hotMin} · pasan a nurturing`} />
-        <KpiCard label="Score promedio (hot)" value={p1(avgScore)} footnote="Asistencia 100% en los 4 casos" />
+        <KpiCard label={ev.scoring ? 'Leads priorizados' : 'Deals totales'} value={num(ev.deals.total)} footnote={ev.deals.note ?? 'Asistentes externos con deal real en HubSpot'} />
+        <KpiCard label="Hot leads" value={num(ev.deals.hot)} accent="green" delta={{ dir: 'up', label: `▲ score ${hotRange}` }} footnote="Contacto comercial directo esta semana" />
+        <KpiCard label={ev.scoring ? 'Warm leads' : 'Leads (resto)'} value={num(dealsOnly)} footnote={`Score ${classes[1].range} · pasan a nurturing`} />
+        <KpiCard label="Score (hot)" value={p1(avgScore)} footnote={hotRows.length === 1 ? hotRows[0].empresa : `Promedio de ${hotRows.length} hot leads`} />
       </div>
       <div className="mb-3 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
         <table className="w-full min-w-[560px] border-collapse">
@@ -256,25 +264,32 @@ export function WebinarMixReport({ ev, accName }) {
             <tr className="border-b-2 border-cu-cyan">
               <th className={thCls}>Empresa</th>
               <th className={thCls}>País</th>
-              <th className={thCls}>Asistencia</th>
+              <th className={thCls}>{ev.hotLeads.col3 ?? 'Asistencia'}</th>
               <th className={thCls}>Score</th>
             </tr>
           </thead>
           <tbody>
-            {ev.hotLeads.rows.map((r) => (
-              <tr key={r.empresa} className="border-b border-cu-border2">
+            {ev.hotLeads.rows.map((r, i) => (
+              <tr key={`${r.empresa}-${i}`} className="border-b border-cu-border2">
                 <td className={`${tdCls} font-medium text-cu-dblue`}>
-                  <span className="mr-2 inline-flex align-middle text-amber-500"><Flame className="h-3.5 w-3.5" /></span>
+                  {(r.tier ?? 'HOT') === 'HOT' ? (
+                    <span className="mr-2 inline-flex align-middle text-amber-500"><Flame className="h-3.5 w-3.5" /></span>
+                  ) : (
+                    <span className="mr-2 inline-block w-[22px] rounded-[3px] bg-cu-bg px-1 text-center text-[8.5px] font-bold text-cu-grey align-middle">W</span>
+                  )}
                   {r.empresa}
                 </td>
                 <td className={tdCls}>{r.pais}</td>
-                <td className={tdCls}>{num(r.asistencia)} %</td>
+                <td className={tdCls}>{r.det}</td>
                 <td className={`${tdCls} font-bold text-cu-dblue`}>{p1(r.score)}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <p className="px-3 pb-2.5 pt-1 text-[10.5px] italic text-cu-grey">{ev.hotLeads.scoreNote}</p>
+        <p className="px-3 pb-2.5 pt-1 text-[10.5px] italic text-cu-grey">
+          {ev.hotLeads.scoreNote}
+          {ev.hotLeads.rowsNote ? ` ${ev.hotLeads.rowsNote}` : ''}
+        </p>
       </div>
       {ev.hotLeads.pipelineUrl ? (
         <a
@@ -296,12 +311,15 @@ export function WebinarMixReport({ ev, accName }) {
       )}
       {!external && <Note>{ev.hotLeads.universeNote}</Note>}
 
-      {/* Metodología de scoring */}
+      {/* Metodología de scoring (global o propia del evento) */}
       <div className="mb-5 grid gap-3 lg:grid-cols-2">
         <div className="overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
           <div className="bg-cu-dblue px-5 py-3 text-[11px] font-bold uppercase tracking-[0.5px] text-white">
-            Cómo se califica un lead (score 0-100)
+            {evScoring ? 'Cómo se calificó un lead en este evento' : 'Cómo se califica un lead (score 0-100)'}
           </div>
+          {evScoring ? (
+            <p className="px-5 py-4 text-[12px] leading-relaxed text-cu-dgrey">{evScoring.desc}</p>
+          ) : (
           <table className="w-full border-collapse">
             <tbody>
               {scoring.formula.map((f) => (
@@ -312,6 +330,7 @@ export function WebinarMixReport({ ev, accName }) {
               ))}
             </tbody>
           </table>
+          )}
         </div>
         <div className="overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
           <div className="bg-cu-dblue px-5 py-3 text-[11px] font-bold uppercase tracking-[0.5px] text-white">
@@ -319,7 +338,7 @@ export function WebinarMixReport({ ev, accName }) {
           </div>
           <table className="w-full border-collapse">
             <tbody>
-              {scoring.classes.map((c) => (
+              {classes.map((c) => (
                 <tr key={c.name} className="border-b border-cu-border2 last:border-b-0">
                   <td className={`${tdCls} w-36 font-medium text-cu-dblue`}>{c.name}<br /><span className="text-[10px] font-bold text-cu-cyan">score {c.range}</span></td>
                   <td className={`${tdCls} text-[11px]`}>{c.action}</td>
@@ -331,6 +350,8 @@ export function WebinarMixReport({ ev, accName }) {
       </div>
 
       {/* Diagnóstico de madurez */}
+      {ev.surveys?.length > 0 && (
+      <>
       <SectionHeader title="Diagnóstico de Madurez" note="Encuestas respondidas durante el webinar" />
       <div className="mb-5 grid gap-3 lg:grid-cols-3">
         {ev.surveys.map((s) => (
@@ -355,6 +376,8 @@ export function WebinarMixReport({ ev, accName }) {
           </div>
         ))}
       </div>
+      </>
+      )}
 
       {/* ── Oportunidad comercial (potencial) ── */}
       <SectionHeader title="Oportunidad Comercial — Cuánto Podría Traerle Este Webinar a Control Union" note="Proyección sobre benchmarks · no es una certeza" />
@@ -363,28 +386,43 @@ export function WebinarMixReport({ ev, accName }) {
         podría generar este webinar si los deals avanzan — nada está asegurado hasta que el equipo comercial haga
         su parte del trabajo.
       </Note>
-      <div className="mb-3 grid gap-3 lg:grid-cols-2">
-        <div className="rounded-cu bg-cu-dblue px-6 py-5 text-white shadow-cu">
-          <div className="text-[30px] font-bold leading-none">{usd(ev.commercial.pipelinePotential)}</div>
-          <div className="mt-2 text-[12px] font-bold">$ Pipeline potencial generado</div>
-          <div className="mt-1 text-[10.5px] text-white/60">{ev.commercial.pipelinePotentialNote}</div>
+      {ev.commercial.pipelinePotential != null ? (
+        <>
+          <div className="mb-3 grid gap-3 lg:grid-cols-2">
+            <div className="rounded-cu bg-cu-dblue px-6 py-5 text-white shadow-cu">
+              <div className="text-[30px] font-bold leading-none">{usd(ev.commercial.pipelinePotential)}</div>
+              <div className="mt-2 text-[12px] font-bold">$ Pipeline potencial generado</div>
+              <div className="mt-1 text-[10.5px] text-white/60">{ev.commercial.pipelinePotentialNote}</div>
+            </div>
+            <div className="rounded-cu border border-cu-border bg-cu-cyan/[0.06] px-6 py-5 shadow-cu">
+              <div className="text-[30px] font-bold leading-none text-cu-dblue">{usd(ev.commercial.hotPipeline)}</div>
+              <div className="mt-2 text-[12px] font-bold text-cu-cyan">$ Pipeline potencial del segmento caliente</div>
+              <div className="mt-1 text-[10.5px] text-cu-grey">{ev.commercial.hotPipelineNote}</div>
+            </div>
+          </div>
+          <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-3">
+            <KpiCard label="$ Que podría cerrarse" value={usd(ev.commercial.closeLow)} footnote={ev.commercial.closeLowNote} />
+            <KpiCard label="$ Que podría cerrarse" value={usd(ev.commercial.closeHigh)} footnote={ev.commercial.closeHighNote} />
+            <KpiCard
+              label="ROI potencial del webinar"
+              value={ev.commercial.roi}
+              accent="amber"
+              footnote={ev.commercial.productionCost != null ? `Sobre el costo de producción (${usd(ev.commercial.productionCost)})` : 'Costo de producción: pendiente'}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-3">
+          <KpiCard label="Leads priorizados (base del cálculo)" value={num(ev.deals.total)} footnote={`${ev.deals.hot} hot + ${dealsOnly} warm sobre ${num(ev.externos.attended)} asistentes externos`} />
+          <KpiCard label="Costo de producción" value={usd(ev.commercial.productionCost)} accent="amber" />
+          <KpiCard label="Pipeline / ROI potencial" value="—" footnote="Pendiente del ticket promedio del servicio" />
         </div>
-        <div className="rounded-cu border border-cu-border bg-cu-cyan/[0.06] px-6 py-5 shadow-cu">
-          <div className="text-[30px] font-bold leading-none text-cu-dblue">{usd(ev.commercial.hotPipeline)}</div>
-          <div className="mt-2 text-[12px] font-bold text-cu-cyan">$ Pipeline potencial del segmento caliente</div>
-          <div className="mt-1 text-[10.5px] text-cu-grey">{ev.commercial.hotPipelineNote}</div>
-        </div>
-      </div>
-      <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-3">
-        <KpiCard label="$ Que podría cerrarse" value={usd(ev.commercial.closeLow)} footnote={ev.commercial.closeLowNote} />
-        <KpiCard label="$ Que podría cerrarse" value={usd(ev.commercial.closeHigh)} footnote={ev.commercial.closeHighNote} />
-        <KpiCard
-          label="ROI potencial del webinar"
-          value={ev.commercial.roi}
-          accent="amber"
-          footnote={ev.commercial.productionCost != null ? `Sobre el costo de producción (${usd(ev.commercial.productionCost)})` : 'Costo de producción: pendiente'}
-        />
-      </div>
+      )}
+      {ev.commercial.pendingNote && !external && (
+        <Note tone="amber">
+          <strong className="text-cu-dblue">Pendiente:</strong> {ev.commercial.pendingNote}
+        </Note>
+      )}
       <p className="mb-5 text-[10.5px] italic leading-relaxed text-cu-grey">
         Metodología: {ev.commercial.metodologia}
       </p>

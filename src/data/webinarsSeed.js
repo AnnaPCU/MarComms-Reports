@@ -46,13 +46,13 @@ export const WEBINARS_DB = {
       attended: 30,
       showRate: 58.8,
       regCountries: 9, // países entre los registrados
-      attCountries: [
-        { name: 'Argentina', v: 11 },
-        { name: 'México', v: 11 },
-        { name: 'Estados Unidos', v: 3 },
-        { name: 'Colombia', v: 2 },
-        { name: 'Perú', v: 2 },
-        { name: 'Honduras', v: 1 },
+      countries: [
+        { name: 'Argentina', reg: null, att: 11 },
+        { name: 'México', reg: null, att: 11 },
+        { name: 'Estados Unidos', reg: null, att: 3 },
+        { name: 'Colombia', reg: null, att: 2 },
+        { name: 'Perú', reg: null, att: 2 },
+        { name: 'Honduras', reg: null, att: 1 },
       ],
       companies: {
         unique: null, // dato no disponible en este evento (Livestorm sin export por empresa)
@@ -106,11 +106,12 @@ export const WEBINARS_DB = {
 
       // ── Sección 3: Hot leads (HubSpot) ──
       hotLeads: {
+        col3: 'Asistencia',
         rows: [
-          { empresa: 'Zucarmex', pais: 'US', asistencia: 100, score: 90.0 },
-          { empresa: 'Bovis Project Management', pais: 'MX', asistencia: 100, score: 85.0 },
-          { empresa: 'Santomar', pais: 'MX', asistencia: 100, score: 70.0 },
-          { empresa: 'Expo Guadalajara', pais: 'MX', asistencia: 100, score: 70.0 },
+          { empresa: 'Zucarmex', pais: 'US', det: '100 %', score: 90.0, tier: 'HOT' },
+          { empresa: 'Bovis Project Management', pais: 'MX', det: '100 %', score: 85.0, tier: 'HOT' },
+          { empresa: 'Santomar', pais: 'MX', det: '100 %', score: 70.0, tier: 'HOT' },
+          { empresa: 'Expo Guadalajara', pais: 'MX', det: '100 %', score: 70.0, tier: 'HOT' },
         ],
         universeNote:
           "Universo más amplio de seguimiento: 7 de 20 respuestas a '¿te gustaría que te contactemos?' fueron Sí — vale la pena que Ventas revise esa lista completa además de estos 4.",
@@ -149,7 +150,167 @@ export const WEBINARS_DB = {
         '<strong>Dar seguimiento a los 7 que pidieron contacto directo.</strong> Son la señal de intención más clara del webinar — conviene contactarlos aunque no todos superen el umbral de score.',
       ],
     },
+
+    'wbn-eudr': {
+      title: 'Webinar EUDR y Evidencia Verificable',
+      subtitle: '«Certificaciones, tecnología y soluciones disponibles para la cadena de suministro»',
+      date: '26 de agosto de 2026',
+      reagendado: false,
+      idioma: 'Español',
+      audiencia: 'Exportadores al mercado europeo (soja, café, cacao, palma, madera, ganado, caucho) — LATAM',
+      canales: 'Email marketing (8 envíos) + LinkedIn orgánico (4 posteos) · Plataforma: Microsoft Teams',
+      serieEmails: ['Emails 1-4 + resends (26/8)', 'Email 5 post-webinar: registrados y participantes (31/8)', 'Base total: 4.966 contactos únicos'],
+
+      // ── Key insights ──
+      registered: 295,
+      attended: 150,
+      attendedNote: '150 identificados vía Teams · +2 sin identificar',
+      showRate: 50.8,
+      regCountries: 27,
+      // Registrados vs asistentes por país (top 10 por registros, externos).
+      countries: [
+        { name: 'Perú', reg: 63, att: 23 },
+        { name: 'Ecuador', reg: 42, att: 10 },
+        { name: 'Argentina', reg: 37, att: 20 },
+        { name: 'Paraguay', reg: 27, att: 10 },
+        { name: 'Colombia', reg: 25, att: 17 },
+        { name: 'México', reg: 13, att: 10 },
+        { name: 'Chile', reg: 8, att: 1 },
+        { name: 'Guatemala', reg: 7, att: 3 },
+        { name: 'Uruguay', reg: 4, att: 5 },
+        { name: 'Honduras', reg: 4, att: 4 },
+      ],
+      companies: {
+        unique: 87, // empresas únicas entre asistentes externos (213 entre registrados)
+        uniqueNote: 'Entre asistentes externos · 213 entre los registrados',
+        featured: ['Pantaleon S.A.', 'Ecom', 'Olam Agro Peru', 'Oleaginosas San Marcos', 'TEAM FOODS', 'INTEROC S.A.', 'LAR PY', 'Cooperativa Unicafec', 'Ochosur', 'Agroindustria Palmera San Roman'],
+      },
+      internos: { total: 41, attended: 33 },
+      externos: { registered: 254, attended: 117 },
+      deals: {
+        total: 27,
+        hot: 1,
+        leads: 26,
+        note: 'Leads priorizados por el scoring del evento (1 hot + 26 warm); 90 asistentes externos quedaron como cold en nurturing.',
+      },
+      durationTotalLabel: '48 min 11 s',
+      durationAvgMin: 34.4,
+      durationMedianMin: 40.2,
+      engagement: { high: 78, mid: 25, low: 47 }, // sobre 48:11 de evento · 150 identificados
+      highlight:
+        '150 asistentes identificados de 295 registrados (50,8% de show rate) desde 27 países — el webinar más grande de la serie. La mediana de permanencia fue de 40 minutos sobre un evento de 48, y el scoring del evento priorizó 27 leads (1 hot + 26 warm) entre los 117 asistentes externos. La base de emails explica la mayor parte del registro: 229 de los 295 registrados estaban en la campaña de Mailchimp.',
+
+      // Scoring propio de este evento (Teams, sin encuestas de diagnóstico).
+      scoring: {
+        desc: '+3 asistió en vivo · +2 si estuvo >50 min / +1 si >30 min · +1 por cada interacción identificable (Q&A, cámara encendida, mano levantada, audio activado). Internos CU/Peterson excluidos.',
+        classes: [
+          { name: 'Hot lead', range: '≥ 8', action: 'Contacto comercial directo esa misma semana.' },
+          { name: 'Warm lead', range: '5 – 7', action: 'Nurturing activo: casos de éxito, contenido de mitad de funnel, próximo webinar.' },
+          { name: 'Cold', range: '< 5', action: 'Secuencia de nurturing larga / contenido educativo. No pasa a Ventas todavía.' },
+        ],
+      },
+
+      // ── Sección 1: Email Marketing ──
+      email: {
+        sends: [
+          { name: '1. Invitación', sent: 2766, open: 18.5, click: 1.5 },
+          { name: '2. Recordatorio', sent: 2675, open: 17.4, click: 1.1 },
+          { name: '2b. Resend recordatorio', sent: 184, open: 22.3, click: 1.1 },
+          { name: '2c. Resend — nueva BBDD', sent: 2018, open: 20.3, click: 0.7 },
+          { name: '3. Reactivación', sent: 2666, open: 17.1, click: 2.0 },
+          { name: '4. Última convocatoria', sent: 2657, open: 17.5, click: 1.9 },
+          { name: '5a. Post-webinar (registrados)', sent: 117, open: 23.9, click: 7.7 },
+          { name: '5b. Post-webinar (participantes)', sent: 79, open: 27.8, click: 3.8 },
+        ],
+        totalSent: 13162,
+        uniqueContacts: 4966,
+        openedOnce: 1247,
+        openedOncePct: 25.1,
+        clickedOnce: 137,
+        clickedOncePct: 2.8,
+        regFromEmail: 229,
+        regFromEmailPct: 78,
+        regFromEmailNote: 'Registrados presentes en la base de la campaña (229 de 295)',
+        nota: 'El mejor click rate llegó después del evento: el email post-webinar a registrados que no asistieron hizo 7,7% de clics (el replay como segunda oportunidad). Los 66 registrados que no estaban en la base de emails llegaron por LinkedIn u otros canales.',
+      },
+
+      // ── Sección 2: Social Media (LinkedIn CU Latinoamérica) ──
+      social: {
+        posts: [
+          { name: 'Post 1 · Evento (4/8)', imp: 1980, inter: 157, rate: 7.93, clicks: 110, ctr: 5.56, reactions: 38 },
+          { name: 'Post 2 · Sectores EUDR', imp: 1228, inter: 71, rate: 5.78, clicks: 38, ctr: 3.09, reactions: 27 },
+          { name: 'Post 3 · Prepararse para EUDR', imp: 1775, inter: 116, rate: 6.54, clicks: 65, ctr: 3.66, reactions: 39 },
+          { name: 'Post 4 · «¡Es mañana!» (25/8)', imp: 1992, inter: 104, rate: 5.22, clicks: 69, ctr: 3.46, reactions: 30 },
+        ],
+        totals: { imp: 6975, inter: 448, rate: 6.4, clicks: 282, ctr: 4.0, reactions: 134, shares: 32 },
+        regFromSocial: null, // LinkedIn no permite atribuir registros directamente en este evento
+        regFromSocialPct: null,
+        lectura:
+          'El posteo del evento (4/8) fue el más efectivo: 7,93% de tasa de interacción y 5,56% de CTR — el público que agenda temprano es el más calificado. El «¡Es mañana!» del 25/8 logró el mayor alcance (1.992 impresiones) como empujón final. 66 de los 295 registros no estaban en la base de emails: LinkedIn es el origen más probable.',
+      },
+
+      // ── Sección 3: Hot leads (scoring del evento) ──
+      hotLeads: {
+        col3: 'Permanencia',
+        rows: [
+          { empresa: 'Pantaleon S.A.', pais: 'Guatemala', det: '37,6 min', score: 9, tier: 'HOT' },
+          { empresa: 'Asociación de Productores Agroecológicos', pais: 'Perú', det: '103,1 min', score: 6, tier: 'WARM' },
+          { empresa: 'Ecom', pais: 'Ecuador', det: '56,4 min', score: 6, tier: 'WARM' },
+          { empresa: 'Oleaginosas San Marcos S.A', pais: 'Colombia', det: '53,1 min', score: 6, tier: 'WARM' },
+          { empresa: 'Funglode', pais: 'República Dominicana', det: '50,4 min', score: 6, tier: 'WARM' },
+          { empresa: 'Productor Aguacate Hass', pais: 'México', det: '50,2 min', score: 6, tier: 'WARM' },
+          { empresa: 'Service Corp Trading', pais: 'Argentina', det: '43,2 min', score: 6, tier: 'WARM' },
+          { empresa: 'Olam Agro Peru SAC', pais: 'Perú', det: '40,2 min', score: 6, tier: 'WARM' },
+          { empresa: 'Productor de banano', pais: 'Costa Rica', det: '98,4 min', score: 5, tier: 'WARM' },
+          { empresa: 'Cooperativa Unicafec', pais: 'Perú', det: '95,3 min', score: 5, tier: 'WARM' },
+          { empresa: 'Ecuadorcolat', pais: 'Ecuador', det: '73,5 min', score: 5, tier: 'WARM' },
+          { empresa: 'LAR PY', pais: 'Paraguay', det: '59,3 min', score: 5, tier: 'WARM' },
+          { empresa: 'INTEROC S.A.', pais: 'Ecuador', det: '53,4 min', score: 5, tier: 'WARM' },
+          { empresa: 'TEAM FOODS', pais: 'Colombia', det: '51,9 min', score: 5, tier: 'WARM' },
+          { empresa: 'Facultad de Ciencia y Tecnología — UADER', pais: 'Argentina', det: '50,8 min', score: 5, tier: 'WARM' },
+          { empresa: 'Agroindustria Palmera San Roman', pais: 'Guatemala', det: '48,8 min', score: 5, tier: 'WARM' },
+          { empresa: 'Ochosur', pais: 'Perú', det: '47,5 min', score: 5, tier: 'WARM' },
+        ],
+        rowsNote: '17 de los 27 leads priorizados (el resto de los warm, con score 5 y menor permanencia, está en el tracker completo).',
+        universeNote:
+          '16 interacciones de Q&A anónimas quedaron excluidas del scoring por no ser identificables — si Comercial quiere, se pueden revisar aparte contra el chat del evento.',
+        pipelineUrl: null, // pendiente: lo pasa el equipo
+        scoreNote: 'Scoring propio del evento (Teams): HOT ≥ 8 · WARM 5-7. Detalle completo por persona, sin defaults.',
+      },
+
+      surveys: [], // este evento no corrió encuestas de diagnóstico en vivo
+
+      // ── Oportunidad comercial (POTENCIAL, no certeza) ──
+      commercial: {
+        productionCost: 600,
+        pipelinePotential: null, // pendiente: falta ticket promedio del servicio EUDR
+        pipelinePotentialNote: null,
+        hotPipeline: null,
+        hotPipelineNote: null,
+        closeLow: null,
+        closeLowNote: null,
+        closeHigh: null,
+        closeHighNote: null,
+        roi: null,
+        pendingNote:
+          'El pipeline potencial de este webinar se calcula cuando se defina el ticket promedio del servicio EUDR (benchmark de mercado o dato comercial). Con 27 leads priorizados sobre 117 asistentes externos, la base para el cálculo ya está lista.',
+        metodologia:
+          'Se excluyen los 33 asistentes internos (CU/Peterson) — solo los 117 externos cuentan como oportunidad. El scoring es el del evento (HOT ≥ 8, WARM 5-7), calculado con el detalle por persona de Microsoft Teams.',
+      },
+
+      // ── Plan de acción (solo vista interna) ──
+      actionPlan: [
+        '<strong>Activar el hot lead esta semana.</strong> Pantaleon S.A. (Guatemala): score 9, 5 interacciones de Q&A y permanencia completa — contacto comercial directo.',
+        '<strong>Trabajar los 26 warm en nurturing activo.</strong> Todos superaron los 30-50 minutos de permanencia; casos de éxito EUDR + invitación al próximo webinar.',
+        '<strong>Revisar las 16 preguntas anónimas del Q&A.</strong> Quedaron fuera del scoring por no ser identificables, pero pueden contener intención de compra real.',
+        '<strong>Definir el ticket promedio del servicio EUDR</strong> para poder proyectar el pipeline potencial de este webinar (la base de 27 leads ya está lista).',
+        '<strong>Replicar la fórmula del posteo de evento.</strong> El post del 4/8 con formato «Evento de LinkedIn» duplicó el CTR del resto — usarlo como pieza central en el próximo webinar.',
+      ],
+    },
   },
 };
 
-export const WEBINAR_PERIODS = [{ id: 'wbn-iso14064', label: 'Webinar ISO 14064 · Jul 2026' }];
+export const WEBINAR_PERIODS = [
+  { id: 'wbn-iso14064', label: 'Webinar ISO 14064 · Jul 2026' },
+  { id: 'wbn-eudr', label: 'Webinar EUDR · Ago 2026' },
+];
