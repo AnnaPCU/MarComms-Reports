@@ -154,10 +154,7 @@ export default function App() {
       </main>
 
       <BarBottom />
-      <footer className="flex items-center justify-between px-9 pb-5 pt-3.5">
-        <p className="text-[10px] text-cu-grey">
-          Reportes MarComms · PCU Group · {PILAR_BY_ID[pilar].sources.join(' · ')}
-        </p>
+      <footer className="flex items-center justify-end px-9 pb-5 pt-3.5">
         <Tagline />
       </footer>
 

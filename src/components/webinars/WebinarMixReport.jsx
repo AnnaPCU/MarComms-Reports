@@ -99,7 +99,7 @@ export function WebinarMixReport({ ev, accName }) {
       {/* ── Key insights (general + webinar) ── */}
       {(isGeneral || view === 'webinar') && (
       <>
-      <SectionHeader title="Key Insights del Evento" note="Livestorm + Mailchimp + LinkedIn + HubSpot" />
+      <SectionHeader title="Key Insights del Evento" />
       <Note>
         <strong className="text-cu-dblue">Principal hallazgo:</strong> {ev.highlight}
       </Note>
