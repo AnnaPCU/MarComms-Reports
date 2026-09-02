@@ -13,15 +13,15 @@ import {
 } from 'recharts';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { PAL, CU, CHART_TOOLTIP } from '@/constants/brand';
+import { SOCIAL_STR } from '@/utils/socialI18n';
 
-export function AudienceCharts({ audience }) {
+export function AudienceCharts({ audience, lang = 'es' }) {
   const { seniority, jobFunction } = audience;
+  const t = SOCIAL_STR[lang];
+  const locale = lang === 'en' ? 'en-US' : 'es-AR';
   return (
     <div className="mb-5 grid grid-cols-1 gap-3 lg:grid-cols-2">
-      <ChartCard
-        title="Nivel de Responsabilidad"
-        subtitle="Total seguidores de la cuenta — datos reales"
-      >
+      <ChartCard title={t.chSenTitle} subtitle={t.chSenSub}>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -40,7 +40,7 @@ export function AudienceCharts({ audience }) {
             </Pie>
             <Tooltip
               {...CHART_TOOLTIP}
-              formatter={(v, n) => [v.toLocaleString('es-AR'), n]}
+              formatter={(v, n) => [v.toLocaleString(locale), n]}
             />
             <Legend
               layout="vertical"
@@ -52,10 +52,7 @@ export function AudienceCharts({ audience }) {
         </ResponsiveContainer>
       </ChartCard>
 
-      <ChartCard
-        title="Función Laboral"
-        subtitle="Top 8 funciones de la audiencia — datos reales"
-      >
+      <ChartCard title={t.chJobTitle} subtitle={t.chJobSub}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={jobFunction}
@@ -73,7 +70,7 @@ export function AudienceCharts({ audience }) {
             <Tooltip
               {...CHART_TOOLTIP}
               cursor={{ fill: 'rgba(62,178,237,.06)' }}
-              formatter={(v) => [v.toLocaleString('es-AR'), 'Seguidores']}
+              formatter={(v) => [v.toLocaleString(locale), t.followersWord]}
             />
             <Bar dataKey="v" fill="rgba(62,178,237,.72)" radius={[0, 3, 3, 0]} />
           </BarChart>

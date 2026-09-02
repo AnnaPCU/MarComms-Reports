@@ -16,6 +16,7 @@ import {
   getSegFolBase,
 } from '@/services/socialService';
 import { genCountryYearInsights } from '@/utils/socialInsights';
+import { SOCIAL_STR } from '@/utils/socialI18n';
 import { fmt, num } from '@/utils/format';
 import { CU, CHART_TOOLTIP } from '@/constants/brand';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
@@ -33,7 +34,9 @@ import { Glossary } from '@/components/shared/Glossary';
 //  mensual por país (posts por hashtag + Ubicación del export): acumula
 //  los meses cargados y muestra la evolución mes a mes.
 // ════════════════════════════════════════════════════════════════
-export function CountryYearView({ account, country }) {
+export function CountryYearView({ account, country, lang = 'es' }) {
+  const t = SOCIAL_STR[lang];
+  const en = lang === 'en';
   const cfg = getSegConfig(account);
   const cInfo = cfg?.countries.find((c) => c.id === country);
   const name = cInfo?.name ?? country;
@@ -78,38 +81,29 @@ export function CountryYearView({ account, country }) {
 
   const chartData = series
     .filter((s) => s.tot)
-    .map((s) => ({ mes: s.short, Impresiones: s.d?.imp || 0, 'ER %': s.d?.er || 0 }));
+    .map((s) => ({ mes: s.short, [t.dkImp]: s.d?.imp || 0, 'ER %': s.d?.er || 0 }));
 
   return (
     <div className="animate-fade-in">
       <InsightsPanel
-        subtitle={`${cfg.label} · ${name} · Año 2026`}
-        title="Progreso del Año — Insights"
-        label="Lectura anual"
-        items={genCountryYearInsights(agg, series, name)}
+        subtitle={`${cfg.label} · ${name} · ${en ? 'Year 2026' : 'Año 2026'}`}
+        title={t.yInsightsTitle}
+        label={t.yInsightLabel}
+        actionLabel={t.actionLabel}
+        emptyText={t.emptyInsights}
+        items={genCountryYearInsights(agg, series, name, lang)}
       />
 
-      <SectionHeader
-        title={`Indicadores del Año — Contenido de ${name}`}
-        note={`${agg.withData.length} ${agg.withData.length === 1 ? 'mes' : 'meses'} con publicaciones del país`}
-      />
+      <SectionHeader title={t.yKpiSection(name)} note={t.yKpiNote(agg.withData.length)} />
       <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <KpiCard label="Impresiones acumuladas" value={fmt(agg.imp)} footnote="De las publicaciones del país" />
-        <KpiCard label="Engagement Rate promedio" value={agg.er.toFixed(1)} unit="%" footnote="Ponderado por impresiones" />
-        <KpiCard label="Clics acumulados" value={fmt(agg.clk)} />
-        <KpiCard
-          label="Publicaciones"
-          value={agg.np}
-          footnote={`~${Math.round(agg.np / agg.withData.length)} por mes con actividad`}
-        />
+        <KpiCard label={t.yImpAcc} value={fmt(agg.imp)} footnote={t.cImpFoot} />
+        <KpiCard label={t.yErAvg} value={agg.er.toFixed(1)} unit="%" footnote={t.yErFoot} />
+        <KpiCard label={t.yClkAcc} value={fmt(agg.clk)} />
+        <KpiCard label={t.kPosts} value={agg.np} footnote={t.yPostsFoot(Math.round(agg.np / agg.withData.length))} />
       </div>
 
-      <SectionHeader title={`Evolución mes a mes — ${name}`} note="LinkedIn Orgánico" />
-      <ChartCard
-        title="Alcance vs. Engagement"
-        subtitle={`Impresiones (barras) y ER % (línea) de las publicaciones de ${name} por mes`}
-        className="mb-5"
-      >
+      <SectionHeader title={t.yEvoSection(name)} note={t.funnelNote} />
+      <ChartCard title={t.yChartTitle} subtitle={t.yChartSub(name)} className="mb-5">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke={CU.border2} />
@@ -121,59 +115,76 @@ export function CountryYearView({ account, country }) {
               cursor={{ fill: 'rgba(62,178,237,.06)' }}
               formatter={(v, n) => (n === 'ER %' ? [`${Number(v).toFixed(1)}%`, n] : [num(v), n])}
             />
-            <Bar yAxisId="imp" dataKey="Impresiones" fill="rgba(62,178,237,.72)" radius={[3, 3, 0, 0]} />
+            <Bar yAxisId="imp" dataKey={t.dkImp} fill="rgba(62,178,237,.72)" radius={[3, 3, 0, 0]} />
             <Line yAxisId="er" dataKey="ER %" stroke={CU.dblue} strokeWidth={2} dot={{ r: 3 }} />
           </ComposedChart>
         </ResponsiveContainer>
       </ChartCard>
 
-      <SectionHeader title={`Top Publicaciones del Año — ${name}`} note="Por impresiones" />
-      <PostsTable posts={agg.posts} />
+      <SectionHeader title={t.yTopSection(name)} note={t.byImpressions} />
+      <PostsTable posts={agg.posts} lang={lang} />
 
-      <SectionHeader title={`Audiencia — ${name}`} note="Por ubicación (LinkedIn)" />
+      <SectionHeader title={t.cAudSection(name)} note={t.byLocation} />
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div className="relative overflow-hidden rounded-cu border border-cu-border bg-white px-5 pb-3.5 pt-4 shadow-cu">
           <span className="absolute inset-y-0 left-0 w-[3px] bg-cu-cyan" />
           <div className="mb-2 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.6px] text-cu-grey">
             <BrandIcon icon={Eye} tone="accent" size="sm" />
-            Visualizaciones de página desde {name} en el año
+            {t.yVisLabel(name)}
           </div>
           <div className="mb-2 text-[30px] font-bold leading-none tracking-tight text-cu-dblue">
             {num(agg.vis)}
           </div>
           <div className="mt-1.5 text-[9px] italic leading-tight text-cu-grey">
-            Suma de los meses cargados — visualizaciones por ubicación, no visitantes únicos
+            {t.yVisFoot}
           </div>
         </div>
         <div className="relative overflow-hidden rounded-cu border border-cu-border bg-white px-5 pb-3.5 pt-4 shadow-cu">
           <span className="absolute inset-y-0 left-0 w-[3px] bg-cu-cyan" />
           <div className="mb-2 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.6px] text-cu-grey">
             <BrandIcon icon={Users} tone="accent" size="sm" />
-            Seguidores de la cuenta en {name}
+            {t.cFolLabel(name)}
           </div>
           <div className="mb-2 text-[30px] font-bold leading-none tracking-tight text-cu-dblue">
             {num(folBase)}
           </div>
           <div className="mt-1.5 text-[9px] italic leading-tight text-cu-grey">
-            Foto acumulada del último export de LinkedIn — no es un dato del mes
+            {t.cFolFoot}
           </div>
         </div>
       </div>
 
       <div className="mb-5 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-cu-cyan/[0.05] px-5 py-3.5 text-[11.5px] leading-relaxed text-cu-dgrey">
-        <strong className="text-cu-dblue">Cómo se arma este resumen por país:</strong>{' '}
-        acumula mes a mes las publicaciones atribuidas a {name} por hashtag ({cInfo?.tag})
-        o mención de país (métricas al momento del export de cada mes)
-        {agg.empty.length ? (
+        {en ? (
           <>
-            . Meses sin publicaciones etiquetadas para {name}: {agg.empty.join(', ')}
+            <strong className="text-cu-dblue">How this country summary is built:</strong>{' '}
+            it accumulates month by month the posts attributed to {name} by hashtag ({cInfo?.tag})
+            or country mention (metrics at each month's export time)
+            {agg.empty.length ? (
+              <>
+                . Months with no tagged posts for {name}: {agg.empty.join(', ')}
+              </>
+            ) : null}
+            . LinkedIn does not segment new followers or unique visitors by country, so
+            those indicators only exist at the {cfg.label} level.
           </>
-        ) : null}
-        . LinkedIn no segmenta por país los seguidores nuevos ni los visitantes únicos,
-        por eso esos indicadores solo existen a nivel {cfg.label}.
+        ) : (
+          <>
+            <strong className="text-cu-dblue">Cómo se arma este resumen por país:</strong>{' '}
+            acumula mes a mes las publicaciones atribuidas a {name} por hashtag ({cInfo?.tag})
+            o mención de país (métricas al momento del export de cada mes)
+            {agg.empty.length ? (
+              <>
+                . Meses sin publicaciones etiquetadas para {name}: {agg.empty.join(', ')}
+              </>
+            ) : null}
+            . LinkedIn no segmenta por país los seguidores nuevos ni los visitantes únicos,
+            por eso esos indicadores solo existen a nivel {cfg.label}.
+          </>
+        )}
       </div>
 
-      <Glossary keys="social" />
+      <Glossary keys={t.glossaryKey} />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { initialLang } from '@/utils/reportLang';
 import {
   BarChart,
   Bar,
@@ -48,7 +49,7 @@ function useYear(account) {
 export function PaidAnnualReview({ account }) {
   const year = useYear(account);
   const accName = listAccounts().find((a) => a.id === account)?.name ?? '';
-  const [lang, setLang] = useState(() => (brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
+  const [lang, setLang] = useState(() => initialLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
   const t = YEAR_STR[lang];
   const tp = PAID_STR[lang];
 

@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
+import { initialLang } from '@/utils/reportLang';
 import { brandOf } from '@/constants/brand';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
@@ -16,7 +17,7 @@ import { ExecutiveReview } from '@/components/social/ExecutiveReview';
 // (commit 2c2d10f) y en los HTML de respaldo entregados en la conversación.
 export function AnnualReview({ account }) {
   const { accName, series } = useSocialYear(account);
-  const [lang, setLang] = useState(() => (brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
+  const [lang, setLang] = useState(() => initialLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
   useEffect(() => {
     setLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es');
   }, [account, accName]);

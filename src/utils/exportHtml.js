@@ -87,7 +87,7 @@ const BRAND_FAVICONS = {
   peterson: '/favicon-peterson.png',
 };
 
-export async function exportViewAsHtml({ pilar, account, period, audience, brand, title, filename, snapshot, socialCountry = null, periods = null }) {
+export async function exportViewAsHtml({ pilar, account, period, audience, brand, title, filename, snapshot, socialCountry = null, periods = null, lang = 'es' }) {
   // Logo de la marca como data URI (para que no se rompa en el archivo offline).
   const logoSrc = brand && BRAND_LOGOS[brand] ? await fetchAsDataUri(BRAND_LOGOS[brand].src) : null;
   // Favicon de la empresa de la cuenta (CU / Peterson); genérico si no hay marca.
@@ -129,7 +129,7 @@ export async function exportViewAsHtml({ pilar, account, period, audience, brand
     }
     if (!css) css = collectInlineCss();
 
-    const embed = safeJson({ pilar, account, period, audience, brand, title, snapshot, logoSrc, socialCountry, periods });
+    const embed = safeJson({ pilar, account, period, audience, brand, title, snapshot, logoSrc, socialCountry, periods, lang });
 
     const doc = `<!DOCTYPE html>
 <html lang="es">

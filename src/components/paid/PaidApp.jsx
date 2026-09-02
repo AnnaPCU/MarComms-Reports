@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { initialLang } from '@/utils/reportLang';
 import { CalendarClock } from 'lucide-react';
 import { listAccounts } from '@/services/paidService';
 import { usePaidMonthly } from '@/hooks/usePaidMonthly';
@@ -97,7 +98,7 @@ function CampaignDetail({ c, currency, accName, periodLabel, t, lang, detailGrou
 export function PaidApp({ account, period }) {
   const { mo, detail, loading } = usePaidMonthly(account, period);
   const [view, setView] = useState(ALL);
-  const [lang, setLang] = useState('es');
+  const [lang, setLang] = useState(() => initialLang('es'));
   useEffect(() => setView(ALL), [account, period]);
 
   const t = PAID_STR[lang];

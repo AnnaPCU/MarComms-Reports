@@ -1,11 +1,13 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { getComparative } from '@/services/websiteService';
+import { WEB_STR } from '@/utils/websiteI18n';
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { Glossary } from '@/components/shared/Glossary';
 
-const num = (v) => Number(v || 0).toLocaleString('es-AR');
-const pos = (v) => Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const numL = (v, lang) => Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR');
+const posL = (v, lang) =>
+  Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 const shortName = (n) => n.replace('Control Union', 'CU').replace('Peterson Solutions', 'PS');
 
 // Gráfico horizontal (12 cuentas no entran verticales con etiquetas legibles).
@@ -39,7 +41,10 @@ function HBarCard({ title, subtitle, data, dataKey, fmt }) {
 // Comparativa multi-cuenta de Website: acumulado anual (GA4 + Search Console)
 // de cada cuenta con sus trimestres activos a la vista. Los datos salen del
 // seed en el bundle, por eso el snapshot embebido solo lleva el marcador.
-export function WebsiteComparative() {
+export function WebsiteComparative({ lang = 'es' }) {
+  const t = WEB_STR[lang];
+  const num = (v) => numL(v, lang);
+  const pos = (v) => posL(v, lang);
   const rows = getComparative();
   const chart = [...rows]
     .map((r) => ({
@@ -55,38 +60,31 @@ export function WebsiteComparative() {
 
   return (
     <div className="animate-fade-in">
-      <SectionHeader title="Comparativa Multi-Cuenta — Año 2026" note="GA4 + Search Console · acumulado de los trimestres con datos de cada cuenta" />
+      <SectionHeader title={t.cmpTitle} note={t.cmpNote} />
       <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3 text-[12px] leading-relaxed text-cu-dgrey shadow-cu">
-        Cada cuenta tiene sus propios trimestres cargados (algunas arrancan en Q2): la comparación
-        es sobre el acumulado del año de cada una, con sus trimestres activos a la vista. Las
-        cuentas sin Search Console conectado figuran con «—» en las columnas SEO.
+        {t.cmpIntro}
       </div>
 
       <div className="mb-5 grid gap-3 lg:grid-cols-3">
-        <HBarCard title="Visitantes únicos acumulados" subtitle="GA4" data={chart} dataKey="visitors" fmt={num} />
-        <HBarCard title="Conversiones acumuladas" subtitle="GA4" data={[...chart].sort((a, b) => b.conversions - a.conversions)} dataKey="conversions" fmt={num} />
+        <HBarCard title={t.cmpChVis} subtitle="GA4" data={chart} dataKey="visitors" fmt={num} />
+        <HBarCard title={t.cmpChConv} subtitle="GA4" data={[...chart].sort((a, b) => b.conversions - a.conversions)} dataKey="conversions" fmt={num} />
         <HBarCard
-          title="Clics SEO acumulados"
-          subtitle="Search Console · solo cuentas con SEO conectado"
+          title={t.cmpChSeo}
+          subtitle={t.cmpChSeoSub}
           data={rows.filter((r) => r.totals.hasSeo).map((r) => ({ name: shortName(r.name), seoClicks: r.totals.seoClicks })).sort((a, b) => b.seoClicks - a.seoClicks)}
           dataKey="seoClicks"
           fmt={num}
         />
       </div>
 
-      <SectionHeader title="Tabla Comparativa" />
+      <SectionHeader title={t.cmpTableSection} />
       <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
         <table className="w-full min-w-[820px] border-collapse">
           <thead>
             <tr className="border-b-2 border-cu-cyan">
-              <th className={thCls}>Cuenta</th>
-              <th className={thCls}>Trimestres</th>
-              <th className={thCls}>Visitantes únicos</th>
-              <th className={thCls}>Sesiones</th>
-              <th className={thCls}>Conversiones</th>
-              <th className={thCls}>Impresiones SEO</th>
-              <th className={thCls}>Clics SEO</th>
-              <th className={thCls}>Posición media</th>
+              {t.cmpTh.map((h) => (
+                <th key={h} className={thCls}>{h}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -108,7 +106,7 @@ export function WebsiteComparative() {
         </table>
       </div>
 
-      <Glossary keys="website" />
+      <Glossary keys={t.glossarySite} />
     </div>
   );
 }

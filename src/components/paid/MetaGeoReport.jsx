@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { initialLang } from '@/utils/reportLang';
 import { MapPin } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { listAccounts, getGeo } from '@/services/paidService';
@@ -93,7 +94,7 @@ function FichaCell({ label, value, foot, highlight = false }) {
 }
 
 export function MetaGeoReport({ account, period }) {
-  const [lang, setLang] = useState('es');
+  const [lang, setLang] = useState(() => initialLang('es'));
   // Vista por campaña (CU tiene 2): en la app se navega de a una para no
   // saturar; el HTML descargado trae SIEMPRE las dos vistas completas.
   const [view, setView] = useState('tf');

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { initialLang } from '@/utils/reportLang';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { getComparative, listGeoAccounts } from '@/services/paidService';
 import { MONTHS_EN, CMP_STR } from '@/utils/paidI18n';
@@ -19,7 +20,7 @@ const money = (v, c, lang) =>
 // cada cuenta con sus meses activos a la vista. Los datos salen del seed en
 // el bundle, por eso el snapshot embebido solo lleva el marcador de vista.
 export function PaidComparative() {
-  const [lang, setLang] = useState('es');
+  const [lang, setLang] = useState(() => initialLang('es'));
   const t = CMP_STR[lang];
   const rows = getComparative();
   const geoAccounts = listGeoAccounts();

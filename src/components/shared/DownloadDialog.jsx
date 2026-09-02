@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { X, Building2, Share2, Download, CalendarRange } from 'lucide-react';
+import { X, Building2, Share2, Download, CalendarRange, Languages } from 'lucide-react';
 
 // Modal de descarga: elegís QUÉ período/s bajar (por defecto el que estás
 // viendo) y si el reporte es para uso interno o externo. Cada período
 // seleccionado se descarga como su propio archivo HTML.
 export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod = null }) {
   const [selected, setSelected] = useState(() => new Set(currentPeriod != null ? [currentPeriod] : []));
+  const [lang, setLang] = useState('es'); // idioma principal del descargable
   const many = periods.length > 1;
 
   function toggle(id) {
@@ -66,6 +67,30 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
             </>
           )}
 
+          <div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+            <Languages className="h-3.5 w-3.5 text-cu-cyan" />
+            Idioma principal del reporte
+          </div>
+          <div className="mb-1.5 grid grid-cols-2 gap-2">
+            {[['es', 'Español'], ['en', 'English']].map(([id, label]) => (
+              <button
+                key={id}
+                onClick={() => setLang(id)}
+                className={`rounded-cu border px-3 py-2 text-[12px] font-bold transition-colors ${
+                  lang === id
+                    ? 'border-cu-dblue bg-cu-dblue text-white'
+                    : 'border-cu-border bg-white text-cu-dgrey hover:border-cu-cyan'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <p className="mb-4 text-[10.5px] leading-snug text-cu-grey">
+            Es el idioma con el que se abre el reporte: adentro vas a poder cambiarlo al otro idioma
+            igual.
+          </p>
+
           <p className="mb-4 text-[13px] text-cu-dgrey">
             ¿Deseás descargar el reporte para <strong className="text-cu-dblue">uso interno</strong> o{' '}
             <strong className="text-cu-dblue">uso externo</strong>?
@@ -73,7 +98,7 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
 
           <div className="grid grid-cols-2 gap-3">
             <button
-              onClick={() => !none && onChoose('internal', chosen)}
+              onClick={() => !none && onChoose('internal', chosen, lang)}
               disabled={none}
               className="group flex flex-col items-center gap-2 rounded-cu border border-cu-border bg-white px-4 py-5 text-center transition-colors hover:border-cu-cyan hover:bg-cu-cyan/[0.04] disabled:cursor-not-allowed disabled:opacity-40"
             >
@@ -83,7 +108,7 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
             </button>
 
             <button
-              onClick={() => !none && onChoose('external', chosen)}
+              onClick={() => !none && onChoose('external', chosen, lang)}
               disabled={none}
               className="group flex flex-col items-center gap-2 rounded-cu border border-cu-border bg-white px-4 py-5 text-center transition-colors hover:border-cu-cyan hover:bg-cu-cyan/[0.04] disabled:cursor-not-allowed disabled:opacity-40"
             >

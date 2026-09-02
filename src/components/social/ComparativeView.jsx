@@ -33,7 +33,46 @@ function normalise(vals) {
   return max > 0 ? vals.map((v) => Math.round((v / max) * 100)) : vals.map(() => 0);
 }
 
-export function ComparativeView() {
+const CMP_STR = {
+  es: {
+    section: 'Comparativa Multi-Cuenta — Efectividad · Mayo 2026',
+    sectionNote: 'Efectividad relativa · no alcance absoluto · datos reales',
+    dims: { er: 'Engagement Rate', ctr: 'CTR', cpf: 'Clics/Seguidor', vis: 'Visitas/Imp.', score: 'Score Global' },
+    mCpf: 'Clics/Seguidor',
+    mVis: 'Visitas/1K imp.',
+    warnCup: '⚠ Datos de mayo muy bajos — posible problema en export',
+    chErTitle: 'Engagement Rate por Cuenta',
+    chErSub: '% promedio mayo 2026 — mayor es mejor',
+    chCtrTitle: 'CTR — Clics / Impresiones',
+    chCtrSub: 'Efectividad de llamada a la acción por cuenta',
+    radarTitle: 'Radar de Efectividad — Top 6 Cuentas',
+    radarSub: 'ER · CTR · Clics/Seguidor · Visitas/Impresión · Score Global',
+    topSection: 'Top 10 Posts por Engagement Rate — Todas las Cuentas',
+    topNote: 'Datos reales mayo 2026 · 9 cuentas',
+    th: ['#', 'Publicación', 'Cuenta', 'Impresiones', 'Eng. Rate', 'Clics', 'Reac.', 'Com.'],
+  },
+  en: {
+    section: 'Multi-Account Comparison — Effectiveness · May 2026',
+    sectionNote: 'Relative effectiveness · not absolute reach · real data',
+    dims: { er: 'Engagement Rate', ctr: 'CTR', cpf: 'Clicks/Follower', vis: 'Visits/Imp.', score: 'Global Score' },
+    mCpf: 'Clicks/Follower',
+    mVis: 'Visits/1K imp.',
+    warnCup: '⚠ Very low May data — possible export issue',
+    chErTitle: 'Engagement Rate per Account',
+    chErSub: 'May 2026 average % — higher is better',
+    chCtrTitle: 'CTR — Clicks / Impressions',
+    chCtrSub: 'Call-to-action effectiveness per account',
+    radarTitle: 'Effectiveness Radar — Top 6 Accounts',
+    radarSub: 'ER · CTR · Clicks/Follower · Visits/Impression · Global Score',
+    topSection: 'Top 10 Posts by Engagement Rate — All Accounts',
+    topNote: 'Real May 2026 data · 9 accounts',
+    th: ['#', 'Post', 'Account', 'Impressions', 'Eng. Rate', 'Clicks', 'Reac.', 'Com.'],
+  },
+};
+
+export function ComparativeView({ lang = 'es' }) {
+  const t = CMP_STR[lang];
+  const en = lang === 'en';
   const ranked = useMemo(() => {
     const data = CMP_DATA.map(effectiveness);
     const erN = normalise(data.map((d) => d.er));
@@ -52,11 +91,11 @@ export function ComparativeView() {
 
   const radarData = useMemo(() => {
     const dims = [
-      { key: 'erN', label: 'Engagement Rate' },
-      { key: 'ctrN', label: 'CTR' },
-      { key: 'cpfN', label: 'Clics/Seguidor' },
-      { key: 'visN', label: 'Visitas/Imp.' },
-      { key: 'score', label: 'Score Global' },
+      { key: 'erN', label: t.dims.er },
+      { key: 'ctrN', label: t.dims.ctr },
+      { key: 'cpfN', label: t.dims.cpf },
+      { key: 'visN', label: t.dims.vis },
+      { key: 'score', label: t.dims.score },
     ];
     const top = ranked.slice(0, 6);
     return dims.map((dim) => {
@@ -66,21 +105,28 @@ export function ComparativeView() {
       });
       return row;
     });
-  }, [ranked]);
+  }, [ranked, t]);
 
   const top6 = ranked.slice(0, 6);
 
   return (
     <div className="animate-fade-in">
-      <SectionHeader
-        title="Comparativa Multi-Cuenta — Efectividad · Mayo 2026"
-        note="Efectividad relativa · no alcance absoluto · datos reales"
-      />
+      <SectionHeader title={t.section} note={t.sectionNote} />
 
       <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3.5 text-[12.5px] leading-relaxed text-cu-dgrey shadow-cu">
-        Esta vista compara las 9 cuentas por <strong className="text-cu-dblue">efectividad</strong>,
-        no por volumen. Las métricas de alcance absoluto siempre favorecen a las cuentas más
-        grandes. Aquí se mide qué tan bien trabaja cada cuenta con la audiencia que tiene.
+        {en ? (
+          <>
+            This view compares the 9 accounts by <strong className="text-cu-dblue">effectiveness</strong>,
+            not by volume. Absolute reach metrics always favor the largest accounts. Here we
+            measure how well each account works with the audience it has.
+          </>
+        ) : (
+          <>
+            Esta vista compara las 9 cuentas por <strong className="text-cu-dblue">efectividad</strong>,
+            no por volumen. Las métricas de alcance absoluto siempre favorecen a las cuentas más
+            grandes. Aquí se mide qué tan bien trabaja cada cuenta con la audiencia que tiene.
+          </>
+        )}
       </div>
 
       {/* Ranking */}
@@ -108,8 +154,8 @@ export function ComparativeView() {
               <div className="grid grid-cols-2 gap-1.5">
                 <Metric label="Eng. Rate" value={`${d.er.toFixed(1)}%`} />
                 <Metric label="CTR" value={`${d.ctr.toFixed(2)}%`} />
-                <Metric label="Clics/Seguidor" value={d.fol > 0 ? d.cpf.toFixed(1) : 'N/D'} />
-                <Metric label="Visitas/1K imp." value={d.visTasa.toFixed(1)} />
+                <Metric label={t.mCpf} value={d.fol > 0 ? d.cpf.toFixed(1) : en ? 'N/A' : 'N/D'} />
+                <Metric label={t.mVis} value={d.visTasa.toFixed(1)} />
               </div>
               <div className="mt-2.5 flex items-center gap-2 border-t border-cu-border2 pt-2.5">
                 <span className="text-[9px] uppercase tracking-[0.4px] text-cu-grey">Score</span>
@@ -122,7 +168,7 @@ export function ComparativeView() {
               </div>
               {d.id === 'cup' && (
                 <div className="mt-1.5 text-[9px] italic text-[#a02020]">
-                  ⚠ Datos de mayo muy bajos — posible problema en export
+                  {t.warnCup}
                 </div>
               )}
             </div>
@@ -132,7 +178,7 @@ export function ComparativeView() {
 
       {/* Charts */}
       <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
-        <ChartCard title="Engagement Rate por Cuenta" subtitle="% promedio mayo 2026 — mayor es mejor">
+        <ChartCard title={t.chErTitle} subtitle={t.chErSub}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={ranked} layout="vertical" margin={{ left: 10, right: 16 }}>
               <CartesianGrid horizontal={false} stroke={CU.border2} />
@@ -144,7 +190,7 @@ export function ComparativeView() {
           </ResponsiveContainer>
         </ChartCard>
 
-        <ChartCard title="CTR — Clics / Impresiones" subtitle="Efectividad de llamada a la acción por cuenta">
+        <ChartCard title={t.chCtrTitle} subtitle={t.chCtrSub}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={ranked} layout="vertical" margin={{ left: 10, right: 16 }}>
               <CartesianGrid horizontal={false} stroke={CU.border2} />
@@ -159,8 +205,8 @@ export function ComparativeView() {
 
       {/* Radar */}
       <ChartCard
-        title="Radar de Efectividad — Top 6 Cuentas"
-        subtitle="ER · CTR · Clics/Seguidor · Visitas/Impresión · Score Global"
+        title={t.radarTitle}
+        subtitle={t.radarSub}
         className="mb-5 [&>div:last-child]:h-[340px]"
       >
         <ResponsiveContainer width="100%" height="100%">
@@ -185,15 +231,12 @@ export function ComparativeView() {
       </ChartCard>
 
       {/* Top posts */}
-      <SectionHeader
-        title="Top 10 Posts por Engagement Rate — Todas las Cuentas"
-        note="Datos reales mayo 2026 · 9 cuentas"
-      />
+      <SectionHeader title={t.topSection} note={t.topNote} />
       <div className="overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
         <table className="w-full min-w-[680px] border-collapse">
           <thead>
             <tr>
-              {['#', 'Publicación', 'Cuenta', 'Impresiones', 'Eng. Rate', 'Clics', 'Reac.', 'Com.'].map(
+              {t.th.map(
                 (h) => (
                   <th key={h} className="border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey">
                     {h}

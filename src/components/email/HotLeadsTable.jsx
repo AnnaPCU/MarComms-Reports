@@ -1,8 +1,7 @@
 import { Flame } from 'lucide-react';
 import { BrandIcon } from '@/components/shared/BrandIcon';
 import { priorityOf } from '@/utils/mailchimp/aggregate';
-
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
+import { EMAIL_STR } from '@/utils/emailI18n';
 
 const BADGE = {
   Crítica: 'bg-[#b42828]/10 text-[#a02020] border border-[#b42828]/30',
@@ -18,11 +17,14 @@ function fullName(l) {
 
 // Tabla de hot leads (contactos que hicieron clic), ordenada por clics desc.
 // Incluye el email completo del contacto (acordado con el cliente).
-export function HotLeadsTable({ leads = [] }) {
+export function HotLeadsTable({ leads = [], lang = 'es' }) {
+  const t = EMAIL_STR[lang];
+  const numL = (v) => Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR');
+
   if (!leads.length) {
     return (
       <div className="mb-5 rounded-cu border border-cu-border bg-white px-5 py-6 text-center text-[12px] text-cu-grey shadow-cu">
-        Todavía no hay contactos con clics registrados en esta secuencia.
+        {t.hotEmpty}
       </div>
     );
   }
@@ -32,18 +34,18 @@ export function HotLeadsTable({ leads = [] }) {
       <div className="mb-3.5 flex flex-wrap items-center gap-2.5">
         <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
           <BrandIcon icon={Flame} tone="accent" size="sm" />
-          {numEs(leads.length)} hot leads — contactos con clic
+          {t.hotHeader(numL(leads.length))}
         </div>
         <div className="ml-auto flex flex-wrap gap-1.5">
-          <span className="rounded-[3px] border border-[#b42828]/30 bg-[#b42828]/10 px-2 py-0.5 text-[9px] font-bold text-[#a02020]">● Crítica (3+ clics)</span>
-          <span className="rounded-[3px] border border-[#d4a72c]/40 bg-[#d4a72c]/12 px-2 py-0.5 text-[9px] font-bold text-[#8a6d12]">● Alta (2 clics)</span>
-          <span className="rounded-[3px] border border-cu-cyan/30 bg-cu-cyan/10 px-2 py-0.5 text-[9px] font-bold text-[#1372a5]">● Media (1 clic)</span>
+          <span className="rounded-[3px] border border-[#b42828]/30 bg-[#b42828]/10 px-2 py-0.5 text-[9px] font-bold text-[#a02020]">{t.legendCrit}</span>
+          <span className="rounded-[3px] border border-[#d4a72c]/40 bg-[#d4a72c]/12 px-2 py-0.5 text-[9px] font-bold text-[#8a6d12]">{t.legendHigh}</span>
+          <span className="rounded-[3px] border border-cu-cyan/30 bg-cu-cyan/10 px-2 py-0.5 text-[9px] font-bold text-[#1372a5]">{t.legendMed}</span>
         </div>
       </div>
       <table className="w-full min-w-[720px] border-collapse">
         <thead>
           <tr>
-            {['#', 'Contacto', 'Empresa', 'Email', 'Clics', 'Aperturas', 'En envíos', 'Prioridad'].map((h) => (
+            {t.th.map((h) => (
               <th
                 key={h}
                 className="whitespace-nowrap border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey"
@@ -62,12 +64,12 @@ export function HotLeadsTable({ leads = [] }) {
                 <td className="px-3 py-2 text-[12px] font-semibold text-cu-dblue">{fullName(l)}</td>
                 <td className="px-3 py-2 text-[12px] text-cu-dgrey">{l.company || '—'}</td>
                 <td className="px-3 py-2 text-[11.5px] text-cu-dgrey">{l.email}</td>
-                <td className="px-3 py-2 text-[12px] font-bold text-cu-dblue">{numEs(l.clicks)}</td>
-                <td className="px-3 py-2 text-[12px] text-cu-dgrey">{numEs(l.opens)}</td>
+                <td className="px-3 py-2 text-[12px] font-bold text-cu-dblue">{numL(l.clicks)}</td>
+                <td className="px-3 py-2 text-[12px] text-cu-dgrey">{numL(l.opens)}</td>
                 <td className="px-3 py-2 text-[12px] text-cu-dgrey">{l.campaigns || (l.emailAppearances?.length ?? 1)}</td>
                 <td className="px-3 py-2">
                   <span className={`whitespace-nowrap rounded-[3px] px-2 py-0.5 text-[9px] font-bold tracking-[0.4px] ${BADGE[prio]}`}>
-                    ● {prio}
+                    ● {t.prio[prio] ?? prio}
                   </span>
                 </td>
               </tr>

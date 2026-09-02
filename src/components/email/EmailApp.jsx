@@ -1,29 +1,39 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { initialLang } from '@/utils/reportLang';
 import { listAccounts } from '@/services/emailService';
 import { useEmailCampaign } from '@/hooks/useEmailCampaign';
 import { MONTHS_2026 } from '@/constants/periods';
 import { genEmailInsights, genEmailConclusions, genEmailNextSteps } from '@/utils/emailInsights';
+import { EMAIL_STR } from '@/utils/emailI18n';
+import { MONTHS_EN } from '@/utils/paidI18n';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { Funnel } from '@/components/shared/Funnel';
+import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { isExternalReport } from '@/utils/reportAudience';
 import { EmailCharts } from '@/components/email/EmailCharts';
 import { HotLeadsTable } from '@/components/email/HotLeadsTable';
 import { Glossary } from '@/components/shared/Glossary';
 
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
-const pct = (v) => Number(v || 0).toFixed(1) + '%';
-
 // Pilar Email Marketing (Mailchimp / Apollo). Reporte de secuencia/campaña.
+// Idioma base español; toggle EN disponible (también en el descargable).
 export function EmailApp({ account, period }) {
   const accName = useMemo(
     () => listAccounts().find((a) => a.id === account)?.name ?? '',
     [account],
   );
-  const periodLabel = MONTHS_2026.find((p) => p.id === period)?.label ?? period;
+  const [lang, setLang] = useState(() => initialLang('es'));
+  const t9 = EMAIL_STR[lang];
+  const numL = (v) => Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR');
+  const pct = (v) =>
+    (lang === 'en' ? Number(v || 0).toFixed(1) : Number(v || 0).toFixed(1).replace('.', ',')) + '%';
+  const periodLabel =
+    lang === 'en'
+      ? MONTHS_EN[period] ?? period
+      : MONTHS_2026.find((p) => p.id === period)?.label ?? period;
 
   const { campaign, loading } = useEmailCampaign(account, period);
 
@@ -69,86 +79,118 @@ export function EmailApp({ account, period }) {
 
   return (
     <div className="animate-fade-in">
+      {/* Toggle de idioma del reporte */}
+      <div className="mb-4 flex justify-end">
+        <SegmentedControl
+          value={lang}
+          onChange={setLang}
+          size="sm"
+          options={[
+            { id: 'es', label: 'ES' },
+            { id: 'en', label: 'EN' },
+          ]}
+        />
+      </div>
+
       <InsightsPanel
-        title="Plan de Acción — Insights Email Marketing"
-        label="Insight"
+        title={t9.insightsTitle}
+        label={t9.insightLabel}
+        actionLabel={t9.actionLabel}
+        emptyText={t9.emptyInsights}
         subtitle={subtitle}
-        items={genEmailInsights(campaign)}
+        items={genEmailInsights(campaign, lang)}
       />
 
-      <SectionHeader title="Indicadores Clave" note={[accName, `${numEs(t.emailCount)} ${t.emailCount === 1 ? 'envío' : 'envíos'}`].filter(Boolean).join(' · ')} />
+      <SectionHeader
+        title={t9.kpiSection}
+        note={[accName, `${numL(t.emailCount)} ${t9.sendsWord(t.emailCount)}`].filter(Boolean).join(' · ')}
+      />
       <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard
-          label="Correos enviados"
-          value={numEs(t.totalSent)}
-          delta={t.totalDelivered ? { dir: 'flat', label: `${numEs(t.totalDelivered)} entregados` } : undefined}
+          label={t9.kSent}
+          value={numL(t.totalSent)}
+          delta={t.totalDelivered ? { dir: 'flat', label: t9.deliveredLabel(numL(t.totalDelivered)) } : undefined}
         />
         <KpiCard
-          label="Tasa de apertura"
+          label={t9.kOpen}
           value={Number(t.openRate).toFixed(1)}
           unit="%"
-          delta={{ dir: t.openRate >= 21 ? 'up' : 'down', label: 'ref. B2B 21%' }}
-          footnote={`${numEs(t.totalOpens)} aperturas únicas`}
+          delta={{ dir: t.openRate >= 21 ? 'up' : 'down', label: t9.refOpen }}
+          footnote={t9.openFoot(numL(t.totalOpens))}
         />
         <KpiCard
-          label="Tasa de clics"
+          label={t9.kClick}
           value={Number(t.clickRate).toFixed(1)}
           unit="%"
           accent="green"
-          delta={{ dir: t.clickRate >= 2.5 ? 'up' : 'down', label: 'ref. B2B 2,5%' }}
-          footnote={`${numEs(t.totalClicks)} clics únicos`}
+          delta={{ dir: t.clickRate >= 2.5 ? 'up' : 'down', label: t9.refClick }}
+          footnote={t9.clickFoot(numL(t.totalClicks))}
         />
         <KpiCard
-          label="CTOR (click-to-open)"
+          label={t9.kCtor}
           value={Number(t.ctor).toFixed(1)}
           unit="%"
           accent="amber"
-          delta={{ dir: t.ctor >= 11 ? 'up' : 'down', label: 'ref. B2B 11%' }}
-          footnote="Clics sobre aperturas"
+          delta={{ dir: t.ctor >= 11 ? 'up' : 'down', label: t9.refCtor }}
+          footnote={t9.ctorFoot}
         />
       </div>
 
       {(t.bounceRate != null || t.unsubRate != null) && (
         <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
           {t.bounceRate != null && (
-            <KpiCard label="Tasa de rebote" value={Number(t.bounceRate).toFixed(1)} unit="%" delta={{ dir: t.bounceRate <= 2 ? 'up' : 'down', label: 'ref. sano <2%' }} footnote={`${numEs(t.totalBounces)} rebotes`} />
+            <KpiCard
+              label={t9.kBounce}
+              value={Number(t.bounceRate).toFixed(1)}
+              unit="%"
+              delta={{ dir: t.bounceRate <= 2 ? 'up' : 'down', label: t9.refBounce }}
+              footnote={t9.bounceFoot(numL(t.totalBounces))}
+            />
           )}
           {t.unsubRate != null && (
-            <KpiCard label="Tasa de bajas" value={Number(t.unsubRate).toFixed(2)} unit="%" delta={{ dir: t.unsubRate <= 0.5 ? 'up' : 'down', label: 'ref. sano <0,5%' }} footnote={`${numEs(t.totalUnsubs)} bajas`} />
+            <KpiCard
+              label={t9.kUnsub}
+              value={Number(t.unsubRate).toFixed(2)}
+              unit="%"
+              delta={{ dir: t.unsubRate <= 0.5 ? 'up' : 'down', label: t9.refUnsub }}
+              footnote={t9.unsubFoot(numL(t.totalUnsubs))}
+            />
           )}
         </div>
       )}
 
-      <SectionHeader title="Embudo de Interacción — Enviados → Aperturas → Clics" note="Mailchimp" />
+      <SectionHeader title={t9.funnelSection} note="Mailchimp" />
       <div className="mb-5 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">
         <div className="mx-auto max-w-[640px]">
           <Funnel
             stages={[
               {
-                name: t.totalDelivered ? 'Entregados' : 'Enviados',
-                value: numEs(t.totalDelivered || t.totalSent),
-                desc: t.totalDelivered ? `${numEs(t.totalSent)} enviados` : `${numEs(t.emailCount)} ${t.emailCount === 1 ? 'envío' : 'envíos'}`,
+                name: t.totalDelivered ? t9.fDelivered : t9.fSent,
+                value: numL(t.totalDelivered || t.totalSent),
+                desc: t.totalDelivered
+                  ? t9.fSentDesc(numL(t.totalSent))
+                  : `${numL(t.emailCount)} ${t9.sendsWord(t.emailCount)}`,
                 retention: '100 %',
               },
               {
-                name: 'Aperturas',
-                value: numEs(t.totalOpens),
-                desc: `Apertura ${pct(t.openRate)}`,
+                name: t9.fOpens,
+                value: numL(t.totalOpens),
+                desc: t9.fOpenDesc(pct(t.openRate)),
                 retention: pct(t.openRate),
                 drop: (
                   <>
-                    Tasa de apertura&nbsp;<b className="font-bold text-cu-cyan">{pct(t.openRate)}</b>&nbsp;· entrega → apertura
+                    {t9.fOpenDrop}&nbsp;<b className="font-bold text-cu-cyan">{pct(t.openRate)}</b>&nbsp;· {t9.fOpenDropNote}
                   </>
                 ),
               },
               {
-                name: 'Clics',
-                value: numEs(t.totalClicks),
-                desc: `CTOR ${pct(t.ctor)}`,
+                name: t9.fClicks,
+                value: numL(t.totalClicks),
+                desc: t9.fCtorDesc(pct(t.ctor)),
                 retention: pct(t.ctor),
                 drop: (
                   <>
-                    CTOR&nbsp;<b className="font-bold text-cu-cyan">{pct(t.ctor)}</b>&nbsp;· apertura → clic
+                    CTOR&nbsp;<b className="font-bold text-cu-cyan">{pct(t.ctor)}</b>&nbsp;· {t9.fCtorDropNote}
                   </>
                 ),
               },
@@ -159,25 +201,25 @@ export function EmailApp({ account, period }) {
 
       {campaign.comparison?.length > 1 && (
         <>
-          <SectionHeader title="Comparativa de la Secuencia" note={`${numEs(t.emailCount)} envíos`} />
-          <EmailCharts comparison={campaign.comparison} emails={campaign.emails} />
+          <SectionHeader title={t9.cmpSection} note={t9.cmpNote(numL(t.emailCount))} />
+          <EmailCharts comparison={campaign.comparison} emails={campaign.emails} lang={lang} />
         </>
       )}
 
-      <SectionHeader title="Hot Leads — Contactos con Interés Comercial" note="Ordenados por clics" />
-      <HotLeadsTable leads={campaign.hotLeads} />
+      <SectionHeader title={t9.hotSection} note={t9.hotNote} />
+      <HotLeadsTable leads={campaign.hotLeads} lang={lang} />
 
-      <SectionHeader title="Lectura de Performance" />
-      <ConclusionsPanel items={genEmailConclusions(campaign)} />
+      <SectionHeader title={t9.perfSection} />
+      <ConclusionsPanel items={genEmailConclusions(campaign, lang)} title={t9.conclusionsTitle} />
 
       {!isExternalReport() && (
         <>
-          <SectionHeader title="Conclusión — Próximos Pasos" />
-          <NextStepsPanel steps={genEmailNextSteps(campaign)} subtitle={subtitle} />
+          <SectionHeader title={t9.nextSection} />
+          <NextStepsPanel steps={genEmailNextSteps(campaign, lang)} subtitle={subtitle} title={t9.nextTitle} />
         </>
       )}
 
-      <Glossary keys="email" />
+      <Glossary keys={t9.glossaryKey} />
     </div>
   );
 }

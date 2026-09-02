@@ -125,6 +125,19 @@ export const GLOSSARIES = {
     ],
   },
 
+  // Versión en inglés del glosario Email — para el toggle EN del pilar.
+  emailEn: {
+    title: 'Glossary — Email Marketing',
+    entries: [
+      { term: 'Sends', def: 'Total number of emails delivered during the period.' },
+      { term: 'Open rate', def: 'Percentage of delivered emails that were opened by recipients.' },
+      { term: 'Click rate', def: 'Percentage of emails where the recipient clicked on a link.' },
+      { term: 'Bounce rate', def: 'Percentage of emails that could not be delivered (non-existent or full inboxes).' },
+      { term: 'Unsubscribe rate', def: 'Percentage of recipients who unsubscribed after the send.' },
+      { term: 'New contacts', def: 'Contacts added to lists/sequences during the period (Mailchimp / Apollo).' },
+    ],
+  },
+
   webinars: {
     title: 'Glosario — Webinars',
     entries: [
@@ -141,6 +154,26 @@ export const GLOSSARIES = {
       { term: 'Warm / Cold lead', def: 'Warm (score 40-69): nurturing activo con contenido de mitad de funnel. Cold (< 40): secuencia educativa larga; no pasa a Ventas todavía.' },
       { term: 'Open rate / Click rate', def: 'Porcentaje de destinatarios que abrieron el email / que hicieron click en algún enlace, sobre los entregados de cada envío.' },
       { term: 'Pipeline potencial', def: 'Proyección del valor comercial de los deals del evento sobre benchmarks de mercado (ticket promedio y tasa de cierre B2B). Es un potencial, no un resultado: depende de la gestión comercial posterior.' },
+    ],
+  },
+
+  // Versión en inglés del glosario Webinars — para el toggle EN del pilar.
+  webinarsEn: {
+    title: 'Glossary — Webinars',
+    entries: [
+      { term: 'Registrants', def: 'Number of people who signed up for the webinar.' },
+      { term: 'Attendees', def: 'Number of registrants who actually attended live.' },
+      { term: 'Attendance rate', def: 'Percentage of registrants who attended live.' },
+      { term: 'Average duration', def: 'Average time attendees stayed connected.' },
+      { term: 'Replay views', def: 'Views of the recording after the live event.' },
+      { term: 'Leads generated', def: 'Qualified business contacts originated from the webinar.' },
+      { term: 'Show rate', def: 'Percentage of registrants who attended live (attendees ÷ registrants).' },
+      { term: 'Deal (HubSpot)', def: 'Business opportunity created in HubSpot for each external webinar attendee. Internal attendees (Control Union) do not generate deals.' },
+      { term: 'Lead score (0-100)', def: 'Sum of: declared need (0-50, diagnostic answers), live engagement (0-30, attendance % × 30) and proactive interaction (0-20, surveys + questions). Methodology in effect since July 2026.' },
+      { term: 'Hot lead', def: 'Deal with a score ≥ 70: moves to direct sales contact that same week. It is a qualified lead, not nurturing content.' },
+      { term: 'Warm / Cold lead', def: 'Warm (score 40-69): active nurturing with mid-funnel content. Cold (< 40): long educational sequence; not handed to Sales yet.' },
+      { term: 'Open rate / Click rate', def: 'Percentage of recipients who opened the email / who clicked a link, over those delivered for each send.' },
+      { term: 'Potential pipeline', def: 'Projection of the business value of the event\'s deals based on market benchmarks (average ticket and B2B close rate). It is a potential, not a result: it depends on subsequent sales management.' },
     ],
   },
 
@@ -163,6 +196,28 @@ export const GLOSSARIES = {
       { term: 'Average Position', def: 'Ranking promedio de las páginas del sitio en los resultados de búsqueda para las keywords seleccionadas. Indica qué tan visible es el contenido frente a competidores.' },
       { term: 'Top 3 keywords con más clics', def: 'Las búsquedas que generaron la mayor cantidad de clics al sitio. Reflejan los temas que impulsan el tráfico más relevante.' },
       { term: 'Total clicks', def: 'Cantidad total de veces que los usuarios hicieron clic en el sitio desde los resultados de búsqueda. Indica el nivel de interés y tráfico orgánico generado.' },
+    ],
+  },
+
+  // Versiones en inglés de los glosarios Website — para el toggle EN del pilar.
+  websiteEn: {
+    title: 'Glossary — Website',
+    entries: [
+      { term: 'Single Traffic', def: 'Total number of unique visitors who accessed the site during the selected period. Each person is counted only once.' },
+      { term: 'Total Traffic', def: 'Total number of visits to the site, including multiple sessions from the same user. It shows the overall site activity.' },
+      { term: 'Impressions', def: 'Total number of page views generated on the site; it indicates how many times pages were displayed.' },
+      { term: 'Conversions', def: 'Number of users who performed a direct-interest action, such as filling out a form, requesting a consultation or reaching out through another channel.' },
+    ],
+  },
+
+  websiteSeoEn: {
+    title: 'Glossary — Website SEO',
+    entries: [
+      { term: 'SEO (Search Engine Optimization)', def: 'Process of optimizing the site to improve its visibility in search results. It helps attract organic traffic by making content more relevant and accessible.' },
+      { term: 'Impressions', def: 'Total number of times the site\'s pages appeared in search results. It reflects visibility and potential organic reach.' },
+      { term: 'Average Position', def: 'Average ranking of the site\'s pages in search results for the selected keywords. It indicates how visible the content is against competitors.' },
+      { term: 'Top 3 keywords by clicks', def: 'The searches that generated the most clicks to the site. They reflect the topics driving the most relevant traffic.' },
+      { term: 'Total clicks', def: 'Total number of times users clicked through to the site from search results. It indicates the level of interest and organic traffic generated.' },
     ],
   },
 };

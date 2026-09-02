@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { initialLang } from '@/utils/reportLang';
 import {
   BarChart,
   Bar,
@@ -22,7 +23,9 @@ import {
   genSeoConclusions,
   genSeoNextSteps,
 } from '@/utils/websiteInsights';
+import { WEB_STR } from '@/utils/websiteI18n';
 import { SectionHeader } from '@/components/shared/SectionHeader';
+import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { KpiCard } from '@/components/shared/KpiCard';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
@@ -34,7 +37,8 @@ import { isExternalReport } from '@/utils/reportAudience';
 import { WebsiteAnnualReview } from '@/components/website/WebsiteAnnualReview';
 import { WebsiteComparative } from '@/components/website/WebsiteComparative';
 
-const pctv = (v) => Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
+const pctL = (v, lang) =>
+  Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
 
 const FunnelCard = ({ children }) => (
   <div className="mb-5 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">
@@ -43,12 +47,39 @@ const FunnelCard = ({ children }) => (
 );
 
 // Pilar Website — trimestral, con dos sub-reportes: Website (GA) y SEO (GSC).
+// Idioma base español; toggle EN disponible (también en el descargable).
 export function WebsiteApp({ account, period }) {
   const [tab, setTab] = useState('site');
+  const [lang, setLang] = useState(() => initialLang('es'));
+  const t9 = WEB_STR[lang];
+
+  const langToggle = (
+    <SegmentedControl
+      value={lang}
+      onChange={setLang}
+      size="sm"
+      options={[
+        { id: 'es', label: 'ES' },
+        { id: 'en', label: 'EN' },
+      ]}
+    />
+  );
 
   // Resumen anual (acumulado de trimestres) y comparativa multi-cuenta.
-  if (period === 'year-2026') return <WebsiteAnnualReview account={account} />;
-  if (period === 'cmp') return <WebsiteComparative />;
+  if (period === 'year-2026')
+    return (
+      <>
+        <div className="mb-4 flex justify-end">{langToggle}</div>
+        <WebsiteAnnualReview account={account} lang={lang} />
+      </>
+    );
+  if (period === 'cmp')
+    return (
+      <>
+        <div className="mb-4 flex justify-end">{langToggle}</div>
+        <WebsiteComparative lang={lang} />
+      </>
+    );
   const data = getQuarter(account, period);
   const accName = listAccounts().find((a) => a.id === account)?.name ?? '';
   const periodLabel = QUARTERS_2026.find((p) => p.id === period)?.label ?? period;
@@ -72,22 +103,27 @@ export function WebsiteApp({ account, period }) {
             {t.label}
           </button>
         ))}
-        {handle && <span className="ml-auto self-center text-[11px] font-medium text-cu-cyan">{handle}</span>}
+        <div className="ml-auto flex items-center gap-3">
+          {handle && <span className="text-[11px] font-medium text-cu-cyan">{handle}</span>}
+          {langToggle}
+        </div>
       </div>
 
       {tab === 'site' ? (
-        <SiteView data={data?.site} accName={accName} periodLabel={periodLabel} />
+        <SiteView data={data?.site} accName={accName} periodLabel={periodLabel} lang={lang} />
       ) : (
-        <SeoView data={data?.seo} accName={accName} periodLabel={periodLabel} />
+        <SeoView data={data?.seo} accName={accName} periodLabel={periodLabel} lang={lang} />
       )}
 
-      <Glossary keys={tab === 'site' ? 'website' : 'websiteSeo'} />
+      <Glossary keys={tab === 'site' ? t9.glossarySite : t9.glossarySeo} />
     </div>
   );
 }
 
 // ── Sub-vista Website (Google Analytics) ──
-function SiteView({ data, accName, periodLabel }) {
+function SiteView({ data, accName, periodLabel, lang = 'es' }) {
+  const t = WEB_STR[lang];
+  const pctv = (v) => pctL(v, lang);
   if (!hasData([data].filter(Boolean))) {
     return (
       <NoDataScreen
@@ -110,7 +146,7 @@ function SiteView({ data, accName, periodLabel }) {
 
   return (
     <>
-      <InsightsPanel title="Plan de Acción — Insights Website" label="Insight" subtitle={`${accName} · ${periodLabel}`} items={genSiteInsights(data)} />
+      <InsightsPanel title={t.siteInsightsTitle} label={t.insightLabel} actionLabel={t.actionLabel} emptyText={t.emptyInsights} subtitle={`${accName} · ${periodLabel}`} items={genSiteInsights(data, lang)} />
 
       <SectionHeader title={`Website — ${periodLabel}`} note={accName} />
       <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -120,31 +156,31 @@ function SiteView({ data, accName, periodLabel }) {
         <KpiCard label="Conversions" value={num(data.conversions)} accent="green" />
       </div>
 
-      <SectionHeader title="Embudo de Tráfico — Vista → Sesión → Conversión" note="Google Analytics" />
+      <SectionHeader title={t.siteFunnelSection} note="Google Analytics" />
       <FunnelCard>
         <Funnel
           stages={[
-            { name: 'Vistas de página', value: num(data.impressions), desc: `${num(data.impressions)} vistas totales`, retention: '100 %' },
+            { name: t.fViews, value: num(data.impressions), desc: t.fViewsDesc(num(data.impressions)), retention: '100 %' },
             {
-              name: 'Sesiones',
+              name: t.fSessions,
               value: num(data.totalTraffic),
-              desc: `${num(data.singleTraffic)} usuarios únicos`,
+              desc: t.fSessionsDesc(num(data.singleTraffic)),
               retention: pctv(retSes),
               drop: (
                 <>
-                  <b className="font-bold text-cu-cyan">{pctv(retSes)}</b>&nbsp;· vista → sesión
+                  <b className="font-bold text-cu-cyan">{pctv(retSes)}</b>&nbsp;· {t.fSesDropNote}
                 </>
               ),
             },
             {
-              name: 'Conversiones',
+              name: t.fConv,
               value: num(data.conversions),
-              desc: `${pctv(retConv)} de las sesiones`,
+              desc: t.fConvDesc(pctv(retConv)),
               retention: pctv(retConv),
               gradient: 'linear-gradient(135deg,#247a44,#3fb86a)',
               drop: (
                 <>
-                  <b className="font-bold text-cu-cyan">{pctv(retConv)}</b>&nbsp;· sesión → conversión
+                  <b className="font-bold text-cu-cyan">{pctv(retConv)}</b>&nbsp;· {t.fConvDropNote}
                 </>
               ),
             },
@@ -156,7 +192,7 @@ function SiteView({ data, accName, periodLabel }) {
         <div className="rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
           <div className="mb-3.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
             <span className="h-3 w-[3px] rounded-sm bg-cu-cyan" />
-            Top 3 landing pages — vistas
+            {t.topPagesTitle}
           </div>
           <ul className="space-y-3">
             {data.topLandingPages.map((p) => (
@@ -170,7 +206,7 @@ function SiteView({ data, accName, periodLabel }) {
           </ul>
         </div>
 
-        <ChartCard title="Generals KPIs" subtitle="Comparativa de indicadores del trimestre">
+        <ChartCard title={t.kpisChartTitle} subtitle={t.siteKpisChartSub}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={kpiChart} margin={{ left: 0, right: 8, top: 4 }}>
               <CartesianGrid vertical={false} stroke={CU.border2} />
@@ -187,13 +223,13 @@ function SiteView({ data, accName, periodLabel }) {
         </ChartCard>
       </div>
 
-      <SectionHeader title="Lectura de Performance" />
-      <ConclusionsPanel items={genSiteConclusions(data)} />
+      <SectionHeader title={t.perfSection} />
+      <ConclusionsPanel items={genSiteConclusions(data, lang)} title={t.conclusionsTitle} />
 
       {!isExternalReport() && (
         <>
-          <SectionHeader title="Conclusión — Próximos Pasos" />
-          <NextStepsPanel steps={genSiteNextSteps(data)} subtitle={`${accName} · ${periodLabel}`} />
+          <SectionHeader title={t.nextSection} />
+          <NextStepsPanel steps={genSiteNextSteps(data, lang)} subtitle={`${accName} · ${periodLabel}`} title={t.nextTitle} />
         </>
       )}
     </>
@@ -201,7 +237,9 @@ function SiteView({ data, accName, periodLabel }) {
 }
 
 // ── Sub-vista SEO (Search Console) ──
-function SeoView({ data, accName, periodLabel }) {
+function SeoView({ data, accName, periodLabel, lang = 'es' }) {
+  const t = WEB_STR[lang];
+  const pctv = (v) => pctL(v, lang);
   if (!hasData([data].filter(Boolean))) {
     return (
       <NoDataScreen
@@ -222,7 +260,7 @@ function SeoView({ data, accName, periodLabel }) {
 
   return (
     <>
-      <InsightsPanel title="Plan de Acción — Insights SEO" label="Insight" subtitle={`${accName} · ${periodLabel}`} items={genSeoInsights(data)} />
+      <InsightsPanel title={t.seoInsightsTitle} label={t.insightLabel} actionLabel={t.actionLabel} emptyText={t.emptyInsights} subtitle={`${accName} · ${periodLabel}`} items={genSeoInsights(data, lang)} />
 
       <SectionHeader title={`SEO — ${periodLabel}`} note={accName} />
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -231,19 +269,19 @@ function SeoView({ data, accName, periodLabel }) {
         <KpiCard label="Total Clicks" value={num(data.totalClicks)} />
       </div>
 
-      <SectionHeader title="Embudo de Búsqueda — Impresión → Clic" note="Search Console" />
+      <SectionHeader title={t.seoFunnelSection} note="Search Console" />
       <FunnelCard>
         <Funnel
           stages={[
-            { name: 'Impresiones', value: num(data.impressions), desc: `Posición promedio ${data.averagePosition.toFixed(2)}`, retention: '100 %' },
+            { name: t.fImp, value: num(data.impressions), desc: t.fImpDesc(data.averagePosition.toFixed(2)), retention: '100 %' },
             {
-              name: 'Clics',
+              name: t.fClk,
               value: num(data.totalClicks),
               desc: `CTR ${pctv(ctr)}`,
               retention: pctv(ctr),
               drop: (
                 <>
-                  CTR&nbsp;<b className="font-bold text-cu-cyan">{pctv(ctr)}</b>&nbsp;· impresión → clic
+                  CTR&nbsp;<b className="font-bold text-cu-cyan">{pctv(ctr)}</b>&nbsp;· {t.fClkDropNote}
                 </>
               ),
             },
@@ -255,7 +293,7 @@ function SeoView({ data, accName, periodLabel }) {
         <div className="rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
           <div className="mb-3.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
             <span className="h-3 w-[3px] rounded-sm bg-cu-cyan" />
-            Top 3 keywords — clics
+            {t.topKeywordsTitle}
           </div>
           <ul className="space-y-3">
             {data.topKeywords.map((k) => (
@@ -267,7 +305,7 @@ function SeoView({ data, accName, periodLabel }) {
           </ul>
         </div>
 
-        <ChartCard title="Generals KPIs" subtitle="Indicadores SEO del trimestre">
+        <ChartCard title={t.kpisChartTitle} subtitle={t.seoKpisChartSub}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={kpiChart} margin={{ left: 0, right: 8, top: 4 }}>
               <CartesianGrid vertical={false} stroke={CU.border2} />
@@ -284,13 +322,13 @@ function SeoView({ data, accName, periodLabel }) {
         </ChartCard>
       </div>
 
-      <SectionHeader title="Lectura de Performance" />
-      <ConclusionsPanel items={genSeoConclusions(data)} />
+      <SectionHeader title={t.perfSection} />
+      <ConclusionsPanel items={genSeoConclusions(data, lang)} title={t.conclusionsTitle} />
 
       {!isExternalReport() && (
         <>
-          <SectionHeader title="Conclusión — Próximos Pasos" />
-          <NextStepsPanel steps={genSeoNextSteps(data)} subtitle={`${accName} · ${periodLabel}`} />
+          <SectionHeader title={t.nextSection} />
+          <NextStepsPanel steps={genSeoNextSteps(data, lang)} subtitle={`${accName} · ${periodLabel}`} title={t.nextTitle} />
         </>
       )}
     </>

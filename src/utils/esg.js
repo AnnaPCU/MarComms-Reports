@@ -42,6 +42,13 @@ export const ESG_NAME = {
   X: 'General',
 };
 
+export const ESG_NAME_EN = {
+  E: 'Environmental',
+  S: 'Social',
+  G: 'Governance',
+  X: 'General',
+};
+
 // Clases Tailwind por pilar (chips de la tabla de posts).
 export const ESG_CHIP = {
   E: 'bg-cu-cyan/10 text-[#1372a5] border border-cu-cyan/20',

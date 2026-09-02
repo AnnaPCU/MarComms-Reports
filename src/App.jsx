@@ -62,7 +62,7 @@ export default function App() {
 
   // audience: 'internal' (reporte completo) | 'external' (sin "Próximos Pasos").
   // periodIds: períodos elegidos en el diálogo (cada uno baja su propio HTML).
-  async function doDownload(audience, periodIds) {
+  async function doDownload(audience, periodIds, lang = 'es') {
     setShowDownload(false);
     const ids = periodIds?.length ? periodIds : [period];
     // Social segmentado: si hay un país seleccionado, la descarga es el
@@ -113,6 +113,7 @@ export default function App() {
       snapshot: multi ? multiPeriods[0].snapshot : await buildSnapshot(pilar, account, ids[0]),
       socialCountry: withCountry ? socialCountry : null,
       periods: multiPeriods,
+      lang,
     });
   }
 

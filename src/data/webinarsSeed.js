@@ -158,10 +158,15 @@ export const WEBINARS_DB = {
       subtitle: '«Certificaciones, tecnología y soluciones disponibles para la cadena de suministro»',
       date: '26 de agosto de 2026',
       reagendado: false,
+      dateEn: 'August 26, 2026',
+      idiomaEn: 'Spanish',
       idioma: 'Español',
       audiencia: 'Exportadores al mercado europeo (soja, café, cacao, palma, madera, ganado, caucho) — LATAM',
+      audienciaEn: 'Exporters to the European market (soy, coffee, cocoa, palm, timber, cattle, rubber) — LATAM',
       canales: 'Email marketing (8 envíos) + LinkedIn orgánico (4 posteos) · Plataforma: Microsoft Teams',
+      canalesEn: 'Email marketing (8 sends) + organic LinkedIn (4 posts) · Platform: Microsoft Teams',
       serieEmails: ['Emails 1-4 (26/8)', 'Email 5 post-webinar: registrados y participantes (31/8)', 'Base total: 4.966 contactos únicos'],
+      serieEmailsEn: ['Emails 1-4 (Aug 26)', 'Email 5 post-webinar: registrants and participants (Aug 31)', 'Total base: 4,966 unique contacts'],
 
       // ── Key insights ──
       registered: 295,
@@ -187,6 +192,7 @@ export const WEBINARS_DB = {
         // Destacadas = empresas de los hot y warm leads del evento.
         featured: ['Pantaleon S.A.', 'Ecom', 'Olam Agro Peru', 'Oleaginosas San Marcos', 'TEAM FOODS', 'INTEROC S.A.', 'LAR PY', 'Cooperativa Unicafec', 'Ochosur', 'Agroindustria Palmera San Roman', 'Asoc. de Productores Agroecológicos Origin Coffee Lab', 'Cacao de Colombia', 'COUSA', 'Daabon', 'Ecuadorcolat', 'Facultad de Ciencia y Tecnología — UADER', 'Funglode', 'PROSERIN', 'Productor de banano', 'Productor Aguacate Hass', 'Service Corp Trading', 'Universidad Nacional de Córdoba'],
         featuredNote: 'Empresas de los hot y warm leads del evento',
+        featuredNoteEn: 'Companies from the event\'s hot and warm leads',
         others: ['ADM', 'ADM Paraguay', 'ALLPA SAC', 'AMAGGI', 'Amazonas Trading Perú', 'Arcos Dorados', 'Asoc. de Cacaoteros Tecnificados del Ucayali', 'Asoc. de Productores Agrarios Alto Kivinaki', 'Asociación Rural del Paraguay', 'Barry Callebaut', 'BioAp', 'Biocertus', 'Biomar', 'Biopa', 'Cafés de Especialidad de Chiapas', 'CAMSA', 'Cargill SACI', 'CARVIMSA', 'CEREGEO — UADER', 'Citrison', 'COFCO International Argentina', 'Colegio de Ing. Agrónomos de Santa Elena', 'Comercializadora Cumbres', 'COOPEAGRI R.L.', 'Dole Perú', 'Dos Beta', 'Dos Hermanos', 'El Recuerdo', 'Evid-AI', 'Farms Group', 'FSC México', 'Fundación Local Partners', 'INTA-FCA', 'Letis', 'MER Seafood Trading', 'Oleomex', 'Perfiles Coffee', 'PL Abogados', 'Proforest', 'ProTerra', 'PUMA by Regrow', 'Qualabs', 'SIMA', 'Smurfit Westrock', 'Solidaridad', 'Somax Agro', 'Terra Nostra Organics', 'UNOCACE', 'Yazoo Investment'],
       },
       internos: { total: 41, attended: 33 },
@@ -196,6 +202,7 @@ export const WEBINARS_DB = {
         hot: 1,
         warm: 26,
         note: '1 hot + 26 warm — deals priorizados por el scoring del evento.',
+        noteEn: '1 hot + 26 warm — deals prioritized by the event scoring.',
       },
       durationTotalLabel: '48 min 11 s',
       durationAvgMin: 34.4,
@@ -203,14 +210,17 @@ export const WEBINARS_DB = {
       engagement: { high: 78, mid: 25, low: 47 }, // sobre 48:11 de evento · 150 identificados
       highlight:
         '150 asistentes identificados de 295 registrados (50,8% de show rate) desde 27 países — el webinar más grande de la serie. El scoring del evento dejó 27 deals priorizados en HubSpot (1 hot + 26 warm) entre los 117 asistentes externos. La mediana de permanencia fue de 40 minutos sobre un evento de 48; el canal email alcanzó a 229 de los 295 registrados (56 con clic rastreado en la campaña).',
+      highlightEn:
+        '150 identified attendees out of 295 registrants (50.8% show rate) from 27 countries — the largest webinar of the series. The event scoring left 27 prioritized deals in HubSpot (1 hot + 26 warm) among the 117 external attendees. Median attendance was 40 minutes over a 48-minute event; the email channel reached 229 of the 295 registrants (56 with a tracked campaign click).',
 
       // Scoring propio de este evento (Teams, sin encuestas de diagnóstico).
       scoring: {
         desc: '+3 asistió en vivo · +2 si estuvo >50 min / +1 si >30 min · +1 por cada interacción identificable (Q&A, cámara encendida, mano levantada, audio activado). Internos CU/Peterson excluidos.',
+        descEn: '+3 attended live · +2 if >50 min / +1 if >30 min · +1 per identifiable interaction (Q&A, camera on, hand raised, audio on). CU/Peterson internal attendees excluded.',
         classes: [
-          { name: 'Hot lead', range: '≥ 8', action: 'Contacto comercial directo esa misma semana.' },
-          { name: 'Warm lead', range: '5 – 7', action: 'Nurturing activo: casos de éxito, contenido de mitad de funnel, próximo webinar.' },
-          { name: 'Cold', range: '< 5', action: 'Secuencia de nurturing larga / contenido educativo. No pasa a Ventas todavía.' },
+          { name: 'Hot lead', range: '≥ 8', action: 'Contacto comercial directo esa misma semana.', actionEn: 'Direct sales contact that same week.' },
+          { name: 'Warm lead', range: '5 – 7', action: 'Nurturing activo: casos de éxito, contenido de mitad de funnel, próximo webinar.', actionEn: 'Active nurturing: success stories, mid-funnel content, next webinar.' },
+          { name: 'Cold', range: '< 5', action: 'Secuencia de nurturing larga / contenido educativo. No pasa a Ventas todavía.', actionEn: 'Long nurturing sequence / educational content. Not passed to Sales yet.' },
         ],
       },
 
@@ -227,6 +237,7 @@ export const WEBINARS_DB = {
           { name: '5b. Post-webinar (participantes)', sent: 79, open: 27.8, click: 3.8 },
         ],
         totalSent: 13162,
+        sendNamesEn: ['1. Invitation', '2. Reminder', '2b. Reminder resend', '2c. Resend — new database', '3. Reactivation', '4. Last call', '5a. Post-webinar (registrants)', '5b. Post-webinar (participants)'],
         uniqueContacts: 4966,
         openedOnce: 1247,
         openedOncePct: 25.1,
@@ -235,12 +246,16 @@ export const WEBINARS_DB = {
         regFromEmail: 56, // registrados con clic rastreado en la campaña (atribución directa)
         regFromEmailPct: 19,
         regFromEmailNote: 'Con clic rastreado en la campaña — atribución directa del canal',
+        regFromEmailNoteEn: 'With a tracked campaign click — direct channel attribution',
         regOpened: 93, // registrados que abrieron al menos un email
         regInBase: 229, // registrados presentes en la base de la campaña
         regInBasePct: 78,
         nota: 'El mejor click rate llegó después del evento: el email post-webinar a registrados que no asistieron hizo 7,7% de clics (el replay como segunda oportunidad).',
+        notaEn: 'The best click rate came after the event: the post-webinar email to registrants who did not attend reached 7.7% clicks (the replay as a second chance).',
         notaClics:
           'La atribución del canal se lee en capas: 56 registrados hicieron clic en algún email de la campaña (atribución directa — el piso), 93 abrieron al menos un email, y 229 de los 295 estaban en la base de contactos (el alcance del canal — no todos se registraron POR el email: pueden haber llegado por un link reenviado, LinkedIn o la URL directa, y Mailchimp además pierde clics que no puede rastrear). Los 66 restantes no estaban en la base: llegaron por otros canales.',
+        notaClicsEn:
+          'Channel attribution is read in layers: 56 registrants clicked a campaign email (direct attribution — the floor), 93 opened at least one email, and 229 of the 295 were in the contact base (the channel\'s reach — not everyone registered BECAUSE of the email: they may have come via a forwarded link, LinkedIn or the direct URL, and Mailchimp also misses clicks it cannot track). The remaining 66 were not in the base: they came through other channels.',
       },
 
       // ── Sección 2: Social Media (LinkedIn CU Latinoamérica) ──
@@ -256,8 +271,11 @@ export const WEBINARS_DB = {
         regFromSocialPct: null,
         regOutsideEmail: 66, // registrados que NO estaban en la base de emails → LinkedIn u otros canales
         regOutsideEmailPct: 22,
+        postNamesEn: ['Post 1 · Event (Aug 4)', 'Post 2 · EUDR sectors', 'Post 3 · Getting ready for EUDR', 'Post 4 · "It\'s tomorrow!" (Aug 25)'],
         lectura:
           'El posteo del evento (4/8) fue el más efectivo: 7,93% de tasa de interacción y 5,56% de CTR — el público que agenda temprano es el más calificado. El «¡Es mañana!» del 25/8 logró el mayor alcance (1.992 impresiones) como empujón final. 66 de los 295 registros no estaban en la base de emails: LinkedIn es el origen más probable.',
+        lecturaEn:
+          'The event post (Aug 4) was the most effective: 7.93% interaction rate and 5.56% CTR — the audience that books early is the most qualified. The Aug 25 "It\'s tomorrow!" post got the biggest reach (1,992 impressions) as the final push. 66 of the 295 registrations were not in the email base: LinkedIn is the most likely origin.',
       },
 
       // ── Sección 3: Hot leads (scoring del evento) ──
@@ -303,6 +321,8 @@ export const WEBINARS_DB = {
         roi: null,
         metodologia:
           'Se excluyen los 33 asistentes internos (CU/Peterson) — solo los 117 externos cuentan como oportunidad. El scoring es el del evento (HOT ≥ 8, WARM 5-7), calculado con el detalle por persona de Microsoft Teams.',
+        metodologiaEn:
+          'The 33 internal attendees (CU/Peterson) are excluded — only the 117 external ones count as opportunity. The scoring is the event\'s own (HOT ≥ 8, WARM 5-7), computed with Microsoft Teams per-person detail.',
       },
 
       // ── Plan de acción (solo vista interna) ──
@@ -312,6 +332,13 @@ export const WEBINARS_DB = {
         '<strong>Revisar las 16 preguntas anónimas del Q&A.</strong> Quedaron fuera del scoring por no ser identificables, pero pueden contener intención de compra real.',
         '<strong>Definir el ticket promedio del servicio EUDR</strong> para poder proyectar el pipeline potencial de este webinar (la base de 27 leads ya está lista).',
         '<strong>Replicar la fórmula del posteo de evento.</strong> El post del 4/8 con formato «Evento de LinkedIn» duplicó el CTR del resto — usarlo como pieza central en el próximo webinar.',
+      ],
+      actionPlanEn: [
+        '<strong>Activate the hot lead this week.</strong> Pantaleon S.A. (Guatemala): score 9, 5 Q&A interactions and full attendance — direct sales contact.',
+        '<strong>Work the 26 warm leads with active nurturing.</strong> All stayed past the 30-50 minute mark; EUDR success stories + invitation to the next webinar.',
+        '<strong>Review the 16 anonymous Q&A questions.</strong> They were left out of the scoring for not being identifiable, but they may contain real purchase intent.',
+        '<strong>Define the average ticket for the EUDR service</strong> to be able to project this webinar\'s potential pipeline (the base of 27 leads is ready).',
+        '<strong>Replicate the event-post formula.</strong> The Aug 4 post using the LinkedIn Event format doubled the CTR of the rest — use it as the centerpiece of the next webinar.',
       ],
     },
   },
