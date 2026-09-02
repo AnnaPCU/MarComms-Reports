@@ -75,3 +75,16 @@ export const BRAND_LOGOS = {
   cu: { src: '/logo-control-union.svg', alt: 'Control Union' },
   peterson: { src: '/logo-peterson-solutions.png', alt: 'Peterson Solutions' },
 };
+
+// ── MarComms (equipo autor de los reportes) ──
+// MarComms es la agencia interna que produce estos reportes: su logo es el
+// principal en el header y el favicon de todas las vistas y descargables.
+// El logo del cliente (CU / Peterson) queda en segundo plano.
+export const MARCOMMS_LOGO = {
+  full: '/marcomms-logo.png', // horizontal (isotipo + wordmark) — header
+  fullWhite: '/marcomms-logo-white.png', // horizontal en blanco — fondos oscuros
+  stacked: '/marcomms-stacked.png', // vertical — login
+  icon: '/marcomms-icon.png', // isotipo sin texto — favicon
+  iconWhite: '/marcomms-icon-white.png',
+  alt: 'MarComms',
+};

@@ -6,7 +6,7 @@
 //  En dev (sin bundle único) cae a un snapshot estático del DOM.
 // ════════════════════════════════════════════════════════════════
 
-import { BRAND_LOGOS } from '@/constants/brand';
+import { BRAND_LOGOS, MARCOMMS_LOGO } from '@/constants/brand';
 
 const FONT_LINK =
   '<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />';
@@ -82,16 +82,16 @@ const safeForScript = (s) => s.replace(/<\/script>/gi, '<\\/script>');
 const safeJson = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c');
 
 // Favicon por marca para los descargables (pestaña del navegador).
-const BRAND_FAVICONS = {
-  cu: '/favicon-cu.png',
-  peterson: '/favicon-peterson.png',
-};
+// Favicon único de todos los descargables: el isotipo de MarComms (el equipo
+// que produce los reportes), sin importar de qué cliente sean las métricas.
 
 export async function exportViewAsHtml({ pilar, account, period, audience, brand, title, filename, snapshot, socialCountry = null, periods = null, lang = 'es' }) {
-  // Logo de la marca como data URI (para que no se rompa en el archivo offline).
+  // Logos como data URI (para que no se rompan en el archivo offline):
+  // el de MarComms es el principal del header; el del cliente va en segundo plano.
+  const marcommsLogoSrc = await fetchAsDataUri(MARCOMMS_LOGO.full);
   const logoSrc = brand && BRAND_LOGOS[brand] ? await fetchAsDataUri(BRAND_LOGOS[brand].src) : null;
-  // Favicon de la empresa de la cuenta (CU / Peterson); genérico si no hay marca.
-  const faviconSrc = await fetchAsDataUri(BRAND_FAVICONS[brand] ?? '/favicon.svg');
+  // Favicon: siempre el isotipo de MarComms.
+  const faviconSrc = await fetchAsDataUri(MARCOMMS_LOGO.icon);
   const faviconTag = faviconSrc
     ? `<link rel="icon" type="${faviconSrc.startsWith('data:image/svg') ? 'image/svg+xml' : 'image/png'}" href="${faviconSrc}" />`
     : '';
@@ -129,7 +129,7 @@ export async function exportViewAsHtml({ pilar, account, period, audience, brand
     }
     if (!css) css = collectInlineCss();
 
-    const embed = safeJson({ pilar, account, period, audience, brand, title, snapshot, logoSrc, socialCountry, periods, lang });
+    const embed = safeJson({ pilar, account, period, audience, brand, title, snapshot, logoSrc, marcommsLogoSrc, socialCountry, periods, lang });
 
     const doc = `<!DOCTYPE html>
 <html lang="es">

@@ -1,11 +1,11 @@
 import { LogOut, Download } from 'lucide-react';
-import { Logo } from '@/components/brand/Logo';
+import { MarCommsLogo, ClientLogo } from '@/components/brand/Logo';
 import { Select } from '@/components/shared/Select';
 import { StatusBadge } from '@/components/shared/StatusBadge';
 import { brandOf } from '@/constants/brand';
 
-// Header sticky: logo (dinámico según la cuenta) + etiqueta + filtros + estado +
-// descargar HTML + logout.
+// Header sticky: logo MarComms (marca principal, equipo autor del reporte) +
+// pilar + cliente en segundo plano + filtros + estado + descargar HTML + logout.
 export function Header({
   pilarLabel,
   accounts,
@@ -25,16 +25,18 @@ export function Header({
 
   return (
     <header className="sticky top-[5px] z-50 flex min-h-[68px] flex-wrap items-center gap-4 border-b border-cu-border bg-white px-9">
+      <MarCommsLogo className="h-8" />
+      <div className="h-9 w-px shrink-0 bg-cu-border" />
+      <div className="text-[11px] text-cu-grey">
+        <strong className="block text-[13px] font-medium text-cu-dgrey">{pilarLabel}</strong>
+        Reportes de Marketing Digital
+      </div>
       {brand && (
         <>
-          <Logo brand={brand} />
-          <div className="h-9 w-px shrink-0 bg-cu-border" />
+          <div className="h-6 w-px shrink-0 bg-cu-border2" />
+          <ClientLogo brand={brand} />
         </>
       )}
-      <div className="text-[11px] text-cu-grey">
-        <strong className="block text-[13px] font-medium text-cu-dgrey">Reportes MarComms</strong>
-        {pilarLabel}
-      </div>
 
       <div className="ml-auto flex flex-wrap items-end gap-3">
         {showFilters && (

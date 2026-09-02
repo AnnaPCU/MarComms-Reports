@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getPilarConfig } from '@/pilares/registry';
 import { BarTop, BarBottom } from '@/components/brand/BrandBars';
-import { Logo } from '@/components/brand/Logo';
+import { MarCommsLogo, ClientLogo } from '@/components/brand/Logo';
 import { Tagline } from '@/components/brand/Tagline';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 
@@ -18,6 +18,7 @@ export function EmbedApp({ embed }) {
   const Pilar = cfg.Component;
   const multi = Array.isArray(embed.periods) && embed.periods.length > 1;
   const [pid, setPid] = useState(embed.period);
+  const en = embed.lang === 'en';
 
   function changePeriod(id) {
     const p = embed.periods.find((x) => x.id === id);
@@ -33,16 +34,15 @@ export function EmbedApp({ embed }) {
     <div className="flex min-h-screen flex-col">
       <BarTop />
       <header className="flex min-h-[68px] flex-wrap items-center gap-4 border-b border-cu-border bg-white px-9">
-        {embed.brand && (
-          <>
-            <Logo brand={embed.brand} />
-            <div className="h-9 w-px shrink-0 bg-cu-border" />
-          </>
-        )}
+        <MarCommsLogo className="h-8" />
+        <div className="h-9 w-px shrink-0 bg-cu-border" />
         <div className="text-[11px] text-cu-grey">
-          <strong className="block text-[13px] font-medium text-cu-dgrey">Reportes MarComms</strong>
-          {embed.title}
+          <strong className="block text-[13px] font-medium text-cu-dgrey">{embed.title}</strong>
+          {en ? 'Digital Marketing Report' : 'Reporte de Marketing Digital'}
         </div>
+        {embed.brand && (
+          <ClientLogo brand={embed.brand} label={en ? 'Report for' : 'Reporte para'} className="ml-auto" />
+        )}
       </header>
 
       <main className="mx-auto w-full max-w-[1440px] flex-1 px-9 pb-11 pt-6">
@@ -61,8 +61,12 @@ export function EmbedApp({ embed }) {
       </main>
 
       <BarBottom />
-      <footer className="flex items-center justify-between px-9 pb-5 pt-3.5">
-        <p className="text-[10px] text-cu-grey">{embed.title} · PCU Group</p>
+      <footer className="flex flex-wrap items-center justify-between gap-3 px-9 pb-5 pt-3.5">
+        <p className="text-[10px] text-cu-grey">
+          {en ? 'Report produced by ' : 'Reporte elaborado por '}
+          <strong className="font-bold text-cu-dgrey">MarComms</strong>
+          {' · PCU Group'}
+        </p>
         <Tagline />
       </footer>
     </div>
