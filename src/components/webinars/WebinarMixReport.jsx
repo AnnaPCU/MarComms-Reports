@@ -27,6 +27,20 @@ function Note({ children, tone = 'cyan' }) {
   );
 }
 
+// Card destacada (azul marino) para las métricas clave de cada vista.
+function HeroCard({ label, value, pill, pillTone = 'cyan', footnote }) {
+  const pillCls =
+    pillTone === 'green' ? 'bg-emerald-400/20 text-emerald-300' : 'bg-cu-cyan/20 text-cu-cyan';
+  return (
+    <div className="rounded-cu bg-cu-dblue px-5 pb-3.5 pt-4 text-white shadow-cu">
+      <div className="mb-2 text-[9px] font-bold uppercase tracking-[0.6px] text-cu-cyan">{label}</div>
+      <div className="mb-2 text-[30px] font-bold leading-none tracking-tight">{value}</div>
+      {pill && <span className={`inline-block rounded-full px-2 py-0.5 text-[10.5px] font-bold ${pillCls}`}>{pill}</span>}
+      {footnote && <div className="mt-1.5 text-[9.5px] italic text-white/60">{footnote}</div>}
+    </div>
+  );
+}
+
 function FichaRow({ k, v }) {
   return (
     <div className="flex gap-4 border-b border-cu-border2 px-4 py-2.5 text-[12px] last:border-b-0">
@@ -117,19 +131,20 @@ export function WebinarMixReport({ ev, accName }) {
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard label="Registrados" value={num(ev.registered)} footnote={`${ev.regCountries} países · ${ev.externos.registered} externos`} />
         {/* Destacadas: Asistentes y Deals en HubSpot (hero-cards) */}
-        <div className="rounded-cu bg-cu-dblue px-5 pb-3.5 pt-4 text-white shadow-cu">
-          <div className="mb-2 text-[9px] font-bold uppercase tracking-[0.6px] text-cu-cyan">Asistentes</div>
-          <div className="mb-2 text-[30px] font-bold leading-none tracking-tight">{num(ev.attended)}</div>
-          <span className="inline-block rounded-full bg-cu-cyan/20 px-2 py-0.5 text-[10.5px] font-bold text-cu-cyan">{p1(ev.showRate)} % show rate</span>
-          <div className="mt-1.5 text-[9.5px] italic text-white/60">{ev.attendedNote ?? `${ev.externos.attended} externos · ${ev.internos.attended} internos`}</div>
-        </div>
+        <HeroCard
+          label="Asistentes"
+          value={num(ev.attended)}
+          pill={`${p1(ev.showRate)} % show rate`}
+          footnote={ev.attendedNote ?? `${ev.externos.attended} externos · ${ev.internos.attended} internos`}
+        />
         <KpiCard label="Emails enviados" value={num(ev.email.totalSent)} footnote={`${ev.email.sends.length} envíos · ${num(ev.email.uniqueContacts)} contactos únicos`} />
-        <div className="rounded-cu bg-cu-dblue px-5 pb-3.5 pt-4 text-white shadow-cu">
-          <div className="mb-2 text-[9px] font-bold uppercase tracking-[0.6px] text-cu-cyan">Deals en HubSpot</div>
-          <div className="mb-2 text-[30px] font-bold leading-none tracking-tight">{num(ev.deals.total)}</div>
-          <span className="inline-block rounded-full bg-emerald-400/20 px-2 py-0.5 text-[10.5px] font-bold text-emerald-300">▲ {ev.deals.hot} hot {ev.deals.hot === 1 ? 'lead' : 'leads'}</span>
-          <div className="mt-1.5 text-[9.5px] italic text-white/60">{ev.deals.note ?? `${ev.deals.hot} hot + ${dealsOnly} leads`}</div>
-        </div>
+        <HeroCard
+          label="Deals en HubSpot"
+          value={num(ev.deals.total)}
+          pill={`▲ ${ev.deals.hot} hot ${ev.deals.hot === 1 ? 'lead' : 'leads'}`}
+          pillTone="green"
+          footnote={ev.deals.note ?? `${ev.deals.hot} hot + ${dealsOnly} leads`}
+        />
       </div>
       <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard
@@ -306,11 +321,11 @@ export function WebinarMixReport({ ev, accName }) {
         <KpiCard label="Emails enviados" value={num(ev.email.totalSent)} footnote={`${ev.email.sends.length} envíos · ${num(ev.email.uniqueContacts)} contactos únicos`} />
         <KpiCard label="Abrieron al menos un email" value={num(ev.email.openedOnce)} delta={{ dir: 'flat', label: `${p1(ev.email.openedOncePct)} %` }} />
         <KpiCard label="Hicieron click al menos una vez" value={num(ev.email.clickedOnce)} delta={{ dir: 'flat', label: `${p1(ev.email.clickedOncePct)} %` }} />
-        <KpiCard
+        <HeroCard
           label="Registrados vía email"
           value={num(ev.email.regFromEmail)}
-          accent="green"
-          delta={{ dir: 'up', label: `▲ ${ev.email.regFromEmailPct}% de los registros` }}
+          pill={`▲ ${ev.email.regFromEmailPct}% de los registros`}
+          pillTone="green"
           footnote={
             ev.email.regInBase != null
               ? `${ev.email.regFromEmailNote} · ${num(ev.email.regOpened)} abrieron algún email · ${num(ev.email.regInBase)} estaban en la base (${ev.email.regInBasePct}%)`
@@ -372,19 +387,19 @@ export function WebinarMixReport({ ev, accName }) {
         <KpiCard label="Impresiones totales" value={num(ev.social.totals.imp)} delta={{ dir: 'flat', label: `${p1(ev.social.totals.rate)} % tasa promedio` }} />
         <KpiCard label="Clics totales" value={num(ev.social.totals.clicks)} delta={{ dir: 'flat', label: `${p1(ev.social.totals.ctr)} % CTR promedio` }} footnote={`${num(ev.social.totals.reactions)} reacciones · ${num(ev.social.totals.shares)} veces compartido`} />
         {ev.social.regFromSocial != null ? (
-          <KpiCard
+          <HeroCard
             label="Registrados vía LinkedIn"
             value={num(ev.social.regFromSocial)}
-            accent="green"
-            delta={{ dir: 'up', label: `▲ ${ev.social.regFromSocialPct}% de los registros` }}
+            pill={`▲ ${ev.social.regFromSocialPct}% de los registros`}
+            pillTone="green"
             footnote="Métrica final del canal"
           />
         ) : ev.social.regOutsideEmail != null ? (
-          <KpiCard
+          <HeroCard
             label="Registros fuera de la base de email"
             value={num(ev.social.regOutsideEmail)}
-            accent="green"
-            delta={{ dir: 'up', label: `▲ ${ev.social.regOutsideEmailPct}% de los registros` }}
+            pill={`▲ ${ev.social.regOutsideEmailPct}% de los registros`}
+            pillTone="green"
             footnote="LinkedIn u otros canales — el registro de este evento (Teams) no trae atribución por canal; Livestorm sí la tendría"
           />
         ) : (
