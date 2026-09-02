@@ -38,17 +38,12 @@ export function Logo({ brand = 'cu', className = '' }) {
   );
 }
 
-// Cliente en segundo plano: etiqueta chica + logo reducido.
-export function ClientLogo({ brand, label = 'Cliente', className = '' }) {
+// Cliente en segundo plano: solo el logo, reducido y sin etiqueta.
+export function ClientLogo({ brand, className = '' }) {
   if (!BRAND_LOGOS[brand]) return null;
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <span className="whitespace-nowrap text-[8.5px] font-bold uppercase tracking-[0.7px] text-cu-grey/80">
-        {label}
-      </span>
-      {/* Tope de ancho: los wordmarks anchos (Peterson) no deben competir
-          con el logo de MarComms, que es el principal del reporte. */}
-      <Logo brand={brand} className="h-6 max-w-[124px] object-contain opacity-90" />
-    </div>
+    // Tope de ancho: los wordmarks anchos (Peterson) no deben competir con
+    // el logo de MarComms, que es el principal del reporte.
+    <Logo brand={brand} className={`h-6 max-w-[124px] object-contain opacity-90 ${className}`} />
   );
 }

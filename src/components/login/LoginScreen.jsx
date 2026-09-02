@@ -64,8 +64,8 @@ export function LoginScreen({ onLogin }) {
           </button>
         </form>
       </div>
-      <footer className="flex items-center justify-between px-9 py-4">
-        <p className="text-[10px] text-cu-grey">PCU Group — MarComms</p>
+      <footer className="flex flex-wrap items-center justify-between gap-3 px-9 py-4">
+        <MarCommsLogo className="h-5" />
         <Tagline />
       </footer>
       <BarBottom />

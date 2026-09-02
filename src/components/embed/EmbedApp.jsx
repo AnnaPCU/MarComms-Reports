@@ -40,9 +40,7 @@ export function EmbedApp({ embed }) {
           <strong className="block text-[13px] font-medium text-cu-dgrey">{embed.title}</strong>
           {en ? 'Digital Marketing Report' : 'Reporte de Marketing Digital'}
         </div>
-        {embed.brand && (
-          <ClientLogo brand={embed.brand} label={en ? 'Report for' : 'Reporte para'} className="ml-auto" />
-        )}
+        {embed.brand && <ClientLogo brand={embed.brand} className="ml-auto" />}
       </header>
 
       <main className="mx-auto w-full max-w-[1440px] flex-1 px-9 pb-11 pt-6">
@@ -61,12 +59,9 @@ export function EmbedApp({ embed }) {
       </main>
 
       <BarBottom />
+      {/* Al pie: logo MarComms (autor del reporte) enfrentado al tagline. */}
       <footer className="flex flex-wrap items-center justify-between gap-3 px-9 pb-5 pt-3.5">
-        <p className="text-[10px] text-cu-grey">
-          {en ? 'Report produced by ' : 'Reporte elaborado por '}
-          <strong className="font-bold text-cu-dgrey">MarComms</strong>
-          {' · PCU Group'}
-        </p>
+        <MarCommsLogo className="h-5" />
         <Tagline />
       </footer>
     </div>

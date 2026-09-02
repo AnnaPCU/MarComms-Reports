@@ -5,6 +5,7 @@ import { getPilarConfig } from '@/pilares/registry';
 
 import { BarTop, BarBottom } from '@/components/brand/BrandBars';
 import { Tagline } from '@/components/brand/Tagline';
+import { MarCommsLogo } from '@/components/brand/Logo';
 import { Header } from '@/components/shared/Header';
 import { PilarNav } from '@/components/shared/PilarNav';
 import { LoginScreen } from '@/components/login/LoginScreen';
@@ -155,7 +156,9 @@ export default function App() {
       </main>
 
       <BarBottom />
-      <footer className="flex items-center justify-end px-9 pb-5 pt-3.5">
+      {/* Al pie: logo MarComms (autor del reporte) enfrentado al tagline. */}
+      <footer className="flex flex-wrap items-center justify-between gap-3 px-9 pb-5 pt-3.5">
+        <MarCommsLogo className="h-5" />
         <Tagline />
       </footer>
 
