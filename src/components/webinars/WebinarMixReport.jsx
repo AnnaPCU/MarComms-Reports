@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-import { ExternalLink, Flame } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { getScoring } from '@/services/webinarsService';
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
@@ -9,7 +9,7 @@ import { KpiCard } from '@/components/shared/KpiCard';
 import { Funnel } from '@/components/shared/Funnel';
 import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { Glossary } from '@/components/shared/Glossary';
-import { isExternalReport } from '@/utils/reportAudience';
+import { isExternalReport, isEmbedReport } from '@/utils/reportAudience';
 
 const num = (v) => Number(v || 0).toLocaleString('es-AR');
 const p1 = (v) => Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -80,8 +80,8 @@ export function WebinarMixReport({ ev, accName }) {
         </div>
       </div>
 
-      {/* Botonera de vistas */}
-      <div className="mb-4">
+      {/* Botonera de vistas + link al pipeline (siempre en paralelo) */}
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <SegmentedControl
           label="Vista"
           value={view}
@@ -94,6 +94,17 @@ export function WebinarMixReport({ ev, accName }) {
             { id: 'social', label: 'Social Media' },
           ]}
         />
+        {ev.hotLeads.pipelineUrl && (
+          <a
+            href={ev.hotLeads.pipelineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-cu bg-cu-dblue px-4 py-2 text-[11px] font-bold text-white transition-opacity hover:opacity-90"
+          >
+            <ExternalLink className="h-3.5 w-3.5" />
+            Link al pipeline
+          </a>
+        )}
       </div>
 
       {/* ── Key insights (general + webinar) ── */}
@@ -148,7 +159,7 @@ export function WebinarMixReport({ ev, accName }) {
             <ul className="mb-3 flex flex-col gap-1.5 text-[12px] text-cu-dgrey">
               <li><strong className="text-cu-dblue">{num(ev.email.totalSent)}</strong> emails · {ev.email.sends.length} envíos</li>
               <li><strong className="text-cu-dblue">{p1(ev.email.openedOncePct)} %</strong> abrió al menos un email</li>
-              <li><strong className="text-cu-dblue">{num(ev.email.regFromEmail)}</strong> registrados en la base ({ev.email.regFromEmailPct}%)</li>
+              <li><strong className="text-cu-dblue">{num(ev.email.regFromEmail)}</strong> registrados con clic en la campaña</li>
             </ul>
             <button onClick={() => setView('email')} className="mt-auto self-start text-[11px] font-bold text-cu-cyan hover:underline">Ver vista completa →</button>
           </div>
@@ -230,15 +241,31 @@ export function WebinarMixReport({ ev, accName }) {
             </div>
           </div>
           <div className="flex-1 rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
-            <div className="mb-2.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+            <div className="mb-0.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
               <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-cyan" />
               Empresas destacadas entre asistentes
             </div>
+            {ev.companies.featuredNote && (
+              <div className="mb-2 text-[10px] text-cu-grey">{ev.companies.featuredNote}</div>
+            )}
             <div className="flex flex-wrap gap-1.5">
               {ev.companies.featured.map((c) => (
                 <span key={c} className="rounded-full bg-cu-bg px-2.5 py-1 text-[10.5px] font-medium text-cu-dgrey">{c}</span>
               ))}
             </div>
+            {ev.companies.others?.length > 0 && (
+              <>
+                <div className="mb-2 mt-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-grey">
+                  <span className="h-3 w-[3px] shrink-0 rounded-sm bg-cu-border" />
+                  Resto de empresas
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {ev.companies.others.map((c) => (
+                    <span key={c} className="rounded-full border border-cu-border2 px-2 py-0.5 text-[9.5px] text-cu-grey">{c}</span>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -255,7 +282,7 @@ export function WebinarMixReport({ ev, accName }) {
               {
                 name: 'Deals en HubSpot',
                 value: ev.deals.total,
-                desc: ev.deals.warm != null ? `${ev.deals.hot} hot · ${ev.deals.warm} warm · ${ev.deals.cold} cold` : `${ev.deals.hot} hot leads`,
+                desc: ev.deals.warm != null ? `${ev.deals.hot} hot · ${ev.deals.warm} warm` : `${ev.deals.hot} hot leads`,
                 retention: `${p1((ev.deals.total / ev.registered) * 100)} %`,
               },
             ]}
@@ -284,7 +311,11 @@ export function WebinarMixReport({ ev, accName }) {
           value={num(ev.email.regFromEmail)}
           accent="green"
           delta={{ dir: 'up', label: `▲ ${ev.email.regFromEmailPct}% de los registros` }}
-          footnote={ev.email.regFromEmailNote ?? 'Métrica final del canal'}
+          footnote={
+            ev.email.regInBase != null
+              ? `${ev.email.regFromEmailNote} · ${num(ev.email.regOpened)} abrieron algún email · ${num(ev.email.regInBase)} estaban en la base (${ev.email.regInBasePct}%)`
+              : (ev.email.regFromEmailNote ?? 'Métrica final del canal')
+          }
         />
       </div>
       <div className="mb-3 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
@@ -369,63 +400,12 @@ export function WebinarMixReport({ ev, accName }) {
       <>
       <SectionHeader title="Sección 3 — Hot Leads" note="HubSpot · deals generados por el evento" />
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <KpiCard label={ev.scoring ? 'Leads priorizados' : 'Deals totales'} value={num(ev.scoring ? prioritized : ev.deals.total)} footnote={ev.scoring ? `${ev.deals.hot} hot + ${ev.deals.warm} warm sobre ${num(ev.deals.total)} deals` : (ev.deals.note ?? 'Asistentes externos con deal real en HubSpot')} />
+        <KpiCard label={ev.scoring ? 'Leads priorizados' : 'Deals totales'} value={num(ev.scoring ? prioritized : ev.deals.total)} footnote={ev.scoring ? `${ev.deals.hot} hot + ${ev.deals.warm} warm sobre ${num(ev.externos.attended)} asistentes externos` : (ev.deals.note ?? 'Asistentes externos con deal real en HubSpot')} />
         <KpiCard label="Hot leads" value={num(ev.deals.hot)} accent="green" delta={{ dir: 'up', label: `▲ score ${hotRange}` }} footnote="Contacto comercial directo esta semana" />
         <KpiCard label={ev.scoring ? 'Warm leads' : 'Leads (resto)'} value={num(ev.deals.warm ?? dealsOnly)} footnote={`Score ${classes[1].range} · pasan a nurturing`} />
         <KpiCard label="Score (hot)" value={p1(avgScore)} footnote={hotRows.length === 1 ? hotRows[0].empresa : `Promedio de ${hotRows.length} hot leads`} />
       </div>
-      <div className="mb-3 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
-        <table className="w-full min-w-[560px] border-collapse">
-          <thead>
-            <tr className="border-b-2 border-cu-cyan">
-              <th className={thCls}>Empresa</th>
-              <th className={thCls}>País</th>
-              <th className={thCls}>{ev.hotLeads.col3 ?? 'Asistencia'}</th>
-              <th className={thCls}>Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ev.hotLeads.rows.map((r, i) => (
-              <tr key={`${r.empresa}-${i}`} className="border-b border-cu-border2">
-                <td className={`${tdCls} font-medium text-cu-dblue`}>
-                  {(r.tier ?? 'HOT') === 'HOT' ? (
-                    <span className="mr-2 inline-flex align-middle text-amber-500"><Flame className="h-3.5 w-3.5" /></span>
-                  ) : (
-                    <span className="mr-2 inline-block w-[22px] rounded-[3px] bg-cu-bg px-1 text-center text-[8.5px] font-bold text-cu-grey align-middle">W</span>
-                  )}
-                  {r.empresa}
-                </td>
-                <td className={tdCls}>{r.pais}</td>
-                <td className={tdCls}>{r.det}</td>
-                <td className={`${tdCls} font-bold text-cu-dblue`}>{p1(r.score)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <p className="px-3 pb-2.5 pt-1 text-[10.5px] italic text-cu-grey">
-          {ev.hotLeads.scoreNote}
-          {ev.hotLeads.rowsNote ? ` ${ev.hotLeads.rowsNote}` : ''}
-        </p>
-      </div>
-      {ev.hotLeads.pipelineUrl ? (
-        <a
-          href={ev.hotLeads.pipelineUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mb-3 inline-flex items-center gap-2 rounded-cu bg-cu-dblue px-4 py-2.5 text-[12px] font-bold text-white transition-opacity hover:opacity-90"
-        >
-          <ExternalLink className="h-3.5 w-3.5" />
-          Ver pipeline con los hot leads en HubSpot
-        </a>
-      ) : (
-        !external && (
-          <Note tone="amber">
-            <strong className="text-cu-dblue">Pendiente:</strong> falta el link al pipeline de HubSpot con los hot
-            leads de este evento (lo provee el equipo por cada reporte).
-          </Note>
-        )
-      )}
-      {!external && <Note>{ev.hotLeads.universeNote}</Note>}
+      {!external && ev.hotLeads.universeNote && <Note>{ev.hotLeads.universeNote}</Note>}
 
       {/* Metodología de scoring (global o propia del evento) */}
       <div className="mb-5 grid gap-3 lg:grid-cols-2">
@@ -502,40 +482,6 @@ export function WebinarMixReport({ ev, accName }) {
       {(isGeneral || view === 'webinar') && (
       <>
       <SectionHeader title="Oportunidad Comercial — Cuánto Podría Traerle Este Webinar a Control Union" note="Proyección sobre benchmarks · no es una certeza" />
-      <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-3">
-        <KpiCard
-          label="Costo de producción"
-          value={ev.commercial.productionCost != null ? usd(ev.commercial.productionCost) : '—'}
-          accent="amber"
-          footnote={ev.commercial.productionCost == null ? 'Pendiente' : undefined}
-        />
-        <div className="relative overflow-hidden rounded-cu border border-cu-border bg-white px-5 pb-3.5 pt-4 shadow-cu">
-          <span className="absolute inset-y-0 left-0 w-[3px] bg-cu-cyan" />
-          <div className="mb-2 text-[9px] font-bold uppercase tracking-[0.6px] text-cu-grey">Pipeline en HubSpot</div>
-          {ev.hotLeads.pipelineUrl ? (
-            <a
-              href={ev.hotLeads.pipelineUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1 inline-flex items-center gap-2 rounded-cu bg-cu-dblue px-3.5 py-2 text-[12px] font-bold text-white transition-opacity hover:opacity-90"
-            >
-              <ExternalLink className="h-3.5 w-3.5" />
-              Ver pipeline
-            </a>
-          ) : (
-            <>
-              <div className="mb-2 text-[30px] font-bold leading-none tracking-tight text-cu-dblue">—</div>
-              <div className="text-[9.5px] italic text-cu-grey">Link al pipeline pendiente</div>
-            </>
-          )}
-        </div>
-        <KpiCard
-          label="Leads priorizados"
-          value={num(prioritized)}
-          accent="green"
-          footnote={`${ev.deals.hot} hot + ${ev.deals.warm ?? dealsOnly} warm sobre ${num(ev.deals.total)} deals`}
-        />
-      </div>
       {ev.commercial.pipelinePotential != null ? (
         <>
           <div className="mb-3 grid gap-3 lg:grid-cols-2">
@@ -564,10 +510,11 @@ export function WebinarMixReport({ ev, accName }) {
       ) : null}
       <p className="mb-5 text-[10.5px] italic leading-relaxed text-cu-grey">
         Metodología: {ev.commercial.metodologia}
+        {ev.commercial.productionCost != null && ` Costo de producción del webinar: ${usd(ev.commercial.productionCost)} USD.`}
       </p>
 
-      {/* ── Plan de acción (solo interno) ── */}
-      {!external && (
+      {/* ── Plan de acción: SOLO en el descargable de uso interno ── */}
+      {isEmbedReport() && !external && (
         <>
           <SectionHeader title="Conclusión — Próximos Pasos" />
           <NextStepsPanel steps={ev.actionPlan} subtitle={`${ev.title} · ${ev.date}`} title="Plan de acción" />

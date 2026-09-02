@@ -166,7 +166,6 @@ export const WEBINARS_DB = {
       // ── Key insights ──
       registered: 295,
       attended: 150,
-      attendedNote: '150 identificados vía Teams · +2 sin identificar',
       showRate: 50.8,
       regCountries: 27,
       // Registrados vs asistentes por país (top 10 por registros, externos).
@@ -185,24 +184,25 @@ export const WEBINARS_DB = {
       companies: {
         unique: 87, // empresas únicas entre asistentes externos (213 entre registrados)
         uniqueNote: 'Entre asistentes externos · 213 entre los registrados',
-        featured: ['Pantaleon S.A.', 'Ecom', 'Olam Agro Peru', 'Oleaginosas San Marcos', 'TEAM FOODS', 'INTEROC S.A.', 'LAR PY', 'Cooperativa Unicafec', 'Ochosur', 'Agroindustria Palmera San Roman'],
+        // Destacadas = empresas de los hot y warm leads del evento.
+        featured: ['Pantaleon S.A.', 'Ecom', 'Olam Agro Peru', 'Oleaginosas San Marcos', 'TEAM FOODS', 'INTEROC S.A.', 'LAR PY', 'Cooperativa Unicafec', 'Ochosur', 'Agroindustria Palmera San Roman', 'Asoc. de Productores Agroecológicos Origin Coffee Lab', 'Cacao de Colombia', 'COUSA', 'Daabon', 'Ecuadorcolat', 'Facultad de Ciencia y Tecnología — UADER', 'Funglode', 'PROSERIN', 'Productor de banano', 'Productor Aguacate Hass', 'Service Corp Trading', 'Universidad Nacional de Córdoba'],
+        featuredNote: 'Empresas de los hot y warm leads del evento',
+        others: ['ADM', 'ADM Paraguay', 'ALLPA SAC', 'AMAGGI', 'Amazonas Trading Perú', 'Arcos Dorados', 'Asoc. de Cacaoteros Tecnificados del Ucayali', 'Asoc. de Productores Agrarios Alto Kivinaki', 'Asociación Rural del Paraguay', 'Barry Callebaut', 'BioAp', 'Biocertus', 'Biomar', 'Biopa', 'Cafés de Especialidad de Chiapas', 'CAMSA', 'Cargill SACI', 'CARVIMSA', 'CEREGEO — UADER', 'Citrison', 'COFCO International Argentina', 'Colegio de Ing. Agrónomos de Santa Elena', 'Comercializadora Cumbres', 'COOPEAGRI R.L.', 'Dole Perú', 'Dos Beta', 'Dos Hermanos', 'El Recuerdo', 'Evid-AI', 'Farms Group', 'FSC México', 'Fundación Local Partners', 'INTA-FCA', 'Letis', 'MER Seafood Trading', 'Oleomex', 'Perfiles Coffee', 'PL Abogados', 'Proforest', 'ProTerra', 'PUMA by Regrow', 'Qualabs', 'SIMA', 'Smurfit Westrock', 'Solidaridad', 'Somax Agro', 'Terra Nostra Organics', 'UNOCACE', 'Yazoo Investment'],
       },
       internos: { total: 41, attended: 33 },
       externos: { registered: 254, attended: 117 },
       deals: {
-        total: 117, // todos los asistentes externos identificados generan deal
+        total: 27, // solo los priorizados por el scoring (hot + warm)
         hot: 1,
         warm: 26,
-        cold: 90,
-        leads: 116,
-        note: '1 hot + 26 warm + 90 cold — cada asistente externo identificado genera un deal en HubSpot.',
+        note: '1 hot + 26 warm — deals priorizados por el scoring del evento.',
       },
       durationTotalLabel: '48 min 11 s',
       durationAvgMin: 34.4,
       durationMedianMin: 40.2,
       engagement: { high: 78, mid: 25, low: 47 }, // sobre 48:11 de evento · 150 identificados
       highlight:
-        '150 asistentes identificados de 295 registrados (50,8% de show rate) desde 27 países — el webinar más grande de la serie. Los 117 asistentes externos generan 117 deals en HubSpot, y el scoring del evento priorizó 27 (1 hot + 26 warm; el resto queda cold en nurturing). La mediana de permanencia fue de 40 minutos sobre un evento de 48, y la base de emails explica la mayor parte del registro: 229 de los 295 registrados estaban en la campaña de Mailchimp.',
+        '150 asistentes identificados de 295 registrados (50,8% de show rate) desde 27 países — el webinar más grande de la serie. El scoring del evento dejó 27 deals priorizados en HubSpot (1 hot + 26 warm) entre los 117 asistentes externos. La mediana de permanencia fue de 40 minutos sobre un evento de 48; el canal email alcanzó a 229 de los 295 registrados (56 con clic rastreado en la campaña).',
 
       // Scoring propio de este evento (Teams, sin encuestas de diagnóstico).
       scoring: {
@@ -232,12 +232,15 @@ export const WEBINARS_DB = {
         openedOncePct: 25.1,
         clickedOnce: 137,
         clickedOncePct: 2.8,
-        regFromEmail: 229,
-        regFromEmailPct: 78,
-        regFromEmailNote: 'Registrados presentes en la base de la campaña (229 de 295)',
-        nota: 'El mejor click rate llegó después del evento: el email post-webinar a registrados que no asistieron hizo 7,7% de clics (el replay como segunda oportunidad). Los 66 registrados que no estaban en la base de emails llegaron por LinkedIn u otros canales.',
+        regFromEmail: 56, // registrados con clic rastreado en la campaña (atribución directa)
+        regFromEmailPct: 19,
+        regFromEmailNote: 'Con clic rastreado en la campaña — atribución directa del canal',
+        regOpened: 93, // registrados que abrieron al menos un email
+        regInBase: 229, // registrados presentes en la base de la campaña
+        regInBasePct: 78,
+        nota: 'El mejor click rate llegó después del evento: el email post-webinar a registrados que no asistieron hizo 7,7% de clics (el replay como segunda oportunidad).',
         notaClics:
-          '¿Por qué hay más registrados (295) que personas con clic en los emails (137)? Porque el clic en el email no es la única puerta de entrada: muchos se registran desde un link reenviado, desde LinkedIn o entrando directo al formulario, y Mailchimp solo cuenta los clics que puede rastrear (los proxies de privacidad y los clientes de correo en texto plano se pierden). Por eso el dato honesto del canal es «registrados presentes en la base» (229), no «registrados por clic».',
+          'La atribución del canal se lee en capas: 56 registrados hicieron clic en algún email de la campaña (atribución directa — el piso), 93 abrieron al menos un email, y 229 de los 295 estaban en la base de contactos (el alcance del canal — no todos se registraron POR el email: pueden haber llegado por un link reenviado, LinkedIn o la URL directa, y Mailchimp además pierde clics que no puede rastrear). Los 66 restantes no estaban en la base: llegaron por otros canales.',
       },
 
       // ── Sección 2: Social Media (LinkedIn CU Latinoamérica) ──
@@ -280,7 +283,7 @@ export const WEBINARS_DB = {
           { empresa: 'Ochosur', pais: 'Perú', det: '47,5 min', score: 5, tier: 'WARM' },
         ],
         rowsNote: '17 de los 27 leads priorizados (el resto de los warm, con score 5 y menor permanencia, está en el tracker completo).',
-        pipelineUrl: null, // pendiente: lo pasa el equipo
+        pipelineUrl: 'https://app.hubspot.com/contacts/47081900/objects/0-3/views/71479376/list',
         scoreNote: 'Scoring propio del evento (Teams): HOT ≥ 8 · WARM 5-7. Detalle completo por persona, sin defaults.',
       },
 
