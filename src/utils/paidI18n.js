@@ -18,6 +18,17 @@ export const PAID_STR = {
     // Aviso período parcial
     partialTitle: 'Período parcial.',
     partialNote: 'Las métricas no son comparables contra meses completos.',
+    // Campañas que arrancaron a mitad del mes (alta en Google Ads).
+    cPartialChip: (dias) => `Parcial · ${dias} ${dias === 1 ? 'día' : 'días'}`,
+    cPartialTitle: 'Campaña parcial.',
+    cPartialNote: (fecha, act, tot) =>
+      `Se creó el ${fecha}: las métricas cubren ${act} de los ${tot} días del mes, así que no son comparables con las campañas que corrieron el mes completo.`,
+    cPartialTableNote: (n) =>
+      `${n === 1 ? 'Una campaña arrancó' : `${n} campañas arrancaron`} a mitad de mes (chip «Parcial»): ${n === 1 ? 'sus métricas cubren' : 'sus métricas cubren'} menos días que el resto.`,
+    cPartialInsight: (nombre, fecha, act, tot) =>
+      `${nombre} arrancó el ${fecha} — ${act} de ${tot} días del mes`,
+    cPartialAction:
+      'Los volúmenes son de una fracción del mes ➜ <strong>Leerla por CTR y CPC, no por totales</strong>, y esperar al primer mes completo para compararla con el resto.',
     // Insights
     insightsTitle: 'Plan de Acción — Insights Paid Media',
     insightsLabel: 'Insight',
@@ -141,6 +152,17 @@ export const PAID_STR = {
     cmpCampaigns: 'Campaign comparison',
     partialTitle: 'Partial period.',
     partialNote: 'Metrics are not comparable against full months.',
+    // Campaigns launched mid-month (created in Google Ads).
+    cPartialChip: (dias) => `Partial · ${dias} ${dias === 1 ? 'day' : 'days'}`,
+    cPartialTitle: 'Partial campaign.',
+    cPartialNote: (fecha, act, tot) =>
+      `Created on ${fecha}: metrics cover ${act} of the ${tot} days in the month, so they are not comparable with campaigns that ran the full month.`,
+    cPartialTableNote: (n) =>
+      `${n === 1 ? 'One campaign started' : `${n} campaigns started`} mid-month ("Partial" chip): ${n === 1 ? 'its metrics cover' : 'their metrics cover'} fewer days than the rest.`,
+    cPartialInsight: (nombre, fecha, act, tot) =>
+      `${nombre} started on ${fecha} — ${act} of ${tot} days in the month`,
+    cPartialAction:
+      'Volumes come from a fraction of the month ➜ <strong>Read it by CTR and CPC, not by totals</strong>, and wait for the first full month before comparing it with the rest.',
     insightsTitle: 'Action Plan — Paid Media Insights',
     insightsLabel: 'Insight',
     actionLabel: 'Recommended action',
@@ -622,6 +644,13 @@ export const YEAR_STR = {
     title: 'Resumen del Año 2026',
     subtitle: (acc, ch) => [acc, ch, 'Acumulado de los meses con datos'].filter(Boolean).join(' · '),
     activeMonths: (labels) => `Meses con datos: ${labels}`,
+    // Cambio de moneda de la cuenta (EUR → ARS en agosto 2026).
+    curTitle: 'La cuenta cambió de moneda durante el año.',
+    curNote: (cur, meses, resto) =>
+      `Los importes de este resumen corresponden solo a los meses en ${cur} (${meses}); ${resto} no se suman porque no son comparables ni se convierten. Impresiones, clics y conversiones sí son del año completo.`,
+    curOther: (cost, cur, meses) => `${cost} en ${meses}`,
+    curChartNote: (cur, meses) => `${cur} · solo ${meses}`,
+    curCampNote: (meses) => `Importes y volúmenes de ${meses} (los meses en otra moneda no se acumulan)`,
     partialMark: ' (parcial)',
     kpiSection: 'Indicadores del Año — Acumulado',
     evolSection: 'Evolución Mensual',
@@ -643,6 +672,13 @@ export const YEAR_STR = {
     title: '2026 Annual Review',
     subtitle: (acc, ch) => [acc, ch, 'Accumulated over months with data'].filter(Boolean).join(' · '),
     activeMonths: (labels) => `Months with data: ${labels}`,
+    // Account currency change (EUR → ARS in August 2026).
+    curTitle: 'The account changed currency during the year.',
+    curNote: (cur, meses, resto) =>
+      `The amounts in this summary cover only the months in ${cur} (${meses}); ${resto} are not added because they are neither comparable nor converted. Impressions, clicks and conversions do cover the full year.`,
+    curOther: (cost, cur, meses) => `${cost} in ${meses}`,
+    curChartNote: (cur, meses) => `${cur} · ${meses} only`,
+    curCampNote: (meses) => `Amounts and volumes from ${meses} (months in another currency are not accumulated)`,
     partialMark: ' (partial)',
     kpiSection: 'Year Indicators — Accumulated',
     evolSection: 'Monthly Evolution',
@@ -668,6 +704,8 @@ export const CMP_STR = {
     note: 'Google Ads · acumulado de los meses con datos de cada cuenta',
     disclaimer:
       'Cada cuenta estuvo activa en meses distintos: la comparación es sobre el acumulado del año de cada una, con sus meses activos a la vista. No es una comparación mes a mes.',
+    curDisclaimer: (cur) =>
+      `Las cuentas cambiaron de moneda durante el año: los importes acumulan solo los meses en ${cur} (no se convierten monedas), mientras que impresiones, clics y conversiones son de todos los meses cargados.`,
     cardMonths: (labels) => `Meses: ${labels}`,
     chCost: 'Inversión acumulada', chClicks: 'Clics acumulados',
     chConv: 'Conversiones acumuladas', chCpc: 'CPC promedio',
@@ -681,6 +719,8 @@ export const CMP_STR = {
     note: 'Google Ads · accumulated over each account\'s months with data',
     disclaimer:
       'Each account was active in different months: the comparison is over each one\'s accumulated year, with its active months in sight. It is not a month-by-month comparison.',
+    curDisclaimer: (cur) =>
+      `The accounts changed currency during the year: amounts accumulate only the months in ${cur} (currencies are never converted), while impressions, clicks and conversions cover every loaded month.`,
     cardMonths: (labels) => `Months: ${labels}`,
     chCost: 'Accumulated spend', chClicks: 'Accumulated clicks',
     chConv: 'Accumulated conversions', chCpc: 'Average CPC',

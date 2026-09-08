@@ -72,14 +72,42 @@ export function getYear(accountId) {
   });
   if (!months.length) return null;
 
+  // ── Cambio de moneda ──
+  // La cuenta pasó de EUR a ARS en agosto 2026 (cambio de cuenta de Google
+  // Ads). Los importes de monedas distintas NO se suman: los volúmenes
+  // (impresiones, clics, conversiones) son de todo el año, mientras que
+  // coste, CPC y coste/conversión se calculan solo sobre los meses de la
+  // moneda vigente — la más reciente. Nunca se convierte a otra moneda.
+  const curOf = (m) => m.currency || 'EUR';
+  const currency = curOf(months[months.length - 1]);
+  const moneyMonths = months.filter((m) => curOf(m) === currency);
+  const currencies = [...new Set(months.map(curOf))];
+  const mixedCurrency = currencies.length > 1;
+  const costByCurrency = currencies.map((cur) => {
+    const ms = months.filter((m) => curOf(m) === cur);
+    return {
+      currency: cur,
+      cost: ms.reduce((a, m) => a + (m.cost || 0), 0),
+      months: ms.map((m) => ({ id: m.id, label: m.label })),
+    };
+  });
+
   const totals = aggTotals(months);
-  totals.currency = months[0].currency || 'EUR';
+  const money = aggTotals(moneyMonths);
+  totals.cost = money.cost;
+  totals.cpc = money.cpc;
+  totals.costPerConv = money.costPerConv;
+  totals.currency = currency;
 
   // Campañas acumuladas del año (por nombre, sumando los meses activos).
+  // Con monedas mezcladas se acumulan SOLO los meses de la moneda vigente,
+  // para que cada fila sea internamente coherente (volumen e importe del
+  // mismo conjunto de meses).
+  const campaignMonths = new Set(moneyMonths.map((m) => m.id));
   const byName = {};
   for (const p of MONTHS_2026) {
     const per = acc.periods[p.id];
-    if (!per) continue;
+    if (!per || !campaignMonths.has(p.id)) continue;
     for (const c of per.campaigns) {
       const e = (byName[c.name] ??= { name: c.name, impressions: 0, clicks: 0, cost: 0, conversions: 0, months: 0 });
       e.impressions += c.impressions || 0;
@@ -96,7 +124,17 @@ export function getYear(accountId) {
     .filter((gp) => getGeo(accountId, gp.id))
     .map((gp) => ({ id: gp.id, label: gp.label }));
 
-  return { channel: first.channel, currency: totals.currency, months, totals, campaigns, geo };
+  return {
+    channel: first.channel,
+    currency,
+    mixedCurrency,
+    costByCurrency,
+    moneyMonths: moneyMonths.map((m) => ({ id: m.id, label: m.label })),
+    months,
+    totals,
+    campaigns,
+    geo,
+  };
 }
 
 // Comparativa multi-cuenta: resumen anual de cada cuenta con datos mensuales.

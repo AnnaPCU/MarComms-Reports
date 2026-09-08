@@ -1,4 +1,5 @@
 import { campaignStatus } from '@/utils/paidInsights';
+import { campaignPartial } from '@/utils/campaignPartial';
 import { PAID_STR } from '@/utils/paidI18n';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
@@ -19,10 +20,24 @@ function StatusChip({ c, L }) {
   return <span className={`whitespace-nowrap rounded-[3px] px-2 py-0.5 text-[9px] font-bold tracking-[0.4px] ${BADGE[s.key]}`}>● {L.status[s.key]}</span>;
 }
 
+// Chip para campañas que arrancaron a mitad de mes: avisa cuántos días
+// de los del mes cubren sus métricas.
+function PartialChip({ p, L }) {
+  return (
+    <span
+      title={L.cPartialNote(p.dateLabel('es'), p.activeDays, p.totalDays)}
+      className="ml-2 whitespace-nowrap rounded-[3px] border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[9px] font-bold text-amber-800"
+    >
+      {L.cPartialChip(p.activeDays)}
+    </span>
+  );
+}
+
 // Tabla de detalle por campaña (ordenada por impresiones desc).
-export function CampaignsTable({ campaigns = [], currency = 'EUR', title = 'Google Ads — Search', lang = 'es' }) {
+export function CampaignsTable({ campaigns = [], currency = 'EUR', title = 'Google Ads — Search', lang = 'es', period = null }) {
   const L = PAID_STR[lang];
   const rows = campaigns.slice().sort((a, b) => (b.impressions || 0) - (a.impressions || 0));
+  const partials = rows.filter((c) => campaignPartial(c, period));
 
   return (
     <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
@@ -50,7 +65,13 @@ export function CampaignsTable({ campaigns = [], currency = 'EUR', title = 'Goog
         <tbody>
           {rows.map((c) => (
             <tr key={c.name} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
-              <td className="px-3 py-2 text-[12px] font-semibold text-cu-dblue">{c.name}</td>
+              <td className="px-3 py-2 text-[12px] font-semibold text-cu-dblue">
+                {c.name}
+                {(() => {
+                  const p = campaignPartial(c, period);
+                  return p ? <PartialChip p={p} L={L} /> : null;
+                })()}
+              </td>
               <td className="px-3 py-2"><StatusChip c={c} L={L} /></td>
               <td className="px-3 py-2 text-[12px] text-cu-dgrey">{numEs(c.impressions)}</td>
               <td className="px-3 py-2 text-[12px] text-cu-dgrey">{numEs(c.clicks)}</td>
@@ -64,6 +85,11 @@ export function CampaignsTable({ campaigns = [], currency = 'EUR', title = 'Goog
           ))}
         </tbody>
       </table>
+      {partials.length > 0 && (
+        <p className="mt-3 text-[10.5px] leading-snug text-cu-grey">
+          <span className="font-bold text-amber-800">⚠</span> {L.cPartialTableNote(partials.length)}
+        </p>
+      )}
     </div>
   );
 }

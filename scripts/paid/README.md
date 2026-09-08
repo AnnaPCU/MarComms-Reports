@@ -38,5 +38,27 @@ python3 scripts/paid/build_detail.py m08 "Semanal_por_grupo.csv" "Terminos_y_key
 ## Cuentas reconocidas
 
 Prefijos de campaña: `CU España` (es) · `CU Portugal` (pt) · `CU Canada`
-(cuc) · `PS Argentina` (psar). Nombres de campaña normalizados igual que en
-paidSeed (Plásticos, Bioenergía, etc.).
+(cuc) · `PS Argentina` (psar) · `CU United States` (cuus, "CU Estados
+Unidos" en la app). Nombres de campaña normalizados igual que en paidSeed
+(Plásticos, Bioenergía, etc.). Si aparece un prefijo nuevo, el script corta
+con error en vez de asignar mal: hay que sumarlo al mapa `ACC`.
+
+## Cosas a tener en cuenta
+
+- **El script fusiona, no pisa.** `build_detail.py` reescribe solo el mes que
+  se le pasa y conserva los meses ya cargados en `paidDetail.js` (antes cada
+  corrida borraba el resto).
+- **Columna `Campaña` obligatoria en el informe de términos.** Sin ella los
+  grupos no se pueden atribuir a su cuenta: hay nombres de grupo repetidos en
+  varias cuentas (PEFC, GRS, GOTS, Smeta, ISCC…).
+- **Separador de miles.** En el export en español el `.` siempre es separador
+  de miles (`5.561`) y la `,` el decimal (`103366,25`). El parser los limpia
+  como corresponde.
+- **Moneda.** Desde agosto 2026 el export viene en **ARS** (cambio de cuenta);
+  antes venía en EUR. Los importes de monedas distintas nunca se suman ni se
+  convierten: el resumen anual acumula solo los meses de la moneda vigente y
+  lo avisa en pantalla.
+- **Campañas que arrancan a mitad de mes.** Agregar `startedOn: 'AAAA-MM-DD'`
+  a la campaña en `paidSeed.js` (fecha de creación, del historial de cambios
+  de Google Ads). La app calcula los días activos y muestra el chip «Parcial»,
+  la nota en el detalle y un insight dedicado.

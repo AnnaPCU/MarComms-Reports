@@ -11,13 +11,17 @@
 # (Google oculta búsquedas de bajo volumen) y así se informa en la UI.
 import csv, io, sys, os, re
 
-ACC = {'CU España': 'es', 'CU Portugal': 'pt', 'CU Canada': 'cuc', 'PS Argentina': 'psar'}
+ACC = {'CU España': 'es', 'CU Portugal': 'pt', 'CU Canada': 'cuc', 'PS Argentina': 'psar',
+       'CU United States': 'cuus'}
 
 def num(v):
+    # Formato español de Google Ads: '.' siempre es separador de miles
+    # ('5.561') y ',' el decimal ('103366,25'). Limpiar solo cuando hay coma
+    # rompía los enteros de 4 cifras para arriba (5.561 -> 5,561 -> 5).
     s = str(v).strip().replace('%', '')
     if not s or s in ('--', '—') or s.startswith('<') or s.startswith('>'):
         return None
-    s = s.replace('.', '').replace(',', '.') if (',' in s) else s
+    s = s.replace('.', '').replace(',', '.')
     try:
         return float(s)
     except ValueError:
@@ -91,7 +95,9 @@ def main():
     L.append('// ════════════════════════════════════════════════════════════════')
     L.append('')
     L.append('export const PAID_DETAIL = {')
-    for a in ['pt', 'es', 'cuc', 'psar']:
+    # Orden fijo conocido primero; cualquier cuenta nueva del export va después.
+    known = ['pt', 'es', 'cuc', 'psar', 'cuus']
+    for a in known + [x for x in detail if x not in known]:
         if a not in detail:
             continue
         L.append(f'  {a}: {{')
@@ -124,9 +130,88 @@ def main():
         L.append('    },')
         L.append('  },')
     L.append('};')
-    out = os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'data', 'paidDetail.js')
-    open(out, 'w').write('\n'.join(L) + '\n')
-    print(f'→ escrito {os.path.normpath(out)}', file=sys.stderr)
+    out = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'data', 'paidDetail.js'))
+    text = merge_month('\n'.join(L) + '\n', out, mid)
+    open(out, 'w').write(text)
+    print(f'→ escrito {out}', file=sys.stderr)
+
+
+# ── merge: conservar los meses ya cargados ──
+# El script genera el archivo completo para el mes que se le pasa. Si ya hay
+# un paidDetail.js con otros meses, se fusiona en vez de pisarlo (antes se
+# perdía el detalle de los meses anteriores en cada corrida).
+def _block_end(text, start):
+    # Devuelve el índice del carácter siguiente al bloque `{...}` que abre en
+    # `start` (donde `text[start]` es la llave de apertura).
+    depth, i, n = 0, start, len(text)
+    while i < n:
+        ch = text[i]
+        if ch == "'":                       # saltear strings (pueden traer llaves)
+            i += 1
+            while i < n and text[i] != "'":
+                i += 2 if text[i] == '\\' else 1
+        elif ch == '{':
+            depth += 1
+        elif ch == '}':
+            depth -= 1
+            if depth == 0:
+                return i + 1
+        i += 1
+    raise SystemExit('paidDetail.js: no se pudo cerrar el bloque en %d' % start)
+
+
+def _months(text, acc):
+    # {mid: (inicio, fin)} de los meses de una cuenta dentro del archivo.
+    a = text.find('\n  %s: {' % acc)
+    if a < 0:
+        return None, {}
+    open_brace = text.index('{', a)
+    acc_end = _block_end(text, open_brace)
+    body = text[open_brace:acc_end]
+    out = {}
+    for m in re.finditer(r'\n    (m\d\d): \{', body):
+        s0 = m.start() + 1
+        e0 = _block_end(body, open_brace + m.end() - 1 - open_brace + (open_brace - open_brace)) if False else None
+        # índice absoluto de la llave que abre el mes
+        brace = open_brace + m.end() - 1
+        e = _block_end(text, brace)
+        # incluir la coma final del bloque si está
+        if text[e:e + 1] == ',':
+            e += 1
+        out[m.group(1)] = (open_brace + s0 - 0, e)
+    return (a, open_brace, acc_end), out
+
+
+def merge_month(generated, path, mid):
+    if not os.path.exists(path):
+        return generated
+    prev = open(path, encoding='utf-8').read()
+    if 'export const PAID_DETAIL' not in prev:
+        return generated
+    # Bloques del mes recién generado, por cuenta.
+    accounts = re.findall(r'\n  (\w+): \{', generated)
+    for acc in accounts:
+        loc_gen, months_gen = _months(generated, acc)
+        gs, ge = months_gen[mid]
+        block = generated[gs:ge]
+        loc_prev, months_prev = _months(prev, acc)
+        if loc_prev is None:
+            # cuenta nueva: agregarla completa antes del cierre del objeto
+            a, _, ae = loc_gen
+            if generated[ae:ae + 1] == ',':
+                ae += 1
+            whole = generated[a:ae]
+            cut = prev.rindex('};')
+            prev = prev[:cut] + whole.strip('\n') + '\n' + prev[cut:]
+            continue
+        if mid in months_prev:               # ya existía: reemplazar
+            ps, pe = months_prev[mid]
+            prev = prev[:ps] + block + prev[pe:]
+        else:                                # mes nuevo: insertar al final de la cuenta
+            _, _, acc_end = loc_prev
+            ins = prev.rindex('\n    },', 0, acc_end) + len('\n    },')
+            prev = prev[:ins] + '\n' + block.rstrip() + prev[ins:]
+    return prev
 
 if __name__ == '__main__':
     main()

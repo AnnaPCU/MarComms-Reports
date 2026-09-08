@@ -65,6 +65,12 @@ export function PaidComparative() {
       <SectionHeader title={t.title} note={t.note} />
       <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3 text-[12px] leading-relaxed text-cu-dgrey shadow-cu">
         {t.disclaimer}
+        {rows.some((r) => r.mixedCurrency) && (
+          <>
+            <br />
+            {t.curDisclaimer(c)}
+          </>
+        )}
       </div>
 
       <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">

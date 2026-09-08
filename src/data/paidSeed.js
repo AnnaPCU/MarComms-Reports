@@ -12,6 +12,7 @@ export const PAID_CLIENTS = [
   { id: 'es', name: 'CU España' },
   { id: 'cuc', name: 'CU Canadá' },
   { id: 'psar', name: 'PS Argentina' },
+  { id: 'cuus', name: 'CU Estados Unidos' },
   // Solo Meta Ads GEO por ahora (ver src/data/paidMetaGeo.js).
   { id: 'cuar', name: 'CU Argentina' },
 ];
@@ -119,6 +120,22 @@ export const PAID_DB = {
         analysis:
           'Julio completo. Smeta logró la única conversión del mes de toda la cartera (37,33 EUR/lead, tasa 4,55%): es la campaña a proteger. GMP+ tuvo la mayor actividad (29 clics) y Biomasa un CTR excepcional (31,25%) con volumen mínimo. Forestal quedó sin clics. Total: 1.799 impresiones, 116 clics y 225,29 EUR.',
       },
+      m08: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 858, clicks: 67, ctr: 7.81, cpc: 2104.38, cost: 140993.7, currency: 'ARS', conversions: 0, convRate: 0.0, costPerConv: 0 },
+        campaigns: [
+          { name: 'Textile', impressions: 427, clicks: 27, ctr: 6.32, cpc: 1549.88, cost: 41846.78, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Forestal', impressions: 152, clicks: 18, ctr: 11.84, cpc: 2671.08, cost: 48079.37, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', impressions: 109, clicks: 6, ctr: 5.5, cpc: 1902.76, cost: 11416.53, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Bioenergía', impressions: 91, clicks: 10, ctr: 10.99, cpc: 2317.37, cost: 23173.69, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Plásticos', impressions: 69, clicks: 6, ctr: 8.7, cpc: 2746.22, cost: 16477.33, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Biomasa', impressions: 10, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'GMP+', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Agosto completo, primer mes reportado en pesos tras el cambio de cuenta. Textile lideró en alcance con 427 impresiones y 27 clics, mientras que Forestal fue la más efectiva en atracción (CTR 11,84%) y la de mayor gasto (48.079,37 ARS). Bioenergía sostuvo un CTR alto (10,99%) con volumen bajo. Biomasa tuvo 10 impresiones sin clics y GMP+ no registró impresiones. Sin conversiones en el mes. Total: 858 impresiones, 67 clics y 140.993,70 ARS.',
+      },
     },
   },
 
@@ -172,6 +189,24 @@ export const PAID_DB = {
         analysis:
           'Julio completo. IFS volvió a liderar los clics (43, CTR 20,87%) y Biomasa mostró el mejor CTR del mes (16,83%) con poco volumen. GMP+ concentró el mayor coste (69,62 EUR) sin conversiones. Mes sin conversiones registradas en la cuenta: revisar landing pages y llamados a la acción. Total: 3.320 impresiones, 246 clics y 428,91 EUR invertidos.',
       },
+      m08: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 4154, clicks: 170, ctr: 4.09, cpc: 2205.21, cost: 374884.93, currency: 'ARS', conversions: 1, convRate: 0.59, costPerConv: 374884.93 },
+        campaigns: [
+          { name: 'CAEs', impressions: 1913, clicks: 63, ctr: 3.29, cpc: 1368.58, cost: 86220.78, conversions: 1, convRate: 1.59, costPerConv: 86220.78 },
+          { name: 'IFS', impressions: 1008, clicks: 35, ctr: 3.47, cpc: 2360.11, cost: 82603.95, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Forestal', impressions: 393, clicks: 20, ctr: 5.09, cpc: 2707.28, cost: 54145.59, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Textile', impressions: 354, clicks: 25, ctr: 7.06, cpc: 2730.67, cost: 68266.8, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', impressions: 318, clicks: 8, ctr: 2.52, cpc: 3477.78, cost: 27822.23, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Plásticos', impressions: 77, clicks: 8, ctr: 10.39, cpc: 3281.1, cost: 26248.77, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Bioenergía', impressions: 69, clicks: 9, ctr: 13.04, cpc: 2707.19, cost: 24364.67, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Biomasa', impressions: 22, clicks: 2, ctr: 9.09, cpc: 2606.07, cost: 5212.14, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'GMP+', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Agosto completo, primer mes reportado en pesos tras el cambio de cuenta. CAEs aparece por primera vez en el reporte y lidera la cuenta: 1.913 impresiones, 63 clics y la única conversión del mes (coste por lead de 86.220,78 ARS). IFS aportó 1.008 impresiones y 35 clics con el segundo mayor gasto (82.603,95 ARS). Bioenergía tuvo el mejor CTR (13,04%) pero sobre apenas 69 impresiones, y GMP+ no registró impresiones. La campaña Car, activa en julio, no figura en el export de agosto. Total: 4.154 impresiones, 170 clics y 374.884,93 ARS.',
+      },
     },
   },
 
@@ -207,6 +242,20 @@ export const PAID_DB = {
         ],
         analysis:
           'Julio completo. Canada Gap lideró en clics (23, CTR 10,13%) y Smeta en coste (50,88 EUR) sin convertir. Forestry aportó el mayor alcance (535 impresiones) con CTR bajo (2,99%). Cannabis sin impresiones y Aqua/Fisheries casi sin actividad. Sin conversiones en el mes. Total: 1.128 impresiones, 65 clics y 142,90 EUR.',
+      },
+      m08: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 911, clicks: 62, ctr: 6.81, cpc: 4339.71, cost: 269062.08, currency: 'ARS', conversions: 1, convRate: 1.61, costPerConv: 269062.08 },
+        campaigns: [
+          { name: 'Forestry', impressions: 461, clicks: 34, ctr: 7.38, cpc: 4481.03, cost: 152355.05, conversions: 1, convRate: 2.94, costPerConv: 152355.05 },
+          { name: 'Canada Gap', impressions: 155, clicks: 14, ctr: 9.03, cpc: 3750.42, cost: 52505.87, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', impressions: 136, clicks: 4, ctr: 2.94, cpc: 4309.36, cost: 17237.42, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Aqua / Fisheries', impressions: 118, clicks: 8, ctr: 6.78, cpc: 4284.82, cost: 34278.57, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'GLOBALG.A.P.', impressions: 41, clicks: 2, ctr: 4.88, cpc: 6342.58, cost: 12685.17, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Agosto completo, primer mes reportado en pesos tras el cambio de cuenta. Forestry concentró la mitad de la cuenta: 461 impresiones, 34 clics y 152.355,05 ARS (57% del coste del mes), y aportó la única conversión, con un coste por lead de 152.355,05 ARS. Canada Gap fue la más eficiente en atracción (CTR 9,03% sobre 155 impresiones) y Smeta la de peor CTR (2,94%). Cannabis no figura en el export de agosto. Total: 911 impresiones, 62 clics y 269.062,08 ARS.',
       },
     },
   },
@@ -247,6 +296,42 @@ export const PAID_DB = {
         ],
         analysis:
           'Julio completo. Agricultura regenerativa lideró los clics (44, CPC 0,90 EUR) y ESG/Reportes el alcance (1.422 impresiones). Huella de agua sostuvo buen CTR (8,30%). Trazabilidad/EUDR y Abastecimiento sostenible casi sin actividad: revisar pujas y presupuesto. Sin conversiones en el mes. Total: 4.091 impresiones, 144 clics y 189,74 EUR.',
+      },
+      m08: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 11507, clicks: 503, ctr: 4.37, cpc: 696.07, cost: 350121.76, currency: 'ARS', conversions: 0, convRate: 0.0, costPerConv: 0 },
+        campaigns: [
+          { name: 'SuSo - Agricultura regenerativa', impressions: 5561, clicks: 348, ctr: 6.26, cpc: 297.03, cost: 103366.25, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSe - Huella de carbono / GEI', impressions: 2552, clicks: 69, ctr: 2.7, cpc: 1306.07, cost: 90118.53, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Bioenergía / Biocombustibles', impressions: 1981, clicks: 29, ctr: 1.46, cpc: 1525.44, cost: 44237.8, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSe - ESG / Reportes', impressions: 1029, clicks: 41, ctr: 3.98, cpc: 1622.94, cost: 66540.72, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSe - Huella de agua', impressions: 157, clicks: 9, ctr: 5.73, cpc: 3565.65, cost: 32090.81, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSo - Abastecimiento sostenible', impressions: 144, clicks: 5, ctr: 3.47, cpc: 1152.59, cost: 5762.95, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSo - Trazabilidad / EUDR', impressions: 75, clicks: 2, ctr: 2.67, cpc: 4002.35, cost: 8004.7, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'CeSu - Preparacion para certificaciones', impressions: 8, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Agosto completo, primer mes reportado en pesos tras el cambio de cuenta. SuSo - Agricultura regenerativa fue el motor del mes: 5.561 impresiones y 348 de los 503 clics de la cuenta (CTR 6,26%) al CPC más bajo (297,03 ARS). Le siguieron Huella de carbono / GEI (2.552 impresiones, 69 clics) y Bioenergía / Biocombustibles, que con 1.981 impresiones solo logró 29 clics (CTR 1,46%, el más bajo). CeSu - Preparación para certificaciones quedó casi sin actividad (8 impresiones). Sin conversiones en el mes. Total: 11.507 impresiones, 503 clics y 350.121,76 ARS.',
+      },
+    },
+  },
+
+  // CU Estados Unidos — cuenta nueva: arranca en agosto 2026 con las dos
+  // campañas de Organic (USDA NOP y PrimusGFS), creadas el 21/8.
+  cuus: {
+    name: 'CU Estados Unidos',
+    periods: {
+      m08: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 179, clicks: 12, ctr: 6.7, cpc: 7443.52, cost: 89322.29, currency: 'ARS', conversions: 0, convRate: 0.0, costPerConv: 0 },
+        campaigns: [
+          { name: 'Organic - USDA NOP', startedOn: '2026-08-21', impressions: 129, clicks: 8, ctr: 6.2, cpc: 7922.62, cost: 63380.93, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Organic - PrimusGFS', startedOn: '2026-08-21', impressions: 50, clicks: 4, ctr: 8.0, cpc: 6485.34, cost: 25941.36, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Primer mes de la cuenta. Las dos campañas se crearon el 21 de agosto, así que las métricas cubren 11 de los 31 días del mes y no son comparables con las de una cuenta en régimen. Organic - USDA NOP concentró el grueso de la actividad (129 impresiones, 8 clics, 63.380,93 ARS) y Organic - PrimusGFS el mejor CTR (8,00% sobre 50 impresiones). El gasto y todos los clics se produjeron entre el 24 y el 30 de agosto; ninguna de las dos registró actividad el 31. Sin conversiones todavía. Total: 179 impresiones, 12 clics y 89.322,29 ARS.',
       },
     },
   },

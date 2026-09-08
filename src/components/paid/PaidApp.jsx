@@ -6,6 +6,7 @@ import { usePaidMonthly } from '@/hooks/usePaidMonthly';
 import { MONTHS_2026 } from '@/constants/periods';
 import { hasData } from '@/utils/hasData';
 import { genPaidInsights, genPaidConclusions, genPaidNextSteps, campaignStatus } from '@/utils/paidInsights';
+import { campaignPartial } from '@/utils/campaignPartial';
 import { PAID_STR, MONTHS_EN } from '@/utils/paidI18n';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
@@ -63,14 +64,23 @@ function KpiRow({ d, currency, partial, t }) {
 }
 
 // Vista de UNA campaña (drill-down).
-function CampaignDetail({ c, currency, accName, periodLabel, t, lang, detailGroups }) {
+function CampaignDetail({ c, currency, accName, periodLabel, t, lang, detailGroups, period }) {
   const st = campaignStatus(c);
+  const part = campaignPartial(c, period);
   return (
     <>
       <SectionHeader title={`${t.campaignWord} — ${c.name}`} note={[accName, periodLabel].filter(Boolean).join(' · ')} />
       <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3 text-[12.5px] text-cu-dgrey shadow-cu">
         <strong className="text-cu-dblue">{t.statusWord}: {t.status[st.key]}.</strong> {t.statusText[st.key]}
       </div>
+      {part && (
+        <div className="mb-4 flex items-start gap-2 rounded-cu border border-amber-300 bg-amber-50 px-4 py-3 text-[12px] text-amber-800">
+          <CalendarClock className="mt-0.5 h-4 w-4 shrink-0" />
+          <span>
+            <strong>{t.cPartialTitle}</strong> {t.cPartialNote(part.dateLabel(lang), part.activeDays, part.totalDays)}
+          </span>
+        </div>
+      )}
       <KpiRow d={c} currency={currency} t={t} />
       <SectionHeader title={t.funnelSection} note={t.funnelNote} />
       <PaidFunnel totals={{ ...c, currency }} campaigns={[c]} lang={lang} />
@@ -148,7 +158,10 @@ export function PaidApp({ account, period }) {
 
   const campOptions = [
     { id: ALL, label: t.allCampaigns },
-    ...mo.campaigns.map((x) => ({ id: x.name, label: x.name })),
+    ...mo.campaigns.map((x) => {
+      const p = campaignPartial(x, period);
+      return { id: x.name, label: p ? `${x.name} · ${t.cPartialChip(p.activeDays)}` : x.name };
+    }),
     { id: CMP, label: t.cmpCampaigns },
   ];
 
@@ -187,6 +200,7 @@ export function PaidApp({ account, period }) {
           periodLabel={periodLabel}
           t={t}
           lang={lang}
+          period={period}
           detailGroups={(detail?.groups ?? []).filter((g) => g.camp === selected.name)}
         />
       ) : (
@@ -195,7 +209,7 @@ export function PaidApp({ account, period }) {
             title={t.insightsTitle}
             label={t.insightsLabel}
             subtitle={[accName, periodLabel, mo.channel].filter(Boolean).join(' · ')}
-            items={genPaidInsights(mo, lang)}
+            items={genPaidInsights(mo, lang, period)}
             actionLabel={t.actionLabel}
             emptyText={t.emptyInsights}
           />
@@ -231,7 +245,7 @@ export function PaidApp({ account, period }) {
           )}
 
           <SectionHeader title={t.tableSection} />
-          <CampaignsTable campaigns={mo.campaigns} currency={c} title={t.tableTitle(mo.channel || 'Google Ads')} lang={lang} />
+          <CampaignsTable campaigns={mo.campaigns} currency={c} title={t.tableTitle(mo.channel || 'Google Ads')} lang={lang} period={period} />
 
           <SectionHeader title={t.perfSection} />
           <ConclusionsPanel items={genPaidConclusions(mo, lang)} title={t.conclusionsTitle} />

@@ -5,8 +5,14 @@
 //  dashboard de referencia de Control Union.
 // ════════════════════════════════════════════════════════════════
 
-const eur = (v) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+import { PAID_STR } from '@/utils/paidI18n';
+import { campaignPartial } from '@/utils/campaignPartial';
+
+// Importe con la moneda REAL del período: las cuentas pasaron de EUR a ARS,
+// así que el símbolo no puede estar fijo.
+const cash = (v, cur) =>
+  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
+  ' ' + (cur || 'EUR');
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct = (v) =>
   Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
@@ -64,10 +70,14 @@ export function scoreCampaigns(mo) {
 }
 
 // ── Insights (4 tarjetas: tendencia + acción) · ES/EN ──
-export function genPaidInsights(mo, lang = 'es') {
+// `period` (opcional) habilita el aviso de campañas que arrancaron a mitad
+// de mes: sus totales no son comparables con los del resto.
+export function genPaidInsights(mo, lang = 'es', period = null) {
   if (!mo?.totals) return [];
   const en = lang === 'en';
+  const L = PAID_STR[lang];
   const t = mo.totals;
+  const cur = t.currency || 'EUR';
   const active = activeCampaigns(mo);
   const total = mo.campaigns?.length ?? 0;
   const noActivity = total - active.length;
@@ -86,13 +96,24 @@ export function genPaidInsights(mo, lang = 'es') {
     });
   }
 
+  // 1.b) Campañas que arrancaron a mitad de mes: aclararlo antes de comparar.
+  const partials = (mo.campaigns ?? [])
+    .map((c) => ({ c, p: campaignPartial(c, period) }))
+    .filter((x) => x.p);
+  if (partials.length) {
+    const detalle = partials
+      .map(({ c, p }) => L.cPartialInsight(c.name, p.dateLabel(lang), p.activeDays, p.totalDays))
+      .join(' · ');
+    ins.push({ m: `${L.cPartialTitle} ${detalle}.`, a: L.cPartialAction });
+  }
+
   // 2) Conversiones / eficiencia
   if ((t.conversions || 0) > 0) {
     const topConv = topBy(active, 'conversions');
     ins.push({
       m: en
-        ? `${numEs(t.conversions)} conversion/s in the period${topConv ? `, led by ${topConv.name}` : ''} — cost per lead of ${eur(t.costPerConv)}.`
-        : `${numEs(t.conversions)} conversión/es en el período${topConv ? `, liderada por ${topConv.name}` : ''} — coste por lead de ${eur(t.costPerConv)}.`,
+        ? `${numEs(t.conversions)} conversion/s in the period${topConv ? `, led by ${topConv.name}` : ''} — cost per lead of ${cash(t.costPerConv, cur)}.`
+        : `${numEs(t.conversions)} conversión/es en el período${topConv ? `, liderada por ${topConv.name}` : ''} — coste por lead de ${cash(t.costPerConv, cur)}.`,
       a: en
         ? `The lead-generation objective is working ➜ <strong>scale the converting campaign's budget</strong> and protect it from cuts.`
         : `El objetivo de generación de leads está funcionando ➜ <strong>escalar la inversión en la campaña que convierte</strong> y proteger su presupuesto ante recortes.`,
@@ -100,8 +121,8 @@ export function genPaidInsights(mo, lang = 'es') {
   } else {
     ins.push({
       m: en
-        ? `No conversions this month over ${numEs(t.clicks)} clicks and ${eur(t.cost)} spent.`
-        : `Sin conversiones en el mes sobre ${numEs(t.clicks)} clics y ${eur(t.cost)} invertidos.`,
+        ? `No conversions this month over ${numEs(t.clicks)} clicks and ${cash(t.cost, cur)} spent.`
+        : `Sin conversiones en el mes sobre ${numEs(t.clicks)} clics y ${cash(t.cost, cur)} invertidos.`,
       a: en
         ? `Traffic arrives but doesn't close ➜ <strong>review search intent, ad copy and the landing page</strong> of campaigns with clicks to improve conversion rate.`
         : `El tráfico llega pero no cierra ➜ <strong>revisar intención de búsqueda, textos de anuncio y la landing page</strong> de las campañas con clics para mejorar la tasa de conversión.`,
@@ -114,8 +135,8 @@ export function genPaidInsights(mo, lang = 'es') {
     const share = t.cost ? Math.round(((topCost.cost || 0) / t.cost) * 100) : 0;
     ins.push({
       m: en
-        ? `${topCost.name} concentrates ${share}% of the month's cost (${eur(topCost.cost)} of ${eur(t.cost)}).`
-        : `${topCost.name} concentra el ${share}% del coste del mes (${eur(topCost.cost)} de ${eur(t.cost)}).`,
+        ? `${topCost.name} concentrates ${share}% of the month's cost (${cash(topCost.cost, cur)} of ${cash(t.cost, cur)}).`
+        : `${topCost.name} concentra el ${share}% del coste del mes (${cash(topCost.cost, cur)} de ${cash(t.cost, cur)}).`,
       a: en
         ? `Spend is concentrated ➜ <strong>watch ${topCost.name}'s cost per click</strong> and consider reallocating budget to campaigns with better CTR and lower CPC.`
         : `La inversión está concentrada ➜ <strong>vigilar el coste por clic de ${topCost.name}</strong> y evaluar reasignar parte del presupuesto a campañas con mejor CTR y menor CPC.`,
@@ -160,6 +181,7 @@ export function genPaidConclusions(mo, lang = 'es') {
   if (!mo?.totals) return [];
   const en = lang === 'en';
   const t = mo.totals;
+  const cur = t.currency || 'EUR';
   const active = activeCampaigns(mo);
   const topClk = topBy(active, 'clicks');
   const topCost = topBy(active, 'cost');
@@ -174,16 +196,16 @@ export function genPaidConclusions(mo, lang = 'es') {
   out.push({
     label: en ? 'Cost efficiency' : 'Eficiencia de coste',
     text: en
-      ? `<strong>${eur(t.cost)}</strong> was spent at an average CPC of <strong>${eur(t.cpc)}</strong>.${topCost ? ` ${topCost.name} concentrated the highest spend.` : ''}`
-      : `Se invirtieron <strong>${eur(t.cost)}</strong> a un CPC medio de <strong>${eur(t.cpc)}</strong>.${topCost ? ` ${topCost.name} concentró el mayor gasto.` : ''}`,
+      ? `<strong>${cash(t.cost, cur)}</strong> was spent at an average CPC of <strong>${cash(t.cpc, cur)}</strong>.${topCost ? ` ${topCost.name} concentrated the highest spend.` : ''}`
+      : `Se invirtieron <strong>${cash(t.cost, cur)}</strong> a un CPC medio de <strong>${cash(t.cpc, cur)}</strong>.${topCost ? ` ${topCost.name} concentró el mayor gasto.` : ''}`,
   });
   out.push({
     label: en ? 'Conversion' : 'Conversión',
     text:
       (t.conversions || 0) > 0
         ? en
-          ? `<strong>${numEs(t.conversions)} lead/s</strong> at a cost per lead of <strong>${eur(t.costPerConv)}</strong> (conversion rate ${pct(t.convRate)}).`
-          : `<strong>${numEs(t.conversions)} lead/s</strong> a un coste por lead de <strong>${eur(t.costPerConv)}</strong> (tasa de conversión ${pct(t.convRate)}).`
+          ? `<strong>${numEs(t.conversions)} lead/s</strong> at a cost per lead of <strong>${cash(t.costPerConv, cur)}</strong> (conversion rate ${pct(t.convRate)}).`
+          : `<strong>${numEs(t.conversions)} lead/s</strong> a un coste por lead de <strong>${cash(t.costPerConv, cur)}</strong> (tasa de conversión ${pct(t.convRate)}).`
         : en
           ? `<strong>No conversions</strong> recorded in the period: the focus should be on improving traffic quality and the landing page.`
           : `<strong>Sin conversiones</strong> registradas en el período: el foco debe estar en mejorar la calidad del tráfico y la landing page.`,

@@ -19,6 +19,7 @@ import { CU, CHART_TOOLTIP, brandOf } from '@/constants/brand';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
 import { ChartCard } from '@/components/shared/ChartCard';
+import { Coins } from 'lucide-react';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { Glossary } from '@/components/shared/Glossary';
@@ -73,6 +74,11 @@ export function PaidAnnualReview({ account }) {
   const tt = year.totals;
   const monthLabel = (m) => (lang === 'en' ? (MONTHS_EN[m.id] ?? m.label) : m.label);
   const activeLabels = year.months.map((m) => monthLabel(m) + (m.partial ? t.partialMark : '')).join(' · ');
+  // Con monedas mezcladas, los gráficos e importes usan solo los meses de la
+  // moneda vigente (el servicio ya calculó los totales así).
+  const moneyIds = new Set((year.moneyMonths ?? year.months).map((m) => m.id));
+  const moneyLabels = year.months.filter((m) => moneyIds.has(m.id)).map(monthLabel).join(' · ');
+  const otherCur = (year.costByCurrency ?? []).filter((x) => x.currency !== c);
   const series = year.months.map((m) => ({
     name: monthLabel(m).slice(0, 3),
     cost: Number((m.cost || 0).toFixed(2)),
@@ -96,10 +102,31 @@ export function PaidAnnualReview({ account }) {
         <strong className="text-cu-dblue">{t.activeMonths(activeLabels)}</strong>
       </div>
 
+      {year.mixedCurrency && (
+        <div className="mb-4 flex items-start gap-2 rounded-cu border border-amber-300 bg-amber-50 px-4 py-3 text-[12px] text-amber-800">
+          <Coins className="mt-0.5 h-4 w-4 shrink-0" />
+          <span>
+            <strong>{t.curTitle}</strong>{' '}
+            {t.curNote(
+              c,
+              moneyLabels,
+              otherCur
+                .map((x) => t.curOther(money(x.cost, x.currency, lang), x.currency, x.months.map((m) => (lang === 'en' ? MONTHS_EN[m.id] ?? m.label : m.label)).join(', ')))
+                .join(' · '),
+            )}
+          </span>
+        </div>
+      )}
+
       <SectionHeader title={t.kpiSection} note={accName} />
       <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard label={tp.kImp} value={num(tt.impressions, lang)} delta={{ dir: 'flat', label: `CTR ${pct(tt.ctr, lang)}` }} />
-        <KpiCard label={tp.kClk} value={num(tt.clicks, lang)} delta={{ dir: 'flat', label: `CPC ${money(tt.cpc, c, lang)}` }} />
+        <KpiCard
+          label={tp.kClk}
+          value={num(tt.clicks, lang)}
+          delta={{ dir: 'flat', label: `CPC ${money(tt.cpc, c, lang)}` }}
+          footnote={year.mixedCurrency ? t.curChartNote(c, moneyLabels) : undefined}
+        />
         <KpiCard
           label={tp.kConv}
           value={num(tt.conversions, lang)}
@@ -112,14 +139,15 @@ export function PaidAnnualReview({ account }) {
           value={money(tt.cost, c, lang)}
           accent="amber"
           delta={(tt.conversions || 0) > 0 ? { dir: 'flat', label: `${money(tt.costPerConv, c, lang)}${tp.perLead}` } : { dir: 'flat', label: tp.noConv }}
+          footnote={year.mixedCurrency ? t.curChartNote(c, moneyLabels) : undefined}
         />
       </div>
 
       <SectionHeader title={t.evolSection} note={t.evolNote} />
       <div className="mb-5 grid gap-3 lg:grid-cols-2">
-        <ChartCard title={t.chCost} subtitle={c}>
+        <ChartCard title={t.chCost} subtitle={year.mixedCurrency ? t.curChartNote(c, moneyLabels) : c}>
           <ResponsiveContainer>
-            <BarChart data={series} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+            <BarChart data={series.filter((_, i) => moneyIds.has(year.months[i].id))} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="0" stroke={CU.border2} vertical={false} />
               <XAxis dataKey="name" tick={{ fontSize: 11, fill: CU.grey }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 10, fill: CU.grey }} axisLine={false} tickLine={false} width={52} />
@@ -178,10 +206,10 @@ export function PaidAnnualReview({ account }) {
                 <td className={tdCls}>{num(m.impressions, lang)}</td>
                 <td className={tdCls}>{num(m.clicks, lang)}</td>
                 <td className={tdCls}>{pct(m.ctr, lang)}</td>
-                <td className={tdCls}>{money(m.cpc, c, lang)}</td>
-                <td className={tdCls}>{money(m.cost, c, lang)}</td>
+                <td className={tdCls}>{money(m.cpc, m.currency || c, lang)}</td>
+                <td className={tdCls}>{money(m.cost, m.currency || c, lang)}</td>
                 <td className={`${tdCls} font-medium text-cu-dblue`}>{num(m.conversions, lang)}</td>
-                <td className={tdCls}>{(m.conversions || 0) > 0 ? money(m.costPerConv, c, lang) : '—'}</td>
+                <td className={tdCls}>{(m.conversions || 0) > 0 ? money(m.costPerConv, m.currency || c, lang) : '—'}</td>
               </tr>
             ))}
             <tr className="bg-cu-bg/60">
@@ -189,8 +217,8 @@ export function PaidAnnualReview({ account }) {
               <td className={`${tdCls} font-bold`}>{num(tt.impressions, lang)}</td>
               <td className={`${tdCls} font-bold`}>{num(tt.clicks, lang)}</td>
               <td className={`${tdCls} font-bold`}>{pct(tt.ctr, lang)}</td>
-              <td className={`${tdCls} font-bold`}>{money(tt.cpc, c, lang)}</td>
-              <td className={`${tdCls} font-bold`}>{money(tt.cost, c, lang)}</td>
+              <td className={`${tdCls} font-bold`}>{money(tt.cpc, c, lang)}{year.mixedCurrency ? ' *' : ''}</td>
+              <td className={`${tdCls} font-bold`}>{money(tt.cost, c, lang)}{year.mixedCurrency ? ' *' : ''}</td>
               <td className={`${tdCls} font-bold text-cu-dblue`}>{num(tt.conversions, lang)}</td>
               <td className={`${tdCls} font-bold`}>{(tt.conversions || 0) > 0 ? money(tt.costPerConv, c, lang) : '—'}</td>
             </tr>
@@ -198,7 +226,16 @@ export function PaidAnnualReview({ account }) {
         </table>
       </div>
 
-      <SectionHeader title={t.campSection} note={t.campNote(year.campaigns.length)} />
+      {year.mixedCurrency && (
+        <p className="-mt-3 mb-5 text-[10.5px] italic leading-snug text-cu-grey">
+          * {t.curChartNote(c, moneyLabels)}
+        </p>
+      )}
+
+      <SectionHeader
+        title={t.campSection}
+        note={year.mixedCurrency ? t.curCampNote(moneyLabels) : t.campNote(year.campaigns.length)}
+      />
       <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
         <table className="w-full min-w-[680px] border-collapse">
           <thead>
