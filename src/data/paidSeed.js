@@ -4,6 +4,10 @@
 //    Junio es PARCIAL (1–12 jun). Se muestran las 7 campañas, incluso las
 //    que estuvieron habilitadas sin actividad (se aclara y explica).
 //  · España: Abril 2026 (del reporte original IFS / GMP+).
+//  · CU España: la campaña «Car» pasó a llamarse «CAEs» en agosto 2026. Es la
+//    misma campaña (mismos grupos: Certificados y Sistema CAE / Verificación y
+//    Actuaciones CAE), así que los meses previos van con el nombre nuevo para
+//    que el acumulado anual no la parta en dos.
 //  Las métricas son la parte firme. Seed temporal hasta que el import persista.
 // ════════════════════════════════════════════════════════════════
 
@@ -166,10 +170,10 @@ export const PAID_DB = {
           { name: 'Bioenergía', impressions: 183, clicks: 15, ctr: 8.2, cpc: 1.47, cost: 22.11, conversions: 0, convRate: 0, costPerConv: 0 },
           { name: 'Smeta', impressions: 331, clicks: 13, ctr: 3.93, cpc: 1.38, cost: 17.92, conversions: 0, convRate: 0, costPerConv: 0 },
           { name: 'Biomasa', impressions: 69, clicks: 8, ctr: 11.59, cpc: 1.22, cost: 9.73, conversions: 0, convRate: 0, costPerConv: 0 },
-          { name: 'Car', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'CAEs', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
         ],
         analysis:
-          'En junio, IFS volvió a ser la única campaña con conversión (1 conversión a 63,10 EUR) sobre 55 clics y un CTR del 15,03% — la mejor señal del mes. GMP+ concentró el mayor coste (90,72 EUR) con 31 clics pero sin conversiones. Forestal, Textile, Plásticos, Bioenergía, Smeta y Biomasa tuvieron actividad moderada sin conversiones, y "Car" quedó sin impresiones. Total: 2.692 impresiones, 196 clics y 301,65 EUR invertidos.',
+          'En junio, IFS volvió a ser la única campaña con conversión (1 conversión a 63,10 EUR) sobre 55 clics y un CTR del 15,03% — la mejor señal del mes. GMP+ concentró el mayor coste (90,72 EUR) con 31 clics pero sin conversiones. Forestal, Textile, Plásticos, Bioenergía, Smeta y Biomasa tuvieron actividad moderada sin conversiones, y CAEs (que hasta julio se llamaba "Car") quedó sin impresiones. Total: 2.692 impresiones, 196 clics y 301,65 EUR invertidos.',
       },
       m07: {
         channel: 'Google Ads Search',
@@ -177,7 +181,7 @@ export const PAID_DB = {
         totals: { impressions: 3320, clicks: 246, ctr: 7.41, cpc: 1.74, cost: 428.91, currency: 'EUR', conversions: 0, convRate: 0, costPerConv: 0 },
         campaigns: [
           { name: 'GMP+', impressions: 619, clicks: 26, ctr: 4.2, cpc: 2.68, cost: 69.62, conversions: 0, convRate: 0, costPerConv: 0 },
-          { name: 'Car', impressions: 590, clicks: 21, ctr: 3.56, cpc: 2.19, cost: 46.01, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'CAEs', impressions: 590, clicks: 21, ctr: 3.56, cpc: 2.19, cost: 46.01, conversions: 0, convRate: 0, costPerConv: 0 },
           { name: 'Textile', impressions: 455, clicks: 30, ctr: 6.59, cpc: 1.58, cost: 47.26, conversions: 0, convRate: 0, costPerConv: 0 },
           { name: 'Forestal', impressions: 409, clicks: 33, ctr: 8.07, cpc: 1.51, cost: 49.97, conversions: 0, convRate: 0, costPerConv: 0 },
           { name: 'Plásticos', impressions: 366, clicks: 25, ctr: 6.83, cpc: 1.88, cost: 46.98, conversions: 0, convRate: 0, costPerConv: 0 },
@@ -205,7 +209,7 @@ export const PAID_DB = {
           { name: 'GMP+', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
         ],
         analysis:
-          'Agosto completo, primer mes reportado en pesos tras el cambio de cuenta. CAEs aparece por primera vez en el reporte y lidera la cuenta: 1.913 impresiones, 63 clics y la única conversión del mes (coste por lead de 86.220,78 ARS). IFS aportó 1.008 impresiones y 35 clics con el segundo mayor gasto (82.603,95 ARS). Bioenergía tuvo el mejor CTR (13,04%) pero sobre apenas 69 impresiones, y GMP+ no registró impresiones. La campaña Car, activa en julio, no figura en el export de agosto. Total: 4.154 impresiones, 170 clics y 374.884,93 ARS.',
+          'Agosto completo, primer mes reportado en pesos tras el cambio de cuenta. CAEs (renombrada desde "Car" en agosto) lidera la cuenta: 1.913 impresiones, 63 clics y la única conversión del mes, con un coste por lead de 86.220,78 ARS — su primer resultado tras dos meses sin convertir. IFS aportó 1.008 impresiones y 35 clics con el segundo mayor gasto (82.603,95 ARS). Bioenergía tuvo el mejor CTR (13,04%) pero sobre apenas 69 impresiones, y GMP+ no registró impresiones. Total: 4.154 impresiones, 170 clics y 374.884,93 ARS.',
       },
     },
   },

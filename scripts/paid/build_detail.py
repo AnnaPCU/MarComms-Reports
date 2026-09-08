@@ -32,7 +32,10 @@ def acc_and_camp(camp_full):
         if camp_full.startswith(pref):
             short = re.sub(r'^' + re.escape(pref) + r'\s*-?\s*', '', camp_full)
             short = re.sub(r'\s*-\s*S(EARCH|earch)$', '', short).strip()
-            FIX = {'Plasticos': 'Plásticos', 'Bioenergia': 'Bioenergía',
+            # 'Car' se renombró a 'CAEs' en agosto 2026: si se reprocesa un mes
+            # viejo, el nombre tiene que quedar unificado igual.
+            FIX = {'Car': 'CAEs',
+                   'Plasticos': 'Plásticos', 'Bioenergia': 'Bioenergía',
                    'Preparacion para certificaciones': 'Preparación para certificaciones',
                    'Bioenergia / Biocombustibles': 'Bioenergía / Biocombustibles'}
             return a, FIX.get(short, short)
