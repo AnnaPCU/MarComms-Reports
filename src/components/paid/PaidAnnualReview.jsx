@@ -74,13 +74,22 @@ export function PaidAnnualReview({ account }) {
   const tt = year.totals;
   const monthLabel = (m) => (lang === 'en' ? (MONTHS_EN[m.id] ?? m.label) : m.label);
   const activeLabels = year.months.map((m) => monthLabel(m) + (m.partial ? t.partialMark : '')).join(' · ');
-  // Con monedas mezcladas, los gráficos e importes usan solo los meses de la
-  // moneda vigente (el servicio ya calculó los totales así).
-  const moneyIds = new Set((year.moneyMonths ?? year.months).map((m) => m.id));
-  const moneyLabels = year.months.filter((m) => moneyIds.has(m.id)).map(monthLabel).join(' · ');
-  const otherCur = (year.costByCurrency ?? []).filter((x) => x.currency !== c);
+  // Monedas mezcladas: los importes se suman POR MONEDA (nunca se convierten)
+  // y el año se muestra completo. `sum` arma esa sumatoria para mostrarla.
+  const byCur = year.costByCurrency ?? [{ currency: c, cost: tt.cost }];
+  const sum = (list, key = 'cost') =>
+    (list ?? [])
+      .filter((x) => (x[key] || 0) > 0)
+      .map((x) => money(x[key], x.currency, lang))
+      .join('  +  ') || money(0, c, lang);
+  const curMonths = byCur
+    .map((x) => t.curOfMonths(x.currency, x.months.map((m) => (lang === 'en' ? MONTHS_EN[m.id] ?? m.label : m.label)).join(', ')))
+    .join(' · ');
+  // Serie de coste con una clave por moneda: cada mes aporta solo a la suya,
+  // así el gráfico muestra todo el año con una escala por moneda.
   const series = year.months.map((m) => ({
     name: monthLabel(m).slice(0, 3),
+    ...Object.fromEntries(byCur.map((x) => [`cost_${x.currency}`, (m.currency || c) === x.currency ? Number((m.cost || 0).toFixed(2)) : null])),
     cost: Number((m.cost || 0).toFixed(2)),
     clicks: m.clicks || 0,
     conversions: m.conversions || 0,
@@ -107,13 +116,7 @@ export function PaidAnnualReview({ account }) {
           <Coins className="mt-0.5 h-4 w-4 shrink-0" />
           <span>
             <strong>{t.curTitle}</strong>{' '}
-            {t.curNote(
-              c,
-              moneyLabels,
-              otherCur
-                .map((x) => t.curOther(money(x.cost, x.currency, lang), x.currency, x.months.map((m) => (lang === 'en' ? MONTHS_EN[m.id] ?? m.label : m.label)).join(', ')))
-                .join(' · '),
-            )}
+            {t.curNote(curMonths)}
           </span>
         </div>
       )}
@@ -124,8 +127,8 @@ export function PaidAnnualReview({ account }) {
         <KpiCard
           label={tp.kClk}
           value={num(tt.clicks, lang)}
-          delta={{ dir: 'flat', label: `CPC ${money(tt.cpc, c, lang)}` }}
-          footnote={year.mixedCurrency ? t.curChartNote(c, moneyLabels) : undefined}
+          delta={{ dir: 'flat', label: `CPC ${year.mixedCurrency ? sum(byCur, 'cpc') : money(tt.cpc, c, lang)}` }}
+          footnote={year.mixedCurrency ? t.curFoot : undefined}
         />
         <KpiCard
           label={tp.kConv}
@@ -136,23 +139,61 @@ export function PaidAnnualReview({ account }) {
         />
         <KpiCard
           label={tp.kCost}
-          value={money(tt.cost, c, lang)}
+          value={
+            year.mixedCurrency ? (
+              <span className="flex flex-col gap-1 text-[21px] leading-none">
+                {byCur.map((x) => (
+                  <span key={x.currency}>{money(x.cost, x.currency, lang)}</span>
+                ))}
+              </span>
+            ) : (
+              money(tt.cost, c, lang)
+            )
+          }
           accent="amber"
-          delta={(tt.conversions || 0) > 0 ? { dir: 'flat', label: `${money(tt.costPerConv, c, lang)}${tp.perLead}` } : { dir: 'flat', label: tp.noConv }}
-          footnote={year.mixedCurrency ? t.curChartNote(c, moneyLabels) : undefined}
+          delta={
+            (tt.conversions || 0) > 0
+              ? { dir: 'flat', label: `${year.mixedCurrency ? sum(byCur, 'costPerConv') : money(tt.costPerConv, c, lang)}${tp.perLead}` }
+              : { dir: 'flat', label: tp.noConv }
+          }
+          footnote={year.mixedCurrency ? t.curFoot : undefined}
         />
       </div>
 
       <SectionHeader title={t.evolSection} note={t.evolNote} />
       <div className="mb-5 grid gap-3 lg:grid-cols-2">
-        <ChartCard title={t.chCost} subtitle={year.mixedCurrency ? t.curChartNote(c, moneyLabels) : c}>
+        <ChartCard
+          title={t.chCost}
+          subtitle={year.mixedCurrency ? t.curChartNote(byCur.map((x) => x.currency).join(' · ')) : c}
+        >
           <ResponsiveContainer>
-            <BarChart data={series.filter((_, i) => moneyIds.has(year.months[i].id))} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+            <BarChart data={series} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="0" stroke={CU.border2} vertical={false} />
               <XAxis dataKey="name" tick={{ fontSize: 11, fill: CU.grey }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 10, fill: CU.grey }} axisLine={false} tickLine={false} width={52} />
-              <Tooltip {...CHART_TOOLTIP} formatter={(v) => [money(v, c, lang), t.costLbl]} />
-              <Bar dataKey="cost" fill={CU.cyan} radius={[4, 4, 0, 0]} maxBarSize={26} />
+              {byCur.map((x, i) => (
+                <YAxis
+                  key={x.currency}
+                  yAxisId={x.currency}
+                  orientation={i === 0 ? 'left' : 'right'}
+                  tick={{ fontSize: 10, fill: CU.grey }}
+                  axisLine={false}
+                  tickLine={false}
+                  width={52}
+                />
+              ))}
+              <Tooltip {...CHART_TOOLTIP} formatter={(v, k) => [money(v, String(k), lang), t.costLbl]} />
+              {year.mixedCurrency && <Legend wrapperStyle={{ fontSize: 11 }} />}
+              {byCur.map((x, i) => (
+                <Bar
+                  key={x.currency}
+                  yAxisId={x.currency}
+                  dataKey={`cost_${x.currency}`}
+                  name={x.currency}
+                  fill={i === 0 ? CU.cyan : CU.dblue}
+                  radius={[4, 4, 0, 0]}
+                  maxBarSize={26}
+                />
+              ))}
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -217,10 +258,12 @@ export function PaidAnnualReview({ account }) {
               <td className={`${tdCls} font-bold`}>{num(tt.impressions, lang)}</td>
               <td className={`${tdCls} font-bold`}>{num(tt.clicks, lang)}</td>
               <td className={`${tdCls} font-bold`}>{pct(tt.ctr, lang)}</td>
-              <td className={`${tdCls} font-bold`}>{money(tt.cpc, c, lang)}{year.mixedCurrency ? ' *' : ''}</td>
-              <td className={`${tdCls} font-bold`}>{money(tt.cost, c, lang)}{year.mixedCurrency ? ' *' : ''}</td>
+              <td className={`${tdCls} font-bold`}>{year.mixedCurrency ? sum(byCur, 'cpc') : money(tt.cpc, c, lang)}{year.mixedCurrency ? ' *' : ''}</td>
+              <td className={`${tdCls} font-bold`}>{year.mixedCurrency ? sum(byCur) : money(tt.cost, c, lang)}{year.mixedCurrency ? ' *' : ''}</td>
               <td className={`${tdCls} font-bold text-cu-dblue`}>{num(tt.conversions, lang)}</td>
-              <td className={`${tdCls} font-bold`}>{(tt.conversions || 0) > 0 ? money(tt.costPerConv, c, lang) : '—'}</td>
+              <td className={`${tdCls} font-bold`}>
+                {(tt.conversions || 0) > 0 ? (year.mixedCurrency ? sum(byCur, 'costPerConv') : money(tt.costPerConv, c, lang)) : '—'}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -228,14 +271,11 @@ export function PaidAnnualReview({ account }) {
 
       {year.mixedCurrency && (
         <p className="-mt-3 mb-5 text-[10.5px] italic leading-snug text-cu-grey">
-          * {t.curChartNote(c, moneyLabels)}
+          * {t.curTotalNote}
         </p>
       )}
 
-      <SectionHeader
-        title={t.campSection}
-        note={year.mixedCurrency ? t.curCampNote(moneyLabels) : t.campNote(year.campaigns.length)}
-      />
+      <SectionHeader title={t.campSection} note={t.campNote(year.campaigns.length)} />
       <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
         <table className="w-full min-w-[680px] border-collapse">
           <thead>
@@ -257,7 +297,7 @@ export function PaidAnnualReview({ account }) {
                 <td className={tdCls}>{num(cp.impressions, lang)}</td>
                 <td className={tdCls}>{num(cp.clicks, lang)}</td>
                 <td className={tdCls}>{pct(cp.ctr, lang)}</td>
-                <td className={tdCls}>{money(cp.cost, c, lang)}</td>
+                <td className={tdCls}>{year.mixedCurrency ? sum(cp.costByCurrency) : money(cp.cost, c, lang)}</td>
                 <td className={`${tdCls} font-medium text-cu-dblue`}>{num(cp.conversions, lang)}</td>
               </tr>
             ))}

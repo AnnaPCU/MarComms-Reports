@@ -74,20 +74,26 @@ export function getYear(accountId) {
 
   // ── Cambio de moneda ──
   // La cuenta pasó de EUR a ARS en agosto 2026 (cambio de cuenta de Google
-  // Ads). Los importes de monedas distintas NO se suman: los volúmenes
-  // (impresiones, clics, conversiones) son de todo el año, mientras que
-  // coste, CPC y coste/conversión se calculan solo sobre los meses de la
-  // moneda vigente — la más reciente. Nunca se convierte a otra moneda.
+  // Ads). El resumen cubre igual el año completo: los volúmenes se suman
+  // normalmente y los importes se suman POR MONEDA, sin convertir nunca de
+  // una a otra (`costByCurrency` es esa sumatoria). `totals.cost` guarda el
+  // acumulado de la moneda vigente, que es lo que usan los gráficos y la
+  // comparativa entre cuentas, donde hace falta un único número.
   const curOf = (m) => m.currency || 'EUR';
   const currency = curOf(months[months.length - 1]);
-  const moneyMonths = months.filter((m) => curOf(m) === currency);
   const currencies = [...new Set(months.map(curOf))];
   const mixedCurrency = currencies.length > 1;
+  const moneyMonths = months.filter((m) => curOf(m) === currency);
   const costByCurrency = currencies.map((cur) => {
     const ms = months.filter((m) => curOf(m) === cur);
+    const a = aggTotals(ms);
     return {
       currency: cur,
-      cost: ms.reduce((a, m) => a + (m.cost || 0), 0),
+      cost: a.cost,
+      clicks: a.clicks,
+      conversions: a.conversions,
+      cpc: a.cpc,
+      costPerConv: a.costPerConv,
       months: ms.map((m) => ({ id: m.id, label: m.label })),
     };
   });
@@ -99,25 +105,35 @@ export function getYear(accountId) {
   totals.costPerConv = money.costPerConv;
   totals.currency = currency;
 
-  // Campañas acumuladas del año (por nombre, sumando los meses activos).
-  // Con monedas mezcladas se acumulan SOLO los meses de la moneda vigente,
-  // para que cada fila sea internamente coherente (volumen e importe del
-  // mismo conjunto de meses).
-  const campaignMonths = new Set(moneyMonths.map((m) => m.id));
+  // Campañas acumuladas del año (por nombre, todos los meses con datos).
+  // El importe se acumula por moneda para no sumar euros con pesos.
   const byName = {};
   for (const p of MONTHS_2026) {
     const per = acc.periods[p.id];
-    if (!per || !campaignMonths.has(p.id)) continue;
+    if (!per) continue;
+    const cur = per.totals?.currency || 'EUR';
     for (const c of per.campaigns) {
-      const e = (byName[c.name] ??= { name: c.name, impressions: 0, clicks: 0, cost: 0, conversions: 0, months: 0 });
+      const e = (byName[c.name] ??= { name: c.name, impressions: 0, clicks: 0, conversions: 0, months: 0, byCur: {} });
       e.impressions += c.impressions || 0;
       e.clicks += c.clicks || 0;
-      e.cost += c.cost || 0;
       e.conversions += c.conversions || 0;
       e.months++;
+      e.byCur[cur] = (e.byCur[cur] ?? 0) + (c.cost || 0);
     }
   }
-  const campaigns = Object.values(byName).map(derive).sort((a, b) => b.cost - a.cost);
+  const campaigns = Object.values(byName)
+    .map((e) => ({
+      name: e.name,
+      impressions: e.impressions,
+      clicks: e.clicks,
+      conversions: e.conversions,
+      months: e.months,
+      ctr: e.impressions ? (e.clicks / e.impressions) * 100 : 0,
+      // Importe en la moneda vigente (ordena la tabla) + sumatoria por moneda.
+      cost: e.byCur[currency] ?? 0,
+      costByCurrency: currencies.filter((cur) => e.byCur[cur] != null).map((cur) => ({ currency: cur, cost: e.byCur[cur] })),
+    }))
+    .sort((a, b) => b.cost - a.cost || b.impressions - a.impressions);
 
   const first = acc.periods[months[0].id];
   const geo = listGeoPeriods()

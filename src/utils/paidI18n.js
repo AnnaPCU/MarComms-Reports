@@ -646,11 +646,12 @@ export const YEAR_STR = {
     activeMonths: (labels) => `Meses con datos: ${labels}`,
     // Cambio de moneda de la cuenta (EUR → ARS en agosto 2026).
     curTitle: 'La cuenta cambió de moneda durante el año.',
-    curNote: (cur, meses, resto) =>
-      `Los importes de este resumen corresponden solo a los meses en ${cur} (${meses}); ${resto} no se suman porque no son comparables ni se convierten. Impresiones, clics y conversiones sí son del año completo.`,
-    curOther: (cost, cur, meses) => `${cost} en ${meses}`,
-    curChartNote: (cur, meses) => `${cur} · solo ${meses}`,
-    curCampNote: (meses) => `Importes y volúmenes de ${meses} (los meses en otra moneda no se acumulan)`,
+    curNote: (detalle) =>
+      `El resumen cubre el año completo: los volúmenes se suman normalmente y los importes se suman por moneda, sin convertir de una a otra (${detalle}). En la tabla, cada mes conserva la moneda con la que se reportó.`,
+    curOfMonths: (cur, meses) => `${cur} en ${meses}`,
+    curFoot: 'Suma por moneda — no se convierten entre sí',
+    curTotalNote: 'Los importes son la suma por moneda de todos los meses del año; no se convierte de una moneda a otra.',
+    curChartNote: (cures) => `Una escala por moneda: ${cures}`,
     partialMark: ' (parcial)',
     kpiSection: 'Indicadores del Año — Acumulado',
     evolSection: 'Evolución Mensual',
@@ -674,11 +675,12 @@ export const YEAR_STR = {
     activeMonths: (labels) => `Months with data: ${labels}`,
     // Account currency change (EUR → ARS in August 2026).
     curTitle: 'The account changed currency during the year.',
-    curNote: (cur, meses, resto) =>
-      `The amounts in this summary cover only the months in ${cur} (${meses}); ${resto} are not added because they are neither comparable nor converted. Impressions, clicks and conversions do cover the full year.`,
-    curOther: (cost, cur, meses) => `${cost} in ${meses}`,
-    curChartNote: (cur, meses) => `${cur} · ${meses} only`,
-    curCampNote: (meses) => `Amounts and volumes from ${meses} (months in another currency are not accumulated)`,
+    curNote: (detalle) =>
+      `The summary covers the full year: volumes add up normally and amounts add up per currency, never converted from one into another (${detalle}). In the table, each month keeps the currency it was reported in.`,
+    curOfMonths: (cur, meses) => `${cur} in ${meses}`,
+    curFoot: 'Sum per currency — never converted between them',
+    curTotalNote: 'Amounts are the per-currency sum of every month of the year; no currency is converted into another.',
+    curChartNote: (cures) => `One scale per currency: ${cures}`,
     partialMark: ' (partial)',
     kpiSection: 'Year Indicators — Accumulated',
     evolSection: 'Monthly Evolution',
@@ -704,8 +706,8 @@ export const CMP_STR = {
     note: 'Google Ads · acumulado de los meses con datos de cada cuenta',
     disclaimer:
       'Cada cuenta estuvo activa en meses distintos: la comparación es sobre el acumulado del año de cada una, con sus meses activos a la vista. No es una comparación mes a mes.',
-    curDisclaimer: (cur) =>
-      `Las cuentas cambiaron de moneda durante el año: los importes acumulan solo los meses en ${cur} (no se convierten monedas), mientras que impresiones, clics y conversiones son de todos los meses cargados.`,
+    curDisclaimer:
+      'Alguna cuenta cambió de moneda durante el año: los importes se muestran sumados por moneda, sin convertir de una a otra. Los gráficos de coste y CPC usan solo la moneda vigente, porque no se pueden graficar dos monedas en una misma escala.',
     cardMonths: (labels) => `Meses: ${labels}`,
     chCost: 'Inversión acumulada', chClicks: 'Clics acumulados',
     chConv: 'Conversiones acumuladas', chCpc: 'CPC promedio',
@@ -719,8 +721,8 @@ export const CMP_STR = {
     note: 'Google Ads · accumulated over each account\'s months with data',
     disclaimer:
       'Each account was active in different months: the comparison is over each one\'s accumulated year, with its active months in sight. It is not a month-by-month comparison.',
-    curDisclaimer: (cur) =>
-      `The accounts changed currency during the year: amounts accumulate only the months in ${cur} (currencies are never converted), while impressions, clicks and conversions cover every loaded month.`,
+    curDisclaimer:
+      'Some accounts changed currency during the year: amounts are shown summed per currency, never converted from one into another. The cost and CPC charts use only the current currency, since two currencies cannot share one scale.',
     cardMonths: (labels) => `Months: ${labels}`,
     chCost: 'Accumulated spend', chClicks: 'Accumulated clicks',
     chConv: 'Accumulated conversions', chCpc: 'Average CPC',

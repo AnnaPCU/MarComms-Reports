@@ -26,6 +26,13 @@ export function PaidComparative() {
   const geoAccounts = listGeoAccounts();
   const c = rows[0]?.currency || 'EUR';
 
+  // Importe de una cuenta: sumatoria por moneda cuando cambió durante el año.
+  const cost = (r, key = 'cost') =>
+    (r.costByCurrency ?? [{ currency: r.currency, cost: r.totals[key] }])
+      .filter((x) => (x[key] ?? x.cost ?? 0) > 0)
+      .map((x) => money(x[key] ?? x.cost, x.currency, lang))
+      .join('  +  ') || money(0, r.currency || c, lang);
+
   const monthLabels = (r) =>
     r.months.map((m) => (lang === 'en' ? (MONTHS_EN[m.id] ?? m.label) : m.label).slice(0, 3)).join(' · ');
   const chart = rows.map((r) => ({
@@ -68,7 +75,7 @@ export function PaidComparative() {
         {rows.some((r) => r.mixedCurrency) && (
           <>
             <br />
-            {t.curDisclaimer(c)}
+            {t.curDisclaimer}
           </>
         )}
       </div>
@@ -78,7 +85,9 @@ export function PaidComparative() {
           <div key={r.id} className="rounded-cu border border-cu-border bg-white px-4 py-3.5 shadow-cu" style={{ borderTop: `3px solid ${PAL[i % PAL.length]}` }}>
             <div className="mb-1 text-[11.5px] font-bold leading-tight text-cu-dblue">{r.name}</div>
             <div className="mb-2 text-[9.5px] text-cu-grey">{t.cardMonths(monthLabels(r))}</div>
-            <div className="text-[19px] font-bold leading-none text-cu-dblue">{money(r.totals.cost, c, lang)}</div>
+            <div className={`font-bold leading-none text-cu-dblue ${r.mixedCurrency ? 'text-[13px] leading-tight' : 'text-[19px]'}`}>
+              {cost(r)}
+            </div>
             <div className="mt-1.5 text-[10.5px] text-cu-grey">
               {num(r.totals.clicks, lang)} clics · CTR {pct(r.totals.ctr, lang)} ·{' '}
               <span className="font-bold text-cu-dblue">{num(r.totals.conversions, lang)} conv.</span>
@@ -117,8 +126,8 @@ export function PaidComparative() {
                 <td className={tdCls}>{num(r.totals.impressions, lang)}</td>
                 <td className={tdCls}>{num(r.totals.clicks, lang)}</td>
                 <td className={tdCls}>{pct(r.totals.ctr, lang)}</td>
-                <td className={tdCls}>{money(r.totals.cpc, c, lang)}</td>
-                <td className={tdCls}>{money(r.totals.cost, c, lang)}</td>
+                <td className={tdCls}>{cost(r, 'cpc')}</td>
+                <td className={tdCls}>{cost(r)}</td>
                 <td className={`${tdCls} font-medium text-cu-dblue`}>{num(r.totals.conversions, lang)}</td>
               </tr>
             ))}
