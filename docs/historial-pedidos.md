@@ -1272,3 +1272,8 @@
 >
 > Procesá las métricas nuevas de Social Media para Agosto
 
+
+**#78**
+
+> que paid arranque en agosto, si
+

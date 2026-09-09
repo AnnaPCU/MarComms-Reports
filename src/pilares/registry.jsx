@@ -51,7 +51,7 @@ export const REGISTRY = {
       return list;
     },
     periodFilterLabel: 'Período/Campaña',
-    defaultPeriod: 'm07', // Julio 2026: último mes completo cargado
+    defaultPeriod: 'm08', // Agosto 2026: último mes cargado
     hasDataFor: paid.hasDataFor,
   },
   website: {
