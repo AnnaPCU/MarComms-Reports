@@ -1,69 +1,70 @@
-# Reportes MarComms — Control Union
+# Reportes MarComms
 
-Dashboard multi-pilar de analytics de marketing para Control Union. App SPA
-React + Vite + Tailwind, backend Supabase, deploy en Vercel.
+Dashboard multi-pilar de analytics de marketing que produce el equipo de
+**MarComms** (agencia interna de marketing digital del grupo PCU) para
+**Control Union** y **Peterson Solutions**.
 
-> ⚠️ Proyecto independiente del Marcomms Hub — no integrar todavía (ver `CLAUDE.md`).
+SPA de React + Vite + Tailwind, **sin backend ni base de datos**: los datos viven
+en el código y viajan en el bundle. Deploy en Vercel desde `main`.
+
+🔗 <https://mar-comms-reports.vercel.app/> · login compartido del equipo.
+
+> ⚠️ Proyecto independiente del MarComms Hub — no integrar todavía (ver `CLAUDE.md`).
 
 ## Pilares
 
 | Pilar | Fuentes | Período | Estado |
 |-------|---------|---------|--------|
-| Social Media | LinkedIn | Mensual | Datos reales (Mayo 2026) |
-| Paid Media | Google Ads, Meta | Mensual | Datos reales (CU Portugal Feb–Jun, España Abr) |
-| Website | GA4, Search Console | **Trimestral** | Datos reales (CU Argentina Q1) |
-| Email Marketing | Mailchimp, Apollo | Mensual | KPIs definidos · pendiente import |
-| Webinars | Livestorm | Mensual | KPIs definidos · pendiente import |
+| Social Media | LinkedIn | Mensual | Mar–Jul 2026 · 9 cuentas + reportes por país |
+| Paid Media | Google Ads, Meta Ads | Mensual | Feb–Ago 2026 · 5 cuentas |
+| Website | GA4, Search Console | **Trimestral** | Q1–Q2 2026 · 12 cuentas |
+| Email Marketing | Mailchimp, Apollo | Mensual | Ago 2026 (campaña del webinar EUDR) |
+| Webinars | Livestorm/Teams + Mailchimp + LinkedIn + HubSpot | Por evento | Webinar EUDR · Ago 2026 |
 
-Cada reporte incluye su **glosario** al pie. Regla de honestidad: si no hay datos
-importados para (cuenta, período) → "Sin información suficiente", nunca números inventados.
+Cada reporte tiene botonera **ES/EN**, glosario al pie y se puede **descargar como
+HTML interactivo** que funciona offline.
 
-## Stack
-
-- React 18 + Vite 5 + Tailwind 3 · Recharts · papaparse/xlsx · lucide-react
-- Supabase (Postgres + Realtime) · Deploy en Vercel (auto-deploy desde `main`)
+**Regla de honestidad**: si no hay datos reales para (cuenta, período) →
+"Sin información suficiente". Nunca números inventados.
 
 ## Desarrollo local
 
 ```bash
 npm install
 npm run dev        # http://localhost:5173
+npm run lint       # eslint sobre src/
+npx vitest run     # tests de funciones puras
 npm run build      # build de producción → dist/
+npm run preview    # sirve el build ya compilado
 ```
 
-Sin variables de entorno, la app corre en **modo seed local** (datos de ejemplo,
-solo lectura, import deshabilitado). Para datos reales + import + realtime, conectá
-Supabase (ver más abajo).
+### Variables de entorno
 
-## Variables de entorno
-
-Copiá `.env.example` a `.env.local`:
+Copiá `.env.example` a `.env.local`. Hay una sola, y es opcional:
 
 ```env
-VITE_SUPABASE_URL=                 # Supabase → Project Settings → API
-VITE_SUPABASE_PUBLISHABLE_KEY=     # anon/publishable key (pública por diseño)
-VITE_SHARED_PASSWORD=marcomms2026  # login compartido del equipo
+VITE_SHARED_PASSWORD=marcomms2026   # login compartido del equipo
 ```
 
-Nunca poner el service role key ni el connection string en variables `VITE_*`
-(se exponen en el bundle del cliente).
+No hay credenciales de backend porque no hay backend.
 
-## Login
+## Cómo se cargan los datos
 
-Login compartido (un solo rol). Contraseña por defecto: `marcomms2026`
-(configurable con `VITE_SHARED_PASSWORD`).
+Export de la plataforma → tooling (`scripts/`) → seed (`src/data/*Seed.js`) →
+commit → deploy. **No hay import por la web.**
 
-## Importar datos
-
-Botón **Importar** (header) → elegí pilar / cuenta / período / tipo de dato, subí
-el CSV o Excel, mapeá las columnas (auto-sugerido y recordado) y confirmá. Para los
-export de Google Ads, dejá "filas a saltar" en **2** (traen 2 filas de preámbulo).
-Requiere Supabase configurado.
+Los responsables de Social, Email y Webinars dejan los exports crudos en
+`metricas/<pilar>/AAAA-MM/` (ver [`metricas/README.md`](metricas/README.md));
+Paid y Website llegan como adjuntos en la conversación.
 
 ## Documentación
 
-- [`SETUP_SUPABASE.md`](SETUP_SUPABASE.md) — crear el proyecto Supabase paso a paso.
-- [`SETUP_AUTOIMPORT.md`](SETUP_AUTOIMPORT.md) — import automático desde una carpeta (Storage + `/api/process-imports`).
-- [`DEPLOY.md`](DEPLOY.md) — integración GitHub → Vercel → Supabase.
-- [`CLAUDE.md`](CLAUDE.md) — marca, reglas y convenciones del proyecto.
-- [`supabase/`](supabase/) — migrations, seeds y `all_in_one.sql`.
+| Archivo | Para qué |
+|---------|----------|
+| [`PROJECT_CONTEXT.md`](PROJECT_CONTEXT.md) | **Empezar por acá.** Estado actual del proyecto |
+| [`CLAUDE.md`](CLAUDE.md) | Marca, reglas y convenciones |
+| [`docs/DECISIONES.md`](docs/DECISIONES.md) | El porqué de los criterios |
+| [`docs/historial-pedidos.md`](docs/historial-pedidos.md) | Registro de lo que pidió el equipo, por fecha |
+| [`metricas/README.md`](metricas/README.md) | Cómo entregar los exports de cada pilar |
+| [`scripts/paid/README.md`](scripts/paid/README.md) | Tooling de Google Ads |
+| [`DEPLOY.md`](DEPLOY.md) | Integración GitHub → Vercel |

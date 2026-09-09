@@ -1,10 +1,16 @@
 # PROJECT_CONTEXT.md — MarComms Reports (Control Union / PCU Group)
 
-> **Memoria de continuidad.** Este archivo es la fuente de verdad del estado
-> actual del proyecto, para que cualquier sesión (humana o de Claude Code) pueda
-> retomar sin perder contexto. Si algo acá contradice a `CLAUDE.md` o a los
-> `SETUP_*.md`, **manda este archivo** (esos describen una arquitectura anterior
-> con Supabase que fue descartada — ver "Decisiones").
+> **Memoria de continuidad.** Este archivo es la fuente de verdad del **estado
+> actual** del proyecto, para que cualquier sesión (humana o de Claude Code) pueda
+> retomar sin perder contexto. Si algo acá contradice a `CLAUDE.md`, manda este
+> archivo: es el que se actualiza en cada sesión.
+>
+> Documentación complementaria:
+> - `CLAUDE.md` — reglas permanentes: marca, stack, convenciones.
+> - `docs/DECISIONES.md` — el **porqué** de los criterios (lo que no se deduce
+>   leyendo el código: honestidad de datos, monedas, campañas parciales, idioma…).
+> - `docs/historial-pedidos.md` — registro textual de lo que pidió el equipo,
+>   sesión por sesión. Las conversaciones no viajan entre cuentas: esto sí.
 
 _Última actualización: Paid Agosto 2026 (cuenta CU Estados Unidos, cambio EUR→ARS,
 campañas parciales) · marca MarComms como principal · toggle ES/EN en los 5 pilares ·
@@ -107,7 +113,6 @@ src/
     format.js                 fmt/num/pct/computeDelta (es-AR)
     hasData.js                regla de honestidad de datos
     snapshot.js / exportHtml.js  descarga de la vista como HTML
-supabase/                     migraciones y seeds SQL (NO se usan hoy; ver "Decisiones")
 ```
 
 ## 6. Formato de los Excel (Paid Media — Google Ads)
@@ -227,9 +232,10 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
    requisito es "que los datos persistan para cualquiera que entre desde un
    navegador", y el seed en el bundle ya lo cumple sin base de datos. Se eliminó
    todo el andamiaje: cliente Supabase, servicios con branch `if (supabase)`,
-   realtime, import por UI y la función serverless de autoimport. *(La carpeta
-   `supabase/` con SQL queda como referencia del modelo de datos por si se
-   reconecta a futuro; hoy no se usa.)*
+   realtime, import por UI y la función serverless de autoimport. La carpeta
+   `supabase/` y los `SETUP_SUPABASE.md` / `SETUP_AUTOIMPORT.md` se eliminaron del
+   repo en septiembre 2026 para que no confundan; si alguna vez hace falta el
+   modelo de datos, está en el historial de git.
 2. **Import por la web retirado.** Los datos se cargan por código (commit → deploy).
 3. **Recharts** para todos los gráficos (no Chart.js), por convención del stack.
 4. **Clientes por pilar** (no compartidos entre pilares).
@@ -249,9 +255,6 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 - 2 vulnerabilidades `npm audit` restantes: **esbuild/vite, solo dev server**, sin
   impacto en producción. Arreglarlas requiere vite@8 (breaking) — no hecho a propósito.
-- Docs `SETUP_SUPABASE.md` / `SETUP_AUTOIMPORT.md` / partes de `CLAUDE.md`
-  describen la arquitectura Supabase **descartada** — leer con ese contexto.
-  La carpeta `supabase/` queda solo como referencia del modelo de datos.
 - El bundle supera los 500 kB (aviso de Vite al buildear). Es esperable: el seed
   de datos viaja adentro. No es un error.
 
@@ -300,6 +303,10 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   una pasada por el navegador (Playwright headless) del pilar tocado, en ES y EN.
 - Flujo de deploy: commit en la rama de trabajo → push → merge fast-forward a
   `main` → push. Vercel publica solo.
+- **Al cerrar una sesión de trabajo**: actualizar §15 de este archivo, sumar al
+  final de `docs/historial-pedidos.md` lo que pidió el equipo, y anotar en
+  `docs/DECISIONES.md` cualquier criterio nuevo que valga para el futuro. Es lo
+  único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
 
@@ -349,3 +356,9 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 - **Fixes del tooling de Paid**: el parseo de miles rompía los números de 4 cifras
   (`5.561` → `5`), `build_detail.py` pisaba los meses ya cargados en vez de
   fusionarlos, y los textos de insights tenían el símbolo `€` fijo.
+- **Documentación reordenada antes de mudar el proyecto a otra cuenta de Claude**:
+  `CLAUDE.md`, `README.md` y `DEPLOY.md` reescritos sin la arquitectura Supabase;
+  se eliminaron `SETUP_SUPABASE.md`, `SETUP_AUTOIMPORT.md` y `supabase/`; se
+  sumaron `docs/DECISIONES.md` (criterios y su porqué) y
+  `docs/historial-pedidos.md` (registro textual de los pedidos del equipo, para
+  que el contexto de las conversaciones no se pierda al cambiar de cuenta).

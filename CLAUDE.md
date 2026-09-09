@@ -1,132 +1,161 @@
-# CLAUDE.md — Dashboard MarComms Control Union
+# CLAUDE.md — Reportes MarComms
 
-> 🟢 **ESTADO ACTUAL — leer `PROJECT_CONTEXT.md` primero.**
-> La arquitectura vigente es **seed en código, sin base de datos**: **Supabase fue
-> descartado** y el **import por la web fue retirado**. Las secciones de más abajo
-> que describen Supabase/import/realtime son **históricas** (intención original) y
-> ya no reflejan el código. Ante cualquier duda, manda `PROJECT_CONTEXT.md`.
+Guía de trabajo para cualquier sesión de Claude Code sobre este repo.
 
-> ⚠️ **Proyecto independiente del Marcomms Hub — no integrar todavía.**
+> **Orden de lectura.** Este archivo tiene las reglas permanentes (marca, stack,
+> convenciones). Para el **estado actual** del proyecto leer `PROJECT_CONTEXT.md`;
+> para el **porqué** de cómo están hechas las cosas, `docs/DECISIONES.md`. Si algo
+> se contradice, manda `PROJECT_CONTEXT.md`, que es el que se actualiza en cada
+> sesión.
+
+> ⚠️ **Proyecto independiente del MarComms Hub — no integrar todavía.**
 > Este dashboard se desarrolla y despliega por separado. No conectar, importar ni
-> acoplar con el Marcomms Hub hasta nueva indicación.
-
-App multi-pilar de analytics de marketing para Control Union, migrada desde el
-dashboard estático `Mayo_ Reportes_Linkedin.html`.
+> acoplar con el Hub hasta nueva indicación.
 
 ---
+
+## Qué es
+
+Dashboard web multi-pilar de analytics de marketing que produce el equipo de
+**MarComms** (agencia interna de marketing digital del grupo PCU) para sus
+clientes **Control Union** y **Peterson Solutions**. Muestra reportes por pilar,
+por cuenta/región y por período, y permite **descargar cada vista como un HTML
+interactivo** que funciona offline.
 
 ## Stack
 
-- **Framework:** React 18 + Vite 5 (mismo stack que el MarComms Hub — ver abajo)
-- **Base de datos / backend:** Supabase (Postgres + Realtime)
-- **Deploy:** Vercel, vía GitHub (auto-deploy desde `main`)
-- **Estilos:** Tailwind CSS 3 con los tokens de marca CU (ver abajo)
-- **Charts:** Recharts (preferido en el Hub; Chart.js solo para herramientas embebidas)
-- **CSV/Excel:** papaparse + xlsx (para el upload manual)
-- **Íconos:** lucide-react
+- **React 18 + Vite 5** · **Tailwind 3** · **Recharts** · **lucide-react**.
+  Sin Next.js.
+- **Sin backend y sin base de datos.** Los datos viven en el seed en código
+  (`src/data/*Seed.js`) y viajan en el bundle publicado.
+- **Deploy en Vercel**, auto-deploy desde `main`.
+- Única variable de entorno: `VITE_SHARED_PASSWORD` (opcional; default
+  `marcomms2026`).
 
-> **Por qué este stack:** el MarComms Hub (donde este proyecto se integrará el día
-> de mañana) es una SPA React + Vite + Tailwind. Igualar el stack permite que Reports
-> entre como un módulo más del Hub sin reescritura. **No usar Next.js.**
+> **No reintroducir Supabase, backend ni import por la web** sin pedido explícito:
+> se descartaron a propósito (`docs/DECISIONES.md` §9).
 
-### Decisiones de arquitectura confirmadas
+## Cómo entran los datos
 
-1. **Importación = upload manual** de CSV/Excel exportados de cada plataforma
-   (papaparse/xlsx). Las integraciones por API quedan para una fase posterior;
-   mantener los parsers aislados en `src/utils/import/`.
-2. **"Tiempo real" = Supabase Realtime al importar** — la vista abierta se refresca
-   sola cuando se importan datos. Sin sync vivo contra APIs externas.
-3. **Auth = login simple** — un solo rol; todo usuario autenticado ve e importa
-   igual. Sin distinción de roles por ahora (login compartido estilo Hub).
-4. **Clientes por pilar, no compartidos.** Cada pilar tiene su propia tabla de
-   clientes (los slugs pueden coincidir entre pilares, pero no se unifican todavía).
-   `periods` e `imports` sí son comunes a todos los pilares.
+Export de la plataforma → tooling (`scripts/`) → seed (`src/data/*Seed.js`) →
+commit → deploy. No hay import por UI ni base de datos.
 
-### Patrón técnico (heredado del Hub — `MarComms Hub/ARCHITECTURE.md`)
+| Pilar | Fuentes | Cómo llegan los archivos |
+|-------|---------|--------------------------|
+| **Social Media** | LinkedIn Analytics | carpeta `metricas/social-media/` |
+| **Paid Media** | Google Ads, Meta Ads | adjuntos en la conversación |
+| **Email Marketing** | Mailchimp, Apollo | carpeta `metricas/email-marketing/` |
+| **Webinars** | Livestorm / Teams (+ Mailchimp, LinkedIn, HubSpot) | carpeta `metricas/webinars/` |
+| **Website** | GA4, Search Console | adjuntos en la conversación |
 
-- **Capas de datos:** UI → hooks → services → `src/lib/supabaseClient.js` → Supabase.
-  **La UI nunca toca Supabase directo.**
-- **Un service por tabla** (`xxxService.js`): expone `list/create/update/delete/subscribe`
-  y traduce snake_case (DB) ↔ camelCase (app) con `fromRow`/`toRow`.
-- **`useCollection`**: hook genérico `[data, setData, meta]` que persiste el diff y
-  aplica deltas de realtime — resuelve el requisito de "tiempo real".
-- **Supabase:** schema `public`, migrations numeradas (`0002_x.sql`), RLS habilitado
-  (`authenticated full access`), todas las tablas en la publicación `supabase_realtime`.
-- **Convenciones:** UI y comentarios en **español argentino** (vos, cliquear, tildar);
-  variables/funciones en **inglés**. `PascalCase.jsx` componentes · `useCamelCase` hooks
-  · `camelCaseService.js` services · `SCREAMING_SNAKE` constantes · IDs con
-  `crypto.randomUUID()` · alias `@/` para imports internos.
-- **Env:** `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `VITE_SHARED_PASSWORD`.
-  Nunca poner service role key ni connection string en variables `VITE_*` (se exponen
-  en el bundle cliente).
+**Ingesta por carpeta:** ante «procesá las métricas nuevas de \<pilar\>», buscar en
+`metricas/<pilar>/` las carpetas `AAAA-MM` que no estén en `_procesados/`, correr
+el tooling del pilar, verificar, deployar y mover la carpeta a `_procesados/` en
+el mismo commit. Reglas completas en `metricas/README.md`.
 
 ---
 
-## Reglas de marca Control Union
+## Reglas que no se negocian
 
-Respetar siempre el manual de marca CU. Tomar estos tokens como única fuente de verdad.
+### 1. Honestidad de los datos
 
-### Colores
+**Si no hay datos reales para (cuenta, período), mostrar "Sin información
+suficiente". Nunca inventar, estimar ni rellenar números.**
+
+- La verificación se centraliza en `src/utils/hasData.js`.
+- Si una métrica no existe en el export, se dice que no está — no se deduce.
+- Una proyección se muestra como proyección, nunca como resultado.
+- Nunca convertir monedas ni sumar importes de monedas distintas.
+
+### 2. Idioma
+
+- **Del código**: UI y comentarios en **español argentino** (vos, cliquear,
+  tildar); variables y funciones en inglés.
+- **Del reporte**: los 5 pilares tienen botonera **ES/EN**, con español por
+  defecto. Cada pilar tiene su diccionario `src/utils/*I18n.js`, y los generadores
+  de insights reciben `lang`. Al descargar se elige el idioma principal del
+  archivo (viaja en `__REPORT_EMBED__.lang`), y adentro el toggle sigue andando.
+- **Todo texto visible nuevo se agrega en los dos idiomas.**
+- Formato numérico: es-AR en español (`1.234,56`), en-US en inglés.
+
+### 3. Marca
+
+**MarComms es la marca principal de los reportes**; el cliente va en segundo
+plano.
+
+- Logo MarComms horizontal arriba a la izquierda del header, logo chico al pie
+  enfrentado al tagline, e isotipo como favicon (app y descargables).
+  Assets en `public/marcomms-*`; originales en `assets/marca/marcomms/`.
+- Logo del cliente (Control Union / Peterson): chico, sin etiqueta y con tope de
+  ancho, para que no compita.
+
+**Tokens de Control Union** (fuente de verdad: `src/constants/brand.js`):
 
 | Token | Hex | Uso |
 |-------|-----|-----|
-| CU Cyan (Primary 2) | `#3eb2ed` | Acento principal, KPIs, charts, barra superior |
-| CU Dark Blue (Support) | `#1b1e42` | Texto destacado, paneles, barra inferior |
-| CU Grey (Primary 1) | `#799495` | Labels, texto secundario |
+| CU Cyan | `#3eb2ed` | Acento principal, KPIs, charts, barra superior |
+| CU Dark Blue | `#1b1e42` | Texto destacado, paneles, barra inferior |
+| CU Grey | `#799495` | Labels, texto secundario |
 | CU Dark Grey | `#4f6566` | Texto de cuerpo |
 | Fondo | `#f0f4f5` | Background general |
-| Bordes | `#d8e2e3` / `#eaf0f1` | Separadores y bordes suaves |
+| Bordes | `#d8e2e3` / `#eaf0f1` | Separadores |
 
-Paleta ordenada para charts:
+Paleta de charts:
 `['#3eb2ed','#1b1e42','#799495','#6dc8f2','#2d3a8a','#9ab5b6','#0088cc','#4a5096']`
 
-### Tipografía
+- **Tipografía**: Ubuntu (sustituto de Sansa Pro), fallback Calibri → sans-serif.
+- **Dispositivos gráficos**: barra cyan full-width arriba, barra dark blue
+  alineada a la derecha abajo.
+- **Tagline** `The Proof to Your Promise`: al pie, **nunca** junto al logo.
 
-- **Headings y cuerpo:** **Ubuntu** (sustituto de Sansa Pro, fuente oficial CU).
-- **Fallback:** Calibri, luego sans-serif (para contextos MS Office del manual).
+### 4. Estructura de un reporte
 
-### Logo y dispositivos gráficos
+Orden común en todos los pilares: **Insights (Plan de Acción)** → **KPIs** →
+**Embudo** → gráficos y tablas propias → **Lectura de Performance** →
+**Próximos Pasos** → **Glosario**.
 
-- **Logo:** SVG oficial (globo + wordmark), arriba a la izquierda. Reproducir con
-  los colores del manual; nunca deformarlo ni recolorearlo fuera de spec.
-- **Dispositivo gráfico superior:** barra **CU Cyan** full-width.
-- **Dispositivo gráfico inferior:** barra **CU Dark Blue** alineada a la derecha.
-- **Tagline:** `The Proof to Your Promise` — al pie de página, **nunca** junto al logo.
-
----
-
-## Regla de honestidad de datos
-
-**Si un período/pilar no tiene datos importados, mostrar "Sin información suficiente".
-Nunca inventar, estimar ni rellenar números.**
-
-- La ausencia de datos se determina a nivel de base de datos: si no hay filas para
-  `(cliente, pilar, período)` → renderizar `<NoDataScreen>` con el mensaje
-  *"Sin información suficiente"*.
-- No existen filas "estimadas" en el modelo. No hay fallback a valores ficticios.
-- El ledger `imports` permite distinguir "nunca importado" de "importado vacío" y
-  mostrar la fecha del último import.
-- Centralizar la verificación en un helper `src/utils/hasData.js` para aplicar la
-  regla de forma uniforme en los 5 pilares.
+- Insights, diagnóstico y próximos pasos se **generan de las métricas reales**
+  (reglas fijas contra benchmarks, sin IA). No se hardcodean.
+- **Próximos Pasos no se muestra en los reportes de uso externo.**
+- Reutilizar los componentes de `src/components/shared/` (KpiCard, ChartCard,
+  Funnel, InsightsPanel, PerformancePanels, SectionHeader, Glossary) para que la
+  estética se mantenga uniforme entre pilares.
 
 ---
 
-## Los 5 pilares y sus fuentes
+## Convenciones de código
 
-| Pilar | Fuentes de datos | Cómo llegan los archivos |
-|-------|------------------|--------------------------|
-| **Social Media** | LinkedIn | Carpeta **`metricas/social-media/`** (ver su README) |
-| **Paid Media** | Google Ads, Meta Ads | Adjuntos en la conversación (Tomás) |
-| **Email Marketing** | Mailchimp, Apollo | Carpeta **`metricas/email-marketing/`** |
-| **Webinars** | Livestorm | Carpeta **`metricas/webinars/`** |
-| **Website** | Google Analytics (GA4), Google Search Console | Adjuntos en la conversación (Tomás) |
+- `PascalCase.jsx` componentes · `useCamelCase` hooks · `camelCaseService.js`
+  services · `SCREAMING_SNAKE` constantes.
+- Alias `@/` para imports internos (resuelve por Vite; en scripts sueltos de Node
+  no funciona).
+- Capas: **UI → hooks → services → seed**. La UI no lee el seed directo.
+- **Modo embed**: `main.jsx` detecta `window.__REPORT_EMBED__` (HTML descargado) y
+  monta `EmbedApp` con el snapshot embebido.
 
-> **Ingesta por carpeta:** ante «procesá las métricas nuevas de <pilar>»,
-> buscar en `metricas/<pilar>/` las carpetas `AAAA-MM` fuera de
-> `_procesados/`, correr el tooling del pilar, verificar, deployar y mover la
-> carpeta a `_procesados/`. Reglas completas en `metricas/README.md`.
+## Verificación antes de deployar
 
-Cada pilar tiene su propia vista, sus propios filtros (cliente / período) y sus
-propias tablas de métricas y de clientes en Supabase. El pilar **Social Media** es
-la referencia: ya migra los datos reales de Mayo 2026 (9 cuentas LinkedIn) del HTML
-original.
+```bash
+npm run lint      # eslint sobre src/
+npx vitest run    # tests de funciones puras
+npm run build     # genera dist/
+npm run preview   # sirve el build para revisarlo en el navegador
+```
+
+Además: pasada por el navegador (Playwright headless) del pilar tocado, **en ES y
+en EN**, sin errores de consola. Al cargar un mes nuevo de Paid, validar el seed
+contra el informe semanal campaña por campaña.
+
+**Flujo de deploy**: commit en la rama de trabajo → push → merge fast-forward a
+`main` → push. Vercel publica solo.
+
+## Documentación del repo
+
+| Archivo | Para qué |
+|---------|----------|
+| `PROJECT_CONTEXT.md` | Estado actual: qué hay cargado, qué falta, cómo está armado |
+| `docs/DECISIONES.md` | El porqué de los criterios (lo que no se deduce del código) |
+| `docs/historial-pedidos.md` | Registro textual de lo que pidió el equipo, por fecha |
+| `metricas/README.md` | Cómo se entregan los exports de cada pilar |
+| `scripts/paid/README.md` | Tooling de Google Ads (los 3 CSV, validaciones, cuentas) |
+| `DEPLOY.md` | Integración GitHub → Vercel |
