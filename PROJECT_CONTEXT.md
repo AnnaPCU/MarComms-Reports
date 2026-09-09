@@ -12,9 +12,10 @@
 > - `docs/historial-pedidos.md` — registro textual de lo que pidió el equipo,
 >   sesión por sesión. Las conversaciones no viajan entre cuentas: esto sí.
 
-_Última actualización: vista por CLIENTE (unidad de negocio + país/región, para
-clientes con más de un pilar) · Paid Agosto 2026 (CU Estados Unidos, EUR→ARS,
-campañas parciales) · marca MarComms como principal · toggle ES/EN en los 5 pilares ·
+_Última actualización: Social Agosto 2026 (primer mes ingresado por la carpeta
+`metricas/`) · vista por CLIENTE (unidad de negocio + país/región, para clientes
+con más de un pilar) · Paid Agosto 2026 (CU Estados Unidos, EUR→ARS, campañas
+parciales) · marca MarComms como principal · toggle ES/EN en los 5 pilares ·
 Email y Webinars con datos reales (webinar EUDR)._
 
 ---
@@ -89,7 +90,9 @@ src/
     brand.js                  tokens de color CU, paleta charts, logos por cuenta
     glossaries.js             glosarios de los 5 pilares
   data/
-    socialSeed.js             datos reales Social (Mayo 2026, 9 cuentas)
+    socialSeed.js             estructura + audiencia Social (9 cuentas); los meses vienen de socialMonthly.js
+    socialMonthly.js          KPIs y top posts por cuenta y mes (Ene–Ago 2026), generado por scripts/linkedin/
+    socialLatam.js / socialNorthAm.js  segmentación por país de CU Latinoamérica y CU North America
     paidSeed.js               datos reales Paid (pt, es, cuc, psar; ver §6)
     websiteSeed.js            datos reales Website (CU Argentina, Q1 2026)
   services/                   socialService, paidService, websiteService… (seed-only)
@@ -250,7 +253,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 | Módulo | Estado |
 |--------|--------|
-| Social Media | ✅ Completo (Mar–Jul 2026, 9 cuentas) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`) |
+| Social Media | ✅ Completo (Ene–Ago 2026, 9 cuentas) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
 | Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas) + drill-down + detalle por grupo + Resumen del Año + comparativa (tooling: `scripts/paid/`) |
 | Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas) + Resumen del Año + comparativa |
 | Email Marketing | ✅ Con datos reales: `cups` (CU + PS Latinoamérica), m08 — campaña del webinar EUDR (tooling: `scripts/mailchimp-to-seed.mjs`) |
@@ -317,11 +320,19 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 - **No reintroducir Supabase ni import por UI** salvo pedido explícito. Los datos
   van en `src/data/*Seed.js`.
 - **Ingesta por carpeta (`metricas/`)**: si piden «procesá las métricas nuevas
-  de <pilar>», buscar en `metricas/<pilar>/` las carpetas `AAAA-MM` que no
-  estén en `_procesados/`, correr el tooling correspondiente (Social:
-  `scripts/linkedin/build_monthly.py` + `build_country_seg.py acc=cul|cuna`;
-  Email/Webinars: construir el parser con el primer drop real), verificar,
-  deployar, y mover la carpeta procesada a `_procesados/` en el mismo commit.
+  de <pilar>», buscar en `metricas/<pilar>/` las carpetas de mes que no
+  estén en `_procesados/` (la convención es `AAAA-MM`, pero el equipo puede
+  subirlas con otro nombre, p. ej. «Metricas 2026-08 Social Media»: se
+  procesan igual y se archivan como `_procesados/AAAA-MM`), correr el tooling
+  correspondiente, verificar, deployar y mover la carpeta en el mismo commit.
+  - **Social**: `python3 scripts/linkedin/build_monthly.py mXX="<carpeta>"` y
+    `build_country_seg.py acc=cul mXX=…` + `acc=cuna mXX=…`. Los tres scripts
+    **fusionan** el mes nuevo con lo ya cargado en `src/data/` (los crudos de
+    meses anteriores no viven en el repo). Después sumar el mes a `ML`/`MO`
+    en `socialSeed.js` y mover `defaultPeriod` de Social en el registry.
+    Requiere `pip install openpyxl xlrd`. Si un drop trae un nombre de
+    subcarpeta nuevo, ajustar `FOLDER_MATCHERS` en `extract_raw.py`.
+  - **Email/Webinars**: construir el parser con el primer drop real.
 - Para sumar datos nuevos de Paid: parsear el CSV de Google Ads, separar por
   prefijo de mercado, agregar al seed (respetando el shape existente), y actualizar
   este archivo (§6). Verificar con `npm run build` + captura (Playwright headless,
@@ -409,3 +420,10 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   período, ES/EN, descarga HTML de la General. `SocialApp` acepta `country`
   para fijar el país de una cuenta segmentada; `HeroCard` pasó a `shared/`.
   Tests: `clientService.test.js`, `clientSummary.test.js`.
+- **Social Agosto 2026**: primer mes procesado desde la carpeta `metricas/`
+  (9 cuentas, exports del 1 al 31/8, con benchmark de competidores y
+  segmentación por país). El tooling de LinkedIn pasó a **fusionar** el mes
+  nuevo con los seeds existentes (antes regeneraba todo y exigía los crudos
+  de todos los meses) y reconoce los nombres de carpeta del drop («PS
+  GLOBAL», «PS IBERIA & AMERICA», «BEL»). Carpeta archivada en
+  `metricas/social-media/_procesados/2026-08/`.

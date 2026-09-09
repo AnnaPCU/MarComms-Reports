@@ -5,16 +5,22 @@ import os, sys, glob, json
 import xlrd
 from extract_unified import find_header, col, ssum, clean_title
 
+# Los nombres de subcarpeta varían según quién arma el drop ("Peterson
+# Solutions", "PS GLOBAL", "PS IBERIA & AMERICA", "BEL"…): cada predicado
+# acepta las variantes vistas. Si un mes trae un nombre nuevo, sumarlo acá.
+def _is_ps(n):
+    return 'peterson' in n or n.strip().startswith('ps ') or n.strip() == 'ps'
+
 FOLDER_MATCHERS = {
     'cul': lambda n: 'latinoam' in n,
     'cue': lambda n: 'espa' in n,
     'cup': lambda n: 'portugal' in n,
     'cun': lambda n: 'norte' in n,
     'cuna': lambda n: 'north' in n,
-    'ps':  lambda n: 'peterson' in n and 'iberia' not in n and 'america' not in n,
-    'pia': lambda n: 'peterson' in n and 'iberia' in n,
+    'ps':  lambda n: _is_ps(n) and 'iberia' not in n and 'america' not in n,
+    'pia': lambda n: _is_ps(n) and 'iberia' in n,
     'tlr': lambda n: 'tlr' in n or 'laborator' in n,
-    'bel': lambda n: 'biomass' in n,
+    'bel': lambda n: 'biomass' in n or n.strip() == 'bel',
 }
 
 def resolve_folders(base):

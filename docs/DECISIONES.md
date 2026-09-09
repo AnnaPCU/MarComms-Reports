@@ -119,6 +119,17 @@
 - Los datos entran **por código**: export → tooling → seed → commit → deploy.
 - La carpeta `supabase/` se eliminó del repo; si alguna vez hace falta el modelo
   de datos, está en el historial de git.
+- **El tooling de ingesta fusiona, no regenera.** Los exports crudos de los
+  meses anteriores no viven en el repo (solo el mes archivado en
+  `_procesados/`), así que un script que regenere el seed completo a partir
+  de los argumentos borra los meses que no se le pasan. Vale para Paid
+  (`build_detail.py`, arreglado en agosto) y para Social (`build_monthly.py`
+  y `build_country_seg.py`, arreglados en septiembre): cada corrida lee el
+  seed existente y solo pisa los meses que se le pasan.
+- **Los drops de `metricas/` se aceptan aunque el nombre de la carpeta no siga
+  la convención** (`AAAA-MM`). Lo que importa es que el mes esté completo y
+  los archivos sean los crudos de la plataforma; al archivar se renombra a
+  `_procesados/AAAA-MM`.
 
 ## 10. Verificación antes de deployar
 

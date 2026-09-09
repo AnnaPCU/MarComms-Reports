@@ -146,7 +146,7 @@ export const LATAM_DB = {
     ]},
     br: {np:3, imp:2188, clk:40, er:4.43, vis:974, folBase:3765, posts:[
       {t:"#ControlUnionBrasil É com grande satisfação que parabenizamos a Printsave Material Gráfico Eireli pela recente",url:"https://www.linkedin.com/feed/update/urn:li:activity:7458508856999157761",imp:1008,clk:21,er:2.88,tp:"Orgánico"},
-      {t:"#ControlUnionBrasil Você já ouviu falar da RSB? 🌍",url:"https://www.linkedin.com/feed/update/urn:li:activity:7462935235647713280",imp:816,clk:12,er:6.0,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil Você já ouviu falar da RSB? 🌍",url:"https://www.linkedin.com/feed/update/urn:li:activity:7462935235647713280",imp:816,clk:12,er:6,tp:"Orgánico"},
       {t:"#ControlUnionBrasil Hoje celebramos o Dia Nacional da Mata Atlântica, um dos biomas mais ricos em biodiversida",url:"https://www.linkedin.com/feed/update/urn:li:activity:7465393968051089409",imp:364,clk:7,er:5.22,tp:"Orgánico"}
     ]},
     cl: {np:0, imp:0, clk:0, er:0, vis:72, folBase:536, posts:[]},
@@ -159,7 +159,7 @@ export const LATAM_DB = {
     ]},
     mx: {np:7, imp:6512, clk:603, er:11.01, vis:58, folBase:545, posts:[
       {t:"#ControlUnionMéxico #Webinar AquaUpdate 2026: Certifícate o quédate atrás",url:"https://www.linkedin.com/feed/update/urn:li:activity:7459977363653554176",imp:1810,clk:63,er:4.81,tp:"Orgánico"},
-      {t:"#ControlUnionMéxico Este fin de semana celebramos el Día de las Madres en México 💐",url:"https://www.linkedin.com/feed/update/urn:li:activity:7460704045784240128",imp:1714,clk:466,er:29.0,tp:"Orgánico"},
+      {t:"#ControlUnionMéxico Este fin de semana celebramos el Día de las Madres en México 💐",url:"https://www.linkedin.com/feed/update/urn:li:activity:7460704045784240128",imp:1714,clk:466,er:29,tp:"Orgánico"},
       {t:"#ControlUnionMéxico #Webinar AquaUpdate 2026: Certifícate o quédate atrás",url:"https://www.linkedin.com/feed/update/urn:li:activity:7464767263859081217",imp:1093,clk:47,er:5.95,tp:"Orgánico"},
       {t:"#ControlUnionMexico Estaremos presentes en el Congreso Palmero Mexicano 2026 🌴",url:"https://www.linkedin.com/feed/update/urn:li:activity:7466115325177229312",imp:653,clk:7,er:3.83,tp:"Orgánico"},
       {t:"✨ ¡Nos vemos en Expo Pack México 2026! En Control Union Latinoamérica estaremos presentes en uno de los encuen",url:"https://www.linkedin.com/feed/update/urn:li:activity:7463241927417593856",imp:559,clk:7,er:3.22,tp:"Orgánico"}
@@ -201,7 +201,7 @@ export const LATAM_DB = {
   m07: {
     ar: {np:8, imp:10824, clk:4222, er:40.48, vis:249, folBase:4804, posts:[
       {t:"#ControlUnionArgentina ⚽🇦🇷 ¡La pasión mundialista sigue presente en Control Union!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7480381834032488448",imp:2597,clk:520,er:22.33,tp:"Orgánico"},
-      {t:"#ControlUnionArgentina Prepararse para el EUDR: un trabajo que involucra a toda la cadena",url:"https://www.linkedin.com/feed/update/urn:li:activity:7487493521130770432",imp:1831,clk:964,er:55.0,tp:"Orgánico"},
+      {t:"#ControlUnionArgentina Prepararse para el EUDR: un trabajo que involucra a toda la cadena",url:"https://www.linkedin.com/feed/update/urn:li:activity:7487493521130770432",imp:1831,clk:964,er:55,tp:"Orgánico"},
       {t:"#ControlUnionArgentina EUDR en Latinoamérica: ¿Dónde estamos hoy?",url:"https://www.linkedin.com/feed/update/urn:li:activity:7484949829022855168",imp:1504,clk:670,er:45.28,tp:"Orgánico"},
       {t:"#ControlUnionArgentina 🌱 ¡Nos vemos en el Congreso AAPRESID 2026!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7486393065600114688",imp:1239,clk:19,er:2.99,tp:"Orgánico"},
       {t:"#ControlUnionArgentina Cinco desafíos que plantea el EUDR para las cadenas de suministro",url:"https://www.linkedin.com/feed/update/urn:li:activity:7488205207080939520",imp:1129,clk:593,er:53.5,tp:"Orgánico"}
@@ -226,5 +226,42 @@ export const LATAM_DB = {
     ]},
     ec: {np:0, imp:0, clk:0, er:0, vis:18, folBase:416, posts:[]},
     _tot: {np:29, imp:42486, clk:7563, un:4},
+  },
+  m08: {
+    ar: {np:7, imp:10917, clk:1953, er:20.36, vis:451, folBase:4836, posts:[
+      {t:"#ControlUnionArgentina 🌱 Día del Ingeniero Agrónomo",url:"https://www.linkedin.com/feed/update/urn:li:activity:7491100773079003136",imp:2433,clk:214,er:11.06,tp:"Vídeo"},
+      {t:"#ControlUnionArgentina EUDR se acerca. ¿Qué certificaciones y soluciones pueden ayudarte a estar preparado?",url:"https://www.linkedin.com/feed/update/urn:li:activity:7497630100239093760",imp:2103,clk:151,er:10.84,tp:"Vídeo"},
+      {t:"#ControlUnionArgentina En Control Union Argentina, en las últimas semanas, recibimos la habilitación como cert",url:"https://www.linkedin.com/feed/update/urn:li:activity:7490124467986219009",imp:1949,clk:51,er:5.7,tp:"Orgánico"},
+      {t:"#ControlUnionArgentina Nos llena de orgullo anunciar que Control Union Argentina ha sido oficialmente aprobada",url:"https://www.linkedin.com/feed/update/urn:li:activity:7495896976358723586",imp:1500,clk:280,er:20.53,tp:"Orgánico"},
+      {t:"#ControlUnionArgentina #AgriReport Reporte mensual de mercado de granos de Argentina.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7491103657048915968",imp:1139,clk:703,er:63.48,tp:"Orgánico"}
+    ]},
+    br: {np:9, imp:13069, clk:2994, er:26.33, vis:1327, folBase:3996, posts:[
+      {t:"#ControlUnionBrasil 🎉Com orgulho, seguimos evoluindo e demos mais um passo na nossa jornada.🎉",url:"https://www.linkedin.com/feed/update/urn:li:activity:7492602590120218625",imp:4099,clk:467,er:16.47,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil 🌿 Esta semana, estamos participando da Assembleia Geral do FSC Brasil 2026, em Belém do Pa",url:"https://www.linkedin.com/feed/update/urn:li:activity:7493683205338841088",imp:3108,clk:542,er:21.17,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil A Control Union disponibiliza serviços de verificação para o C.A.F.E Pratices, contando co",url:"https://www.linkedin.com/feed/update/urn:li:activity:7497650365895561216",imp:1113,clk:622,er:57.86,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil 🔎 Monitorar bovinos vai muito além da contagem.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7496536847205154820",imp:958,clk:509,er:56.58,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil O Programa Brasileiro GHG Protocol é a principal iniciativa no Brasil voltada para a conta",url:"https://www.linkedin.com/feed/update/urn:li:activity:7498348646464266240",imp:783,clk:419,er:54.15,tp:"Orgánico"}
+    ]},
+    cl: {np:3, imp:2465, clk:41, er:2.92, vis:27, folBase:547, posts:[
+      {t:"¡Gracias a Round Table on Responsible Soy Association (RTRS) y Skretting Chile por ser parte de este encuentro",url:"https://www.linkedin.com/feed/update/urn:li:activity:7496554776151867392",imp:846,clk:7,er:1.65,tp:"Orgánico"},
+      {t:"#ControlUnionChile 🌊 ¡Nos enorgullece ser parte de AQUA FOCUS NORDICS 2026!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7493686559439785984",imp:816,clk:5,er:2.21,tp:"Orgánico"},
+      {t:"#ControlUnionChile Control Union estará presente en AQUA FOCUS NORDICS 2026, en Trondheim, Noruega.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7492661944009637889",imp:803,clk:29,er:4.98,tp:"Orgánico"}
+    ]},
+    pe: {np:13, imp:26020, clk:3672, er:15.69, vis:274, folBase:1975, posts:[
+      {t:"#ControlUnionServices #WeAreHiring #Lima #Perú #Certificador #Organicos",url:"https://www.linkedin.com/feed/update/urn:li:activity:7498340755770449920",imp:3415,clk:82,er:3.19,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Perú La segunda edición de Control Conecta nos llevó a Piura, reuniendo a representante",url:"https://www.linkedin.com/feed/update/urn:li:activity:7492637155970756608",imp:3356,clk:1573,er:49.2,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Perú 📢 Convocatoria abierta | Curso Normas ISO – Sistema Integrado de Gestión",url:"https://www.linkedin.com/feed/update/urn:li:activity:7498789779728195584",imp:2740,clk:89,er:5.0,tp:"Orgánico"},
+      {t:"#ControlUnionServices #WeAreHiring #Lima #Perú #Asistente #Certificaciones",url:"https://www.linkedin.com/feed/update/urn:li:activity:7498339798542118912",imp:2701,clk:77,er:3.52,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Peru Ayer realizamos en Lima la tercera edición de Control Conecta, un espacio que segu",url:"https://www.linkedin.com/feed/update/urn:li:activity:7496618934687887360",imp:2668,clk:668,er:26.99,tp:"Orgánico"}
+    ]},
+    mx: {np:2, imp:2398, clk:914, er:39.87, vis:71, folBase:556, posts:[
+      {t:"#ControlUnionMéxico Esta semana celebramos nuestra PCU Week, una oportunidad para reunir a nuestros equipos, h",url:"https://www.linkedin.com/feed/update/urn:li:activity:7500175570400464896",imp:2082,clk:912,er:45.53,tp:"Orgánico"},
+      {t:"#ControlUnionMéxico 🌿 ¿Tu hotel está preparado para convertir la sostenibilidad en una ventaja competitiva?",url:"https://www.linkedin.com/feed/update/urn:li:activity:7492655301280727040",imp:316,clk:2,er:2.53,tp:"Orgánico"}
+    ]},
+    ec: {np:2, imp:3880, clk:1325, er:36.19, vis:48, folBase:423, posts:[
+      {t:"#ControlUnionEcuador 🌿 Un día para conectar, compartir y disfrutar juntos. 🤝✨",url:"https://www.linkedin.com/feed/update/urn:li:activity:7495443776400969730",imp:2421,clk:1302,er:55.68,tp:"Orgánico"},
+      {t:"#ControlUnionEcuador 🍫 ¡Nos vemos en CHOKAO 2026!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7490818667870568448",imp:1459,clk:23,er:3.84,tp:"Orgánico"}
+    ]},
+    _tot: {np:44, imp:74848, clk:13769, un:8},
   },
 };

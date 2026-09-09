@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { initialLang } from '@/utils/reportLang';
 import { listAccounts, getSegConfig } from '@/services/socialService';
 import { useSocialMonthly } from '@/hooks/useSocialMonthly';
-import { ML } from '@/data/socialSeed';
+import { ML, MO } from '@/data/socialSeed';
 import { monthHasData } from '@/utils/hasData';
 import { genMonthlyInsights, genSocialConclusions, genSocialNextSteps } from '@/utils/socialInsights';
 import { SOCIAL_STR, ML_EN } from '@/utils/socialI18n';
@@ -174,7 +174,7 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
           }
           hint={
             <>
-              Período con datos reales: <span className="font-bold text-cu-cyan">Mayo 2026</span>
+              Último mes con datos reales: <span className="font-bold text-cu-cyan">{ML[MO[MO.length - 1]]}</span>
             </>
           }
         />

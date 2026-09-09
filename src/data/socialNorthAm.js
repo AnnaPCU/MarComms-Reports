@@ -107,4 +107,17 @@ export const NA_DB = {
     ca: {np:0, imp:0, clk:0, er:0, vis:0, folBase:86, posts:[]},
     _tot: {np:11, imp:3797, clk:262, un:5},
   },
+  m08: {
+    us: {np:5, imp:2020, clk:40, er:6.58, vis:10, folBase:133, posts:[
+      {t:"🌎 Control Union USA is proud to be an Earth Sponsor of the ISCC Regional Stakeholder Conference North America!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7498444513963868160",imp:859,clk:13,er:5.59,tp:"Orgánico"},
+      {t:"#ControlUnionUSA 🔎 One audit. Greater visibility. More confidence across your supply chain.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7499104134923743234",imp:457,clk:19,er:9.85,tp:"Vídeo"},
+      {t:"#ControlUnionUSA Your Scope 3 reporting is only as good as the supplier data underneath it.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7493320461863264258",imp:253,clk:0,er:2.77,tp:"Orgánico"},
+      {t:"#ControlUnionUSA One region. Three standards. One trusted verifier.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7490406280021393408",imp:227,clk:6,er:7.05,tp:"Orgánico"},
+      {t:"#ControlUnionUSA For North American brands, the reporting pressure is coming from every direction:",url:"https://www.linkedin.com/feed/update/urn:li:activity:7491236670864793601",imp:224,clk:2,er:7.59,tp:"Orgánico"}
+    ]},
+    ca: {np:1, imp:622, clk:25, er:6.43, vis:0, folBase:89, posts:[
+      {t:"#ControlUnionCanada #WeAreHiring Company Name: Control Union North America",url:"https://www.linkedin.com/feed/update/urn:li:activity:7490096657779462145",imp:622,clk:25,er:6.43,tp:"Orgánico"}
+    ]},
+    _tot: {np:6, imp:2642, clk:65, un:0},
+  },
 };

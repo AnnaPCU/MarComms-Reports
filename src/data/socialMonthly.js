@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════════
-//  DATOS MENSUALES 2026 — Social/LinkedIn (m07, m06, m05, m04, m03, m02, m01).
+//  DATOS MENSUALES 2026 — Social/LinkedIn (m08, m07, m06, m05, m04, m03, m02, m01).
 //  Generado con scripts/linkedin/build_monthly.py desde los exports de
 //  LinkedIn (crudos o unificados). Se mergea sobre DB en socialSeed.js.
 //  Métrica ER = (clics+reacciones+comentarios+compartidos)/impresiones,
@@ -10,6 +10,24 @@
 
 export const SOCIAL_MONTHLY_2026 = {
   cul: {
+    m08: {imp:79758,clk:14986,er:21.21,vis:1038,fol:399,np:44,posts:[
+      {t:'#ControlUnionBrasil 🎉Com orgulho, seguimos evoluindo e demos mais um passo na nossa jornada.🎉',imp:4099,er:16.47,clk:467,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7492602590120218625'},
+      {t:'#ControlUnionServices #WeAreHiring #Lima #Perú #Certificador #Organicos',imp:3415,er:3.19,clk:82,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7498340755770449920'},
+      {t:'¿Qué significa realmente certificar una Cadena de Custodia? 🔎',imp:3399,er:71.14,clk:2393,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7490764823153086465'},
+      {t:'#ControlUnionServices #Perú La segunda edición de Control Conecta nos llevó a Piura, reuniendo a representante',imp:3356,er:49.20,clk:1573,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7492637155970756608'},
+      {t:'#ControlUnionBrasil 🌿 Esta semana, estamos participando da Assembleia Geral do FSC Brasil 2026, em Belém do Pa',imp:3108,er:21.17,clk:542,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7493683205338841088'}
+    ],comp:[
+      {name:'Bureau Veritas',fol:1766304,nfol:24413,eng:19139,posts:259},
+      {name:'Peterson Solutions (Iberia & Americas)',fol:8002,nfol:101,eng:432,posts:19},
+      {name:'Control Union Norte',fol:2339,nfol:27,eng:156,posts:7},
+      {name:'Control Union Latinoamérica',fol:27333,nfol:399,eng:1934,posts:44,own:true},
+      {name:'Control Union UK',fol:1945,nfol:9,eng:1,posts:1},
+      {name:'Control Union',fol:51139,nfol:575,eng:1007,posts:15},
+      {name:'Groupe ECOCERT',fol:47899,nfol:328,eng:1169,posts:18},
+      {name:'Peterson Solutions',fol:4940,nfol:99,eng:665,posts:16},
+      {name:'SGS Argentina',fol:43825,nfol:3,eng:0,posts:0},
+      {name:'SGS',fol:3632058,nfol:84362,eng:19097,posts:321}
+    ]},
     m07: {imp:45264,clk:8073,er:19.59,vis:649,fol:262,np:29,posts:[
       {t:'#ControlUnionServices #Perú El desarrollo de la agroexportación también depende de espacios donde el conocimie',imp:3765,er:27.49,clk:978,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7485750472050503680'},
       {t:'#ControlUnionMéxico #NuevaFecha En unos días comienza nuestro webinar "ISO 14064 en acción: Validación y Verif',imp:3603,er:2.44,clk:62,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7478424977948614657'},
@@ -138,6 +156,24 @@ export const SOCIAL_MONTHLY_2026 = {
     ]},
   },
   cue: {
+    m08: {imp:6110,clk:456,er:9.71,vis:77,fol:42,np:5,posts:[
+      {t:'#Webinar ♻️ The future of plastic packaging is changing. Is your business ready?',imp:3311,er:7.58,clk:193,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7497563446306074624'},
+      {t:'#WeAreHiring #Auditor #ISCC Control Union España es una entidad de certificación multinacional con una amplia ',imp:1321,er:4.69,clk:38,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7490043017370787840'},
+      {t:'#Webinar 📢 Regulations are reshaping the future of plastic packaging.',imp:518,er:9.46,clk:32,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7495774097197600769'},
+      {t:'#Webinar #ComingSoon What does a successful certification journey look like?',imp:406,er:7.14,clk:14,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7498658074467926016'},
+      {t:'#Webinar ♻️ The future of plastic packaging is changing. Is your business ready?',imp:358,er:7.54,clk:17,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7493683751689056257'}
+    ],comp:[
+      {name:'OCA GLOBAL',nfol:2004,eng:1466,posts:13},
+      {name:'Intertek',nfol:7701,eng:3925,posts:69},
+      {name:'AENOR',nfol:706,eng:791,posts:23},
+      {name:'Control Union España',nfol:42,eng:135,posts:5,own:true},
+      {name:'TÜV SÜD',nfol:16154,eng:11781,posts:121},
+      {name:'DNV',nfol:7761,eng:8857,posts:35},
+      {name:'Bureau Veritas Spain',nfol:3,eng:0,posts:0},
+      {name:'RINA',nfol:4563,eng:3971,posts:24},
+      {name:'Applus+',nfol:3895,eng:191,posts:2},
+      {name:'SGS',nfol:84362,eng:18834,posts:321}
+    ]},
     m07: {imp:1123,clk:122,er:13.00,vis:61,fol:19,np:3,posts:[
       {t:'Hoy realizamos nuestro webinar sobre ISO 27001: Por qué y cómo certificarse, donde compartimos los principales',imp:240,er:15.42,clk:28,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7480228116074790913'},
       {t:'¿Está tu organización preparada para Materials Matter Standard?',imp:235,er:42.13,clk:91,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7488916424476868608'},
@@ -245,6 +281,13 @@ export const SOCIAL_MONTHLY_2026 = {
     ]},
   },
   cup: {
+    m08: {imp:105,clk:8,er:7.62,vis:17,fol:6,np:0,posts:[
+],comp:[
+      {name:'Bureau Veritas',nfol:24413,eng:18986,posts:259},
+      {name:'APCER',nfol:96,eng:610,posts:18},
+      {name:'Control Union Portugal',nfol:6,eng:0,posts:0,own:true},
+      {name:'SGS',nfol:84362,eng:18834,posts:321}
+    ]},
     m07: {imp:715,clk:75,er:14.27,vis:27,fol:9,np:3,posts:[
       {t:'#ControlUnionPortugal A segurança da informação é hoje um fator essencial para a continuidade, a confiança e a',imp:364,er:19.78,clk:66,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7483063275010801664'},
       {t:'#ControlUnionPortugal A qualidade não acontece por acaso. Constrói-se com processos claros, melhoria contínua ',imp:147,er:9.52,clk:5,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7480161622377013248'},
@@ -309,6 +352,15 @@ export const SOCIAL_MONTHLY_2026 = {
     ]},
   },
   cun: {
+    m08: {imp:6157,clk:2004,er:35.08,vis:37,fol:27,np:6,posts:[
+      {t:'🌎 Control Union Norte presente en NOA Exporta',imp:2438,er:77.77,clk:1841,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7494080431173238784'},
+      {t:'📍 ¡Nos vemos en NOA Exporta! En Control Union Norte nos enorgullece ser sponsors de NOA Exporta, un espacio qu',imp:946,er:5.07,clk:32,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7491142865847373824'},
+      {t:'En Control Union, en las últimas semanas, recibimos la habilitación como certificadora reconocida para Orgánic',imp:883,er:4.08,clk:13,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7498030749434929153'},
+      {t:'📊 Avance de Zafra | 2da quincena de julio',imp:654,er:7.49,clk:39,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7490851479382163456'},
+      {t:'📊 Avance de Zafra | 1ra quincena de agosto',imp:459,er:4.58,clk:15,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7495898003015262209'}
+    ],comp:[
+      {name:'Control Union Norte',nfol:27,eng:156,posts:7,own:true}
+    ]},
     m07: {imp:6016,clk:1129,er:20.55,vis:42,fol:14,np:4,posts:[
       {t:'🌱 ¡Estuvimos presentes en la Jornada de Actualización Técnica y Comercial de Legumbres 2026!',imp:2513,er:10.27,clk:222,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7478458480152961024'},
       {t:'📊 Avance de Zafra | 1era quincena de julio',imp:796,er:5.40,clk:39,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7483892599443914752'},
@@ -365,6 +417,24 @@ export const SOCIAL_MONTHLY_2026 = {
     ]},
   },
   cuna: {
+    m08: {imp:3153,clk:88,er:6.95,vis:37,fol:20,np:6,posts:[
+      {t:'🌎 Control Union USA is proud to be an Earth Sponsor of the ISCC Regional Stakeholder Conference North America!',imp:859,er:5.59,clk:13,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7498444513963868160'},
+      {t:'#ControlUnionCanada #WeAreHiring Company Name: Control Union North America',imp:622,er:6.43,clk:25,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7490096657779462145'},
+      {t:'#ControlUnionUSA 🔎 One audit. Greater visibility. More confidence across your supply chain.',imp:457,er:9.85,clk:19,tp:'Vídeo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7499104134923743234'},
+      {t:'#ControlUnionUSA Your Scope 3 reporting is only as good as the supplier data underneath it.',imp:253,er:2.77,clk:0,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7493320461863264258'},
+      {t:'#ControlUnionUSA One region. Three standards. One trusted verifier.',imp:227,er:7.05,clk:6,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7490406280021393408'}
+    ],comp:[
+      {name:'NSF - Food and Nutrition',fol:77934,nfol:464,eng:1066,posts:67},
+      {name:'SCS Global Services',fol:48515,nfol:675,eng:1032,posts:28},
+      {name:'Intertek',fol:598288,nfol:7701,eng:0,posts:69},
+      {name:'Oregon Tilth',fol:5466,nfol:93,eng:341,posts:10},
+      {name:'CCOF',fol:12332,nfol:115,eng:516,posts:18},
+      {name:'SGS Environment, Health and Safety (North America)',fol:22559,nfol:650,eng:516,posts:7},
+      {name:'IDFL Laboratory and Institute',fol:3827,nfol:82,eng:139,posts:6},
+      {name:'Bureau Veritas North America',fol:59985,nfol:443,eng:912,posts:38},
+      {name:'Control Union North America',fol:1197,nfol:20,eng:131,posts:6,own:true},
+      {name:'ECOCERT Canada',fol:1828,nfol:30,eng:27,posts:11}
+    ]},
     m07: {imp:3854,clk:275,er:12.84,vis:36,fol:51,np:11,posts:[
       {t:'🌍 Green Choice certification is now recognized by Booking.com.',imp:871,er:7.00,clk:11,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7487612787653898240'},
       {t:'#ControlUnionUSA Last week, Robert Demianew and Karl Osorio Diaz represented Control Union USA at the #Organic',imp:428,er:32.71,clk:121,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7485061075198107648'},
@@ -493,6 +563,24 @@ export const SOCIAL_MONTHLY_2026 = {
     ]},
   },
   ps: {
+    m08: {imp:15742,clk:3332,er:25.39,vis:261,fol:99,np:15,posts:[
+      {t:'EUDR Accelerator Day! (Asia edition) Last week we hosted the Asia edition of our EUDR Accelerator Day. This on',imp:2211,er:32.29,clk:637,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7489944376954220544'},
+      {t:'In the first season of "Peterson in the Field," we follow a gathering organized by the Embassy of the Kingdom ',imp:1820,er:10.38,clk:126,tp:'Vídeo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7495839108016148480'},
+      {t:'EUDR Training for the CellMark Team Recently, colleagues from Peterson Solutions came together to deliver an E',imp:1328,er:30.87,clk:363,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7490328878360649728'},
+      {t:'In the second episode of Peterson in the Field, we highlight the importance of traceability for the livestock ',imp:1303,er:8.67,clk:66,tp:'Vídeo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7498379559470518273'},
+      {t:'🎥 Today, we’re launching Peterson in the Field! An exclusive series created by Peterson Solutions to give a vo',imp:1191,er:7.39,clk:41,tp:'Vídeo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7495096993741103105'}
+    ],comp:[
+      {name:'ucrop.it',fol:11318,nfol:48,eng:84,posts:7},
+      {name:'Circularise',fol:14268,nfol:122,eng:154,posts:7},
+      {name:'Vega Monitoramento',fol:38982,nfol:108,eng:278,posts:13},
+      {name:'Agrotools',fol:37386,nfol:322,eng:693,posts:20},
+      {name:'Satelligence',fol:12501,nfol:104,eng:281,posts:10},
+      {name:'BanQu | Proven Traceability Tech & Expertise',fol:5883,nfol:6,eng:0,posts:0},
+      {name:'osapiens',fol:36440,nfol:1031,eng:1713,posts:24},
+      {name:'Peterson Solutions',fol:4940,nfol:99,eng:665,posts:16,own:true},
+      {name:'Koltiva',fol:27966,nfol:124,eng:190,posts:5},
+      {name:'Justoken',fol:26501,nfol:28,eng:2,posts:0}
+    ]},
     m07: {imp:6103,clk:570,er:12.90,vis:260,fol:86,np:7,posts:[
       {t:'We’ve just launched our new EUDR system, a platform built to make sure your goods can continue to be imported,',imp:1016,er:6.10,clk:23,tp:'Artículo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7483175144211947520'},
       {t:'#PetersonSolutionsAcademy EUDR compliance starts with understanding what’s behind your supply chain.',imp:978,er:10.12,clk:51,tp:'Vídeo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7478047832432742400'},
@@ -620,6 +708,24 @@ export const SOCIAL_MONTHLY_2026 = {
     ]},
   },
   pia: {
+    m08: {imp:15667,clk:1484,er:12.23,vis:342,fol:101,np:19,posts:[
+      {t:'#PetersonSolutionsArgentina ¿Cómo funciona FSA (Farm Sustainability Assessment) y qué aporta a los productores',imp:1932,er:1.60,clk:20,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7495827198407540738'},
+      {t:'#PetersonSolutionsArgentina #Webinar #EmpCo',imp:1242,er:8.94,clk:60,tp:'Vídeo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7497639200444452864'},
+      {t:'#PetersonSolutionsArgentina #WebinarEmpCo',imp:1236,er:12.94,clk:95,tp:'Vídeo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7493637631105273856'},
+      {t:'#PetersonSolutionsArgentina #Webinar #EmpCo',imp:1172,er:5.38,clk:38,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7493318000121561088'},
+      {t:'#PetersonSolutionsArgentina 🌱 El greenwashing dejó de ser solo un riesgo reputacional.',imp:1153,er:5.29,clk:32,tp:'Artículo',url:'https://www.linkedin.com/feed/update/urn:li:activity:7495464522984493056'}
+    ],comp:[
+      {name:'Bureau Veritas',fol:1766307,nfol:24413,eng:19139,posts:259},
+      {name:'SCS Global Services',fol:48516,nfol:675,eng:1032,posts:28},
+      {name:'Regenerative Organic Alliance',fol:45516,nfol:353,eng:706,posts:16},
+      {name:'Peterson Solutions (Iberia & Americas)',fol:8002,nfol:101,eng:432,posts:19,own:true},
+      {name:'Peterson Solutions (Europe)',fol:5083,nfol:53,eng:39,posts:2},
+      {name:'Anthesis ESP',fol:29908,nfol:135,eng:117,posts:13},
+      {name:'Regenagri',fol:10204,nfol:188,eng:409,posts:6},
+      {name:'Anthesis Latam',fol:20830,nfol:120,eng:296,posts:13},
+      {name:'South Pole',fol:164454,nfol:979,eng:464,posts:12},
+      {name:'SGS',fol:3632084,nfol:84362,eng:19097,posts:321}
+    ]},
     m07: {imp:21340,clk:2657,er:15.43,vis:483,fol:202,np:21,posts:[
       {t:'#PetersonSolutionsMéxico #WeAreHiring 🌱 Consultor/a de Sostenibilidad — Peterson Solutions',imp:4889,er:5.56,clk:220,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7485667975417536514'},
       {t:'#PetersonSolutionsArgentina Este lunes y martes, Argentina fue sede del #GHGSummit, un encuentro que reunió a ',imp:3329,er:29.92,clk:909,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7482857485050191872'},
@@ -727,6 +833,15 @@ export const SOCIAL_MONTHLY_2026 = {
     ]},
   },
   tlr: {
+    m08: {imp:1483,clk:629,er:46.80,vis:23,fol:11,np:5,posts:[
+      {t:'TLR INTERNATIONAL LABORATORIES estará presente en la feria más importante de la industria alimentaria de la re',imp:372,er:8.87,clk:21,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7498067840068046850'},
+      {t:'🛡️ LA SEGURIDAD TAMBIÉN SE CONSTRUYE CON PREPARACIÓN',imp:320,er:93.12,clk:292,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7495926622219460608'},
+      {t:'🌍 CACAO PERUANO: LA INOCUIDAD TAMBIÉN DEFINE EL ÉXITO DE UNA EXPORTACIÓN.',imp:289,er:70.24,clk:200,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7495530960394805249'},
+      {t:'Potencia la calidad de tus granos andinos con nuestro nuevo servicio especializado 🌾✨',imp:225,er:27.56,clk:60,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7492942926650728450'},
+      {t:'🌱 ¿Exportas frutas, vegetales o granos andinos? Lleva tu control de calidad al siguiente nivel. 🚀',imp:213,er:26.76,clk:55,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7492632976409870337'}
+    ],comp:[
+      {name:'TLR International Laboratories Perú',nfol:11,eng:65,posts:5,own:true}
+    ]},
     m07: {imp:552,clk:84,er:17.03,vis:8,fol:7,np:0,posts:[
 ],comp:[
       {name:'TLR International Laboratories Perú',nfol:7,eng:10,posts:0,own:true}
@@ -770,6 +885,21 @@ export const SOCIAL_MONTHLY_2026 = {
     ]},
   },
   bel: {
+    m08: {imp:3304,clk:149,er:7.84,vis:27,fol:37,np:2,posts:[
+      {t:'We’re pleased to share that Chris Wiberg, Vice President of Biomass Energy Lab (BEL), will be speaking at the ',imp:1645,er:7.29,clk:61,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7495467898191388672'},
+      {t:'🎙️ New Podcast | The Future of Biomass, Biocarbon & Biochar Standards',imp:564,er:7.80,clk:25,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7490484067801673728'}
+    ],comp:[
+      {name:'BioMass Energy Techniques Inc',nfol:198,eng:536,posts:19},
+      {name:'Biomass Energy Lab',nfol:37,eng:109,posts:3,own:true},
+      {name:'Fagus GreCon, Inc.',nfol:46,eng:225,posts:3},
+      {name:'ANDRITZ Feed & Biofuel',nfol:973,eng:2186,posts:23},
+      {name:'AMANDUS KAHL',nfol:109,eng:878,posts:6},
+      {name:'Mondi Group',nfol:5752,eng:4911,posts:22},
+      {name:'Control Union Türkiye',nfol:86,eng:576,posts:38},
+      {name:'Laidig Systems, Inc.',nfol:51,eng:292,posts:4},
+      {name:'IMAL Srl',nfol:144,eng:129,posts:2},
+      {name:'Advanced Woody Biomass Alliance',nfol:11,eng:59,posts:3}
+    ]},
     m07: {imp:3429,clk:167,er:9.83,vis:16,fol:44,np:2,posts:[
       {t:'We are proud to share that Biomass Energy Lab\'s Project Lead, Chris Wiberg, was recognized as part of the team',imp:2246,er:8.10,clk:77,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7484995614636765184'},
       {t:'It was an honor to represent Team USA at the ISO/TC 238 Annual Plenary and Working Group Meetings held in Berl',imp:1231,er:11.86,clk:108,tp:'Orgánico',url:'https://www.linkedin.com/feed/update/urn:li:activity:7487537309580615680'}

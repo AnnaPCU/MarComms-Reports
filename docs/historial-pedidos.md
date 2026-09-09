@@ -1259,3 +1259,16 @@
 >
 > Quiero que hagamos una implementación de una nueva vista. Asi como hay vistas por pilares de MarComms necesito vistas por unidad de negocio y pais, siempre y cuando haya mas de un pilar que mostrar por el mismo. Si para un cliente solo se trabaja un pilar no tiene sentido dedicarle una vista.
 > Esta landing para cada cliente con mas de un pilar me la imagino con botones listos para filtrarse por vistas de pilares con la misma información que hay como si entrara particularmente a esto en la vista de un pilar, pero que por default haya una vista general, tal y como funciona la vista de webinars, abarcando los puntos mas importantes de cada vista en relación a los pilares qeu se toque en el cliente respectivo
+
+
+**#76**
+
+> No voe que se haya cargado al front los cambios recientes. Y tampoco veo que estes en la rama main
+
+
+**#77**
+
+> Eliminame las otras branches si no tienen nada nuevo que aportar.
+>
+> Procesá las métricas nuevas de Social Media para Agosto
+

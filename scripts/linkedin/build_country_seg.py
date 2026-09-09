@@ -24,7 +24,7 @@
 #     m01="<scratch>/enero/Metricas mensuales LKD Enero" \
 #     m07="<scratch>/julio/.../Control_Union_North_America_unified.xlsx" ...
 # ════════════════════════════════════════════════════════════════
-import os, sys, re, json, unicodedata
+import os, sys, re, json, unicodedata, subprocess
 import xlrd, openpyxl
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -273,6 +273,17 @@ def js(v, ind=0):
     return json.dumps(v)
 
 
+def load_existing(dest, prefix):
+    """Meses ya generados en el seed del país → {mid: {cid: d, _tot: t}}.
+    Se lee con node (módulo ES sin imports). Los exports crudos de meses
+    anteriores no viven en el repo: el script FUSIONA, no regenera todo."""
+    if not os.path.exists(dest):
+        return {}
+    js = f"import(process.argv[1]).then(m => process.stdout.write(JSON.stringify(m.{prefix}_DB)))"
+    raw = subprocess.check_output(['node', '--input-type=module', '-e', js, '--', dest]).decode()
+    return json.loads(raw)
+
+
 def main():
     acc = 'cul'
     months = {}
@@ -287,13 +298,16 @@ def main():
     cfg = ACCOUNTS[acc]
     countries = cfg['countries']
 
-    db = {}
+    P = cfg['prefix']
+    dest = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'src', 'data', cfg['out']))
+    db = load_existing(dest, P)
+    if db:
+        print(f"  meses ya cargados: {', '.join(sorted(db))}", file=sys.stderr)
     for m in sorted(months):
         db[m], total, un = build_month(months[m], cfg)
         tag = ' '.join(f"{cid}:{db[m][cid]['np']}" for cid in countries)
         print(f'  {m}: {total} posts → {tag} | sin país: {un}', file=sys.stderr)
 
-    P = cfg['prefix']
     out = ['// ════════════════════════════════════════════════════════════════',
            '//  GENERADO por scripts/linkedin/build_country_seg.py — NO editar a mano.',
            f'//  Segmentación por país de la cuenta LinkedIn "{acc}":',
@@ -319,7 +333,6 @@ def main():
         out.append(f"    _tot: {{np:{t['np']}, imp:{t['imp']}, clk:{t['clk']}, un:{t['un']}}},")
         out.append('  },')
     out.append('};')
-    dest = os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'data', cfg['out'])
     with open(dest, 'w') as f:
         f.write('\n'.join(out) + '\n')
     print('wrote', os.path.normpath(dest))

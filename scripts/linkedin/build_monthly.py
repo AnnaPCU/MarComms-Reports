@@ -9,8 +9,13 @@
 #   - carpeta de archivos UNIFICADOS: un .xlsx consolidado por cuenta.
 # El formato se detecta solo (si hay subcarpetas → crudo).
 #
-# Requiere: pip install openpyxl xlrd
-import os, sys, json
+# Los meses ya cargados en src/data/socialMonthly.js se CONSERVAN: el script
+# fusiona (los meses pasados por argumento pisan a los existentes con el
+# mismo id). Los exports crudos de meses anteriores no viven en el repo, así
+# que regenerar todo desde cero no es una opción.
+#
+# Requiere: pip install openpyxl xlrd · node (para leer el seed existente)
+import os, sys, json, subprocess
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from extract_unified import extract as extract_unified_month
@@ -58,15 +63,33 @@ def month_js(m):
         s += ",comp:[\n%s\n    ]" % ',\n'.join(comp_js(c) for c in m['comp'])
     return s + "}"
 
+OUT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'src', 'data', 'socialMonthly.js'))
+
+def load_existing(path):
+    """Meses ya cargados en socialMonthly.js → {mid: {acc: month}}. Se lee con
+    node (el archivo es un módulo ES sin imports). Si no existe, {}."""
+    if not os.path.exists(path):
+        return {}
+    js = "import(process.argv[1]).then(m => process.stdout.write(JSON.stringify(m.SOCIAL_MONTHLY_2026)))"
+    raw = subprocess.check_output(['node', '--input-type=module', '-e', js, '--', path]).decode()
+    by_acc = json.loads(raw)
+    out = {}
+    for acc, months in by_acc.items():
+        for mid, m in months.items():
+            out.setdefault(mid, {})[acc] = m
+    return out
+
 def main():
     args = dict(a.split('=', 1) for a in sys.argv[1:])
     if not args:
         print(__doc__ or 'Uso: build_monthly.py m03=/ruta ...'); sys.exit(1)
-    months = sorted(args.items(), reverse=True)  # más reciente primero
-    data = {}
-    for mid, base in months:
+    data = load_existing(OUT)
+    if data:
+        print(f"  meses ya cargados: {', '.join(sorted(data))}", file=sys.stderr)
+    for mid, base in sorted(args.items()):
         print(f"  {mid} ← {base}", file=sys.stderr)
         data[mid] = extract_month(base)
+    months = sorted(data.items(), reverse=True)  # más reciente primero
     L = []
     L.append("// ════════════════════════════════════════════════════════════════")
     L.append("//  DATOS MENSUALES 2026 — Social/LinkedIn (%s)." % ', '.join(m for m, _ in months))
@@ -85,9 +108,8 @@ def main():
             L.append(f"    {mid}: {month_js(data[mid][k])},")
         L.append("  },")
     L.append("};")
-    out = os.path.join(os.path.dirname(__file__), '..', '..', 'src', 'data', 'socialMonthly.js')
-    open(out, 'w').write('\n'.join(L) + '\n')
-    print(f"→ escrito {os.path.normpath(out)}")
+    open(OUT, 'w').write('\n'.join(L) + '\n')
+    print(f"→ escrito {OUT}")
 
 if __name__ == '__main__':
     main()

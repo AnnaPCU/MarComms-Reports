@@ -22,7 +22,8 @@ responsable:
    consolidar ni traducir nada — el tooling se encarga. Solo respetar la
    estructura/prefijos que indica el README de cada pilar.
 3. **No tocar `_procesados/`.** Cuando Claude ingesta un mes, mueve la
-   carpeta ahí como archivo histórico. Si hay que corregir algo de un mes ya
+   carpeta ahí como archivo histórico (con el nombre `AAAA-MM`, aunque se
+   haya subido con otro nombre). Si hay que corregir algo de un mes ya
    procesado, avisarle a Claude en vez de editar a mano.
 4. **Nunca inventar ni estimar datos.** Solo exports reales; si un mes no
    tiene datos, no se crea la carpeta (regla de honestidad del proyecto).
