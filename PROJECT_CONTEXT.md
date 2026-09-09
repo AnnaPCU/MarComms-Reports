@@ -427,3 +427,4 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   de todos los meses) y reconoce los nombres de carpeta del drop («PS
   GLOBAL», «PS IBERIA & AMERICA», «BEL»). Carpeta archivada en
   `metricas/social-media/_procesados/2026-08/`.
+- Paid arranca por defecto en **Agosto 2026** (antes quedaba en julio).
