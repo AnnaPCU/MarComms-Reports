@@ -6,7 +6,9 @@
 > `SETUP_*.md`, **manda este archivo** (esos describen una arquitectura anterior
 > con Supabase que fue descartada — ver "Decisiones").
 
-_Última actualización: reporte Paid Junio 2026 + estética unificada + baja de Supabase._
+_Última actualización: Paid Agosto 2026 (cuenta CU Estados Unidos, cambio EUR→ARS,
+campañas parciales) · marca MarComms como principal · toggle ES/EN en los 5 pilares ·
+Email y Webinars con datos reales (webinar EUDR)._
 
 ---
 
@@ -86,7 +88,8 @@ src/
     social/                   SocialApp, AudienceCharts, PostsTable, ComparativeView
     website/                  WebsiteApp (sub-tabs Website/SEO)
     email/                    EmailApp, EmailCharts, HotLeadsTable (Mailchimp)
-    webinars/                 WebinarsApp (placeholder NoData + glosario)
+    webinars/                 WebinarMixReport (reporte mixto por evento) + WebinarsApp
+    brand/                    Logo/MarCommsLogo/ClientLogo, BrandBars, Tagline
     embed/                    EmbedApp (render del HTML descargable)
   utils/
     paidInsights.js           insights/diagnóstico/próximos pasos + scoreCampaigns (Paid)
@@ -96,7 +99,11 @@ src/
     emailInsights.js          insights/diagnóstico/próximos pasos (Email) + benchmarks B2B
     mailchimp/                lógica pura: leads (parseo/detección de columnas),
                               aggregate (métricas/comparativa/hot leads), build (compone campaña)
-    esg.js                    clasificador ESG por keywords
+    esg.js                    clasificador ESG por keywords (+ ESG_NAME_EN)
+    paidI18n.js / emailI18n.js / socialI18n.js / websiteI18n.js / webinarsI18n.js
+                              diccionarios ES/EN de cada pilar (ver §7 idioma)
+    reportLang.js             idioma inicial del reporte (lee __REPORT_EMBED__.lang)
+    campaignPartial.js        días activos de una campaña que arrancó a mitad de mes
     format.js                 fmt/num/pct/computeDelta (es-AR)
     hasData.js                regla de honestidad de datos
     snapshot.js / exportHtml.js  descarga de la vista como HTML
@@ -107,38 +114,74 @@ supabase/                     migraciones y seeds SQL (NO se usan hoy; ver "Deci
 
 El export mensual de Google Ads (Search) que provee el usuario:
 
-- Trae **2 filas de preámbulo** (título + rango de fechas) antes del encabezado.
+Son **3 CSV por mes** (ver `scripts/paid/README.md` para el detalle):
+rendimiento de campaña, semanal por grupo de anuncios y términos + palabras clave.
+
+- Traen **2 filas de preámbulo** (título + rango de fechas) antes del encabezado:
+  el tooling las saltea, no hay que borrarlas.
 - Columnas usadas: `Campaña · Impr. · Clics · CTR · Código de moneda · CPC medio ·
-  Coste · Conversiones · Coste/conv. · Tasa de conv.` Moneda: EUR.
+  Coste · Conversiones · Coste/conv. · Tasa de conv.`
+- El informe de términos **debe** incluir la columna `Campaña`: hay nombres de
+  grupo repetidos entre cuentas (PEFC, GRS, GOTS, Smeta, ISCC…) y sin ella no se
+  pueden atribuir.
 - El nombre de campaña trae prefijo de cuenta/mercado: `CU España - IFS - SEARCH`,
   `PS Argentina - SuSe - ESG / Reportes - Search`, etc. → se separa por **mercado**
-  (prefijo) en las 4 cuentas y se limpia el nombre visible.
-- Números en formato es (coma decimal, punto de miles). Los totales por cuenta se
-  **calculan** sumando campañas y derivando CTR/CPC/tasas.
+  (prefijo) en las cuentas y se limpia el nombre visible. Prefijo desconocido =
+  error del script (no se asigna a ciegas).
+- Números en formato es: el `.` es **siempre** separador de miles (`5.561`) y la
+  `,` el decimal (`103366,25`). Los totales por cuenta se **calculan** sumando
+  campañas y derivando CTR/CPC/tasas, y se validan contra el semanal.
+- **Moneda**: hasta julio 2026 el export venía en **EUR**; desde agosto 2026 viene
+  en **ARS** (cambio de cuenta de Google Ads). Ver §7.
 
 > Social (LinkedIn) y Website (GA4/Search Console): sus formatos de export reales
 > aún no se documentaron; los datos actuales se cargaron a mano en el seed.
 
-### Cuentas Paid actuales (Junio 2026, EUR)
+### Cuentas Paid actuales (Agosto 2026, ARS)
 
-| Cuenta | slug | logo | Junio: impr · clics · coste · conv |
-|--------|------|------|------------------------------------|
-| CU España | `es` | CU | 2.692 · 196 · 301,65 € · 1 (IFS) |
-| CU Portugal | `pt` | CU | 838 · 62 · 83,97 € · 0 |
-| CU Canadá | `cuc` | CU | 276 · 14 · 22,68 € · 0 |
-| PS Argentina | `psar` | Peterson | 3.912 · 119 · 112,57 € · 0 |
+| Cuenta | slug | logo | Agosto: impr · clics · coste · conv |
+|--------|------|------|-------------------------------------|
+| PS Argentina | `psar` | Peterson | 11.507 · 503 · 350.121,76 ARS · 0 |
+| CU España | `es` | CU | 4.154 · 170 · 374.884,93 ARS · 1 (CAEs) |
+| CU Canadá | `cuc` | CU | 911 · 62 · 269.062,08 ARS · 1 (Forestry) |
+| CU Portugal | `pt` | CU | 858 · 67 · 140.993,70 ARS · 0 |
+| CU Estados Unidos | `cuus` | CU | 179 · 12 · 89.322,29 ARS · 0 |
 
-(Paid además tiene meses previos de pt: feb–may; es: abr.)
+- `cuus` arranca en agosto 2026 con dos campañas de Organic (USDA NOP y
+  PrimusGFS) **creadas el 21/8** → 11 de 31 días (ver campañas parciales en §7).
+- La campaña `Car` de CU España **pasó a llamarse `CAEs`** en agosto: es la misma
+  (mismos grupos), y los meses previos están renombrados para que el acumulado
+  anual no la parta en dos.
+- `cuar` (CU Argentina) existe solo para las campañas GEO de Meta Ads.
 
 ## 7. Reglas de negocio
 
 - **Honestidad de datos** (`hasData.js`): sin filas reales para (cuenta, período)
   → "Sin información suficiente". Nunca inventar/estimar.
-- **Marca CU** (`brand.js`): tokens de color oficiales, tipografía Ubuntu, paleta
-  de charts fija, logo por cuenta (CU / Peterson / sin logo). Tagline "The Proof
-  to Your Promise" al pie.
-- **Idioma**: UI y comentarios en español (argentino); variables/funciones en
-  inglés. Formato numérico es-AR (miles con `.`, decimales con `,`).
+- **Marca**: MarComms (el equipo que produce los reportes) es la marca
+  **principal** — logo horizontal arriba a la izquierda del header, logo chico al
+  pie enfrentado al tagline, e isotipo como favicon de la app y de todos los
+  descargables. El logo del **cliente** (CU / Peterson) va en segundo plano: chico,
+  sin etiqueta y con tope de ancho. Assets en `public/marcomms-*`, originales en
+  `assets/marca/marcomms/`. Tokens de color CU, tipografía Ubuntu y paleta de
+  charts fija siguen igual (`brand.js`); tagline "The Proof to Your Promise" al pie.
+- **Idioma del código**: UI y comentarios en español (argentino);
+  variables/funciones en inglés.
+- **Idioma del reporte (ES/EN)**: los 5 pilares tienen botonera ES/EN, con español
+  por defecto. Cada pilar tiene su diccionario `*I18n.js` y sus generadores de
+  insights reciben `lang`. Al **descargar**, el diálogo pregunta el idioma
+  principal del archivo (viaja en `__REPORT_EMBED__.lang` y lo lee `initialLang()`);
+  adentro del HTML el toggle sigue funcionando. Glosarios EN: `*En` en
+  `glossaries.js`. Formato numérico: es-AR en español, en-US en inglés.
+- **Monedas**: nunca se convierte de una moneda a otra. Cada mes se muestra con la
+  moneda con la que se reportó; en el Resumen del Año y la Comparativa los importes
+  se muestran como **sumatoria por moneda** (`977,84 EUR + 374.884,93 ARS`) sobre el
+  año completo, mientras que los volúmenes se suman normalmente. Los gráficos de
+  coste usan un eje por moneda (anual) o solo la moneda vigente (comparativa).
+- **Campañas parciales**: una campaña que arrancó a mitad de mes lleva
+  `startedOn: 'AAAA-MM-DD'` en el seed (fecha de creación, del historial de cambios
+  de Google Ads). `campaignPartial.js` calcula los días activos y la UI avisa con
+  chip «Parcial · N días», banner en el detalle e insight propio.
 
 ## 8. Tipos de reporte (estructura por pilar)
 
@@ -155,17 +198,27 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
   de posts por pilar ESG; vista **Comparativa multi-cuenta**.
 - **Website**: sub-tabs **Website** (embudo Vista→Sesión→Conversión) y **SEO**
   (embudo Impresión→Clic), cada uno con top-lists y chart.
+- **Email**: embudo Entregados→Aperturas→Clics; KPIs con benchmarks B2B;
+  comparativa de la secuencia; tabla de hot leads con prioridad por clics.
+- **Webinars**: reporte **mixto por evento** (no mensual). Botonera de vistas
+  General · Webinar · Email Marketing · Social Media, cada una con su glosario.
+  Cruza Livestorm/Teams + Mailchimp + LinkedIn + HubSpot: key insights, países,
+  embudo, engagement, atribución de registros, deals priorizados por scoring
+  0-100, encuestas y oportunidad comercial. El plan de acción solo se ve en la
+  descarga interna.
 
 ## 9. Estado de cada módulo
 
 | Módulo | Estado |
 |--------|--------|
-| Social Media | ✅ Completo (Mar–Jul 2026, 9 cuentas) + comparativa + benchmark de competidores + Resumen del Año (tooling: `scripts/linkedin/`) |
-| Paid Media | ✅ Completo (Feb–Jun 2026) + drill-down + comparativa |
-| Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas incl. CU Canada y CU United States) |
-| Email Marketing | ✅ Reporte armado (Mailchimp) — a la espera del 1er export real; NoData hasta cargar datos |
-| Webinars | ⛔ Placeholder (NoData + glosario) — falta export/datos |
-| Descarga HTML | ✅ Funciona (snapshot embebido) |
+| Social Media | ✅ Completo (Mar–Jul 2026, 9 cuentas) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`) |
+| Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas) + drill-down + detalle por grupo + Resumen del Año + comparativa (tooling: `scripts/paid/`) |
+| Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas) + Resumen del Año + comparativa |
+| Email Marketing | ✅ Con datos reales: `cups` (CU + PS Latinoamérica), m08 — campaña del webinar EUDR (tooling: `scripts/mailchimp-to-seed.mjs`) |
+| Webinars | ✅ Reporte mixto por evento: **Webinar EUDR · Ago 2026**. El de ISO 14064 (Jul 2026) está oculto a pedido del equipo, con los datos intactos en el seed |
+| Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
+| Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
+| Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
 | Login compartido | ✅ Funciona (localStorage) |
 
 ## 10. Decisiones tomadas
@@ -183,15 +236,13 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 ## 11. Pendientes
 
-- **Email Marketing**: cargar el primer export real de Mailchimp. La vista y la
-  lógica ya están; se procesa con `node scripts/mailchimp-to-seed.mjs <config.json>`
-  (ver cabecera del script) y se pega el resultado en `src/data/emailSeed.js`
-  (`EMAIL_DB`). El CSV de destinatarios alimenta los *hot leads*; el resumen de la
-  campaña (`stats`) alimenta las tasas. Insights por reglas fijas vs. benchmarks B2B
-  (sin IA).
-- Webinars: definir formato de export real y cargar datos.
-- Formatos de export reales de LinkedIn / GA4 / Search Console (documentar columnas).
-- Lint real + tests de funciones puras (hoy `npm run lint` es un stub).
+- **Webinar EUDR**: falta el **ticket promedio del servicio EUDR** para proyectar
+  el pipeline potencial (hoy la sección de potencial no se muestra porque
+  `pipelinePotential` es `null`). Los próximos webinars llegan por `metricas/`.
+- **Paid Agosto**: confirmar por qué las dos campañas de CU Estados Unidos
+  quedaron en cero el 31/8 (¿presupuesto agotado o pausa?) para aclararlo en el
+  análisis.
+- Formatos de export reales de GA4 / Search Console (documentar columnas).
 - Opcional: extender drill-down/comparativa a Social por cuenta si se pide.
 
 ## 12. Problemas conocidos
@@ -200,12 +251,17 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
   impacto en producción. Arreglarlas requiere vite@8 (breaking) — no hecho a propósito.
 - Docs `SETUP_SUPABASE.md` / `SETUP_AUTOIMPORT.md` / partes de `CLAUDE.md`
   describen la arquitectura Supabase **descartada** — leer con ese contexto.
+  La carpeta `supabase/` queda solo como referencia del modelo de datos.
+- El bundle supera los 500 kB (aviso de Vite al buildear). Es esperable: el seed
+  de datos viaja adentro. No es un error.
 
 ## 13. Instrucciones de ejecución
 
 ```bash
 npm install
 npm run dev        # http://localhost:5173  (contraseña: VITE_SHARED_PASSWORD)
+npm run lint       # eslint sobre src/ (real, no un stub)
+npx vitest run     # 39 tests de funciones puras (6 archivos en src/utils/__tests__/)
 npm run build      # genera dist/  (lo que deploya Vercel)
 npm run preview    # sirve el build en :4173
 ```
@@ -229,9 +285,21 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   prefijo de mercado, agregar al seed (respetando el shape existente), y actualizar
   este archivo (§6). Verificar con `npm run build` + captura (Playwright headless,
   ver historial) antes de pushear.
-- Respetar honestidad de datos, marca CU y español argentino.
+- **Paid mensual**: además del seed, correr
+  `python3 scripts/paid/build_detail.py mXX <semanal.csv> <terminos.csv>` para el
+  detalle por grupo. El script **fusiona** el mes nuevo y conserva los anteriores.
+  Validar siempre el seed contra el semanal antes de deployar.
+- **Todo texto nuevo visible va en ES y EN.** Si se agrega una sección a un pilar,
+  sumar las claves al `*I18n.js` correspondiente y pasar `lang` a los generadores.
+- **Nunca convertir monedas** ni sumar importes de monedas distintas (ver §7).
+- Respetar honestidad de datos, jerarquía de marca (MarComms principal, cliente en
+  segundo plano) y español argentino.
 - Reutilizar los componentes `shared/` (Funnel, KpiCard, InsightsPanel,
   PerformancePanels) para mantener la estética uniforme entre pilares.
+- Verificar antes de pushear: `npm run lint`, `npx vitest run`, `npm run build` y
+  una pasada por el navegador (Playwright headless) del pilar tocado, en ES y EN.
+- Flujo de deploy: commit en la rama de trabajo → push → merge fast-forward a
+  `main` → push. Vercel publica solo.
 
 ## 15. Registro de cambios relevantes
 
@@ -258,3 +326,26 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   (key insights, embudo, email, social, hot leads con scoring 0-100,
   diagnóstico de madurez, oportunidad comercial POTENCIAL). Inputs manuales
   por evento: pipeline HubSpot, costo de producción, duración total.
+- **Webinar EUDR (Ago 2026)**: segundo evento y el único visible hoy (el de ISO
+  quedó oculto a pedido del equipo, con datos intactos). Sumó botonera de vistas
+  con glosario por vista, atribución real del canal email (56 registrados con
+  clic sobre 295), hero cards para las métricas clave y deals priorizados
+  (1 hot + 26 warm).
+- **Email Marketing con datos reales**: primera campaña cargada (`cups`, m08 —
+  la del webinar EUDR) con `scripts/mailchimp-to-seed.mjs`.
+- **Idioma ES/EN en los 5 pilares** con español por defecto, más elección del
+  idioma principal al descargar (viaja en el embed; el toggle sigue adentro).
+  Diccionarios `*I18n.js` por pilar y glosarios `*En`.
+- **Marca MarComms como principal**: logo en el header (donde antes iba el del
+  cliente), logo al pie enfrentado al tagline, isotipo como favicon de la app y
+  de los descargables. El logo del cliente pasó a segundo plano.
+- **Paid Agosto 2026**: 5 cuentas incluyendo la nueva **CU Estados Unidos**;
+  detalle por grupo de anuncios de todas; validado contra el semanal.
+- **Campañas parciales**: `startedOn` + aviso de días activos, para campañas que
+  arrancan a mitad de mes (las dos de USA, creadas el 21/8).
+- **Cambio de moneda EUR → ARS** (agosto, por cambio de cuenta de Google Ads):
+  el Resumen del Año y la Comparativa cubren el año completo y muestran los
+  importes como sumatoria por moneda, sin convertir; cada mes conserva la suya.
+- **Fixes del tooling de Paid**: el parseo de miles rompía los números de 4 cifras
+  (`5.561` → `5`), `build_detail.py` pisaba los meses ya cargados en vez de
+  fusionarlos, y los textos de insights tenían el símbolo `€` fijo.
