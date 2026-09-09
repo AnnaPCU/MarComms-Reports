@@ -15,6 +15,8 @@ export function Header({
   period,
   onPeriodChange,
   periodFilterLabel = 'Período',
+  accountFilterLabel = 'Cuenta / Región',
+  hidePeriod = false,
   badge,
   onDownload,
   onLogout,
@@ -41,8 +43,8 @@ export function Header({
       <div className="ml-auto flex flex-wrap items-end gap-3">
         {showFilters && (
           <>
-            <Select label="Cuenta / Región" value={account} onChange={onAccountChange} options={accounts} />
-            <Select label={periodFilterLabel} value={period} onChange={onPeriodChange} options={periods} />
+            <Select label={accountFilterLabel} value={account} onChange={onAccountChange} options={accounts} />
+            {!hidePeriod && <Select label={periodFilterLabel} value={period} onChange={onPeriodChange} options={periods} />}
           </>
         )}
         {badge && <StatusBadge variant={badge.variant}>{badge.text}</StatusBadge>}

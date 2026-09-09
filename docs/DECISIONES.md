@@ -55,6 +55,11 @@
   (0-20); hot ≥70, warm 40-69, cold <40. Vigente desde julio 2026.
 - **Las métricas clave van destacadas** (hero cards navy): asistentes, deals,
   registrados vía email y registros fuera de la base de email.
+- **La proyección de «pipeline potencial» se descartó** (septiembre 2026). Se
+  había armado sobre benchmarks (ticket promedio × tasa de cierre B2B) y el
+  equipo decidió no mostrar una vista basada en eso. El código sigue
+  soportando `commercial.pipelinePotential`, pero se deja en `null` y no hace
+  falta pedir el ticket promedio del servicio.
 
 ## 4. Campañas parciales (Paid)
 
@@ -130,3 +135,41 @@ Quedó como práctica fija, y conviene sostenerla:
 > Historia útil: los tres bugs del tooling de Paid (miles mal parseados,
 > `build_detail.py` pisando meses anteriores, símbolo `€` fijo en los textos)
 > aparecieron por hacer estas validaciones, no por casualidad.
+
+## 11. Vista por cliente (unidad de negocio + país/región)
+
+- **Un cliente solo tiene vista propia si se le trabaja más de un pilar.** Si
+  a un cliente se le hace un solo pilar, su reporte es el del pilar; una vista
+  aparte no aporta nada. La regla se aplica por datos reales
+  (`clientService.listClients()` exige ≥2 pilares con datos), así que un
+  cliente aparece solo cuando su segundo pilar tiene algo cargado.
+- **El mapeo cliente → cuenta por pilar es explícito** (`constants/clients.js`),
+  no se infiere por nombre: las cuentas nacieron por pilar con ids distintos y
+  adivinarlas es la forma de mezclar dos clientes.
+- **La vista General muestra el último período con datos de cada pilar**, aunque
+  no coincidan entre sí (Social cierra en julio, Paid en agosto, Website por
+  trimestre). Cada tarjeta dice a qué período corresponde. No se fuerza un
+  período común ni se rellena el pilar que va atrasado.
+- **No se suman métricas entre pilares.** Impresiones de LinkedIn, de Google Ads
+  y de Search Console no son la misma unidad: la General las muestra una al
+  lado de la otra, no las consolida en un total.
+- **Cuando la cuenta mapeada no coincide exactamente con el cliente, se
+  aclara** («Alcance: …» en la tarjeta y en la ficha). Casos vigentes: la
+  cuenta LinkedIn «PS Iberia & Americas» alimenta a PS Iberia y a PS
+  Americas; la campaña de Email «CU + PS Latinoamérica» y los webinars
+  (cuenta global `cu`, audiencia LATAM) cuelgan de CU Latinoamérica; CU
+  Argentina en Paid solo tiene el GEO de Meta. Son criterios revisables por
+  el equipo, no datos.
+- **Social por país reutiliza la segmentación por hashtag** de la cuenta
+  regional (CU Latinoamérica, CU North America), con sus limitaciones ya
+  documentadas (§1): lo que LinkedIn no segmenta por país no se muestra.
+- **Entrar a un pilar desde el cliente es entrar al pilar.** La botonera
+  renderiza el mismo componente del pilar con la cuenta mapeada; no hay una
+  versión «resumida» del pilar que pueda quedar desactualizada respecto de la
+  vista principal.
+- **La descarga del cliente baja solo la vista General.** Los reportes
+  completos de cada pilar ya se descargan desde su pilar; duplicarlos dentro
+  del archivo del cliente multiplicaba el tamaño y las formas de que un dato
+  quedara distinto entre dos descargas.
+- **«Clientes» no es un sexto pilar.** Va en la nav separado por una línea y no
+  entra en `PILARES`: los pilares son las fuentes; los clientes las cruzan.

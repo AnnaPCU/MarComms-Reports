@@ -12,7 +12,8 @@
 > - `docs/historial-pedidos.md` — registro textual de lo que pidió el equipo,
 >   sesión por sesión. Las conversaciones no viajan entre cuentas: esto sí.
 
-_Última actualización: Paid Agosto 2026 (cuenta CU Estados Unidos, cambio EUR→ARS,
+_Última actualización: vista por CLIENTE (unidad de negocio + país/región, para
+clientes con más de un pilar) · Paid Agosto 2026 (CU Estados Unidos, EUR→ARS,
 campañas parciales) · marca MarComms como principal · toggle ES/EN en los 5 pilares ·
 Email y Webinars con datos reales (webinar EUDR)._
 
@@ -35,7 +36,12 @@ rol). No hay gestión de usuarios ni permisos.
 1. Login con la contraseña del equipo (`VITE_SHARED_PASSWORD`).
 2. Header: logo dinámico según la marca de la cuenta + selector de **cuenta** y
    **período** + badge de estado + **Descargar** (HTML) + Salir.
-3. Nav de 5 pilares. Cada pilar muestra su reporte para (cuenta, período).
+3. Nav de 5 pilares + **Clientes**. Cada pilar muestra su reporte para (cuenta,
+   período). **Clientes** cruza los pilares: se elige un cliente (unidad de
+   negocio + país/región) y arranca en una vista General con lo más importante
+   de cada pilar; la botonera permite entrar a cada pilar con la misma vista
+   que tendría entrando por el pilar. Solo aparecen los clientes con **más de
+   un pilar con datos** (ver §7).
 4. Si no hay datos para esa combinación → **"Sin información suficiente"** (nunca
    se inventan números).
 5. **Descargar**: baja la vista actual como HTML interactivo offline.
@@ -75,9 +81,10 @@ bundle publicado).
 src/
   App.jsx                     layout, estado {pilar,cuenta,período}, header, nav, descarga
   main.jsx                    entrada; App normal o EmbedApp (HTML descargado)
-  pilares/registry.jsx        conecta cada pilar con su vista, cuentas y períodos
+  pilares/registry.jsx        conecta cada pilar con su vista, cuentas y períodos (+ clientes)
   constants/
-    pilares.js                los 5 pilares (id, fuentes, ícono, ready)
+    pilares.js                los 5 pilares (id, fuentes, ícono, ready) + entrada de nav Clientes
+    clients.js                mapa cliente (unidad + país) → cuenta de cada pilar (ver §7)
     periods.js                meses y trimestres 2026
     brand.js                  tokens de color CU, paleta charts, logos por cuenta
     glossaries.js             glosarios de los 5 pilares
@@ -85,8 +92,9 @@ src/
     socialSeed.js             datos reales Social (Mayo 2026, 9 cuentas)
     paidSeed.js               datos reales Paid (pt, es, cuc, psar; ver §6)
     websiteSeed.js            datos reales Website (CU Argentina, Q1 2026)
-  services/                   socialService, paidService, websiteService (seed-only)
-  hooks/                      useSocialMonthly, usePaidMonthly (seed-only + embed)
+  services/                   socialService, paidService, websiteService… (seed-only)
+                              clientService: qué pilares/períodos tiene cada cliente + paquete de la vista General
+  hooks/                      useSocialMonthly, usePaidMonthly, useClientOverview (seed-only + embed)
   components/
     shared/                   KpiCard, ChartCard, SectionHeader, Funnel, InsightsPanel,
                               PerformancePanels (Conclusiones + Próximos pasos), NoDataScreen…
@@ -95,6 +103,7 @@ src/
     website/                  WebsiteApp (sub-tabs Website/SEO)
     email/                    EmailApp, EmailCharts, HotLeadsTable (Mailchimp)
     webinars/                 WebinarMixReport (reporte mixto por evento) + WebinarsApp
+    clients/                  ClientApp (botonera General + pilares, período por pilar) + ClientOverview
     brand/                    Logo/MarCommsLogo/ClientLogo, BrandBars, Tagline
     embed/                    EmbedApp (render del HTML descargable)
   utils/
@@ -103,11 +112,12 @@ src/
     socialYearInsights.js     agregados e insights del "Resumen del Año" (Social)
     websiteInsights.js        insights/diagnóstico/próximos pasos (Website/SEO)
     emailInsights.js          insights/diagnóstico/próximos pasos (Email) + benchmarks B2B
+    clientSummary.js          vista General por cliente: hero/líneas/insights por pilar (reusa los generadores)
     mailchimp/                lógica pura: leads (parseo/detección de columnas),
                               aggregate (métricas/comparativa/hot leads), build (compone campaña)
     esg.js                    clasificador ESG por keywords (+ ESG_NAME_EN)
-    paidI18n.js / emailI18n.js / socialI18n.js / websiteI18n.js / webinarsI18n.js
-                              diccionarios ES/EN de cada pilar (ver §7 idioma)
+    paidI18n.js / emailI18n.js / socialI18n.js / websiteI18n.js / webinarsI18n.js / clientI18n.js
+                              diccionarios ES/EN de cada pilar y de la vista por cliente (ver §7 idioma)
     reportLang.js             idioma inicial del reporte (lee __REPORT_EMBED__.lang)
     campaignPartial.js        días activos de una campaña que arrancó a mitad de mes
     format.js                 fmt/num/pct/computeDelta (es-AR)
@@ -187,6 +197,19 @@ rendimiento de campaña, semanal por grupo de anuncios y términos + palabras cl
   `startedOn: 'AAAA-MM-DD'` en el seed (fecha de creación, del historial de cambios
   de Google Ads). `campaignPartial.js` calcula los días activos y la UI avisa con
   chip «Parcial · N días», banner en el detalle e insight propio.
+- **Vista por cliente** (`src/constants/clients.js`): un cliente es una unidad de
+  negocio (Control Union / Peterson Solutions) + país o región, y mapea
+  explícitamente la cuenta de cada pilar (las cuentas nunca se compartieron
+  entre pilares: Social `cue`, Paid `es`, Website `cues` son el mismo cliente).
+  **Solo tiene vista propia si tiene más de un pilar con datos**; con un solo
+  pilar alcanza con la vista del pilar. La vista General muestra el **último
+  período con datos de cada pilar** (pueden ser distintos: Social Jul, Paid
+  Ago, Website Q2) y lo dice en cada tarjeta. Cuando la cuenta mapeada tiene
+  un alcance distinto al del cliente (cuenta regional, campaña conjunta CU+PS,
+  solo GEO de Meta), la vista lo aclara con «Alcance: …». Social por país usa
+  la segmentación por hashtag de la cuenta regional. Clientes hoy (13):
+  CU España, Portugal, Latinoamérica, Argentina, Brasil, Chile, México, Perú,
+  North America, Estados Unidos, Canadá; PS Iberia y PS Americas.
 
 ## 8. Tipos de reporte (estructura por pilar)
 
@@ -210,7 +233,18 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
   Cruza Livestorm/Teams + Mailchimp + LinkedIn + HubSpot: key insights, países,
   embudo, engagement, atribución de registros, deals priorizados por scoring
   0-100, encuestas y oportunidad comercial. El plan de acción solo se ve en la
-  descarga interna.
+  descarga interna. La proyección de «pipeline potencial» se descartó (ver
+  `docs/DECISIONES.md` §3).
+- **Clientes** (vista transversal): ficha del cliente → hero cards (una por
+  pilar, su métrica principal del último período) → Plan de Acción por pilar
+  (los primeros insights de cada generador, etiquetados por pilar) → tarjetas
+  de resumen por pilar con «Ver vista completa →» → Lectura de Performance
+  (un diagnóstico por pilar) → Próximos Pasos por pilar (solo interno) →
+  glosarios de los pilares involucrados. Los botones de pilar renderizan el
+  **mismo componente del pilar** con la cuenta mapeada (y el país, si
+  segmenta) y una botonera de período propia (meses/trimestres/eventos con
+  datos + Resumen del Año). La descarga HTML baja **solo la vista General**;
+  los reportes completos de cada pilar se descargan desde su pilar.
 
 ## 9. Estado de cada módulo
 
@@ -225,6 +259,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
 | Login compartido | ✅ Funciona (localStorage) |
+| Vista por cliente | ✅ 13 clientes con más de un pilar (mapa en `constants/clients.js`), vista General + entrada a cada pilar, descarga de la General |
 
 ## 10. Decisiones tomadas
 
@@ -242,13 +277,16 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 ## 11. Pendientes
 
-- **Webinar EUDR**: falta el **ticket promedio del servicio EUDR** para proyectar
-  el pipeline potencial (hoy la sección de potencial no se muestra porque
-  `pipelinePotential` es `null`). Los próximos webinars llegan por `metricas/`.
-- **Paid Agosto**: confirmar por qué las dos campañas de CU Estados Unidos
-  quedaron en cero el 31/8 (¿presupuesto agotado o pausa?) para aclararlo en el
-  análisis.
-- Formatos de export reales de GA4 / Search Console (documentar columnas).
+- Formatos de export reales de GA4 / Search Console (documentar columnas cuando
+  lleguen los próximos exports).
+- **Vista por cliente**: revisar con el equipo dos mapeos que son criterio y no
+  dato (ver `docs/DECISIONES.md` §11): la campaña de Email «CU + PS
+  Latinoamérica» y los webinars (cuenta global `cu`, audiencia LATAM) cuelgan
+  de **CU Latinoamérica**; la cuenta LinkedIn «PS Iberia & Americas» alimenta
+  a **PS Iberia** y a **PS Americas** con la aclaración de alcance.
+- Resueltos: el ticket promedio EUDR ya no hace falta (la proyección de
+  pipeline se descartó); el 31/8 en cero de las campañas de CU Estados Unidos
+  se corroboró y en septiembre fluyen normal.
 - Opcional: extender drill-down/comparativa a Social por cuenta si se pide.
 
 ## 12. Problemas conocidos
@@ -362,3 +400,12 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   sumaron `docs/DECISIONES.md` (criterios y su porqué) y
   `docs/historial-pedidos.md` (registro textual de los pedidos del equipo, para
   que el contexto de las conversaciones no se pierda al cambiar de cuenta).
+- **Vista por CLIENTE** (unidad de negocio + país/región): nueva entrada
+  «Clientes» en la nav, solo para clientes con más de un pilar con datos.
+  Mapa explícito cliente → cuenta por pilar (`constants/clients.js`),
+  `clientService` + `clientSummary` (reusa los generadores de insights de cada
+  pilar), vista General con hero cards/plan de acción/resumen/diagnóstico/
+  próximos pasos por pilar, botonera para entrar a cada pilar con su propio
+  período, ES/EN, descarga HTML de la General. `SocialApp` acepta `country`
+  para fijar el país de una cuenta segmentada; `HeroCard` pasó a `shared/`.
+  Tests: `clientService.test.js`, `clientSummary.test.js`.

@@ -9,6 +9,7 @@ import * as paid from '@/services/paidService';
 import * as website from '@/services/websiteService';
 import * as email from '@/services/emailService';
 import * as webinars from '@/services/webinarsService';
+import * as clients from '@/services/clientService';
 import { QUARTERS_2026 } from '@/constants/periods';
 
 import { SocialApp } from '@/components/social/SocialApp';
@@ -16,6 +17,7 @@ import { PaidApp } from '@/components/paid/PaidApp';
 import { WebsiteApp } from '@/components/website/WebsiteApp';
 import { EmailApp } from '@/components/email/EmailApp';
 import { WebinarsApp } from '@/components/webinars/WebinarsApp';
+import { ClientApp } from '@/components/clients/ClientApp';
 
 const COMPARATIVE = { id: 'cmp', label: 'Comparativa Multi-Cuenta' };
 // Vista temporal: resumen anual de progreso de una cuenta (pedido puntual).
@@ -76,6 +78,23 @@ export const REGISTRY = {
     periodFilterLabel: 'Evento',
     defaultPeriod: webinars.listPeriods().slice(-1)[0]?.id ?? null,
     hasDataFor: webinars.hasDataFor,
+  },
+  // Vista por CLIENTE (unidad de negocio + país/región): no es un pilar.
+  // El "período" es único (la vista General); cada pilar elige el suyo
+  // adentro. Solo se listan los clientes con más de un pilar con datos.
+  clients: {
+    Component: ClientApp,
+    accounts: clients.listClients(),
+    periods: [{ id: 'overview', label: 'Vista General' }],
+    defaultPeriod: 'overview',
+    accountFilterLabel: 'Cliente',
+    hidePeriod: true,
+    hasDataFor: (account) => clients.hasDataFor(account),
+    badgeText: (account) => {
+      const c = clients.getClient(account);
+      const n = c ? clients.pillarsWithData(c).length : 0;
+      return `Datos reales — ${n} pilares`;
+    },
   },
 };
 

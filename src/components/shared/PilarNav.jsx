@@ -1,18 +1,22 @@
-import { PILARES } from '@/constants/pilares';
+import { PILARES, CLIENTS_NAV } from '@/constants/pilares';
 
-// Navegación horizontal de pilares. El pilar activo lleva el acento cyan;
-// los pilares sin datos todavía muestran un punto tenue.
+// Navegación horizontal de pilares + la vista por cliente (separada con una
+// línea: no es un pilar, los cruza). El activo lleva el acento cyan; los
+// pilares sin datos todavía muestran un punto tenue.
 export function PilarNav({ active, onChange }) {
   return (
     <nav className="flex flex-wrap gap-1 border-b border-cu-border bg-white px-9">
-      {PILARES.map((p) => {
+      {[...PILARES, CLIENTS_NAV].map((p) => {
         const Icon = p.icon;
         const isActive = p.id === active;
         return (
           <button
             key={p.id}
             onClick={() => onChange(p.id)}
+            title={p.id === CLIENTS_NAV.id ? 'Vista por unidad de negocio y país (clientes con más de un pilar)' : undefined}
             className={`relative flex items-center gap-2 px-3 py-3 text-[12px] font-medium transition-colors ${
+              p.id === CLIENTS_NAV.id ? 'ml-2 border-l border-cu-border pl-5' : ''
+            } ${
               isActive
                 ? 'text-cu-dblue'
                 : 'text-cu-grey hover:text-cu-dgrey'

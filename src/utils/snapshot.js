@@ -8,6 +8,7 @@ import * as paid from '@/services/paidService';
 import * as website from '@/services/websiteService';
 import * as email from '@/services/emailService';
 import * as webinars from '@/services/webinarsService';
+import * as clients from '@/services/clientService';
 
 export function buildSnapshot(pilar, account, period) {
   if (pilar === 'social') {
@@ -37,6 +38,10 @@ export function buildSnapshot(pilar, account, period) {
   }
   if (pilar === 'webinars') {
     return { event: webinars.getEvent(account, period) };
+  }
+  if (pilar === 'clients') {
+    // Solo la vista General: el último período con datos de cada pilar.
+    return { kind: 'client-overview', overview: clients.getOverview(account) };
   }
   return {}; // webinars: sin datos, solo glosario
 }

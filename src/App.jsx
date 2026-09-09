@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { PILARES, PILAR_BY_ID } from '@/constants/pilares';
+import { PILARES, navLabel } from '@/constants/pilares';
 import { getPilarConfig } from '@/pilares/registry';
 
 import { BarTop, BarBottom } from '@/components/brand/BrandBars';
@@ -92,11 +92,13 @@ export default function App() {
         ? ids.map(labelOf).join(' · ')
         : `${ids.length} períodos`
       : labelOf(ids[0]);
-    const title = [PILAR_BY_ID[pilar].label, expandAccountName(accountName), withCountry ? countryName : null, periodsLabel]
+    // La vista por cliente se descarga como «Reporte Cliente» (solo la General).
+    const pilarLabel = pilar === 'clients' ? 'Cliente' : navLabel(pilar);
+    const title = [pilarLabel, expandAccountName(accountName), withCountry ? countryName : null, periodsLabel]
       .filter(Boolean)
       .join(' — ');
     const filename = reportFilename({
-      pilarLabel: PILAR_BY_ID[pilar].label,
+      pilarLabel,
       // 'multi' evita que el nombre salga como el 1er período: cae al label.
       accountName: withCountry ? `${accountName} ${countryName}` : accountName,
       period: multi ? 'multi' : ids[0],
@@ -122,7 +124,9 @@ export default function App() {
   let badge = null;
   if (periods.length && cfg.hasDataFor) {
     const has = cfg.hasDataFor(account, period);
-    if (has) {
+    if (has && cfg.badgeText) {
+      badge = { variant: 'real', text: cfg.badgeText(account) };
+    } else if (has) {
       // La comparativa de Social compara sobre Mayo 2026 (dato fijo del seed).
       const label = pilar === 'social' && period === 'cmp' ? 'Mayo 2026' : periodLabel;
       badge = { variant: 'real', text: `Datos reales — ${label}` };
@@ -135,7 +139,7 @@ export default function App() {
     <div className="flex min-h-screen flex-col">
       <BarTop />
       <Header
-        pilarLabel={PILAR_BY_ID[pilar].label}
+        pilarLabel={navLabel(pilar)}
         accounts={cfg.accounts.map((a) => ({ id: a.id, label: a.name }))}
         account={account}
         onAccountChange={changeAccount}
@@ -143,6 +147,8 @@ export default function App() {
         period={period}
         onPeriodChange={setPeriod}
         periodFilterLabel={cfg.periodFilterLabel}
+        accountFilterLabel={cfg.accountFilterLabel}
+        hidePeriod={cfg.hidePeriod}
         badge={badge}
         onDownload={() => setShowDownload(true)}
         onLogout={logout}

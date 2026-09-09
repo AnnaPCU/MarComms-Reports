@@ -26,7 +26,9 @@ import { Glossary } from '@/components/shared/Glossary';
 
 // Vista del pilar Social Media (LinkedIn).
 // Idioma base español; toggle EN disponible (también en el descargable).
-export function SocialApp({ account, period }) {
+// `country` (opcional) fija el país de una cuenta segmentada desde afuera
+// (vista por cliente): el reporte es el de ese país y el selector se oculta.
+export function SocialApp({ account, period, country: forcedCountry = null }) {
   const accName = useMemo(
     () => listAccounts().find((a) => a.id === account)?.name ?? '',
     [account],
@@ -48,11 +50,11 @@ export function SocialApp({ account, period }) {
   // el país elegido viaja en window.__REPORT_EMBED__.socialCountry.
   const embedCountry =
     (typeof window !== 'undefined' && window.__REPORT_EMBED__?.socialCountry) || 'all';
-  const [country, setCountry] = useState(embedCountry);
+  const [country, setCountry] = useState(forcedCountry ?? embedCountry);
   useEffect(() => {
-    setCountry(embedCountry);
+    setCountry(forcedCountry ?? embedCountry);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account]);
+  }, [account, forcedCountry]);
   useEffect(() => {
     viewState.socialCountry = country;
     return () => {
@@ -61,6 +63,8 @@ export function SocialApp({ account, period }) {
   }, [country]);
   const segCfg = getSegConfig(account);
   const isSeg = !!segCfg && (/^m\d\d$/.test(period) || period === 'year-2026');
+  // El selector de país solo se muestra en la app y si nadie lo fijó desde afuera.
+  const showCountrySel = isSeg && !isEmbedReport() && !forcedCountry;
 
   const langToggle = (
     <SegmentedControl
@@ -76,7 +80,7 @@ export function SocialApp({ account, period }) {
 
   const countrySelector = (
     <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-      {isSeg && !isEmbedReport() ? (
+      {showCountrySel ? (
         <SegmentedControl
           label={t.reportLabel}
           value={country}
@@ -117,7 +121,7 @@ export function SocialApp({ account, period }) {
           </>
         ) : (
           <>
-            {isSeg && !isEmbedReport() && (
+            {showCountrySel && (
               <div className="mb-4">
                 <SegmentedControl
                   label={t.reportLabel}

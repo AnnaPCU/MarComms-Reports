@@ -8,6 +8,7 @@ import { initialLang } from '@/utils/reportLang';
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
+import { HeroCard } from '@/components/shared/HeroCard';
 import { Funnel } from '@/components/shared/Funnel';
 import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { Glossary } from '@/components/shared/Glossary';
@@ -21,20 +22,6 @@ function Note({ children, tone = 'cyan' }) {
   return (
     <div className={`mb-4 rounded-cu border border-cu-border border-l-4 ${border} bg-white px-4 py-3 text-[12px] leading-relaxed text-cu-dgrey shadow-cu`}>
       {children}
-    </div>
-  );
-}
-
-// Card destacada (azul marino) para las métricas clave de cada vista.
-function HeroCard({ label, value, pill, pillTone = 'cyan', footnote }) {
-  const pillCls =
-    pillTone === 'green' ? 'bg-emerald-400/20 text-emerald-300' : 'bg-cu-cyan/20 text-cu-cyan';
-  return (
-    <div className="rounded-cu bg-cu-dblue px-5 pb-3.5 pt-4 text-white shadow-cu">
-      <div className="mb-2 text-[9px] font-bold uppercase tracking-[0.6px] text-cu-cyan">{label}</div>
-      <div className="mb-2 text-[30px] font-bold leading-none tracking-tight">{value}</div>
-      {pill && <span className={`inline-block rounded-full px-2 py-0.5 text-[10.5px] font-bold ${pillCls}`}>{pill}</span>}
-      {footnote && <div className="mt-1.5 text-[9.5px] italic text-white/60">{footnote}</div>}
     </div>
   );
 }

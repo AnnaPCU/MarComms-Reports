@@ -1230,3 +1230,32 @@
 >
 > Por otro lado reescribime los .md para que no haya ambiguedades
 
+
+**#73**
+
+> Si yo te pidiera hacer un commit para que se suba el github, pase por vercel y supabase, podrias?
+
+
+**#74**
+
+> Tenes razon, sigamos asi. No entiendo como sabes esto:
+>
+> * "Confirmar por qué las dos campañas de CU Estados Unidos quedaron en cero el 31/8."
+>
+> En el sentiod de como llegaste a esa conclusión.
+> Respecto a:
+>
+> * "Ticket promedio del servicio EUDR para proyectar el pipeline del webinar"
+>
+> No va a ser necesario que sepas esto porque al final no hacemos una vista en rleacion a "Pipeline potencial
+> Proyección del valor comercial de los deals del evento sobre benchmarks de mercado (ticket promedio y tasa de cierre B2B). Es un potencial, no un resultado: depende de la gestión comercial posterior."
+>
+> * En cuanto a esto, cuando llegue el momento de subir esto "Documentar los formatos reales de export de GA4 y Search Console." lo vemos
+
+
+**#75**
+
+> Es cierto lo del 31 de agosto. Lo corroboré y sucede asi. Pero en septiembre fluye bien la campaña, asi que sigamos igual.
+>
+> Quiero que hagamos una implementación de una nueva vista. Asi como hay vistas por pilares de MarComms necesito vistas por unidad de negocio y pais, siempre y cuando haya mas de un pilar que mostrar por el mismo. Si para un cliente solo se trabaja un pilar no tiene sentido dedicarle una vista.
+> Esta landing para cada cliente con mas de un pilar me la imagino con botones listos para filtrarse por vistas de pilares con la misma información que hay como si entrara particularmente a esto en la vista de un pilar, pero que por default haya una vista general, tal y como funciona la vista de webinars, abarcando los puntos mas importantes de cada vista en relación a los pilares qeu se toque en el cliente respectivo

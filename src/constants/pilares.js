@@ -10,6 +10,7 @@ import {
   Mail,
   Video,
   Globe,
+  Building2,
 } from 'lucide-react';
 
 export const PILARES = [
@@ -51,3 +52,18 @@ export const PILARES = [
 ];
 
 export const PILAR_BY_ID = Object.fromEntries(PILARES.map((p) => [p.id, p]));
+
+// Vista por CLIENTE (unidad de negocio + país/región). No es un pilar: cruza
+// los 5 pilares para los clientes a los que se les trabaja más de uno. Va en
+// la nav como sección aparte, después de los pilares.
+export const CLIENTS_NAV = {
+  id: 'clients',
+  label: 'Clientes',
+  icon: Building2,
+  ready: true,
+};
+
+// Etiqueta visible de una entrada de la nav (pilar o clientes).
+export function navLabel(id) {
+  return PILAR_BY_ID[id]?.label ?? (id === CLIENTS_NAV.id ? CLIENTS_NAV.label : id);
+}

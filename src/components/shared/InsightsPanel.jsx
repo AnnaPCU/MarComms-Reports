@@ -1,5 +1,6 @@
 // Panel de insights / plan de acción (cabecera dark blue + grid de tarjetas).
-// Cada item: { m: tendencia, a: acción recomendada (HTML inline permitido) }.
+// Cada item: { m: tendencia, a: acción recomendada (HTML inline permitido),
+//              label?: etiqueta propia (reemplaza a «<label> N») }.
 import { Zap } from 'lucide-react';
 import { BrandIcon } from '@/components/shared/BrandIcon';
 
@@ -34,7 +35,7 @@ export function InsightsPanel({
             >
               <div className="mb-1.5 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.5px] text-cu-cyan">
                 <span className="text-[7px]">◆</span>
-                {label} {i + 1}
+                {x.label ?? `${label} ${i + 1}`}
               </div>
               <div className="mb-2 text-[12px] leading-snug text-cu-dgrey">
                 {x.m}

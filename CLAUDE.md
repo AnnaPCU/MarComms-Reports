@@ -117,6 +117,11 @@ Orden común en todos los pilares: **Insights (Plan de Acción)** → **KPIs** �
 - Insights, diagnóstico y próximos pasos se **generan de las métricas reales**
   (reglas fijas contra benchmarks, sin IA). No se hardcodean.
 - **Próximos Pasos no se muestra en los reportes de uso externo.**
+- **Vista por cliente** («Clientes» en la nav): cruza los pilares para un
+  cliente (unidad de negocio + país/región) y **solo existe si el cliente tiene
+  más de un pilar con datos**. El mapeo cliente → cuenta por pilar es explícito
+  en `src/constants/clients.js`: al sumar una cuenta nueva a un pilar, agregarla
+  ahí si pertenece a un cliente. Criterios en `docs/DECISIONES.md` §11.
 - Reutilizar los componentes de `src/components/shared/` (KpiCard, ChartCard,
   Funnel, InsightsPanel, PerformancePanels, SectionHeader, Glossary) para que la
   estética se mantenga uniforme entre pilares.
