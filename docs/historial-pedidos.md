@@ -1295,3 +1295,8 @@
 
 > Ya podes eliminar la vista de demo con los numeros con "x"
 
+
+**#82**
+
+> Okay, ahora sí, efectivamente, no veo otra branch, pero a mí me preocupa que hagas un commit nuevamente y si crees una nueva branch. ¿Cómo hacemos para evitar eso?
+

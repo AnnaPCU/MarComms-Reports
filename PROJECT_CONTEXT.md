@@ -350,8 +350,9 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   PerformancePanels) para mantener la estética uniforme entre pilares.
 - Verificar antes de pushear: `npm run lint`, `npx vitest run`, `npm run build` y
   una pasada por el navegador (Playwright headless) del pilar tocado, en ES y EN.
-- Flujo de deploy: commit en la rama de trabajo → push → merge fast-forward a
-  `main` → push. Vercel publica solo.
+- Flujo de deploy: commit → merge fast-forward a `main` → **push solo de
+  `main`**. Vercel publica solo. **No pushear la rama de trabajo** (pedido del
+  10/9/2026: en GitHub debe existir únicamente `main`).
 - **Al cerrar una sesión de trabajo**: actualizar §15 de este archivo, sumar al
   final de `docs/historial-pedidos.md` lo que pidió el equipo, y anotar en
   `docs/DECISIONES.md` cualquier criterio nuevo que valga para el futuro. Es lo

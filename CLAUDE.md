@@ -151,8 +151,12 @@ Además: pasada por el navegador (Playwright headless) del pilar tocado, **en ES
 en EN**, sin errores de consola. Al cargar un mes nuevo de Paid, validar el seed
 contra el informe semanal campaña por campaña.
 
-**Flujo de deploy**: commit en la rama de trabajo → push → merge fast-forward a
-`main` → push. Vercel publica solo.
+**Flujo de deploy**: commit (en la rama de trabajo local o directo en `main`)
+→ merge fast-forward a `main` → **push solo de `main`**. Vercel publica solo.
+**No pushear ramas de trabajo a GitHub**: el equipo pidió que en el remoto
+exista únicamente `main` (cada rama `claude/...` pusheada les aparece como una
+rama extra que después tienen que borrar a mano). La rama local puede usarse
+igual; lo que no se hace es `git push` de esa rama.
 
 ## Documentación del repo
 

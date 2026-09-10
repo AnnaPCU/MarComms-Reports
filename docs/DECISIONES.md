@@ -141,7 +141,10 @@ Quedó como práctica fija, y conviene sostenerla:
    en EN**, revisando que no haya errores de consola.
 4. Cuando se carga un mes nuevo de Paid: **validar el seed contra el informe
    semanal**, campaña por campaña, antes de commitear.
-5. Recién ahí: commit → push → merge fast-forward a `main` → push.
+5. Recién ahí: commit → merge fast-forward a `main` → push **solo de `main`**.
+   Las ramas de trabajo no se pushean: en GitHub existe únicamente `main`
+   (pedido del equipo, 10/9/2026). Una rama `claude/...` en el remoto es
+   ruido que después hay que borrar a mano.
 
 > Historia útil: los tres bugs del tooling de Paid (miles mal parseados,
 > `build_detail.py` pisando meses anteriores, símbolo `€` fijo en los textos)
