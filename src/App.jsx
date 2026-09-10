@@ -16,6 +16,7 @@ import { reportFilename, expandAccountName } from '@/utils/reportFilename';
 import { brandOf } from '@/constants/brand';
 import { getSegConfig } from '@/services/socialService';
 import { viewState } from '@/utils/viewState';
+import { isDemoMode } from '@/utils/demoMask'; // TEMPORAL — modo demo
 
 export default function App() {
   const { authed, login, logout } = useAuth();
@@ -55,6 +56,7 @@ export default function App() {
 
   if (!authed) return <LoginScreen onLogin={login} />;
 
+  const demo = isDemoMode();
   const cfg = getPilarConfig(pilar);
   const Pilar = cfg.Component;
   const accountName = cfg.accounts.find((a) => a.id === account)?.name ?? '';
@@ -150,6 +152,7 @@ export default function App() {
         accountFilterLabel={cfg.accountFilterLabel}
         hidePeriod={cfg.hidePeriod}
         badge={badge}
+        demo={demo}
         onDownload={() => setShowDownload(true)}
         onLogout={logout}
       />

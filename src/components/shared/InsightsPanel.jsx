@@ -33,7 +33,7 @@ export function InsightsPanel({
               key={i}
               className="border-b border-r border-cu-border2 p-4 transition-colors hover:bg-cu-cyan/[0.025]"
             >
-              <div className="mb-1.5 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.5px] text-cu-cyan">
+              <div data-demo-keep className="mb-1.5 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.5px] text-cu-cyan">
                 <span className="text-[7px]">◆</span>
                 {x.label ?? `${label} ${i + 1}`}
               </div>

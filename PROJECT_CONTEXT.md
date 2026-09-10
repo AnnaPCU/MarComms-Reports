@@ -278,6 +278,23 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 3. **Recharts** para todos los gráficos (no Chart.js), por convención del stack.
 4. **Clientes por pilar** (no compartidos entre pilares).
 
+## 10 bis. Modo DEMO (temporal — para sacar cuando ya no haga falta)
+
+Pedido del 10/9/2026: una ruta para grabar un recorrido del sistema sin
+exponer cifras. En **`/demo`** (también `?demo=1`) la app funciona igual pero
+todos los dígitos visibles se muestran como «x» (KPIs, tablas, embudos, ejes y
+tooltips de los gráficos, insights). Se conservan años, fechas, trimestres y
+normas ISO para poder orientarse; el glosario y los ordinales no se enmascaran.
+En modo demo la descarga está deshabilitada (el HTML llevaría los datos
+reales adentro) y el header muestra el chip «Demo · cifras ocultas».
+
+Es una capa aparte sobre el DOM (`src/utils/demoMask.js`): no toca datos ni
+componentes. **Para eliminarlo**: borrar `src/utils/demoMask.js` y su test,
+quitar el import y la llamada en `src/main.jsx`, quitar `demo` en `App.jsx` y
+`Header.jsx` (chip + descarga bloqueada), quitar los `data-demo-keep` de
+`Glossary.jsx`, `InsightsPanel.jsx` y `PerformancePanels.jsx`, y el rewrite de
+`/demo` en `vercel.json`. Todo está marcado con el comentario «TEMPORAL».
+
 ## 11. Pendientes
 
 - Formatos de export reales de GA4 / Search Console (documentar columnas cuando
@@ -428,3 +445,5 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   GLOBAL», «PS IBERIA & AMERICA», «BEL»). Carpeta archivada en
   `metricas/social-media/_procesados/2026-08/`.
 - Paid arranca por defecto en **Agosto 2026** (antes quedaba en julio).
+- **Modo DEMO temporal** en `/demo`: cifras visibles enmascaradas con «x» para
+  grabar un recorrido del sistema (ver §10 bis, con la lista para sacarlo).
