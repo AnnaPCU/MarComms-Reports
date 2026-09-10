@@ -8,8 +8,7 @@ export function Glossary({ keys }) {
   if (list.length === 0) return null;
 
   return (
-    // data-demo-keep: el glosario es metodología, no datos (modo demo no lo enmascara).
-    <div className="mt-8" data-demo-keep>
+    <div className="mt-8">
       {list.map((g) => (
         <div
           key={g.title}

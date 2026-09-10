@@ -38,7 +38,7 @@ export function NextStepsPanel({ steps = [], subtitle, title = 'Próximos pasos'
       <ol className="flex list-none flex-col gap-2.5 px-6 py-5">
         {steps.map((s, i) => (
           <li key={i} className="relative pl-8 text-[12.5px] leading-relaxed text-cu-dgrey [&_strong]:font-bold [&_strong]:text-cu-dblue">
-            <span data-demo-keep className="absolute left-0 top-0 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-cu-cyan text-[11px] font-bold text-white">
+            <span className="absolute left-0 top-0 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-cu-cyan text-[11px] font-bold text-white">
               {i + 1}
             </span>
             <span dangerouslySetInnerHTML={{ __html: s }} />

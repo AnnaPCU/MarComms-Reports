@@ -1285,3 +1285,13 @@
 
 > Decime el paso a paso para borrar la rama fervent y funny. Bueno, por otro lado también necesito que me hagas una ruta nueva y me la pases específicamente, donde pueda ver la totalidad de todos los reportes, todas las vistas, todos los pilares, pero donde en vez de que los números se vean como un número como tal, se vean con una x. ¿Para qué es esto? El objetivo es que yo pueda hacer una especie de grabación y explicación de cómo funciona este sistema de reportes, y que de una manera la información quede privilegiada y escondida, porque si yo pongo un número como tal, es información que podría quedar expuesta. En cambio, si yo pongo x números, que el número se agarre empezado por la x, yo puedo hacer esa versión tranquilamente sin que haya problema. Como esta este esta grabación que voy a hacer, ¿es es una grabación temporal? O sea, que la voy a hacer, la voy a usar para algo, y después no voy a necesitarla nunca más, es importante que estés listo para que esta nueva ruta o como quieras armarlo, porque quizás es más fácil as armarla de otra manera, esté hecha para que temporalmente también se elimine, y que siempre, como te digo, los números queden en formato x, o como quieras ponerlo.
 
+
+**#80**
+
+> Estupendo trabajo. Yo te aviso cuando podes borrar la demo. Para mientras revisa si logré borrar efectivamente las branches
+
+
+**#81**
+
+> Ya podes eliminar la vista de demo con los numeros con "x"
+

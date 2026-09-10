@@ -18,7 +18,6 @@ export function Header({
   accountFilterLabel = 'Cuenta / Región',
   hidePeriod = false,
   badge,
-  demo = false, // TEMPORAL — modo demo: chip + descarga bloqueada
   onDownload,
   onLogout,
 }) {
@@ -49,19 +48,10 @@ export function Header({
           </>
         )}
         {badge && <StatusBadge variant={badge.variant}>{badge.text}</StatusBadge>}
-        {demo && (
-          <span
-            data-demo-keep
-            className="inline-flex items-center whitespace-nowrap rounded-full border border-amber-300 bg-amber-50 px-3 py-[5px] text-[10px] font-bold uppercase tracking-[0.5px] text-amber-800"
-          >
-            Demo · cifras ocultas
-          </span>
-        )}
         <button
-          onClick={demo ? undefined : onDownload}
-          disabled={demo}
-          title={demo ? 'Descarga deshabilitada en modo demo' : 'Descargar esta vista como HTML'}
-          className="flex h-9 items-center gap-1.5 rounded-sm border border-cu-border px-3 text-[11px] font-medium text-cu-dgrey transition-colors hover:border-cu-cyan hover:text-cu-cyan disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-cu-border disabled:hover:text-cu-dgrey"
+          onClick={onDownload}
+          title="Descargar esta vista como HTML"
+          className="flex h-9 items-center gap-1.5 rounded-sm border border-cu-border px-3 text-[11px] font-medium text-cu-dgrey transition-colors hover:border-cu-cyan hover:text-cu-cyan"
         >
           <Download className="h-3.5 w-3.5" />
           Descargar
