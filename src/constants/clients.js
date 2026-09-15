@@ -51,11 +51,17 @@ export const CLIENTS = [
         note: 'Campaña conjunta CU + Peterson Solutions Latinoamérica',
         noteEn: 'Joint CU + Peterson Solutions Latin America campaign',
       },
-      webinars: {
-        account: 'cu',
-        note: 'Webinars de Control Union con audiencia LATAM',
-        noteEn: 'Control Union webinars with a LATAM audience',
-      },
+      webinars: { account: 'cu' },
+    },
+  },
+  {
+    id: 'cu-global',
+    name: 'Control Union Global',
+    unit: 'cu',
+    region: 'Global (Américas + Europa)',
+    pillars: {
+      email: { account: 'cug' },
+      webinars: { account: 'cug', note: 'Webinars en inglés con base de contactos de Américas y Europa', noteEn: 'English-language webinars with an Americas + Europe contact base' },
     },
   },
   {

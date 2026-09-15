@@ -30,7 +30,7 @@ export function WebinarsApp({ account, period }) {
               <strong>metricas/webinars/</strong> del proyecto.
             </>
           }
-          hint={<>Evento con datos reales: <span className="font-bold text-cu-cyan">Webinar ISO 14064 · Jul 2026</span></>}
+          hint={<>Cada cuenta lista solo sus eventos con datos reales</>}
         />
         <Glossary keys="webinars" />
       </div>

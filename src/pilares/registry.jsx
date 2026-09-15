@@ -67,6 +67,8 @@ export const REGISTRY = {
     accounts: email.listAccounts(),
     // meses presentes en el seed (más reciente primero); vacío hasta el 1er import
     periods: [...email.listPeriods()].reverse(),
+    // Cada cuenta tiene su propia campaña: solo se listan los meses con datos.
+    periodsFor: (account) => [...email.listPeriods()].reverse().filter((p) => email.hasDataFor(account, p.id)),
     defaultPeriod: email.listPeriods().slice(-1)[0]?.id ?? null,
     hasDataFor: email.hasDataFor,
   },
@@ -75,6 +77,8 @@ export const REGISTRY = {
     accounts: webinars.listAccounts(),
     // Un período por EVENTO (reporte mixto: Livestorm+Mailchimp+LinkedIn+HubSpot)
     periods: [...webinars.listPeriods()].reverse(),
+    // Cada cuenta (LATAM / Global) tiene sus propios eventos.
+    periodsFor: (account) => [...webinars.listPeriods()].reverse().filter((p) => webinars.hasDataFor(account, p.id)),
     periodFilterLabel: 'Evento',
     defaultPeriod: webinars.listPeriods().slice(-1)[0]?.id ?? null,
     hasDataFor: webinars.hasDataFor,

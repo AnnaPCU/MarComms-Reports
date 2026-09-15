@@ -40,6 +40,11 @@ describe('listClients — solo clientes con más de un pilar con datos', () => {
     expect(pillarsWithData(CLIENT_BY_ID['cu-es'])).toEqual(['social', 'paid', 'website']);
   });
 
+  it('CU Global cruza Email y Webinars (cuentas cug)', () => {
+    expect(pillarsWithData(CLIENT_BY_ID['cu-global'])).toEqual(['email', 'webinars']);
+    expect(listClients().map((c) => c.id)).toContain('cu-global');
+  });
+
   it('un cliente sin cuentas no aparece', () => {
     expect(hasDataFor('no-existe')).toBe(false);
     expect(pillarsWithData({ pillars: {} })).toEqual([]);

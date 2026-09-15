@@ -55,6 +55,23 @@
   (0-20); hot ≥70, warm 40-69, cold <40. Vigente desde julio 2026.
 - **Las métricas clave van destacadas** (hero cards navy): asistentes, deals,
   registrados vía email y registros fuera de la base de email.
+- **Una cuenta de Webinars por audiencia.** Los webinars en español para LATAM
+  (`cu`, «Control Union Latinoamérica») y los globales en inglés con base de
+  Américas + Europa (`cug`, «Control Union Global») son series distintas: no
+  se mezclan en un mismo selector de eventos ni se comparan entre sí. La
+  campaña de email de cada webinar va en la cuenta de Email del mismo nombre.
+- **Si el drop no trae LinkedIn, el reporte lo dice.** El webinar Plastic
+  Packaging llegó sin exports de posteos: la sección Social muestra «Sin
+  exports de LinkedIn para este evento» y solo el dato real que sí existe
+  (registrados fuera de la base de email). No se reconstruye desde
+  capturas ni se estima.
+- **El modelo de scoring es el del Excel del equipo, evento por evento.** Cada
+  webinar puede traer su propia fórmula (EUDR: +3/+2/+1, HOT ≥ 8; Plastic:
+  registro 10 + asistencia 20 + tiempo hasta 40 + pregunta 20 + interacción
+  hasta 10, HOT ≥ 70). El reporte muestra la del evento y no las normaliza.
+- **Un reenvío de Mailchimp («copy») es un envío más.** Se lista como tal
+  («Email 3 (reenvío)») y suma a los enviados; no se fusiona con el original
+  porque son dos oportunidades de apertura distintas.
 - **La proyección de «pipeline potencial» se descartó** (septiembre 2026). Se
   había armado sobre benchmarks (ticket promedio × tasa de cierre B2B) y el
   equipo decidió no mostrar una vista basada en eso. El código sigue

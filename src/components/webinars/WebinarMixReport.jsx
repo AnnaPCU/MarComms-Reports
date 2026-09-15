@@ -61,6 +61,8 @@ export function WebinarMixReport({ ev, accName }) {
   const hotRows = ev.hotLeads.rows.filter((r) => (r.tier ?? 'HOT') === 'HOT');
   const avgScore = hotRows.length ? hotRows.reduce((a, r) => a + r.score, 0) / hotRows.length : 0;
   const hasRegByCountry = ev.countries.some((c) => c.reg != null);
+  // Un evento puede venir sin exports de LinkedIn: se dice, no se inventa.
+  const hasSocial = (ev.social?.posts?.length ?? 0) > 0;
   const sendName = (s, i) => (en ? (ev.email.sendNamesEn?.[i] ?? s.name) : s.name);
   const postName = (po, i) => (en ? (ev.social.postNamesEn?.[i] ?? po.name) : po.name);
 
@@ -178,8 +180,14 @@ export function WebinarMixReport({ ev, accName }) {
               {t.views.social}
             </div>
             <ul className="mb-3 flex flex-col gap-1.5 text-[12px] text-cu-dgrey">
-              <li><strong className="text-cu-dblue">{ev.social.posts.length}</strong>{t.sumSocial1()[0]}<strong className="text-cu-dblue">{num(ev.social.totals.imp)}</strong>{t.sumSocial1()[1]}</li>
-              <li><strong className="text-cu-dblue">{num(ev.social.totals.clicks)}</strong>{t.sumSocial2(p1(ev.social.totals.ctr))}</li>
+              {hasSocial ? (
+                <>
+                  <li><strong className="text-cu-dblue">{ev.social.posts.length}</strong>{t.sumSocial1()[0]}<strong className="text-cu-dblue">{num(ev.social.totals.imp)}</strong>{t.sumSocial1()[1]}</li>
+                  <li><strong className="text-cu-dblue">{num(ev.social.totals.clicks)}</strong>{t.sumSocial2(p1(ev.social.totals.ctr))}</li>
+                </>
+              ) : (
+                <li className="italic text-cu-grey">{t.noSocialData}</li>
+              )}
               {ev.social.regFromSocial != null ? (
                 <li><strong className="text-cu-dblue">{num(ev.social.regFromSocial)}</strong>{t.sumSocial3lkd}</li>
               ) : ev.social.regOutsideEmail != null ? (
@@ -361,6 +369,9 @@ export function WebinarMixReport({ ev, accName }) {
       {view === 'social' && (
       <>
       <SectionHeader title={t.s2} note={t.s2note} />
+      {!hasSocial && <Note tone="amber">{t.noSocialData}</Note>}
+      {hasSocial && (
+      <>
       <div className={`mb-3 grid gap-3 ${ev.social.posts.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
         {ev.social.posts.map((po, i) => (
           <div key={po.name} className="rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
@@ -379,6 +390,10 @@ export function WebinarMixReport({ ev, accName }) {
         <KpiCard label={t.kPosts} value={ev.social.posts.length} />
         <KpiCard label={t.kImpTotal} value={num(ev.social.totals.imp)} delta={{ dir: 'flat', label: t.rateAvg(p1(ev.social.totals.rate)) }} />
         <KpiCard label={t.kClkTotal} value={num(ev.social.totals.clicks)} delta={{ dir: 'flat', label: t.ctrAvg(p1(ev.social.totals.ctr)) }} footnote={t.clkFoot(num(ev.social.totals.reactions), num(ev.social.totals.shares))} />
+      </div>
+      </>
+      )}
+      <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {ev.social.regFromSocial != null ? (
           <HeroCard
             label={t.kRegLkd}

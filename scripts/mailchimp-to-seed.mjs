@@ -33,6 +33,8 @@
 //    (sirve cuando el export ya es la base completa de la campaña).
 //
 //  Emite por stdout el snippet JS. Con --write <ruta> escribe un .js aparte.
+//  Con --no-all-leads omite la lista completa de contactos (allLeads) y deja
+//  solo su conteo (allLeadsCount): la vista usa únicamente hotLeads.
 // ════════════════════════════════════════════════════════════════
 
 import fs from 'node:fs';
@@ -139,7 +141,11 @@ function main() {
     };
   });
 
-  const campaign = tidy(buildCampaign({ campaignName: cfg.campaignName || '', emails }));
+  let campaign = tidy(buildCampaign({ campaignName: cfg.campaignName || '', emails }));
+  if (args.includes('--no-all-leads')) {
+    const { allLeads, ...rest } = campaign;
+    campaign = { ...rest, allLeadsCount: allLeads.length };
+  }
 
   const snippet =
     `// ${cfg.accountName} · ${cfg.period} — generado con scripts/mailchimp-to-seed.mjs\n` +

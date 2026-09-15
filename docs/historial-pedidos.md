@@ -1300,3 +1300,11 @@
 
 > Okay, ahora sí, efectivamente, no veo otra branch, pero a mí me preocupa que hagas un commit nuevamente y si crees una nueva branch. ¿Cómo hacemos para evitar eso?
 
+
+## 15 de septiembre de 2026
+
+
+**#83**
+
+> Procesá las métricas nuevas de Email Marketing / Webinars
+

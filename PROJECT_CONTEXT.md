@@ -12,8 +12,9 @@
 > - `docs/historial-pedidos.md` — registro textual de lo que pidió el equipo,
 >   sesión por sesión. Las conversaciones no viajan entre cuentas: esto sí.
 
-_Última actualización: Social Agosto 2026 (primer mes ingresado por la carpeta
-`metricas/`) · vista por CLIENTE (unidad de negocio + país/región, para clientes
+_Última actualización: Webinar Plastic Packaging (Sep 2026) + su campaña de
+email, ingresados por `metricas/` con tooling nuevo (`scripts/webinars/`) ·
+Social Agosto 2026 · vista por CLIENTE (unidad de negocio + país/región, para clientes
 con más de un pilar) · Paid Agosto 2026 (CU Estados Unidos, EUR→ARS, campañas
 parciales) · marca MarComms como principal · toggle ES/EN en los 5 pilares ·
 Email y Webinars con datos reales (webinar EUDR)._
@@ -256,8 +257,8 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Social Media | ✅ Completo (Ene–Ago 2026, 9 cuentas) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
 | Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas) + drill-down + detalle por grupo + Resumen del Año + comparativa (tooling: `scripts/paid/`) |
 | Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas) + Resumen del Año + comparativa |
-| Email Marketing | ✅ Con datos reales: `cups` (CU + PS Latinoamérica), m08 — campaña del webinar EUDR (tooling: `scripts/mailchimp-to-seed.mjs`) |
-| Webinars | ✅ Reporte mixto por evento: **Webinar EUDR · Ago 2026**. El de ISO 14064 (Jul 2026) está oculto a pedido del equipo, con los datos intactos en el seed |
+| Email Marketing | ✅ Dos campañas reales: `cups` (CU + PS Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging (tooling: `scripts/mailchimp-to-seed.mjs`) |
+| Webinars | ✅ Reporte mixto por evento, dos cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo) y **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés, sin LinkedIn en el drop). Tooling: `scripts/webinars/build_event.py` |
 | Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
 | Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
@@ -332,7 +333,16 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
     en `socialSeed.js` y mover `defaultPeriod` de Social en el registry.
     Requiere `pip install openpyxl xlrd`. Si un drop trae un nombre de
     subcarpeta nuevo, ajustar `FOLDER_MATCHERS` en `extract_raw.py`.
-  - **Email/Webinars**: construir el parser con el primer drop real.
+  - **Email**: por cada envío, el export de destinatarios de Mailchimp
+    (`members_*.csv`, una fila por destinatario = enviados). Armar el
+    `config.json` (cuenta, mes, orden de envíos) y correr
+    `node scripts/mailchimp-to-seed.mjs config.json --no-all-leads`; pegar el
+    snippet en `emailSeed.js`.
+  - **Webinars**: `python3 scripts/webinars/build_event.py "<leads.xlsx>"
+    <carpeta con los members_*.csv>` → JSON con todos los números; redactar
+    sobre ellos los textos del evento y cargarlo en `webinarsSeed.js` en la
+    cuenta que corresponda (`cu` LATAM/español · `cug` Global/inglés). Si el
+    drop no trae LinkedIn, `social.posts` va vacío y el reporte lo dice.
 - Para sumar datos nuevos de Paid: parsear el CSV de Google Ads, separar por
   prefijo de mercado, agregar al seed (respetando el shape existente), y actualizar
   este archivo (§6). Verificar con `npm run build` + captura (Playwright headless,
@@ -429,6 +439,15 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   GLOBAL», «PS IBERIA & AMERICA», «BEL»). Carpeta archivada en
   `metricas/social-media/_procesados/2026-08/`.
 - Paid arranca por defecto en **Agosto 2026** (antes quedaba en julio).
+- **Webinar Plastic Packaging (9/9/2026) + campaña de email** (15/9/2026):
+  primer evento **global en inglés**, cargado en cuentas nuevas `cug`
+  «Control Union Global» en Webinars y Email (los LATAM quedan en `cu`,
+  renombrada «Control Union Latinoamérica»). Tooling nuevo
+  `scripts/webinars/build_event.py` (Excel de lead scoring de Teams + CSVs de
+  Mailchimp → JSON del evento) y opción `--no-all-leads` en el de Mailchimp.
+  El reporte mixto ahora tolera un evento sin posteos de LinkedIn. Cliente
+  nuevo «Control Union Global» (Email + Webinars). Registry: Email y Webinars
+  listan solo los períodos con datos de cada cuenta.
 - **Modo DEMO temporal** en `/demo` (10/9/2026): cifras visibles enmascaradas
   con «x» para grabar un recorrido del sistema. Se usó para la grabación y
   **se eliminó el mismo día** a pedido del equipo; si hiciera falta de nuevo,

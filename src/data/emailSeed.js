@@ -2215,6 +2215,1630 @@ EMAIL_DB['cups'] = {
 };
 
 
+// Control Union Global · m09 — generado con scripts/mailchimp-to-seed.mjs
+EMAIL_DB['cug'] = {
+  name: 'Control Union Global',
+  periods: {
+    'm09': {
+        campaignName: 'Webinar The Future of Plastic Packaging · Septiembre 2026',
+        emails: [
+          {
+            name: 'Email 1 · Américas',
+            subject: '',
+            metrics: {
+              sent: 2030,
+              uniqueOpens: 321,
+              uniqueClicks: 29,
+              totalOpens: 470,
+              totalClicks: 205,
+              openRate: 15.81,
+              clickRate: 1.43,
+              ctor: 9.03
+            }
+          },
+          {
+            name: 'Email 1 · Europa',
+            subject: '',
+            metrics: {
+              sent: 1116,
+              uniqueOpens: 208,
+              uniqueClicks: 18,
+              totalOpens: 451,
+              totalClicks: 86,
+              openRate: 18.64,
+              clickRate: 1.61,
+              ctor: 8.65
+            }
+          },
+          {
+            name: 'Email 2 · Américas',
+            subject: '',
+            metrics: {
+              sent: 1946,
+              uniqueOpens: 300,
+              uniqueClicks: 34,
+              totalOpens: 383,
+              totalClicks: 204,
+              openRate: 15.42,
+              clickRate: 1.75,
+              ctor: 11.33
+            }
+          },
+          {
+            name: 'Email 2 · Europa',
+            subject: '',
+            metrics: {
+              sent: 1073,
+              uniqueOpens: 169,
+              uniqueClicks: 17,
+              totalOpens: 244,
+              totalClicks: 81,
+              openRate: 15.75,
+              clickRate: 1.58,
+              ctor: 10.06
+            }
+          },
+          {
+            name: 'Email 3 · Américas',
+            subject: '',
+            metrics: {
+              sent: 1932,
+              uniqueOpens: 328,
+              uniqueClicks: 45,
+              totalOpens: 450,
+              totalClicks: 294,
+              openRate: 16.98,
+              clickRate: 2.33,
+              ctor: 13.72
+            }
+          },
+          {
+            name: 'Email 3 · Europa',
+            subject: '',
+            metrics: {
+              sent: 1065,
+              uniqueOpens: 177,
+              uniqueClicks: 14,
+              totalOpens: 279,
+              totalClicks: 100,
+              openRate: 16.62,
+              clickRate: 1.31,
+              ctor: 7.91
+            }
+          },
+          {
+            name: 'Email 3 (reenvío) · Américas',
+            subject: '',
+            metrics: {
+              sent: 1920,
+              uniqueOpens: 253,
+              uniqueClicks: 32,
+              totalOpens: 317,
+              totalClicks: 234,
+              openRate: 13.18,
+              clickRate: 1.67,
+              ctor: 12.65
+            }
+          },
+          {
+            name: 'Email 3 (reenvío) · Europa',
+            subject: '',
+            metrics: {
+              sent: 1057,
+              uniqueOpens: 135,
+              uniqueClicks: 14,
+              totalOpens: 228,
+              totalClicks: 85,
+              openRate: 12.77,
+              clickRate: 1.32,
+              ctor: 10.37
+            }
+          },
+          {
+            name: 'Post-webinar · Asistentes',
+            subject: '',
+            metrics: {
+              sent: 74,
+              uniqueOpens: 44,
+              uniqueClicks: 12,
+              totalOpens: 82,
+              totalClicks: 28,
+              openRate: 59.46,
+              clickRate: 16.22,
+              ctor: 27.27
+            }
+          }
+        ],
+        totals: {
+          emailCount: 9,
+          totalSent: 12213,
+          totalDelivered: 12213,
+          totalOpens: 1935,
+          totalClicks: 215,
+          totalBounces: null,
+          totalUnsubs: null,
+          openRate: 15.84,
+          clickRate: 1.76,
+          ctor: 11.11,
+          bounceRate: null,
+          unsubRate: null
+        },
+        comparison: [
+          {
+            name: 'Email 1 · Américas',
+            aperturas: 15.8,
+            clics: 1.4,
+            ctor: 9
+          },
+          {
+            name: 'Email 1 · Europa',
+            aperturas: 18.6,
+            clics: 1.6,
+            ctor: 8.7
+          },
+          {
+            name: 'Email 2 · Américas',
+            aperturas: 15.4,
+            clics: 1.7,
+            ctor: 11.3
+          },
+          {
+            name: 'Email 2 · Europa',
+            aperturas: 15.8,
+            clics: 1.6,
+            ctor: 10.1
+          },
+          {
+            name: 'Email 3 · Américas',
+            aperturas: 17,
+            clics: 2.3,
+            ctor: 13.7
+          },
+          {
+            name: 'Email 3 · Europa',
+            aperturas: 16.6,
+            clics: 1.3,
+            ctor: 7.9
+          },
+          {
+            name: 'Email 3 (reenvío) · Américas',
+            aperturas: 13.2,
+            clics: 1.7,
+            ctor: 12.6
+          },
+          {
+            name: 'Email 3 (reenvío) · Europa',
+            aperturas: 12.8,
+            clics: 1.3,
+            ctor: 10.4
+          },
+          {
+            name: 'Post-webinar · Asistentes',
+            aperturas: 59.5,
+            clics: 16.2,
+            ctor: 27.3
+          }
+        ],
+        hotLeads: [
+          {
+            email: 'fauricioc@amvac.com',
+            clicks: 52,
+            opens: 4,
+            company: 'AMVAC Latam',
+            firstName: 'Fauricio',
+            lastName: 'Castro',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'luis.mamani@hihonor.com',
+            clicks: 48,
+            opens: 4,
+            company: 'HONOR',
+            firstName: 'Luis',
+            lastName: 'Angel Mamani',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'kaltnow@langetwins.com',
+            clicks: 44,
+            opens: 4,
+            company: 'LangeTwins Family Winery and Vineyards',
+            firstName: 'Kendra',
+            lastName: 'Altnow',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'bknapp@smirecyclers.com',
+            clicks: 36,
+            opens: 5,
+            company: 'Scrap Management Industries',
+            firstName: 'Bronson',
+            lastName: 'Knapp',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'nhammond@shawmutcorporation.com',
+            clicks: 33,
+            opens: 4,
+            company: 'Shawmut Corporation',
+            firstName: 'Nicholas',
+            lastName: 'Hammond',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'paula.meegan@asrcindustrial.com',
+            clicks: 33,
+            opens: 4,
+            company: 'ASRC Industrial',
+            firstName: 'Paula',
+            lastName: 'Meegan',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'rylee.mccone@ahec.edu',
+            clicks: 33,
+            opens: 4,
+            company: 'Auraria Sustainable Campus Program',
+            firstName: 'Rylee',
+            lastName: 'McCone',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'michelle.obrien@coillte.ie',
+            clicks: 33,
+            opens: 4,
+            company: 'Coillte',
+            firstName: 'Michelle',
+            lastName: 'O\'Brien',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'cja@larslarsengroup.com',
+            clicks: 32,
+            opens: 12,
+            company: 'Lars Larsen Group',
+            firstName: 'Christina',
+            lastName: 'Jacobsen',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'vschenk@palmerholland.com',
+            clicks: 32,
+            opens: 8,
+            company: 'Palmer Holland',
+            firstName: 'Valerie',
+            lastName: 'Schenk',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'bailym@pureoptions.com',
+            clicks: 32,
+            opens: 7,
+            company: 'Pure Options',
+            firstName: 'Bailey',
+            lastName: 'McDaniel',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'kristi.megivern@passportauto.com',
+            clicks: 32,
+            opens: 7,
+            company: 'Passport Auto Group',
+            firstName: 'Kristi',
+            lastName: 'Megivern',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'm.stankius@hyva.com',
+            clicks: 32,
+            opens: 6,
+            company: 'Hyva',
+            firstName: 'Maciej',
+            lastName: 'Stankius',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'christiancovarrubias@tupperware.com',
+            clicks: 32,
+            opens: 5,
+            company: 'Tupperware México',
+            firstName: 'Christian',
+            lastName: 'Covarrubias Pimentel',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'cekanayake@atmossolutionsinc.com',
+            clicks: 32,
+            opens: 4,
+            company: 'Atmos Solutions, Inc.',
+            firstName: 'Chamod',
+            lastName: 'Ekanayake',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'chenyongjun@honor.com',
+            clicks: 32,
+            opens: 4,
+            company: 'HONOR',
+            firstName: 'Yongjun',
+            lastName: 'Chen',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'jordanm@amvac.com',
+            clicks: 32,
+            opens: 4,
+            company: 'AMVAC U.S.',
+            firstName: 'Jordan',
+            lastName: 'Moseley',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'kyleg@cometobask.com',
+            clicks: 32,
+            opens: 4,
+            company: 'Bask, Inc.',
+            firstName: 'Kyle',
+            lastName: 'Grotevant',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'marcuso@modere.com',
+            clicks: 32,
+            opens: 4,
+            company: 'Modere',
+            firstName: 'Marcus',
+            lastName: 'Ostergaard',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'sloria@keramida.com',
+            clicks: 32,
+            opens: 4,
+            company: 'KERAMIDA Inc.',
+            firstName: 'Steve',
+            lastName: 'Loria',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'yrodriguez@myinsa.com',
+            clicks: 32,
+            opens: 4,
+            company: 'Insa',
+            firstName: 'Yalissa',
+            lastName: 'Rodriguez',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'carlos.taus@huhtamaki.com',
+            clicks: 32,
+            opens: 4,
+            company: 'Huhtamaki, Inc. - Waterville',
+            firstName: 'Carlos',
+            lastName: 'Taus Soler',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'slb@jysk.com',
+            clicks: 32,
+            opens: 4,
+            company: 'JYSK',
+            firstName: 'Soren',
+            lastName: 'Beek',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'ettore.vercesi@huhtamaki.com',
+            clicks: 30,
+            opens: 6,
+            company: 'Huhtamaki, Inc. - Waterville',
+            firstName: 'Ettore',
+            lastName: 'Vercesi',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'rdavis@asrcenergy.com',
+            clicks: 30,
+            opens: 4,
+            company: 'ASRC Energy Services, LLC',
+            firstName: 'Rachel',
+            lastName: 'Davis',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'barbara.telecka@huhtamaki.com',
+            clicks: 29,
+            opens: 4,
+            company: 'Huhtamaki, Inc. - Waterville',
+            firstName: 'Barbara',
+            lastName: 'Telecka',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'pawel.pikula@ironsideslubricants.co.uk',
+            clicks: 29,
+            opens: 4,
+            company: 'Ironsides Lubricants Ltd',
+            firstName: 'Pawel',
+            lastName: 'Pikula',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'bignacio@virginiadare.com',
+            clicks: 26,
+            opens: 4,
+            company: 'Virginia Dare Extract Co.',
+            firstName: 'Bediver',
+            lastName: 'Ignacio',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'gregg.mance@aac-contracting.com',
+            clicks: 26,
+            opens: 4,
+            company: 'AAC Contracting, LLC',
+            firstName: 'Gregg',
+            lastName: 'Mance',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'ahume@gpminvestments.com',
+            clicks: 24,
+            opens: 7,
+            company: 'GPM Investments, LLC',
+            firstName: 'Amber',
+            lastName: 'Hume',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'nancyo@westmarine.com',
+            clicks: 24,
+            opens: 4,
+            company: 'West Marine',
+            firstName: 'Nancy',
+            lastName: 'Ortiz',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'v.fulginei@elica.com',
+            clicks: 22,
+            opens: 17,
+            company: 'Elica',
+            firstName: 'Valentina',
+            lastName: 'Fulginei',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'aleija@niagarawater.com',
+            clicks: 19,
+            opens: 2,
+            company: 'Niagara Bottling',
+            firstName: 'Anna',
+            lastName: 'Jeraldine Leija',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'sdascher@niagarawater.com',
+            clicks: 18,
+            opens: 2,
+            company: 'Niagara Bottling',
+            firstName: 'Shalto',
+            lastName: 'Dascher',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'mmarrero@plaidonline.com',
+            clicks: 16,
+            opens: 2,
+            company: 'Plaid Enterprises',
+            firstName: 'Maria',
+            lastName: 'Marrero',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'mkroh@lgchem.com',
+            clicks: 15,
+            opens: 5,
+            company: 'LG Chem America, Inc.',
+            firstName: 'Michelle',
+            lastName: 'Kroh',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'jbeck@usadebusk.com',
+            clicks: 12,
+            opens: 3,
+            company: 'USA DeBusk',
+            firstName: 'Jessica',
+            lastName: 'Beck',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'tassio.domingues@reachcooling.com',
+            clicks: 12,
+            opens: 3,
+            company: 'Reach Cooling Group',
+            firstName: 'Tassio',
+            lastName: 'Domingues',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'jvanbennekom@inlineplastics.com',
+            clicks: 10,
+            opens: 6,
+            company: 'Inline Plastics',
+            firstName: 'Julie',
+            lastName: 'Van Bennekom',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'mlaser@visteon.com',
+            clicks: 8,
+            opens: 3,
+            company: 'Visteon Corporation',
+            firstName: 'Michelle',
+            lastName: 'Laser',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'preston_poag@mohawkind.com',
+            clicks: 8,
+            opens: 3,
+            company: 'Mohawk Industries',
+            firstName: 'Preston',
+            lastName: 'Poag',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'mariana.carvalho@heiq.com',
+            clicks: 8,
+            opens: 3,
+            company: 'HeiQ',
+            firstName: 'Mariana',
+            lastName: 'Carvalho',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'esaccoccia@newpharm.it',
+            clicks: 8,
+            opens: 2,
+            company: 'NEWPHARM S.r.l.',
+            firstName: 'Erika',
+            lastName: 'Saccoccia',
+            campaigns: 2,
+            emailAppearances: [
+              2,
+              4
+            ]
+          },
+          {
+            email: 'francesca.bugli@luxottica.com',
+            clicks: 8,
+            opens: 2,
+            company: 'EssilorLuxottica',
+            firstName: 'Francesca',
+            lastName: 'Bugli',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'edillon@brewerscience.com',
+            clicks: 8,
+            opens: 1,
+            company: 'Brewer Science',
+            firstName: 'Edna',
+            lastName: 'Dillon',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'raffaele.gazzano@sedamyl.com',
+            clicks: 8,
+            opens: 1,
+            company: 'SEDAMYL',
+            firstName: 'Raffaele',
+            lastName: 'Gazzano',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: '99849035@ambev.com.br',
+            clicks: 7,
+            opens: 12,
+            company: 'Ambev',
+            firstName: 'Leonardo',
+            lastName: 'Souza',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'ben.anderson@ralcoagriculture.com',
+            clicks: 6,
+            opens: 7,
+            company: 'Ralco',
+            firstName: 'Ben',
+            lastName: 'Anderson',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'costel.suditu@greentech.ro',
+            clicks: 6,
+            opens: 1,
+            company: 'greentech',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'dpe@fecc.org',
+            clicks: 5,
+            opens: 19,
+            company: 'European Association of Chemical Distributors',
+            firstName: 'David',
+            lastName: 'Navarro',
+            campaigns: 5,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8,
+              9
+            ]
+          },
+          {
+            email: 'biancadewit@primo.com',
+            clicks: 4,
+            opens: 8,
+            company: 'Inter Primo A/S - Primo Group - Extruded polymer profiles',
+            firstName: 'Bianca',
+            lastName: 'Wit',
+            campaigns: 5,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8,
+              9
+            ]
+          },
+          {
+            email: 'ssac@be-liv.com',
+            clicks: 4,
+            opens: 4,
+            company: 'Beliv Company',
+            firstName: 'Sara',
+            lastName: 'Sac Tejada',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'brennan.greene@growmark.com',
+            clicks: 4,
+            opens: 2,
+            company: 'GROWMARK, Inc.',
+            firstName: 'Brennan',
+            lastName: 'Greene',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'sgallego@nexamp.com',
+            clicks: 4,
+            opens: 2,
+            company: 'Nexamp',
+            firstName: 'Stephany',
+            lastName: 'Gallego',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'eva.kiefhaber@bardusch.com',
+            clicks: 4,
+            opens: 2,
+            company: 'bardusch',
+            firstName: 'Eva',
+            lastName: 'Kiefhaber',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'g.pasotti@davines.it',
+            clicks: 4,
+            opens: 2,
+            company: 'Davines Group | B Corp since 2016',
+            firstName: 'Giulia',
+            lastName: 'Pasotti',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'brecht.deschuymer@baltagroup.com',
+            clicks: 4,
+            opens: 1,
+            company: 'Balta Group',
+            firstName: 'Brecht',
+            lastName: 'Deschuymer',
+            campaigns: 5,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8,
+              9
+            ]
+          },
+          {
+            email: 'matthew.allen@molsoncoors.com',
+            clicks: 3,
+            opens: 5,
+            company: 'Molson Coors Beverage Company',
+            firstName: 'Matt',
+            lastName: 'Allen',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'alessandra.petrini@sogefigroup.com',
+            clicks: 3,
+            opens: 4,
+            company: 'Sogefi Group',
+            firstName: 'Alessandra',
+            lastName: 'Petrini',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'dshuleva@controlunion.com',
+            clicks: 3,
+            opens: 4,
+            company: 'controlunion',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'harry1260@gmail.com',
+            clicks: 3,
+            opens: 1,
+            company: 'gmail',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'obiriukova@controlunion.com',
+            clicks: 3,
+            opens: 1,
+            company: 'controlunion',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'tamara.schuitvlot@nl.bolsius.com',
+            clicks: 2,
+            opens: 84,
+            company: 'Bolsius | B Corp™',
+            firstName: 'Tamara',
+            lastName: 'Schuitvlot',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'b.vandenbrink@intersnackgroup.com',
+            clicks: 2,
+            opens: 60,
+            company: 'INTERSNACK LIMITED',
+            firstName: 'Bas',
+            lastName: 'Van Den Brink',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'michiel.kokken@ofi.com',
+            clicks: 2,
+            opens: 17,
+            company: 'OFI',
+            firstName: 'Michiel',
+            lastName: 'Kokken',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'juan.rico@alcaliber.com',
+            clicks: 2,
+            opens: 15,
+            company: 'ALCALIBER, S.A.U.',
+            firstName: 'Juan',
+            lastName: 'Rico Zamorano',
+            campaigns: 5,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8,
+              9
+            ]
+          },
+          {
+            email: 'romulo.pereira@archroma.com',
+            clicks: 2,
+            opens: 8,
+            company: 'ARCHROMA IBÉRICA, S.L.',
+            firstName: 'Romulo',
+            lastName: 'Pereira',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'salikov@matterr.de',
+            clicks: 2,
+            opens: 8,
+            company: 'matterr',
+            firstName: 'Vitalij',
+            lastName: 'Salikov',
+            campaigns: 5,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8,
+              9
+            ]
+          },
+          {
+            email: 'sguardia@quimivita.com',
+            clicks: 2,
+            opens: 6,
+            company: 'Quimivita',
+            firstName: 'Sara',
+            lastName: 'Guardia Almeida',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'frank.schlauer@hamburgwasser.de',
+            clicks: 2,
+            opens: 5,
+            company: 'HAMBURG WASSER',
+            firstName: 'Frank',
+            lastName: 'Schlauer',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'linda.gustafsson@toteme.com',
+            clicks: 2,
+            opens: 5,
+            company: 'TOTEME',
+            firstName: 'Linda',
+            lastName: 'Gustafsson',
+            campaigns: 5,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8,
+              9
+            ]
+          },
+          {
+            email: 'slemay@rti-inc.com',
+            clicks: 2,
+            opens: 4,
+            company: 'Restaurant Technologies',
+            firstName: 'Sean',
+            lastName: 'Lemay',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'laura.hofman.miquel@volvo.com',
+            clicks: 2,
+            opens: 4,
+            company: 'Volvo',
+            firstName: 'Laura',
+            lastName: 'Miquel',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'oliver.priess@aldautomotive.com',
+            clicks: 2,
+            opens: 4,
+            company: 'ALD Automotive Germany',
+            firstName: 'Oliver',
+            lastName: 'Priess',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'line.kerbech@everrest.com',
+            clicks: 2,
+            opens: 3,
+            company: 'EverRest',
+            firstName: 'Line',
+            lastName: 'Kerbech',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'brenda.calderon@organizacionsoriana.com',
+            clicks: 2,
+            opens: 2,
+            company: 'Organización Soriana',
+            firstName: 'Brenda',
+            lastName: 'Calderon',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'rafael.galvao@byd.com',
+            clicks: 2,
+            opens: 2,
+            company: 'BYD Brasil',
+            firstName: 'Rafael',
+            lastName: 'Galvao',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'aaron.miller@ashland.com',
+            clicks: 2,
+            opens: 1,
+            company: 'Ashland',
+            firstName: 'Aaron',
+            lastName: 'Miller',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'anderson.lima@grupohope.com.br',
+            clicks: 2,
+            opens: 1,
+            company: 'Grupo HOPE',
+            firstName: 'Anderson',
+            lastName: 'Lima',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'bward@sandersonfarms.com',
+            clicks: 2,
+            opens: 1,
+            company: 'Wayne-Sanderson Farms',
+            firstName: 'Brittany',
+            lastName: 'Kerr',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'carolina.hasegawa@reverconsulting.com',
+            clicks: 2,
+            opens: 1,
+            company: 'Rever | Consultoria em Sustentabilidade',
+            firstName: 'Carolina',
+            lastName: 'Hasegawa',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'dsalgado@artesco.com.pe',
+            clicks: 2,
+            opens: 1,
+            company: 'Artesco',
+            firstName: 'Diego',
+            lastName: 'Salgado',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'exportregulatory@plymag.com',
+            clicks: 2,
+            opens: 1,
+            company: 'PLYMAG - Agronutrientes',
+            firstName: 'Fernando',
+            lastName: 'Gimenez Lazaro',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'glassu@ashland.com',
+            clicks: 2,
+            opens: 1,
+            company: 'Ashland',
+            firstName: 'Gyongyi',
+            lastName: 'Lassu',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'mgaleano@koppert.es',
+            clicks: 2,
+            opens: 1,
+            company: 'Koppert España',
+            firstName: 'Magda',
+            lastName: 'Galeano Revert',
+            campaigns: 4,
+            emailAppearances: [
+              2,
+              4,
+              6,
+              8
+            ]
+          },
+          {
+            email: 'Nattarika.Siripunt@doleintl.com',
+            clicks: 2,
+            opens: 1,
+            company: 'doleintl',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'Sukanya.Dathong@doleintl.com',
+            clicks: 2,
+            opens: 1,
+            company: 'doleintl',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'rosa.cabezudo@intertek.com',
+            clicks: 2,
+            opens: 1,
+            company: 'intertek',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'erin.semple@averydennison.com',
+            clicks: 1,
+            opens: 7,
+            company: 'Avery Dennison',
+            firstName: 'Erin',
+            lastName: 'Semple',
+            campaigns: 5,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7,
+              9
+            ]
+          },
+          {
+            email: 'lkarpati@controlunion.com',
+            clicks: 1,
+            opens: 2,
+            company: 'controlunion',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'qa@rpet.co.il',
+            clicks: 1,
+            opens: 2,
+            company: 'rpet',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'belinda.andaverde@abbott.com',
+            clicks: 1,
+            opens: 1,
+            company: 'Abbott Laboratories',
+            firstName: 'Belinda',
+            lastName: 'Andaverde',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'kristina.mccoy@us.dsv.com',
+            clicks: 1,
+            opens: 1,
+            company: 'DSV',
+            firstName: 'Kristina',
+            lastName: 'McCoy',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'sourcing@asap-trading.net',
+            clicks: 1,
+            opens: 1,
+            company: 'ASAP TRADING Sourcing',
+            firstName: 'Cesar',
+            lastName: 'Salamanca Castilla',
+            campaigns: 4,
+            emailAppearances: [
+              1,
+              3,
+              5,
+              7
+            ]
+          },
+          {
+            email: 'leena.ta.salaime@gmail.com',
+            clicks: 1,
+            opens: 1,
+            company: 'gmail',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          },
+          {
+            email: 'shehbazahmed743@gmail.com',
+            clicks: 1,
+            opens: 1,
+            company: 'gmail',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              9
+            ]
+          }
+        ],
+        hotLeadsCount: 96,
+        allLeadsCount: 3213
+      },
+  },
+};
+
 // Cuentas derivadas del seed (vacío hasta el primer import real).
 export const EMAIL_CLIENTS = Object.entries(EMAIL_DB).map(([id, v]) => ({ id, name: v.name }));
 

@@ -8,7 +8,12 @@
 //  null → la vista los muestra como pendientes, no los inventa.
 // ════════════════════════════════════════════════════════════════
 
-export const WEBINAR_CLIENTS = [{ id: 'cu', name: 'Control Union' }];
+// Una cuenta por audiencia: los webinars en español para LATAM y los
+// globales en inglés (base Américas + Europa) son series distintas.
+export const WEBINAR_CLIENTS = [
+  { id: 'cu', name: 'Control Union Latinoamérica' },
+  { id: 'cug', name: 'Control Union Global' },
+];
 
 // Metodología de scoring (doc "Metodología de Scoring de Leads en Webinars",
 // vigente desde julio 2026): score 0-100 = Necesidad declarada (0-50) +
@@ -342,10 +347,228 @@ export const WEBINARS_DB = {
       ],
     },
   },
+
+  // ── Control Union Global: webinars en inglés con base de Américas + Europa ──
+  cug: {
+    'wbn-plastic': {
+      title: 'Webinar The Future of Plastic Packaging',
+      tema: 'Packaging plástico — regulación y certificación',
+      temaEn: 'Plastic packaging — regulation and certification',
+      subtitle: '«Preparing for the Future of Plastic Packaging»',
+      date: '9 de septiembre de 2026',
+      dateEn: 'September 9, 2026',
+      reagendado: false,
+      idioma: 'Inglés',
+      idiomaEn: 'English',
+      audiencia: 'Empresas de packaging plástico, marcas, recicladores y consultores — registrados de 48 países (Europa, Asia y Américas)',
+      audienciaEn: 'Plastic packaging companies, brands, recyclers and consultants — registrants from 48 countries (Europe, Asia and the Americas)',
+      canales: 'Email marketing (9 envíos: Emails 1-3 segmentados Américas / Europa, reenvío del Email 3 y post-webinar a asistentes) · Plataforma: Microsoft Teams · Partners: ALPLA, ISCC y RecyClass · LinkedIn: sin export en este drop',
+      canalesEn: 'Email marketing (9 sends: Emails 1-3 split Americas / Europe, an Email 3 resend and a post-webinar to attendees) · Platform: Microsoft Teams · Partners: ALPLA, ISCC and RecyClass · LinkedIn: no export in this drop',
+      serieEmails: ['Emails 1-3 segmentados Américas / Europa (+ reenvío del Email 3)', 'Post-webinar a asistentes (74 contactos)', 'Base total: 3,213 contactos únicos'.replace(',', '.')],
+      serieEmailsEn: ['Emails 1-3 split Americas / Europe (+ Email 3 resend)', 'Post-webinar to attendees (74 contacts)', 'Total base: 3,213 unique contacts'],
+
+      // ── Key insights (scripts/webinars/build_event.py sobre el Excel de lead scoring) ──
+      registered: 163,
+      attended: 72,
+      showRate: 44.2,
+      regCountries: 48,
+      // Registrados vs asistentes por país (top 10 por registros, externos).
+      countries: [
+        { name: 'Bulgaria', reg: 11, att: 4 },
+        { name: 'Chile', reg: 11, att: 5 },
+        { name: 'Sri Lanka', reg: 10, att: 5 },
+        { name: 'Pakistán', reg: 8, att: 2 },
+        { name: 'Países Bajos', reg: 7, att: 4 },
+        { name: 'Israel', reg: 6, att: 3 },
+        { name: 'Alemania', reg: 6, att: 4 },
+        { name: 'Bélgica', reg: 6, att: 4 },
+        { name: 'España', reg: 6, att: 2 },
+        { name: 'India', reg: 4, att: 1 },
+      ],
+      companies: {
+        unique: 41, // empresas únicas entre asistentes externos
+        uniqueNote: 'Entre asistentes externos (se excluyen CU/Peterson y los partners ALPLA, ISCC y RecyClass)',
+        uniqueNoteEn: 'Among external attendees (CU/Peterson and the partners ALPLA, ISCC and RecyClass excluded)',
+        // Destacadas = empresas de los hot y warm leads del evento.
+        featured: ['Trinseo', 'AMB', 'Bolsius', 'Dole', 'Enitor Primo', 'Greentech S.A.', 'Nébih', 'Pakuote Ratu VsI', 'Printech Packages pvt Ltd', 'Publiambiente', 'Dole Food and Beverage group', 'TOTEME AB', 'SD Jivkov Lilov Neshev', 'Coca-Cola HBC', 'Estia Consulting', 'DE123239087', 'Jokey BG d.o.o.', 'ECOCERT GREENLIFE', 'Senior International Scientific, Regulatory & Strategic Consultant', 'Rpet', 'Kiwa', 'Avery Dennison', 'Balta Industries', 'deSter', 'Pantaleon S.A.', 'Nutrisco', 'Logoplaste Innovation Lab', 'Recycling Europe', 'Kolmar Group AG', 'LIBERTY MILLS LIMITED', 'Alcaliber S.A.', 'Fecc', 'Hayleys Aventura Pvt Ltd.', 'Silchron', 'Intersnack'],
+        featuredNote: 'Empresas de los hot y warm leads del evento',
+        featuredNoteEn: 'Companies from the event\'s hot and warm leads',
+        others: ['cyclos', 'Bio Extracts (Pvt) Ltd', 'Consultant', 'Bio extracts Pvt Ltd', 'Qualitea Ceylon', 'Asian sciences research pvtltd'],
+      },
+      internos: { total: 41, attended: 19 }, // CU/Peterson + partners (ALPLA, ISCC, RecyClass)
+      externos: { registered: 122, attended: 53 },
+      deals: {
+        total: 41, // solo los priorizados por el scoring (hot + warm)
+        hot: 11,
+        warm: 30,
+        note: '11 hot + 30 warm — leads priorizados por el scoring del evento (externos).',
+        noteEn: '11 hot + 30 warm — leads prioritized by the event scoring (external).',
+      },
+      durationTotalLabel: '1 h 44 min', // sesión completa en Teams (organizador conectado)
+      durationAvgMin: 61.8, // tiempo conectado por asistente, tope 90 min (target del modelo)
+      durationMedianMin: 72.1,
+      engagement: { high: 36, mid: 15, low: 21 }, // ≥80% / 50-79% / <50% de los 90 min objetivo · 72 asistentes
+      highlight:
+        '72 asistentes identificados de 163 registrados (44,2% de show rate) desde 48 países — el primer webinar global en inglés de la serie. El scoring dejó 41 leads priorizados (11 hot + 30 warm) entre los 53 asistentes externos, y 36 de los 72 asistentes se quedaron más del 80% de los 90 minutos objetivo. La atribución del email es baja: 24 de los 163 registrados (15%) hicieron clic en la campaña y 92 (56%) no estaban en la base — el registro llegó mayormente por otros canales.',
+      highlightEn:
+        '72 identified attendees out of 163 registrants (44.2% show rate) from 48 countries — the first global, English-language webinar of the series. The scoring left 41 prioritized leads (11 hot + 30 warm) among the 53 external attendees, and 36 of the 72 attendees stayed past 80% of the 90-minute target. Email attribution is low: 24 of the 163 registrants (15%) clicked the campaign and 92 (56%) were not in the base — registration came mostly through other channels.',
+
+      // Scoring propio de este evento (modelo del Excel de lead scoring del equipo).
+      scoring: {
+        desc: 'Registro 10 pts + asistencia 20 pts + tiempo conectado hasta 40 pts (minutos / 90 × 40) + pregunta en el Q&A 20 pts + reacciones y otras interacciones hasta 10 pts. Se excluyen Control Union/Peterson y los partners (ALPLA, ISCC, RecyClass).',
+        descEn: 'Registration 10 pts + attendance 20 pts + time connected up to 40 pts (minutes / 90 × 40) + Q&A question 20 pts + reactions and other interactions up to 10 pts. Control Union/Peterson and the partners (ALPLA, ISCC, RecyClass) excluded.',
+        classes: [
+          { name: 'Hot lead', range: '≥ 70', action: 'Contacto comercial directo esa misma semana.', actionEn: 'Direct sales contact that same week.' },
+          { name: 'Warm lead', range: '40 – 69,9', action: 'Nurturing activo: casos de éxito, contenido de mitad de funnel, replay y próximo webinar.', actionEn: 'Active nurturing: success stories, mid-funnel content, replay and next webinar.' },
+          { name: 'Cold', range: '< 40', action: 'Secuencia de nurturing larga / contenido educativo. No pasa a Ventas todavía.', actionEn: 'Long nurturing sequence / educational content. Not passed to Sales yet.' },
+        ],
+      },
+
+      // ── Sección 1: Email Marketing (exports de destinatarios de Mailchimp) ──
+      email: {
+        sends: [
+          { name: 'Email 1 · Américas', sent: 2030, open: 15.8, click: 1.4 },
+          { name: 'Email 1 · Europa', sent: 1116, open: 18.6, click: 1.6 },
+          { name: 'Email 2 · Américas', sent: 1946, open: 15.4, click: 1.7 },
+          { name: 'Email 2 · Europa', sent: 1073, open: 15.8, click: 1.6 },
+          { name: 'Email 3 · Américas', sent: 1932, open: 17.0, click: 2.3 },
+          { name: 'Email 3 · Europa', sent: 1065, open: 16.6, click: 1.3 },
+          { name: 'Email 3 (reenvío) · Américas', sent: 1920, open: 13.2, click: 1.7 },
+          { name: 'Email 3 (reenvío) · Europa', sent: 1057, open: 12.8, click: 1.3 },
+          { name: 'Post-webinar · Asistentes', sent: 74, open: 59.5, click: 16.2 },
+        ],
+        totalSent: 12213,
+        sendNamesEn: ['Email 1 · Americas', 'Email 1 · Europe', 'Email 2 · Americas', 'Email 2 · Europe', 'Email 3 · Americas', 'Email 3 · Europe', 'Email 3 (resend) · Americas', 'Email 3 (resend) · Europe', 'Post-webinar · Attendees'],
+        uniqueContacts: 3213,
+        openedOnce: 840,
+        openedOncePct: 26.1,
+        clickedOnce: 96,
+        clickedOncePct: 3.0,
+        regFromEmail: 24, // registrados con clic rastreado en la campaña (atribución directa)
+        regFromEmailPct: 15,
+        regFromEmailNote: 'Con clic rastreado en la campaña — atribución directa del canal',
+        regFromEmailNoteEn: 'With a tracked campaign click — direct channel attribution',
+        regOpened: 50, // registrados que abrieron al menos un email
+        regInBase: 71, // registrados presentes en la base de la campaña
+        regInBasePct: 44,
+        nota: 'Los envíos previos rondaron el 13-19% de apertura con clics entre 1,3% y 2,3%: Europa abrió algo más que Américas en el Email 1 (18,6% vs 15,8%) pero el clic fue parejo. El reenvío del Email 3 sumó aperturas incrementales (13%) sin mejorar el clic. El post-webinar a asistentes fue, por lejos, el mejor envío: 59,5% de apertura y 16,2% de clics.',
+        notaEn: 'The pre-event sends ran at 13-19% opens with 1.3-2.3% clicks: Europe opened a bit more than the Americas on Email 1 (18.6% vs 15.8%) but clicks were even. The Email 3 resend added incremental opens (13%) without lifting clicks. The post-webinar send to attendees was by far the best: 59.5% opens and 16.2% clicks.',
+        notaClics:
+          'La atribución del canal se lee en capas: 24 registrados hicieron clic en algún email de la campaña (atribución directa — el piso), 50 abrieron al menos un email, y 71 de los 163 estaban en la base de contactos (44%). Los otros 92 registrados (56%) llegaron por fuera de la base: LinkedIn, los partners del webinar u otros canales — el registro por Teams no trae atribución por canal.',
+        notaClicsEn:
+          'Channel attribution is read in layers: 24 registrants clicked a campaign email (direct attribution — the floor), 50 opened at least one email, and 71 of the 163 were in the contact base (44%). The other 92 registrants (56%) came from outside the base: LinkedIn, the webinar partners or other channels — Teams registration carries no per-channel attribution.',
+      },
+
+      // ── Sección 2: Social Media — este drop NO incluyó exports de LinkedIn ──
+      social: {
+        posts: [], // sin datos: no se inventan (regla de honestidad)
+        totals: null,
+        regFromSocial: null,
+        regFromSocialPct: null,
+        regOutsideEmail: 92, // registrados que NO estaban en la base de emails → LinkedIn, partners u otros canales
+        regOutsideEmailPct: 56,
+        lectura:
+          'Este drop no incluyó exports de LinkedIn para el evento, así que no hay métricas de posteos. Lo que sí se sabe: 92 de los 163 registrados (56%) no estaban en la base de email — llegaron por LinkedIn, por los partners del webinar (ALPLA, ISCC, RecyClass) o por otros canales, sin atribución individual.',
+        lecturaEn:
+          'This drop did not include LinkedIn exports for the event, so there are no post metrics. What is known: 92 of the 163 registrants (56%) were not in the email base — they came through LinkedIn, the webinar partners (ALPLA, ISCC, RecyClass) or other channels, with no individual attribution.',
+      },
+
+      // ── Sección 3: leads priorizados (scoring del evento) ──
+      hotLeads: {
+        col3: 'Permanencia',
+        rows: [
+          { empresa: 'Trinseo', pais: 'Países Bajos', det: '87,5 min', score: 88.9, tier: 'HOT' },
+          { empresa: '—', pais: 'Taiwán', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'AMB', pais: 'Bulgaria', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Bolsius', pais: 'Países Bajos', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Dole', pais: 'Tailandia', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Enitor Primo', pais: 'Países Bajos', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Greentech S.A.', pais: 'Rumania', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Nébih', pais: 'Hungría', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Pakuote Ratu VsI', pais: 'Lituania', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Printech Packages pvt Ltd', pais: 'Pakistán', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Publiambiente', pais: 'Portugal', det: '90,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Publiambiente', pais: 'Portugal', det: '89,7 min', score: 69.9, tier: 'WARM' },
+          { empresa: 'Dole Food and Beverage group', pais: 'Tailandia', det: '89,5 min', score: 69.8, tier: 'WARM' },
+          { empresa: 'TOTEME AB', pais: 'Suecia', det: '88,8 min', score: 69.5, tier: 'WARM' },
+          { empresa: 'SD Jivkov Lilov Neshev', pais: 'Bulgaria', det: '88,7 min', score: 69.4, tier: 'WARM' },
+          { empresa: 'Coca-Cola HBC', pais: 'Bulgaria', det: '88,5 min', score: 69.3, tier: 'WARM' },
+          { empresa: 'Estia Consulting', pais: 'Israel', det: '88,5 min', score: 69.3, tier: 'WARM' },
+          { empresa: 'DE123239087', pais: 'Alemania', det: '87,4 min', score: 68.8, tier: 'WARM' },
+          { empresa: 'Jokey BG d.o.o.', pais: 'Serbia', det: '86,3 min', score: 68.4, tier: 'WARM' },
+          { empresa: 'ECOCERT GREENLIFE', pais: 'Francia', det: '84,8 min', score: 67.7, tier: 'WARM' },
+          { empresa: 'Senior International Scientific, Regulatory & Strategic Consultant', pais: 'Israel', det: '84,5 min', score: 67.6, tier: 'WARM' },
+          { empresa: 'Rpet', pais: 'Israel', det: '83,3 min', score: 67.0, tier: 'WARM' },
+          { empresa: 'Kiwa', pais: 'Países Bajos', det: '79,8 min', score: 65.5, tier: 'WARM' },
+          { empresa: 'Avery Dennison', pais: 'Estados Unidos', det: '78,9 min', score: 65.1, tier: 'WARM' },
+          { empresa: 'Balta Industries', pais: 'Bélgica', det: '70,8 min', score: 61.5, tier: 'WARM' },
+          { empresa: '—', pais: 'Alemania', det: '68,5 min', score: 60.4, tier: 'WARM' },
+          { empresa: 'deSter', pais: 'Bélgica', det: '67,0 min', score: 59.8, tier: 'WARM' },
+          { empresa: 'Pantaleon S.A.', pais: 'Guatemala', det: '66,6 min', score: 59.6, tier: 'WARM' },
+          { empresa: 'Nutrisco', pais: 'Chile', det: '62,5 min', score: 57.8, tier: 'WARM' },
+          { empresa: 'Logoplaste Innovation Lab', pais: 'Portugal', det: '60,0 min', score: 56.7, tier: 'WARM' },
+          { empresa: 'Recycling Europe', pais: 'Bélgica', det: '56,1 min', score: 54.9, tier: 'WARM' },
+          { empresa: 'Kolmar Group AG', pais: 'Suiza', det: '51,0 min', score: 52.7, tier: 'WARM' },
+          { empresa: 'LIBERTY MILLS LIMITED', pais: 'Pakistán', det: '50,5 min', score: 52.4, tier: 'WARM' },
+          { empresa: 'Alcaliber S.A.', pais: 'España', det: '48,7 min', score: 51.6, tier: 'WARM' },
+          { empresa: 'Fecc', pais: 'Bélgica', det: '46,9 min', score: 50.8, tier: 'WARM' },
+          { empresa: '—', pais: 'Italia', det: '41,0 min', score: 48.2, tier: 'WARM' },
+          { empresa: 'Hayleys Aventura Pvt Ltd.', pais: 'Sri Lanka', det: '36,9 min', score: 46.4, tier: 'WARM' },
+          { empresa: 'Silchron', pais: 'Chile', det: '29,6 min', score: 43.2, tier: 'WARM' },
+          { empresa: 'Intersnack', pais: 'Alemania', det: '29,3 min', score: 43.0, tier: 'WARM' },
+          { empresa: '—', pais: 'Reino Unido', det: '25,8 min', score: 41.5, tier: 'WARM' },
+          { empresa: '—', pais: 'Austria', det: '24,7 min', score: 41.0, tier: 'WARM' },
+        ],
+        pipelineUrl: null, // lo pasa el equipo por evento (link al pipeline de HubSpot)
+        scoreNote: 'Scoring del evento (Teams): HOT ≥ 70 · WARM 40-69,9. Permanencia = tiempo conectado sobre los 90 min objetivo (tope del modelo).',
+        universeNote: 'Pregunta externa en el Q&A: Is ISCC also accredited for EN15343? (trinseo.com). Las otras 2 preguntas fueron internas (Control Union).',
+        universeNoteEn: 'External Q&A question: Is ISCC also accredited for EN15343? (trinseo.com). The other 2 questions were internal (Control Union).',
+      },
+
+      surveys: [], // este evento no corrió encuestas de diagnóstico en vivo
+
+      // ── Oportunidad comercial (POTENCIAL, no certeza) ──
+      commercial: {
+        productionCost: null, // lo pasa el equipo por evento
+        pipelinePotential: null, // proyección descartada (docs/DECISIONES.md §3)
+        pipelinePotentialNote: null,
+        hotPipeline: null,
+        hotPipelineNote: null,
+        closeLow: null,
+        closeLowNote: null,
+        closeHigh: null,
+        closeHighNote: null,
+        roi: null,
+        metodologia:
+          'Se excluyen los 41 contactos internos y de partners (Control Union/Peterson, ALPLA, ISCC y RecyClass): solo los 122 externos registrados y los 53 que asistieron cuentan como oportunidad. El scoring es el del evento (HOT ≥ 70, WARM 40-69,9), calculado con el detalle por persona de Microsoft Teams; el tiempo conectado se toma con tope de 90 minutos, el target del modelo.',
+        metodologiaEn:
+          'The 41 internal and partner contacts (Control Union/Peterson, ALPLA, ISCC and RecyClass) are excluded — only the 122 external registrants and the 53 who attended count as opportunity. The scoring is the event\'s own (HOT ≥ 70, WARM 40-69.9), computed with Microsoft Teams per-person detail; time connected is capped at 90 minutes, the model\'s target.',
+      },
+
+      // ── Plan de acción (solo vista interna) ──
+      actionPlan: [
+        '<strong>Activar los 11 hot leads esta semana.</strong> Diez de ellos se quedaron los 90 minutos completos; Trinseo (Países Bajos, score 88,9) además preguntó en el Q&A si ISCC está acreditado para EN 15343 — contacto comercial directo con la respuesta.',
+        '<strong>Trabajar los 30 warm en nurturing activo.</strong> La mayoría superó los 45 minutos de permanencia: replay, casos de éxito de certificación de packaging (ISCC PLUS / RecyClass) e invitación al próximo webinar.',
+        '<strong>Conseguir el export de LinkedIn del evento</strong> para completar la atribución: 92 registrados (56%) llegaron por fuera de la base de email y hoy no se puede saber por dónde.',
+        '<strong>Replicar el post-webinar y extenderlo a los que no asistieron.</strong> Fue el mejor envío de la serie (59,5% de apertura, 16,2% de clics) pero solo llegó a 74 asistentes; los 91 registrados que no asistieron merecen el replay.',
+        '<strong>Probar asunto y CTA distintos en vez de reenviar.</strong> El reenvío del Email 3 sumó aperturas (13%) pero no clics (1,3-1,7%): la segunda oportunidad tiene que ser otro mensaje, no el mismo.',
+        '<strong>Pasar el costo de producción y el link al pipeline de HubSpot</strong> para cerrar la ficha del evento (hoy figuran como pendientes).',
+      ],
+      actionPlanEn: [
+        '<strong>Activate the 11 hot leads this week.</strong> Ten of them stayed the full 90 minutes; Trinseo (Netherlands, score 88.9) also asked in the Q&A whether ISCC is accredited for EN 15343 — direct sales contact with the answer.',
+        '<strong>Work the 30 warm leads with active nurturing.</strong> Most stayed past 45 minutes: replay, packaging certification success stories (ISCC PLUS / RecyClass) and an invitation to the next webinar.',
+        '<strong>Get the LinkedIn export for the event</strong> to complete attribution: 92 registrants (56%) came from outside the email base and there is no way to tell from where today.',
+        '<strong>Replicate the post-webinar send and extend it to no-shows.</strong> It was the best send of the series (59.5% opens, 16.2% clicks) but only reached 74 attendees; the 91 registrants who did not attend deserve the replay.',
+        '<strong>Test a different subject line and CTA instead of resending.</strong> The Email 3 resend added opens (13%) but no clicks (1.3-1.7%): the second chance has to be a different message, not the same one.',
+        '<strong>Provide the production cost and the HubSpot pipeline link</strong> to close the event sheet (both show as pending today).',
+      ],
+    },
+  },
 };
 
 export const WEBINAR_PERIODS = [
   // ISO 14064 oculto a pedido del equipo (los datos siguen en el seed):
   // { id: 'wbn-iso14064', label: 'Webinar ISO 14064 · Jul 2026' },
   { id: 'wbn-eudr', label: 'Webinar EUDR · Ago 2026' },
+  { id: 'wbn-plastic', label: 'Webinar Plastic Packaging · Sep 2026' },
 ];

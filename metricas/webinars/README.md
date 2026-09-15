@@ -1,37 +1,45 @@
-# Webinars — drops de Livestorm
+# Webinars — drops por evento (Teams / Livestorm + Mailchimp)
 
-Carpeta de ingesta para los exports de **Livestorm**.
+Carpeta de ingesta de los exports de cada webinar. El tooling es
+`scripts/webinars/build_event.py`.
 
-> ⚠️ Este pilar todavía no tiene pipeline: se construye con el **primer drop
-> real**. Cuando subas los primeros archivos, Claude arma el parser y la vista
-> a partir de lo que Livestorm realmente exporta — por eso es clave subir los
-> archivos **crudos, sin editar**.
+## Qué subir por evento (formato real, validado con EUDR y Plastic Packaging)
+
+1. **Excel de lead scoring** que arma el equipo por evento, con las hojas
+   `Dashboard · Priority Leads · Lead Scoring · Registrations Raw ·
+   Attendance Raw · Q&A Raw · Scoring Model` (registros y asistencia de
+   Microsoft Teams ya cruzados, score por persona y modelo de puntaje).
+2. Los **exports de destinatarios de Mailchimp** de la campaña del webinar
+   (uno por envío) — van en `email-marketing/` (ver su README): el tooling los
+   cruza con los registrados para la atribución del canal email.
+3. **LinkedIn** (opcional pero recomendado): las métricas de los posteos del
+   evento. Si no vienen, el reporte lo dice («Sin exports de LinkedIn para
+   este evento») y no inventa nada.
+
+Si Livestorm reemplaza a Teams, subir sus exports crudos: el parser se ajusta
+con el primer drop real de esa plataforma.
 
 ## Estructura esperada
 
 ```
 webinars/
-└── 2026-08/                          ← una carpeta por mes (AAAA-MM)
-    ├── livestorm_<lo-que-sea>.csv    ← prefijo "livestorm_"
-    └── livestorm_<otro-export>.csv
+└── 2026-09/                          ← una carpeta por mes (AAAA-MM)
+    ├── <Webinar X> Leads.xlsx        ← Excel de lead scoring
+    └── linkedin/ (opcional)
 ```
 
-- **Prefijo obligatorio**: `livestorm_`. El resto del nombre es libre.
-- Si un webinar puntual genera varios exports (registrados, asistentes,
-  replay, encuestas), subirlos todos en la carpeta del mes en que ocurrió.
-- Formato preferido: **CSV**; si la plataforma solo da Excel, subir el `.xlsx`.
+## Qué hace Claude al procesar
 
-Pedido típico: **«Procesá las métricas nuevas de Webinars»**.
-
-## El reporte mixto (Webinars + Email + Social + HubSpot)
-
-Cada webinar genera un **reporte mixto** en el pilar Webinars (un período por
-evento), pensado para entrega al cliente: key insights, campaña de email,
-posteos de LinkedIn, hot leads (metodología de scoring de julio 2026) y
-oportunidad comercial **potencial**. Los reportes por pilar siguen existiendo
-para mejora interna.
+1. `python3 scripts/webinars/build_event.py "<leads.xlsx>" <carpeta email>` →
+   JSON con todos los números del evento (registros, asistencia, países,
+   empresas, engagement, leads priorizados, envíos y atribución del email).
+2. Redacta sobre esos números los textos del reporte mixto (hallazgo, lecturas,
+   plan de acción) y carga el evento en `src/data/webinarsSeed.js`, en la
+   cuenta que corresponda (LATAM en español · Global en inglés).
+3. Verifica en el navegador, deploya y archiva la carpeta.
 
 **Inputs manuales que provee el equipo por cada evento** (no salen de los
-exports): link al pipeline de HubSpot con los hot leads, costo de producción
-del webinar, y duración total del evento. Hasta que se pasen, el reporte los
-muestra como pendientes (nunca los inventa).
+exports): link al pipeline de HubSpot y costo de producción. Hasta que se
+pasen, el reporte los muestra como pendientes (nunca los inventa).
+
+Pedido típico: **«Procesá las métricas nuevas de Webinars»**.
