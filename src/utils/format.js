@@ -12,14 +12,15 @@ export function pct(n, decimals = 1) {
 
 // Devuelve {dir, label} para renderizar el delta vs período anterior.
 // dir: 'up' | 'down' | 'flat' | 'none'
-export function computeDelta(curr, prev) {
+export function computeDelta(curr, prev, lang = 'es') {
+  const en = lang === 'en';
   if (prev == null || prev === 0) {
-    return { dir: 'none', label: '— Sin dato previo' };
+    return { dir: 'none', label: en ? '— No previous data' : '— Sin dato previo' };
   }
   const p = ((curr - prev) / Math.abs(prev)) * 100;
   const dir = p > 0 ? 'up' : p < 0 ? 'down' : 'flat';
   const arrow = p > 0 ? '↑' : p < 0 ? '↓' : '→';
-  return { dir, label: `${arrow} ${Math.abs(p).toFixed(1)}% vs mes ant.` };
+  return { dir, label: `${arrow} ${Math.abs(p).toFixed(1)}% ${en ? 'vs prev. month' : 'vs mes ant.'}` };
 }
 
 export function num(n) {

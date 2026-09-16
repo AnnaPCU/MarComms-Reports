@@ -125,6 +125,8 @@ export const PAID_STR = {
     lostRankLabel: 'perdida por ranking',
     lostBudgetLabel: 'perdida por presupuesto (est.)',
     groupTotals: (imp, clk, cost) => `${imp} impr. · ${clk} clics · ${cost}`,
+    cmpClicks: 'clics',
+    cmpConv: 'conv.',
     // Comparativa
     cmpSection: 'Comparativa de Campañas — Efectividad',
     cmpNote: 'Campañas con actividad',
@@ -250,6 +252,8 @@ export const PAID_STR = {
     lostRankLabel: 'lost to rank',
     lostBudgetLabel: 'lost to budget (est.)',
     groupTotals: (imp, clk, cost) => `${imp} impr. · ${clk} clicks · ${cost}`,
+    cmpClicks: 'clicks',
+    cmpConv: 'conv.',
     cmpSection: 'Campaign Comparison — Effectiveness',
     cmpNote: 'Active campaigns',
     cmpIntro:

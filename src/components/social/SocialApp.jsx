@@ -165,20 +165,29 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
     return (
       <>
         <NoDataScreen
+          lang={lang}
           detail={
-            <>
-              No hay datos importados de <strong>{accName}</strong> para{' '}
-              <strong>{ML[period] || period}</strong>. Importá el archivo
-              correspondiente desde LinkedIn Analytics para verlos acá.
-            </>
+            lang === 'en' ? (
+              <>
+                No data imported for <strong>{accName}</strong> for <strong>{periodLabel}</strong>. Import the
+                matching LinkedIn Analytics export to see it here.
+              </>
+            ) : (
+              <>
+                No hay datos importados de <strong>{accName}</strong> para{' '}
+                <strong>{ML[period] || period}</strong>. Importá el archivo
+                correspondiente desde LinkedIn Analytics para verlos acá.
+              </>
+            )
           }
           hint={
             <>
-              Último mes con datos reales: <span className="font-bold text-cu-cyan">{ML[MO[MO.length - 1]]}</span>
+              {lang === 'en' ? 'Last month with real data: ' : 'Último mes con datos reales: '}
+              <span className="font-bold text-cu-cyan">{lang === 'en' ? ML_EN[MO[MO.length - 1]] ?? ML[MO[MO.length - 1]] : ML[MO[MO.length - 1]]}</span>
             </>
           }
         />
-        <Glossary keys="social" />
+        <Glossary keys={lang === 'en' ? 'socialEn' : 'social'} />
       </>
     );
   }
@@ -199,16 +208,16 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
 
       <SectionHeader title={t.kpiSection} />
       <div className={`mb-5 grid grid-cols-2 gap-3 ${mo.np != null ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
-        <KpiCard label={t.kImp} value={fmt(mo.imp)} delta={computeDelta(mo.imp, prev?.imp)} />
-        <KpiCard label={t.kEr} value={Number(mo.er).toFixed(1)} unit="%" delta={computeDelta(mo.er, prev?.er)} />
-        <KpiCard label={t.kClk} value={fmt(mo.clk)} delta={computeDelta(mo.clk, prev?.clk)} />
+        <KpiCard label={t.kImp} value={fmt(mo.imp)} delta={computeDelta(mo.imp, prev?.imp, lang)} />
+        <KpiCard label={t.kEr} value={Number(mo.er).toFixed(1)} unit="%" delta={computeDelta(mo.er, prev?.er, lang)} />
+        <KpiCard label={t.kClk} value={fmt(mo.clk)} delta={computeDelta(mo.clk, prev?.clk, lang)} />
         {mo.np != null && (
-          <KpiCard label={t.kPosts} value={mo.np} delta={computeDelta(mo.np, prev?.np)} footnote={t.postsFoot} />
+          <KpiCard label={t.kPosts} value={mo.np} delta={computeDelta(mo.np, prev?.np, lang)} footnote={t.postsFoot} />
         )}
         <KpiCard
           label={t.kVis}
           value={mo.vis}
-          delta={computeDelta(mo.vis, prev?.vis)}
+          delta={computeDelta(mo.vis, prev?.vis, lang)}
           footnote={t.visFoot}
         />
       </div>

@@ -36,15 +36,23 @@ export function AnnualReview({ account }) {
     return (
       <>
         <NoDataScreen
+          lang={lang}
           detail={
-            <>
-              No hay meses con datos cargados para <strong>{accName || 'esta cuenta'}</strong> en 2026.
-              El resumen anual se arma con las métricas mensuales de LinkedIn.
-            </>
+            en ? (
+              <>
+                No months with data loaded for <strong>{accName || 'this account'}</strong> in 2026. The annual
+                review is built from LinkedIn's monthly metrics.
+              </>
+            ) : (
+              <>
+                No hay meses con datos cargados para <strong>{accName || 'esta cuenta'}</strong> en 2026.
+                El resumen anual se arma con las métricas mensuales de LinkedIn.
+              </>
+            )
           }
-          hint={<>Cargá al menos un mes para ver el progreso del año</>}
+          hint={<>{en ? 'Load at least one month to see the year\'s progress' : 'Cargá al menos un mes para ver el progreso del año'}</>}
         />
-        <Glossary keys="social" />
+        <Glossary keys={en ? 'socialEn' : 'social'} />
       </>
     );
   }

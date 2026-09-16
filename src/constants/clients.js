@@ -157,6 +157,16 @@ export const CLIENTS = [
       website: { account: 'psam' },
     },
   },
+  {
+    id: 'ps-iberoam',
+    name: 'Peterson Solutions Iberoamérica',
+    unit: 'ps',
+    region: 'Iberoamérica',
+    pillars: {
+      email: { account: 'psi' },
+      webinars: { account: 'psi', note: 'Webinars en español con la base de contactos de Iberia y Américas', noteEn: 'Spanish-language webinars with the Iberia + Americas contact base' },
+    },
+  },
 ];
 
 export const CLIENT_BY_ID = Object.fromEntries(CLIENTS.map((c) => [c.id, c]));

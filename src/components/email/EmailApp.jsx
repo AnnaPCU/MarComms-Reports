@@ -4,7 +4,7 @@ import { listAccounts } from '@/services/emailService';
 import { useEmailCampaign } from '@/hooks/useEmailCampaign';
 import { MONTHS_2026 } from '@/constants/periods';
 import { genEmailInsights, genEmailConclusions, genEmailNextSteps } from '@/utils/emailInsights';
-import { EMAIL_STR } from '@/utils/emailI18n';
+import { EMAIL_STR, emailLabelEn } from '@/utils/emailI18n';
 import { MONTHS_EN } from '@/utils/paidI18n';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
@@ -51,31 +51,49 @@ export function EmailApp({ account, period }) {
       <div className="animate-fade-in">
         <SectionHeader title="Email Marketing" note="Fuentes: Mailchimp · Apollo" />
         <NoDataScreen
+          lang={lang}
           detail={
-            <>
-              El pilar <strong>Email Marketing</strong> todavía no tiene datos importados
-              {accName ? (
-                <>
-                  {' '}de <strong>{accName}</strong>
-                </>
-              ) : null}
-              {period ? (
-                <>
-                  {' '}para <strong>{periodLabel}</strong>
-                </>
-              ) : null}
-              . Los KPIs a medir están definidos en el glosario de abajo.
-            </>
+            lang === 'en' ? (
+              <>
+                The <strong>Email Marketing</strong> pillar has no data imported yet
+                {accName ? (
+                  <>
+                    {' '}for <strong>{accName}</strong>
+                  </>
+                ) : null}
+                {period ? (
+                  <>
+                    {' '}for <strong>{periodLabel}</strong>
+                  </>
+                ) : null}
+                . The KPIs to track are defined in the glossary below.
+              </>
+            ) : (
+              <>
+                El pilar <strong>Email Marketing</strong> todavía no tiene datos importados
+                {accName ? (
+                  <>
+                    {' '}de <strong>{accName}</strong>
+                  </>
+                ) : null}
+                {period ? (
+                  <>
+                    {' '}para <strong>{periodLabel}</strong>
+                  </>
+                ) : null}
+                . Los KPIs a medir están definidos en el glosario de abajo.
+              </>
+            )
           }
-          hint={<>Pendiente del primer import (Mailchimp / Apollo)</>}
+          hint={<>{lang === 'en' ? 'Pending the first import (Mailchimp / Apollo)' : 'Pendiente del primer import (Mailchimp / Apollo)'}</>}
         />
-        <Glossary keys="email" />
+        <Glossary keys={lang === 'en' ? 'emailEn' : 'email'} />
       </div>
     );
   }
 
   const t = campaign.totals;
-  const subtitle = [accName, periodLabel, campaign.campaignName].filter(Boolean).join(' · ');
+  const subtitle = [accName, periodLabel, lang === 'en' ? emailLabelEn(campaign.campaignName) : campaign.campaignName].filter(Boolean).join(' · ');
 
   return (
     <div className="animate-fade-in">

@@ -1316,3 +1316,8 @@
 **#84**
 
 > Estupendo trabajo. Ya podes deshacerte de este archivo. Necesito volver a la subida de metricas para un webinar en concreto... Tenes razon lo de Linkedin. Te lo adjunte recientemente al github y luego lo adjuntaras en la carpeta corrrespondiente y en la website. Link al pipeline: a partir de ahora nunca mas se hará un link custom a la vista de Deals especifica del caso. Usaras siempe para este boton el siguiente link: https://app.hubspot.com/contacts/47081900/objects/0-3/views/all/board. Costo de produccion: 600
+
+
+**#85**
+
+> [3 capturas de LinkedIn: video 1.265 impresiones / 513 visualizaciones; «¡Próximamente! ¿Tu empresa dice que es sostenible?» 793 impresiones (página Peterson Solutions Iberia & Americas); 368 impresiones] Las capturas que ya tenes de posteos son de plasticos. Y en este mensaje te adjunto captura posteos EmpCo. Tema Webinar empco es para Peterson Solutions Iberoamerica. Y si, usar el logo de Peterson Solutions. Por otro lado necesito que revises el tema traducion al ingles, que vi que mantenes ciertas palabras en español. Puntualmente vi un caso de el webinar plastic de el Topic que se mantuvo en castellano en la vista de ingles. Revisá todo por las dudas

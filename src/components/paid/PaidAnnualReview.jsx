@@ -58,14 +58,21 @@ export function PaidAnnualReview({ account }) {
     return (
       <div className="animate-fade-in">
         <NoDataScreen
+          lang={lang}
           detail={
-            <>
-              No hay meses de Google Ads importados de <strong>{accName}</strong> para armar el
-              resumen anual.
-            </>
+            lang === 'en' ? (
+              <>
+                No Google Ads months imported for <strong>{accName}</strong> to build the annual review.
+              </>
+            ) : (
+              <>
+                No hay meses de Google Ads importados de <strong>{accName}</strong> para armar el
+                resumen anual.
+              </>
+            )
           }
         />
-        <Glossary keys="paid" />
+        <Glossary keys={lang === 'en' ? 'paidEn' : 'paid'} />
       </div>
     );
   }
@@ -311,7 +318,7 @@ export function PaidAnnualReview({ account }) {
         </div>
       )}
 
-      <Glossary keys="paid" />
+      <Glossary keys={lang === 'en' ? 'paidEn' : 'paid'} />
     </div>
   );
 }

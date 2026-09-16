@@ -127,10 +127,17 @@ function SiteView({ data, accName, periodLabel, lang = 'es' }) {
   if (!hasData([data].filter(Boolean))) {
     return (
       <NoDataScreen
+        lang={lang}
         detail={
-          <>
-            No hay datos de tráfico importados de <strong>{accName}</strong> para <strong>{periodLabel}</strong>.
-          </>
+          lang === 'en' ? (
+            <>
+              No traffic data imported for <strong>{accName}</strong> for <strong>{periodLabel}</strong>.
+            </>
+          ) : (
+            <>
+              No hay datos de tráfico importados de <strong>{accName}</strong> para <strong>{periodLabel}</strong>.
+            </>
+          )
         }
       />
     );
@@ -243,10 +250,17 @@ function SeoView({ data, accName, periodLabel, lang = 'es' }) {
   if (!hasData([data].filter(Boolean))) {
     return (
       <NoDataScreen
+        lang={lang}
         detail={
-          <>
-            No hay datos de SEO importados de <strong>{accName}</strong> para <strong>{periodLabel}</strong>.
-          </>
+          lang === 'en' ? (
+            <>
+              No SEO data imported for <strong>{accName}</strong> for <strong>{periodLabel}</strong>.
+            </>
+          ) : (
+            <>
+              No hay datos de SEO importados de <strong>{accName}</strong> para <strong>{periodLabel}</strong>.
+            </>
+          )
         }
       />
     );

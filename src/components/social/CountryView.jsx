@@ -51,16 +51,24 @@ export function CountryView({ account, country, period, lang = 'es' }) {
     return (
       <>
         <NoDataScreen
+          lang={lang}
           detail={
-            <>
-              No hay publicaciones etiquetadas para <strong>{name}</strong> en{' '}
-              <strong>{mesLabel}</strong> en la cuenta de {cfg?.label}, ni datos de
-              audiencia por ubicación para el país.
-            </>
+            en ? (
+              <>
+                No posts tagged for <strong>{name}</strong> in <strong>{mesLabel}</strong> on the {cfg?.label} account,
+                and no audience-by-location data for the country.
+              </>
+            ) : (
+              <>
+                No hay publicaciones etiquetadas para <strong>{name}</strong> en{' '}
+                <strong>{mesLabel}</strong> en la cuenta de {cfg?.label}, ni datos de
+                audiencia por ubicación para el país.
+              </>
+            )
           }
-          hint={<>La atribución por país se hace por hashtag ({cInfo?.tag})</>}
+          hint={<>{en ? `Country attribution is done by hashtag (${cInfo?.tag})` : `La atribución por país se hace por hashtag (${cInfo?.tag})`}</>}
         />
-        <Glossary keys="social" />
+        <Glossary keys={en ? 'socialEn' : 'social'} />
       </>
     );
   }
@@ -84,10 +92,10 @@ export function CountryView({ account, country, period, lang = 'es' }) {
         <>
           <SectionHeader title={t.cKpiSection(name)} note={t.cKpiNote(d.np, mesLabel)} />
           <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <KpiCard label={t.fImp} value={fmt(d.imp)} delta={computeDelta(d.imp, prev?.imp)} footnote={t.cImpFoot} />
-            <KpiCard label={t.kEr} value={Number(d.er).toFixed(1)} unit="%" delta={computeDelta(d.er, prev?.er)} />
-            <KpiCard label={t.fClk} value={fmt(d.clk)} delta={computeDelta(d.clk, prev?.clk)} />
-            <KpiCard label={t.kPosts} value={d.np} delta={computeDelta(d.np, prev?.np)} footnote={t.cPostsFoot} />
+            <KpiCard label={t.fImp} value={fmt(d.imp)} delta={computeDelta(d.imp, prev?.imp, lang)} footnote={t.cImpFoot} />
+            <KpiCard label={t.kEr} value={Number(d.er).toFixed(1)} unit="%" delta={computeDelta(d.er, prev?.er, lang)} />
+            <KpiCard label={t.fClk} value={fmt(d.clk)} delta={computeDelta(d.clk, prev?.clk, lang)} />
+            <KpiCard label={t.kPosts} value={d.np} delta={computeDelta(d.np, prev?.np, lang)} footnote={t.cPostsFoot} />
           </div>
 
           <SectionHeader title={t.cTopSection(name)} note={t.byImpressions} />

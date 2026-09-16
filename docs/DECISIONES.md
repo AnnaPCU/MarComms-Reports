@@ -69,6 +69,15 @@
   reales de la plataforma. El seed anota que la fuente es la captura y la
   fecha; la página se identifica por la captura misma (o por cruce con el
   export mensual de Social, como se hizo con el Post 2 de CU España).
+- **Los webinars de Peterson Solutions van en su propia cuenta** (`psi`,
+  «Peterson Solutions Iberoamérica», desde EmpCo 2026 · 10/9/2026): marca
+  separada de Control Union, con su logo como cliente y su campaña de email en
+  la cuenta de Email del mismo nombre. Nunca se listan junto a los de CU en
+  un mismo selector de eventos.
+- **Sin «Organization» en el Excel, el lead muestra el dominio del email
+  corporativo** (EmpCo: 53 de 94 priorizados sin empresa ni país en el
+  formulario de Teams). El dominio es un dato real del export, no una
+  deducción; los proveedores genéricos (gmail, hotmail…) quedan en «—».
 - **El botón «Link al pipeline» apunta siempre a la vista general de deals
   de HubSpot** (`HUBSPOT_PIPELINE_URL` en `webinarsSeed.js`, la vista
   «board»). Desde el 16/9/2026 no se arman links custom por evento; el de
@@ -197,7 +206,9 @@ Quedó como práctica fija, y conviene sostenerla:
   cuenta LinkedIn «PS Iberia & Americas» alimenta a PS Iberia y a PS
   Americas; la campaña de Email «CU + PS Latinoamérica» y los webinars
   (cuenta global `cu`, audiencia LATAM) cuelgan de CU Latinoamérica; CU
-  Argentina en Paid solo tiene el GEO de Meta. Son criterios revisables por
+  Argentina en Paid solo tiene el GEO de Meta; «Peterson Solutions
+  Iberoamérica» (`ps-iberoam`) cruza la cuenta `psi` de Email y de Webinars.
+  Son criterios revisables por
   el equipo, no datos.
 - **Social por país reutiliza la segmentación por hashtag** de la cuenta
   regional (CU Latinoamérica, CU North America), con sus limitaciones ya

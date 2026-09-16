@@ -12,9 +12,11 @@
 > - `docs/historial-pedidos.md` — registro textual de lo que pidió el equipo,
 >   sesión por sesión. Las conversaciones no viajan entre cuentas: esto sí.
 
-_Última actualización: Webinar Plastic Packaging (Sep 2026) completo (LinkedIn
-desde capturas, costo, link fijo al pipeline) + su campaña de email, ingresados
-por `metricas/` con tooling nuevo (`scripts/webinars/`) ·
+_Última actualización: Webinar EmpCo 2026 (Peterson Solutions Iberoamérica,
+cuenta nueva `psi` en Webinars y Email) · Webinar Plastic Packaging (Sep 2026)
+completo (LinkedIn desde capturas, costo, link fijo al pipeline) + su campaña de
+email, ingresados por `metricas/` con tooling nuevo (`scripts/webinars/`) ·
+traducción EN revisada en todos los pilares ·
 Social Agosto 2026 · vista por CLIENTE (unidad de negocio + país/región, para clientes
 con más de un pilar) · Paid Agosto 2026 (CU Estados Unidos, EUR→ARS, campañas
 parciales) · marca MarComms como principal · toggle ES/EN en los 5 pilares ·
@@ -258,8 +260,8 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Social Media | ✅ Completo (Ene–Ago 2026, 9 cuentas) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
 | Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas) + drill-down + detalle por grupo + Resumen del Año + comparativa (tooling: `scripts/paid/`) |
 | Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas) + Resumen del Año + comparativa |
-| Email Marketing | ✅ Dos campañas reales: `cups` (CU + PS Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging (tooling: `scripts/mailchimp-to-seed.mjs`) |
-| Webinars | ✅ Reporte mixto por evento, dos cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo) y **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9). Tooling: `scripts/webinars/build_event.py` |
+| Email Marketing | ✅ Tres campañas reales: `cups` (CU + PS Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 (tooling: `scripts/mailchimp-to-seed.mjs`) |
+| Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
 | Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
 | Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
@@ -292,10 +294,10 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 - Resueltos: el ticket promedio EUDR ya no hace falta (la proyección de
   pipeline se descartó); el 31/8 en cero de las campañas de CU Estados Unidos
   se corroboró y en septiembre fluyen normal.
-- **Webinar EmpCo 2026** («¿Tu empresa dice que es sostenible?», 10/9/2026,
-  en español): el Excel de lead scoring está en `metricas/webinars/` sin
-  procesar (202 registrados, 120 asistentes). Faltan los exports de Mailchimp
-  de su campaña y confirmar que va en la cuenta CU Latinoamérica.
+- **Webinar EmpCo 2026**: falta el costo de producción (figura como
+  pendiente) y las capturas de los otros dos posteos de LinkedIn del evento
+  que aparecen en el export de agosto de PS Iberia & Americas (video de
+  1.236 impresiones y orgánico de 1.172 al 31/8).
 - Opcional: extender drill-down/comparativa a Social por cuenta si se pide.
 
 ## 12. Problemas conocidos
@@ -460,6 +462,28 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   «Link al pipeline» de **todos** los eventos apunta ahora a la vista general
   de deals de HubSpot (`HUBSPOT_PIPELINE_URL`), sin links custom por evento.
   Capturas archivadas en `metricas/webinars/_procesados/2026-09/linkedin/`.
+- **Webinar EmpCo 2026 «¿Tu empresa dice que es sostenible?»** (16/9/2026):
+  primer webinar de **Peterson Solutions**, en cuenta nueva `psi` «Peterson
+  Solutions Iberoamérica» (Webinars + Email) con logo de Peterson como
+  cliente. 202 registrados, 120 asistentes (59,4%), 94 leads priorizados
+  (5 hot + 89 warm), 7 envíos de Mailchimp (26.072 enviados) y 2 posteos de
+  LinkedIn desde capturas. Cliente nuevo «Peterson Solutions Iberoamérica».
+  Tooling: `build_event.py` tolera «Internal / Partner» y usa el dominio del
+  email cuando falta la empresa. Drop archivado en
+  `metricas/webinars/_procesados/2026-09-empco/` y
+  `metricas/email-marketing/_procesados/2026-09-empco/`.
+- **Traducción EN revisada en los 5 pilares** (16/9/2026), con un barrido
+  Playwright de 149 vistas en inglés buscando palabras en castellano. Se
+  corrigió: el «Tema» de la ficha del webinar (no pasaba por el helper de
+  idioma), los nombres de país del gráfico de registrados (`COUNTRY_EN` en
+  `webinarsI18n.js`), los rangos del scoring con punto decimal, los deltas de
+  Social («vs prev. month» / «No previous data»), las pantallas «Sin
+  información suficiente» y sus glosarios en Paid, Social, Website, Email y
+  Meta GEO, el resumen de la comparativa de Paid («clicks · conv.»), los
+  nombres de envío y de campaña de Email (`emailLabelEn`) y la nota de
+  empresas del EUDR. Lo que queda en castellano en EN es dato real: textos de
+  posteos de LinkedIn, nombres de empresas y personas, respuestas de los
+  formularios de Meta GEO.
 - **Modo DEMO temporal** en `/demo` (10/9/2026): cifras visibles enmascaradas
   con «x» para grabar un recorrido del sistema. Se usó para la grabación y
   **se eliminó el mismo día** a pedido del equipo; si hiciera falta de nuevo,

@@ -25,19 +25,26 @@ con el primer drop real de esa plataforma.
 
 ```
 webinars/
-└── 2026-09/                          ← una carpeta por mes (AAAA-MM)
-    ├── <Webinar X> Leads.xlsx        ← Excel de lead scoring
-    └── linkedin/ (opcional)
+└── 2026-09/                          ← una carpeta por mes (AAAA-MM); con dos
+    ├── <Webinar X> Leads.xlsx           eventos en el mes, `AAAA-MM-<evento>`
+    └── linkedin/ (opcional)             (ej. `2026-09-empco`)
 ```
+
+Sin dos puntos ni barras en los nombres de archivo (`10:09:2026 …` rompe un
+checkout en Windows): usar `2026-09-10` o el nombre del evento.
 
 ## Qué hace Claude al procesar
 
 1. `python3 scripts/webinars/build_event.py "<leads.xlsx>" <carpeta email>` →
    JSON con todos los números del evento (registros, asistencia, países,
    empresas, engagement, leads priorizados, envíos y atribución del email).
+   Tolera la columna «Internal / Partner» (EmpCo) además de «Internal»
+   (Plastic). Si un lead no trae «Organization», usa el dominio del email
+   corporativo (genéricos → «—»).
 2. Redacta sobre esos números los textos del reporte mixto (hallazgo, lecturas,
    plan de acción) y carga el evento en `src/data/webinarsSeed.js`, en la
-   cuenta que corresponda (LATAM en español · Global en inglés).
+   cuenta que corresponda (CU Latinoamérica en español · CU Global en inglés
+   · Peterson Solutions Iberoamérica en español, con logo de Peterson).
 3. Verifica en el navegador, deploya y archiva la carpeta.
 
 **Input manual que provee el equipo por cada evento** (no sale de los

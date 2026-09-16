@@ -129,3 +129,21 @@ export const EMAIL_STR = {
     prio: { Crítica: 'Critical', Alta: 'High', Media: 'Medium', Baja: 'Low' },
   },
 };
+
+// Los nombres de envío y de campaña viven en el seed en español (salen del
+// tooling de Mailchimp). Para la vista EN se traducen los términos conocidos;
+// lo que no está en el mapa queda igual.
+const EMAIL_LABEL_EN = [
+  ['Invitación inicial', 'Initial invitation'], ['Invitación', 'Invitation'], ['Recordatorio pre-webinar', 'Pre-webinar reminder'],
+  ['Recordatorio', 'Reminder'], ['Nueva BBDD', 'New database'], ['nueva BBDD', 'new database'], ['Reactivación', 'Reactivation'],
+  ['Última convocatoria', 'Last call'], ['Aviso de nueva fecha', 'New date notice'], ['registrados', 'registrants'],
+  ['Registrados', 'Registrants'], ['participantes', 'attendees'], ['Asistentes', 'Attendees'], ['asistentes', 'attendees'],
+  ['Base completa', 'Full base'], ['reenvío', 'resend'], ['Américas', 'Americas'], ['Europa', 'Europe'],
+  ['Septiembre', 'September'], ['Agosto', 'August'], ['Julio', 'July'], ['Junio', 'June'], ['Mayo', 'May'], ['Abril', 'April'],
+  ['Marzo', 'March'], ['Febrero', 'February'], ['Enero', 'January'], ['Octubre', 'October'], ['Noviembre', 'November'], ['Diciembre', 'December'],
+];
+export function emailLabelEn(label) {
+  let out = String(label ?? '');
+  for (const [es, en] of EMAIL_LABEL_EN) out = out.split(es).join(en);
+  return out;
+}

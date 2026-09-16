@@ -63,7 +63,8 @@ def num(v):
 
 def sheet(wb, name):
     rows = [r for r in wb[name].iter_rows(values_only=True)]
-    hdr = [str(c).strip() if c is not None else '' for c in rows[0]]
+    # El Excel de EmpCo (sep 2026) llama «Internal / Partner» a la columna que en Plastic era «Internal».
+    hdr = [{'Internal / Partner': 'Internal'}.get(str(c).strip(), str(c).strip()) if c is not None else '' for c in rows[0]]
     return [dict(zip(hdr, r)) for r in rows[1:] if any(c is not None for c in r)]
 
 
@@ -130,8 +131,18 @@ def main():
     # ── Leads priorizados ──
     def tier(s):
         return 'HOT' if str(s).lower() == 'hot' else 'WARM'
+    # Sin «Organization» en el Excel (EmpCo: 53 de 94 priorizados), se muestra el
+    # dominio del email corporativo — dato real del export, no una deducción.
+    # Los proveedores genéricos (gmail, hotmail…) quedan en «—».
+    GENERIC = ('gmail.', 'hotmail.', 'yahoo.', 'outlook.', 'live.', 'icloud.', 'protonmail.', 'msn.')
+    def org_or_domain(x):
+        o = norm_org(x['Organization'])
+        if o:
+            return o
+        dom = str(x['Email'] or '').strip().lower().split('@')[-1]
+        return '—' if not dom or dom.startswith(GENERIC) else dom
     rows = [{
-        'empresa': norm_org(x['Organization']) or '—',
+        'empresa': org_or_domain(x),
         'pais': country(x['Country/Region']) or '—',
         'det': f"{num(x['Duration (min)']):.1f}".replace('.', ',') + ' min',
         'score': round(num(x['Score']), 1),

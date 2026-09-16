@@ -89,8 +89,8 @@ export function PaidComparative() {
               {cost(r)}
             </div>
             <div className="mt-1.5 text-[10.5px] text-cu-grey">
-              {num(r.totals.clicks, lang)} clics · CTR {pct(r.totals.ctr, lang)} ·{' '}
-              <span className="font-bold text-cu-dblue">{num(r.totals.conversions, lang)} conv.</span>
+              {num(r.totals.clicks, lang)} {t.cmpClicks} · CTR {pct(r.totals.ctr, lang)} ·{' '}
+              <span className="font-bold text-cu-dblue">{num(r.totals.conversions, lang)} {t.cmpConv}</span>
             </div>
           </div>
         ))}
@@ -141,7 +141,7 @@ export function PaidComparative() {
         </div>
       )}
 
-      <Glossary keys="paid" />
+      <Glossary keys={lang === 'en' ? 'paidEn' : 'paid'} />
     </div>
   );
 }

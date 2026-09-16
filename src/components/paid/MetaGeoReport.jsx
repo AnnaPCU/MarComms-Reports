@@ -107,15 +107,23 @@ export function MetaGeoReport({ account, period }) {
     return (
       <div className="animate-fade-in">
         <NoDataScreen
+          lang={lang}
           detail={
-            <>
-              No hay campañas Meta Ads GEO cargadas de <strong>{accName}</strong> para este
-              evento. Las cuentas con datos son <strong>CU Argentina</strong> y{' '}
-              <strong>PS Argentina</strong>.
-            </>
+            en ? (
+              <>
+                No Meta Ads GEO campaigns loaded for <strong>{accName}</strong> for this event. The accounts with
+                data are <strong>CU Argentina</strong> and <strong>PS Argentina</strong>.
+              </>
+            ) : (
+              <>
+                No hay campañas Meta Ads GEO cargadas de <strong>{accName}</strong> para este
+                evento. Las cuentas con datos son <strong>CU Argentina</strong> y{' '}
+                <strong>PS Argentina</strong>.
+              </>
+            )
           }
         />
-        <Glossary keys="paidMeta" />
+        <Glossary keys={en ? 'paidMetaEn' : 'paidMeta'} />
       </div>
     );
   }

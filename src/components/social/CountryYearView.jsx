@@ -66,15 +66,22 @@ export function CountryYearView({ account, country, lang = 'es' }) {
     return (
       <>
         <NoDataScreen
+          lang={lang}
           detail={
-            <>
-              No hay publicaciones etiquetadas para <strong>{name}</strong> en ningún mes
-              cargado de 2026 en la cuenta de {cfg?.label}.
-            </>
+            en ? (
+              <>
+                No posts tagged for <strong>{name}</strong> in any 2026 month loaded on the {cfg?.label} account.
+              </>
+            ) : (
+              <>
+                No hay publicaciones etiquetadas para <strong>{name}</strong> en ningún mes
+                cargado de 2026 en la cuenta de {cfg?.label}.
+              </>
+            )
           }
-          hint={<>La atribución por país se hace por hashtag ({cInfo?.tag})</>}
+          hint={<>{en ? `Country attribution is done by hashtag (${cInfo?.tag})` : `La atribución por país se hace por hashtag (${cInfo?.tag})`}</>}
         />
-        <Glossary keys="social" />
+        <Glossary keys={en ? 'socialEn' : 'social'} />
       </>
     );
   }

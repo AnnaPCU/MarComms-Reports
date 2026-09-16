@@ -17,6 +17,7 @@ export const HUBSPOT_PIPELINE_URL = 'https://app.hubspot.com/contacts/47081900/o
 export const WEBINAR_CLIENTS = [
   { id: 'cu', name: 'Control Union Latinoamérica' },
   { id: 'cug', name: 'Control Union Global' },
+  { id: 'psi', name: 'Peterson Solutions Iberoamérica' },
 ];
 
 // Metodología de scoring (doc "Metodología de Scoring de Leads en Webinars",
@@ -198,6 +199,7 @@ export const WEBINARS_DB = {
       companies: {
         unique: 87, // empresas únicas entre asistentes externos (213 entre registrados)
         uniqueNote: 'Entre asistentes externos · 213 entre los registrados',
+        uniqueNoteEn: 'Among external attendees · 213 among registrants',
         // Destacadas = empresas de los hot y warm leads del evento.
         featured: ['Pantaleon S.A.', 'Ecom', 'Olam Agro Peru', 'Oleaginosas San Marcos', 'TEAM FOODS', 'INTEROC S.A.', 'LAR PY', 'Cooperativa Unicafec', 'Ochosur', 'Agroindustria Palmera San Roman', 'Asoc. de Productores Agroecológicos Origin Coffee Lab', 'Cacao de Colombia', 'COUSA', 'Daabon', 'Ecuadorcolat', 'Facultad de Ciencia y Tecnología — UADER', 'Funglode', 'PROSERIN', 'Productor de banano', 'Productor Aguacate Hass', 'Service Corp Trading', 'Universidad Nacional de Córdoba'],
         featuredNote: 'Empresas de los hot y warm leads del evento',
@@ -575,6 +577,287 @@ export const WEBINARS_DB = {
       ],
     },
   },
+
+  // ── Peterson Solutions Iberoamérica: webinars en español con la base de PS (Iberia + Américas) ──
+  psi: {
+    'wbn-empco': {
+      title: 'Webinar EmpCo 2026',
+      tema: 'Directiva EmpCo — afirmaciones ambientales demostrables y greenwashing',
+      temaEn: 'EmpCo Directive — provable environmental claims and greenwashing',
+      subtitle: '«¿Tu empresa dice que es sostenible? A partir de septiembre, deberá demostrarlo»',
+      date: '10 de septiembre de 2026',
+      dateEn: 'September 10, 2026',
+      reagendado: false,
+      idioma: 'Español',
+      idiomaEn: 'Spanish',
+      audiencia: 'Empresas de Iberoamérica que comunican atributos ambientales (bodegas, agroindustria, alimentos, energía, consultoras) — registrados de 18 países; entre los externos con país informado, Argentina concentra 66 de 95',
+      audienciaEn: 'Ibero-American companies that communicate environmental attributes (wineries, agribusiness, food, energy, consultancies) — registrants from 18 countries; among external registrants with a country on file, Argentina accounts for 66 of 95',
+      canales: 'Email marketing (7 envíos: Emails 1-4 a la base completa y post-webinar en tres versiones: base, asistentes y registrados) · Plataforma: Microsoft Teams · LinkedIn: 2 posteos con captura en Peterson Solutions Iberia & Americas',
+      canalesEn: 'Email marketing (7 sends: Emails 1-4 to the full base and a post-webinar in three versions: base, attendees and registrants) · Platform: Microsoft Teams · LinkedIn: 2 posts with screenshots on Peterson Solutions Iberia & Americas',
+      serieEmails: ['Emails 1-4 a la base completa (5.100-5.300 contactos cada uno)', 'Post-webinar en tres versiones: base completa, asistentes (64) y registrados (63)', 'Base total: 5.403 contactos únicos'],
+      serieEmailsEn: ['Emails 1-4 to the full base (5,100-5,300 contacts each)', 'Post-webinar in three versions: full base, attendees (64) and registrants (63)', 'Total base: 5,403 unique contacts'],
+
+      // ── Key insights (scripts/webinars/build_event.py sobre el Excel de lead scoring) ──
+      registered: 202,
+      attended: 120,
+      showRate: 59.4,
+      regCountries: 18,
+      // Registrados vs asistentes por país (top 10 por registros, externos con país informado).
+      countries: [
+        { name: 'Argentina', reg: 66, att: 34 },
+        { name: 'Chile', reg: 8, att: 2 },
+        { name: 'Colombia', reg: 5, att: 4 },
+        { name: 'México', reg: 3, att: 1 },
+        { name: 'España', reg: 3, att: 2 },
+        { name: 'Perú', reg: 3, att: 1 },
+        { name: 'Uruguay', reg: 3, att: 0 },
+        { name: 'El Salvador', reg: 2, att: 1 },
+        { name: 'Reino Unido', reg: 1, att: 1 },
+        { name: 'Estados Unidos', reg: 1, att: 1 },
+      ],
+      companies: {
+        unique: 44, // empresas únicas entre asistentes externos
+        uniqueNote: 'Entre asistentes externos (se excluyen los 18 contactos internos de Control Union / Peterson)',
+        uniqueNoteEn: 'Among external attendees (the 18 internal Control Union / Peterson contacts excluded)',
+        // Destacadas = empresas de los hot y warm leads del evento (tal como las escribió cada registrado).
+        featured: ['Grupo Bimbo', 'Bio Vanda S.A.', 'WOFA', 'Ingeniería Ambiental Consultora', 'GRUPO COLOME S A', 'Domaine Bousquet', 'Bodega y Viñedos Mauricio Lorca SA', 'Finca Sophenia', 'Bodega Salentein SA', 'Bodegas Salentein', 'PAI S.A.', 'Seaboard Energías Renovables y Alimentos S.R.L.', 'AUSTIN POWDER ARGNETINA', 'DACAS', 'COFCO INTL', 'COFCO INTERNATIONAL ARGENTINA', 'COFCO INTERNATIONAL ARGENTINA S.A.', 'COFCO INTERNATIONAL', 'Patagonian Fruits S.A.', 'SAN MIGUEL', 'La Anonima', 'La Serenisima', 'Aris Mining', 'Just', 'Westons Cider', 'Just International LATAM', 'Bimbo QSR', 'Regrow', 'Bodegas Salentein SA', 'BIOETANOL RIO CUARTO SA', 'AIMPLAS', 'Cera', 'Buyatti SAICA', 'EcoEtika', 'Terratio', 'Agricola Cerro Prieto SA', 'IMCD Chile'],
+        featuredNote: 'Empresas de los hot y warm leads del evento',
+        featuredNoteEn: 'Companies from the event\'s hot and warm leads',
+        others: ['Bunge', 'AMAGGI', 'Nutrisco Chile', 'Fundazucar', 'OLEGA'],
+      },
+      internos: { total: 18, attended: 14 }, // Control Union / Peterson
+      externos: { registered: 184, attended: 106 },
+      deals: {
+        total: 94, // solo los priorizados por el scoring (hot + warm)
+        hot: 5,
+        warm: 89,
+        note: '5 hot + 89 warm — leads priorizados por el scoring del evento (externos).',
+        noteEn: '5 hot + 89 warm — leads prioritized by the event scoring (external).',
+      },
+      durationTotalLabel: '1 h 06 min', // sesión completa en Teams (organizador conectado)
+      durationAvgMin: 39.3, // tiempo conectado por asistente, tope 70 min (target del modelo)
+      durationMedianMin: 45.4,
+      engagement: { high: 7, mid: 79, low: 34 }, // ≥80% / 50-79% / <50% de los 70 min objetivo · 120 asistentes
+      highlight:
+        '120 asistentes de 202 registrados (59,4% de show rate), 106 externos de 44 empresas — bodegas, agroindustria y alimentos, sobre todo de Argentina. El scoring dejó 94 leads priorizados (5 hot + 89 warm): la mayoría se quedó entre 45 y 60 de los 66 minutos de sesión, pero pocos llegaron al tope del modelo (7 con más del 80% de los 70 min objetivo). Grupo Bimbo y un contacto de catenazapata.com preguntaron en el Q&A.',
+      highlightEn:
+        '120 attendees out of 202 registrants (59.4% show rate), 106 external from 44 companies — wineries, agribusiness and food, mostly from Argentina. The scoring left 94 prioritized leads (5 hot + 89 warm): most stayed 45-60 of the 66-minute session, but few reached the model\'s cap (7 above 80% of the 70-minute target). Grupo Bimbo and a catenazapata.com contact asked questions in the Q&A.',
+
+      // Scoring propio de este evento (modelo del Excel de lead scoring del equipo).
+      scoring: {
+        desc: 'Registro 10 pts + asistencia 20 pts + tiempo conectado hasta 40 pts (minutos / 70 × 40) + pregunta en el Q&A 20 pts + respuestas y discusiones hasta 10 pts (5 por interacción). Se excluyen los 18 contactos internos de Control Union / Peterson. HOT ≥ 70 · WARM 40-69,9.',
+        descEn: 'Registration 10 pts + attendance 20 pts + time connected up to 40 pts (minutes / 70 × 40) + Q&A question 20 pts + replies and discussions up to 10 pts (5 per interaction). The 18 internal Control Union / Peterson contacts are excluded. HOT ≥ 70 · WARM 40-69.9.',
+        classes: [
+          { name: 'Hot lead', range: '≥ 70', action: 'Contacto comercial directo esa misma semana.', actionEn: 'Direct sales contact that same week.' },
+          { name: 'Warm lead', range: '40 – 69,9', action: 'Nurturing activo: casos de éxito, contenido de mitad de funnel, replay y próximo webinar.', actionEn: 'Active nurturing: success stories, mid-funnel content, replay and the next webinar.' },
+          { name: 'Cold', range: '< 40', action: 'Secuencia de nurturing larga / contenido educativo. No pasa a Ventas todavía.', actionEn: 'Long nurturing sequence / educational content. Not passed to Sales yet.' },
+        ],
+      },
+
+      // ── Sección 1: Email Marketing (exports de destinatarios de Mailchimp) ──
+      email: {
+        sends: [
+          { name: 'Email 1 · Invitación', sent: 5297, open: 16.8, click: 0.9 },
+          { name: 'Email 2', sent: 5199, open: 19.5, click: 1.4 },
+          { name: 'Email 3', sent: 5178, open: 18.1, click: 0.6 },
+          { name: 'Email 4', sent: 5146, open: 18.5, click: 0.9 },
+          { name: 'Post-webinar · Base completa', sent: 5125, open: 18.8, click: 0.7 },
+          { name: 'Post-webinar · Asistentes', sent: 64, open: 39.1, click: 9.4 },
+          { name: 'Post-webinar · Registrados', sent: 63, open: 19.0, click: 0.0 },
+        ],
+        totalSent: 26072,
+        sendNamesEn: ['Email 1 · Invitation', 'Email 2', 'Email 3', 'Email 4', 'Post-webinar · Full base', 'Post-webinar · Attendees', 'Post-webinar · Registrants'],
+        uniqueContacts: 5403,
+        openedOnce: 1701,
+        openedOncePct: 31.5,
+        clickedOnce: 138,
+        clickedOncePct: 2.6,
+        regFromEmail: 27, // registrados con clic rastreado en la campaña (atribución directa)
+        regFromEmailPct: 13,
+        regFromEmailNote: 'Con clic rastreado en la campaña — atribución directa del canal',
+        regFromEmailNoteEn: 'With a tracked campaign click — direct channel attribution',
+        regOpened: 55, // registrados que abrieron al menos un email
+        regInBase: 127, // registrados presentes en la base de la campaña
+        regInBasePct: 63,
+        nota: 'Los cuatro envíos previos a la base completa rindieron parejo: 16,8-19,5% de apertura y 0,6-1,4% de clics, con el Email 2 como el mejor (19,5% / 1,4%). El post-webinar a asistentes fue el de mejor respuesta de la serie (39,1% de apertura, 9,4% de clics); el enviado a los 63 registrados abrió 19% sin ningún clic. Los exports de destinatarios no traen el asunto de cada envío.',
+        notaEn: 'The four pre-event sends to the full base performed evenly: 16.8-19.5% opens and 0.6-1.4% clicks, with Email 2 the best (19.5% / 1.4%). The post-webinar to attendees got the best response of the series (39.1% opens, 9.4% clicks); the one sent to the 63 registrants opened at 19% with no clicks at all. The recipient exports do not carry each send\'s subject line.',
+        notaClics:
+          'La atribución del canal se lee en capas: 27 registrados hicieron clic en algún email de la campaña (atribución directa — el piso), 55 abrieron al menos un email, y 127 de los 202 estaban en la base de contactos (63%). Los otros 75 registrados (37%) llegaron por fuera de la base: LinkedIn u otros canales — el registro por Teams no trae atribución por canal.',
+        notaClicsEn:
+          'Channel attribution is read in layers: 27 registrants clicked a campaign email (direct attribution — the floor), 55 opened at least one email, and 127 of the 202 were in the contact base (63%). The other 75 registrants (37%) came from outside the base: LinkedIn or other channels — Teams registration carries no per-channel attribution.',
+      },
+
+      // ── Sección 2: Social Media (LinkedIn Peterson Solutions Iberia & Americas) ──
+      // Fuente: capturas del panel «Rendimiento del anuncio» enviadas por el
+      // equipo el 16/9/2026. El Post 1 (video) coincide con el post
+      // «#PetersonSolutionsArgentina #Webinar #EmpCo» del export mensual de
+      // agosto de la página (1.242 impresiones al 31/8). Ese mismo export lista
+      // otros dos posteos del evento (video de 1.236 impresiones y orgánico de
+      // 1.172 al 31/8) sin captura actualizada: no se suman acá.
+      social: {
+        posts: [
+          { name: 'Post 1 · Video «#Webinar #EmpCo» (agosto)', imp: 1265, inter: 113, rate: 8.93, clicks: 62, ctr: 4.9, reactions: 43 },
+          { name: 'Post 2 · «¿Tu empresa dice que es sostenible?»', imp: 793, inter: 43, rate: 5.42, clicks: 27, ctr: 3.4, reactions: 12 },
+        ],
+        totals: { imp: 2058, inter: 156, rate: 7.6, clicks: 89, ctr: 4.3, reactions: 55, shares: 8 },
+        videoViews: 513, // visualizaciones del video del Post 1
+        regFromSocial: null, // sin atribución directa: el registro corrió por Teams
+        regFromSocialPct: null,
+        regOutsideEmail: 75, // registrados que NO estaban en la base de emails → LinkedIn u otros canales
+        regOutsideEmailPct: 37,
+        postNamesEn: ['Post 1 · Video "#Webinar #EmpCo" (August)', 'Post 2 · "Does your company say it is sustainable?"'],
+        lectura:
+          'Dos posteos de Peterson Solutions Iberia & Americas con captura: el video del webinar (1.265 impresiones, 513 visualizaciones, 62 clics y 8,9% de interacción) y el aviso «¿Tu empresa dice que es sostenible?» (793 impresiones, 27 clics, 5,4%). El export mensual de agosto de la página muestra otros dos posteos del evento (un video con 1.236 impresiones y un post orgánico con 1.172 al 31/8) que no tienen captura actualizada y no se suman acá. No hay atribución individual: 75 de los 202 registrados (37%) no estaban en la base de email.',
+        lecturaEn:
+          'Two posts on Peterson Solutions Iberia & Americas with screenshots: the webinar video (1,265 impressions, 513 views, 62 clicks and 8.9% interaction) and the "Does your company say it is sustainable?" notice (793 impressions, 27 clicks, 5.4%). The page\'s August monthly export shows two more posts for the event (a video with 1,236 impressions and an organic post with 1,172 as of Aug 31) with no updated screenshot, so they are not added here. There is no individual attribution: 75 of the 202 registrants (37%) were not in the email base.',
+      },
+
+      // ── Sección 3: Leads priorizados (scoring del evento) ──
+      // Sin «Organization» en el Excel se muestra el dominio del email corporativo
+      // (dato real del export); los proveedores genéricos quedan en «—».
+      hotLeads: {
+        col3: 'Permanencia',
+        rows: [
+          { empresa: 'Grupo Bimbo', pais: 'México', det: '47,5 min', score: 77.1, tier: 'HOT' },
+          { empresa: 'catenazapata.com', pais: '—', det: '41,4 min', score: 73.6, tier: 'HOT' },
+          { empresa: '—', pais: '—', det: '70,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'familiazuccardi.com', pais: '—', det: '70,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'Bio Vanda S.A.', pais: 'Argentina', det: '70,0 min', score: 70.0, tier: 'HOT' },
+          { empresa: 'grupocolome.com', pais: '—', det: '58,4 min', score: 63.4, tier: 'WARM' },
+          { empresa: 'WOFA', pais: 'Argentina', det: '58,0 min', score: 63.1, tier: 'WARM' },
+          { empresa: 'Ingeniería Ambiental Consultora', pais: 'Argentina', det: '56,8 min', score: 62.5, tier: 'WARM' },
+          { empresa: '—', pais: '—', det: '56,0 min', score: 62.0, tier: 'WARM' },
+          { empresa: 'mendozavineyards.com', pais: '—', det: '54,2 min', score: 61.0, tier: 'WARM' },
+          { empresa: '—', pais: '—', det: '52,6 min', score: 60.1, tier: 'WARM' },
+          { empresa: '—', pais: '—', det: '52,6 min', score: 60.1, tier: 'WARM' },
+          { empresa: 'ojodeagua.global', pais: '—', det: '52,0 min', score: 59.7, tier: 'WARM' },
+          { empresa: 'GRUPO COLOME S A', pais: 'Argentina', det: '51,9 min', score: 59.6, tier: 'WARM' },
+          { empresa: 'trivento.com', pais: '—', det: '51,2 min', score: 59.3, tier: 'WARM' },
+          { empresa: 'Domaine Bousquet', pais: 'Argentina', det: '50,9 min', score: 59.1, tier: 'WARM' },
+          { empresa: 'mendozavineyards.com', pais: '—', det: '50,6 min', score: 58.9, tier: 'WARM' },
+          { empresa: '—', pais: '—', det: '50,3 min', score: 58.8, tier: 'WARM' },
+          { empresa: 'Bodega y Viñedos Mauricio Lorca SA', pais: 'Argentina', det: '49,5 min', score: 58.3, tier: 'WARM' },
+          { empresa: 'Finca Sophenia', pais: 'Argentina', det: '49,6 min', score: 58.3, tier: 'WARM' },
+          { empresa: 'achaval-ferrer.com', pais: '—', det: '49,2 min', score: 58.1, tier: 'WARM' },
+          { empresa: 'Bodega Salentein SA', pais: 'Argentina', det: '49,2 min', score: 58.1, tier: 'WARM' },
+          { empresa: 'Bodegas Salentein', pais: 'Argentina', det: '49,0 min', score: 58.0, tier: 'WARM' },
+          { empresa: 'grupocolome.com', pais: '—', det: '48,8 min', score: 57.9, tier: 'WARM' },
+          { empresa: 'catenazapata.com', pais: '—', det: '48,6 min', score: 57.8, tier: 'WARM' },
+          { empresa: 'PAI S.A.', pais: 'Argentina', det: '48,4 min', score: 57.7, tier: 'WARM' },
+          { empresa: 'grupoavinea.com', pais: '—', det: '48,2 min', score: 57.6, tier: 'WARM' },
+          { empresa: 'bodegasbianchi.com.ar', pais: '—', det: '48,2 min', score: 57.5, tier: 'WARM' },
+          { empresa: 'Seaboard Energías Renovables y Alimentos S.R.L.', pais: 'Argentina', det: '48,0 min', score: 57.5, tier: 'WARM' },
+          { empresa: 'AUSTIN POWDER ARGNETINA', pais: 'Argentina', det: '48,0 min', score: 57.4, tier: 'WARM' },
+          { empresa: 'lagarde.com.ar', pais: '—', det: '47,8 min', score: 57.3, tier: 'WARM' },
+          { empresa: 'DACAS', pais: 'Argentina', det: '47,8 min', score: 57.3, tier: 'WARM' },
+          { empresa: 'chakanawines.com.ar', pais: '—', det: '47,6 min', score: 57.2, tier: 'WARM' },
+          { empresa: 'grupoavinea.com', pais: '—', det: '47,6 min', score: 57.2, tier: 'WARM' },
+          { empresa: 'tresvins.dk', pais: '—', det: '47,7 min', score: 57.2, tier: 'WARM' },
+          { empresa: 'rutiniwines.com', pais: '—', det: '47,5 min', score: 57.2, tier: 'WARM' },
+          { empresa: 'COFCO INTL', pais: 'Argentina', det: '47,6 min', score: 57.2, tier: 'WARM' },
+          { empresa: 'Domaine Bousquet', pais: 'Argentina', det: '47,6 min', score: 57.2, tier: 'WARM' },
+          { empresa: 'terrazasdelosandes.com.ar', pais: '—', det: '47,5 min', score: 57.1, tier: 'WARM' },
+          { empresa: 'catenazapata.com', pais: '—', det: '47,4 min', score: 57.1, tier: 'WARM' },
+          { empresa: '—', pais: 'España', det: '47,2 min', score: 57.0, tier: 'WARM' },
+          { empresa: 'COFCO INTERNATIONAL ARGENTINA', pais: 'Argentina', det: '47,1 min', score: 56.9, tier: 'WARM' },
+          { empresa: 'COFCO INTERNATIONAL ARGENTINA S.A.', pais: 'Argentina', det: '47,0 min', score: 56.9, tier: 'WARM' },
+          { empresa: 'COFCO INTERNATIONAL', pais: 'Argentina', det: '46,9 min', score: 56.8, tier: 'WARM' },
+          { empresa: 'Patagonian Fruits S.A.', pais: 'Argentina', det: '46,9 min', score: 56.8, tier: 'WARM' },
+          { empresa: 'SAN MIGUEL', pais: 'Argentina', det: '46,8 min', score: 56.8, tier: 'WARM' },
+          { empresa: 'rutiniwines.com', pais: '—', det: '46,7 min', score: 56.7, tier: 'WARM' },
+          { empresa: 'La Anonima', pais: 'Argentina', det: '46,8 min', score: 56.7, tier: 'WARM' },
+          { empresa: 'La Serenisima', pais: 'Argentina', det: '46,7 min', score: 56.7, tier: 'WARM' },
+          { empresa: 'COFCO International Argentina', pais: 'Argentina', det: '46,5 min', score: 56.6, tier: 'WARM' },
+          { empresa: 'liafcontrol.com', pais: '—', det: '46,3 min', score: 56.5, tier: 'WARM' },
+          { empresa: '—', pais: '—', det: '46,4 min', score: 56.5, tier: 'WARM' },
+          { empresa: 'Aris Mining', pais: 'Colombia', det: '46,3 min', score: 56.4, tier: 'WARM' },
+          { empresa: 'chandon.com.ar', pais: '—', det: '45,8 min', score: 56.2, tier: 'WARM' },
+          { empresa: 'Aris Mining', pais: 'Colombia', det: '45,7 min', score: 56.1, tier: 'WARM' },
+          { empresa: '—', pais: '—', det: '45,4 min', score: 56.0, tier: 'WARM' },
+          { empresa: 'lagarde.com.ar', pais: '—', det: '45,4 min', score: 55.9, tier: 'WARM' },
+          { empresa: 'Just', pais: 'Argentina', det: '45,4 min', score: 55.9, tier: 'WARM' },
+          { empresa: 'terrazasdelosandes.com.ar', pais: '—', det: '45,2 min', score: 55.8, tier: 'WARM' },
+          { empresa: 'Westons Cider', pais: 'Reino Unido', det: '44,7 min', score: 55.5, tier: 'WARM' },
+          { empresa: 'Just International LATAM', pais: 'Argentina', det: '44,4 min', score: 55.4, tier: 'WARM' },
+          { empresa: 'luigibosca.com', pais: '—', det: '44,2 min', score: 55.3, tier: 'WARM' },
+          { empresa: 'antigal.com', pais: '—', det: '44,2 min', score: 55.2, tier: 'WARM' },
+          { empresa: 'Aris Mining', pais: 'Colombia', det: '43,8 min', score: 55.0, tier: 'WARM' },
+          { empresa: 'decero.com', pais: '—', det: '43,3 min', score: 54.8, tier: 'WARM' },
+          { empresa: 'familiazuccardi.com', pais: '—', det: '42,8 min', score: 54.4, tier: 'WARM' },
+          { empresa: 'inti.gob.ar', pais: '—', det: '42,4 min', score: 54.2, tier: 'WARM' },
+          { empresa: 'winesofargentina.com', pais: '—', det: '42,3 min', score: 54.2, tier: 'WARM' },
+          { empresa: 'Bimbo QSR', pais: 'Estados Unidos', det: '41,6 min', score: 53.8, tier: 'WARM' },
+          { empresa: 'Regrow', pais: 'Argentina', det: '40,9 min', score: 53.4, tier: 'WARM' },
+          { empresa: 'familiazuccardi.com', pais: '—', det: '40,5 min', score: 53.1, tier: 'WARM' },
+          { empresa: 'pulentaestate.com', pais: '—', det: '39,2 min', score: 52.4, tier: 'WARM' },
+          { empresa: 'casayague.com', pais: '—', det: '38,7 min', score: 52.1, tier: 'WARM' },
+          { empresa: '—', pais: '—', det: '38,3 min', score: 51.9, tier: 'WARM' },
+          { empresa: 'Bodegas Salentein SA', pais: 'Argentina', det: '38,2 min', score: 51.8, tier: 'WARM' },
+          { empresa: 'BIOETANOL RIO CUARTO SA', pais: 'Argentina', det: '36,6 min', score: 50.9, tier: 'WARM' },
+          { empresa: 'AIMPLAS', pais: 'España', det: '36,4 min', score: 50.8, tier: 'WARM' },
+          { empresa: 'inti.gob.ar', pais: '—', det: '34,7 min', score: 49.8, tier: 'WARM' },
+          { empresa: 'Cera', pais: 'Argentina', det: '34,3 min', score: 49.6, tier: 'WARM' },
+          { empresa: 'Buyatti SAICA', pais: 'Argentina', det: '33,5 min', score: 49.1, tier: 'WARM' },
+          { empresa: 'bodegafosterlorca.com', pais: '—', det: '32,6 min', score: 48.6, tier: 'WARM' },
+          { empresa: 'coopsve.com', pais: '—', det: '31,7 min', score: 48.1, tier: 'WARM' },
+          { empresa: 'norton.com.ar', pais: '—', det: '29,8 min', score: 47.0, tier: 'WARM' },
+          { empresa: 'salentein.com', pais: '—', det: '28,5 min', score: 46.3, tier: 'WARM' },
+          { empresa: 'EcoEtika', pais: 'Argentina', det: '28,1 min', score: 46.1, tier: 'WARM' },
+          { empresa: 'blendswineestates.com', pais: '—', det: '26,4 min', score: 45.1, tier: 'WARM' },
+          { empresa: 'masitupungato.com', pais: '—', det: '25,9 min', score: 44.8, tier: 'WARM' },
+          { empresa: 'blendswineestates.com', pais: '—', det: '26,0 min', score: 44.8, tier: 'WARM' },
+          { empresa: '—', pais: '—', det: '24,0 min', score: 43.7, tier: 'WARM' },
+          { empresa: 'Terratio', pais: 'Argentina', det: '22,8 min', score: 43.0, tier: 'WARM' },
+          { empresa: 'Agricola Cerro Prieto SA', pais: 'Perú', det: '22,4 min', score: 42.8, tier: 'WARM' },
+          { empresa: 'bodegasfabre.com', pais: '—', det: '20,5 min', score: 41.7, tier: 'WARM' },
+          { empresa: 'IMCD Chile', pais: 'Chile', det: '19,6 min', score: 41.2, tier: 'WARM' },
+          { empresa: 'bywine.com.ar', pais: '—', det: '18,2 min', score: 40.4, tier: 'WARM' },
+        ],
+        pipelineUrl: HUBSPOT_PIPELINE_URL,
+        scoreNote: 'Scoring del evento (Teams): HOT ≥ 70 · WARM 40-69,9. Permanencia = tiempo conectado sobre los 70 min objetivo (tope del modelo).',
+        universeNote: 'Preguntas externas en el Q&A: Grupo Bimbo (si la ECGT aplica a comunicaciones publicadas antes de la entrada en vigor) y catenazapata.com (qué requisito debe cumplir el ente verificador para ser aceptado bajo EmpCo, y si la vigencia aplica por fecha de ingreso o por lote). Austin Powder abrió una discusión sobre el alcance geográfico de las comunicaciones de una empresa global.',
+        universeNoteEn: 'External Q&A questions: Grupo Bimbo (whether the ECGT applies to communications published before it entered into force) and catenazapata.com (which requirement the verification body must meet to be accepted under EmpCo, and whether applicability goes by entry date or by batch). Austin Powder opened a discussion on the geographic scope of a global company\'s communications.',
+      },
+
+      surveys: [], // este evento no corrió encuestas de diagnóstico en vivo
+
+      // ── Oportunidad comercial (POTENCIAL, no certeza) ──
+      commercial: {
+        productionCost: null, // lo pasa el equipo por evento
+        pipelinePotential: null, // proyección descartada (docs/DECISIONES.md §3)
+        pipelinePotentialNote: null,
+        hotPipeline: null,
+        hotPipelineNote: null,
+        closeLow: null,
+        closeLowNote: null,
+        closeHigh: null,
+        closeHighNote: null,
+        roi: null,
+        metodologia:
+          'Se excluyen los 18 contactos internos (Control Union / Peterson): solo los 184 externos registrados y los 106 que asistieron cuentan como oportunidad. El scoring es el del evento (HOT ≥ 70, WARM 40-69,9), calculado con el detalle por persona de Microsoft Teams; el tiempo conectado se toma con tope de 70 minutos, el target del modelo.',
+        metodologiaEn:
+          'The 18 internal contacts (Control Union / Peterson) are excluded — only the 184 external registrants and the 106 who attended count as opportunity. The scoring is the event\'s own (HOT ≥ 70, WARM 40-69.9), computed with Microsoft Teams per-person detail; time connected is capped at 70 minutes, the model\'s target.',
+      },
+
+      // ── Plan de acción (solo vista interna) ──
+      actionPlan: [
+        '<strong>Activar los 5 hot leads esta semana.</strong> Grupo Bimbo (México, score 77,1) y el contacto de catenazapata.com (score 73,6) preguntaron en el Q&A; Bio Vanda y otros dos contactos se quedaron los 70 minutos completos.',
+        '<strong>Trabajar los 89 warm por sector.</strong> Bodegas (Salentein, Domaine Bousquet, Finca Sophenia, Mauricio Lorca, Zuccardi), agroindustria y alimentos (COFCO, San Miguel, Patagonian Fruits, La Serenísima, La Anónima): replay, guía práctica de EmpCo / Green Claims y casos de afirmaciones ambientales verificadas.',
+        '<strong>Pedir empresa y país como campos obligatorios en el próximo registro.</strong> 53 de los 94 leads priorizados no traen empresa ni país en el formulario de Teams: hoy solo se los identifica por el dominio del email.',
+        '<strong>Repetir el formato de video en LinkedIn</strong> (8,9% de interacción y 513 visualizaciones) y conseguir las capturas de los otros dos posteos de agosto para cerrar la atribución del canal.',
+        '<strong>Cambiar el post-webinar a los registrados que no asistieron.</strong> Abrió 19% sin ningún clic: mandar el replay con otro asunto y un solo CTA.',
+        '<strong>Pasar el costo de producción</strong> para cerrar la ficha del evento (hoy figura como pendiente).',
+      ],
+      actionPlanEn: [
+        '<strong>Activate the 5 hot leads this week.</strong> Grupo Bimbo (Mexico, score 77.1) and the catenazapata.com contact (score 73.6) asked questions in the Q&A; Bio Vanda and two other contacts stayed the full 70 minutes.',
+        '<strong>Work the 89 warm leads by sector.</strong> Wineries (Salentein, Domaine Bousquet, Finca Sophenia, Mauricio Lorca, Zuccardi), agribusiness and food (COFCO, San Miguel, Patagonian Fruits, La Serenísima, La Anónima): replay, a practical EmpCo / Green Claims guide and cases of verified environmental claims.',
+        '<strong>Make company and country mandatory fields at the next registration.</strong> 53 of the 94 prioritized leads have no company or country in the Teams form: today they can only be identified by their email domain.',
+        '<strong>Repeat the video format on LinkedIn</strong> (8.9% interaction and 513 views) and get the screenshots of the other two August posts to close the channel attribution.',
+        '<strong>Change the post-webinar for registrants who did not attend.</strong> It opened at 19% with no clicks: send the replay with a different subject line and a single CTA.',
+        '<strong>Provide the production cost</strong> to close the event sheet (it shows as pending today).',
+      ],
+    },
+  },
 };
 
 export const WEBINAR_PERIODS = [
@@ -582,4 +865,5 @@ export const WEBINAR_PERIODS = [
   // { id: 'wbn-iso14064', label: 'Webinar ISO 14064 · Jul 2026' },
   { id: 'wbn-eudr', label: 'Webinar EUDR · Ago 2026' },
   { id: 'wbn-plastic', label: 'Webinar Plastic Packaging · Sep 2026' },
+  { id: 'wbn-empco', label: 'Webinar EmpCo 2026 · Sep 2026' },
 ];

@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { ChartCard } from '@/components/shared/ChartCard';
-import { EMAIL_STR } from '@/utils/emailI18n';
+import { EMAIL_STR, emailLabelEn } from '@/utils/emailI18n';
 
 const short = (s, n = 16) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
 
@@ -22,7 +22,7 @@ export function EmailCharts({ comparison = [], emails = [], lang = 'es' }) {
   const t = EMAIL_STR[lang];
 
   const rateData = comparison.map((c) => ({
-    name: short(c.name),
+    name: short(lang === 'en' ? emailLabelEn(c.name) : c.name),
     [t.dkOpen]: c.aperturas,
     [t.dkClicks]: c.clics,
     CTOR: c.ctor,
@@ -31,7 +31,7 @@ export function EmailCharts({ comparison = [], emails = [], lang = 'es' }) {
   const volData = emails
     .filter((e) => e.metrics)
     .map((e) => ({
-      name: short(e.name),
+      name: short(lang === 'en' ? emailLabelEn(e.name) : e.name),
       [t.dkOpens]: e.metrics.uniqueOpens ?? e.metrics.totalOpens ?? 0,
       [t.dkClicks]: e.metrics.uniqueClicks ?? e.metrics.totalClicks ?? 0,
     }));

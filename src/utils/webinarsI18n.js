@@ -61,7 +61,7 @@ export const WBN_STR = {
     countriesSub: (n, grouped) => `Entre los registrados hubo ${n} países en total${grouped ? ' · top por registros (externos)' : ''}`,
     serReg: 'Registrados', serAtt: 'Asistentes',
     intExt: 'Interno vs externo',
-    cuLabel: (n) => `Control Union (${n} asistieron)`,
+    cuLabel: (n, brand = 'Control Union') => `${brand} (${n} asistieron)`,
     extLabel: (p) => `Audiencia externa · ${p}% de los registrados`,
     featured: 'Empresas destacadas entre asistentes',
     resto: 'Resto de empresas',
@@ -108,7 +108,7 @@ export const WBN_STR = {
     clasifTitle: 'Clasificación y acción comercial',
     ptsWord: 'pts', scoreWord: 'score',
     surveysTitle: 'Diagnóstico de Madurez', surveysNote: 'Encuestas respondidas durante el webinar', resp: 'resp.',
-    comTitle: 'Oportunidad Comercial — Cuánto Podría Traerle Este Webinar a Control Union',
+    comTitle: (brand = 'Control Union') => `Oportunidad Comercial — Cuánto Podría Traerle Este Webinar a ${brand}`,
     comNote: 'Proyección sobre benchmarks · no es una certeza',
     pipePot: '$ Pipeline potencial generado',
     pipeHot: '$ Pipeline potencial del segmento caliente',
@@ -163,7 +163,7 @@ export const WBN_STR = {
     countriesSub: (n, grouped) => `Registrants came from ${n} countries in total${grouped ? ' · top by registrations (external)' : ''}`,
     serReg: 'Registrants', serAtt: 'Attendees',
     intExt: 'Internal vs external',
-    cuLabel: (n) => `Control Union (${n} attended)`,
+    cuLabel: (n, brand = 'Control Union') => `${brand} (${n} attended)`,
     extLabel: (p) => `External audience · ${p}% of registrants`,
     featured: 'Featured companies among attendees',
     resto: 'Other companies',
@@ -210,7 +210,7 @@ export const WBN_STR = {
     clasifTitle: 'Classification and sales action',
     ptsWord: 'pts', scoreWord: 'score',
     surveysTitle: 'Maturity Diagnosis', surveysNote: 'Surveys answered during the webinar', resp: 'resp.',
-    comTitle: 'Commercial Opportunity — What This Webinar Could Bring Control Union',
+    comTitle: (brand = 'Control Union') => `Commercial Opportunity — What This Webinar Could Bring ${brand}`,
     comNote: 'Benchmark projection · not a certainty',
     pipePot: '$ Potential pipeline generated',
     pipeHot: '$ Potential pipeline of the hot segment',
@@ -224,3 +224,20 @@ export const WBN_STR = {
     glossaryKeys: { webinars: 'webinarsEn', email: 'emailEn', social: 'socialEn' },
   },
 };
+
+// Nombres de país en inglés para la vista EN (el seed los guarda en español,
+// como salen del tooling). Lo que no está en el mapa se muestra igual.
+export const COUNTRY_EN = {
+  'Perú': 'Peru', 'Países Bajos': 'Netherlands', 'Bélgica': 'Belgium', 'Alemania': 'Germany', 'Pakistán': 'Pakistan',
+  'México': 'Mexico', 'Tailandia': 'Thailand', 'Estados Unidos': 'United States', 'España': 'Spain', 'Taiwán': 'Taiwan',
+  'Suiza': 'Switzerland', 'Suecia': 'Sweden', 'Rumania': 'Romania', 'República Dominicana': 'Dominican Republic',
+  'Reino Unido': 'United Kingdom', 'Lituania': 'Lithuania', 'Italia': 'Italy', 'Hungría': 'Hungary', 'Francia': 'France',
+  'Brasil': 'Brazil', 'Panamá': 'Panama', 'Filipinas': 'Philippines', 'Japón': 'Japan', 'Turquía': 'Turkey', 'Grecia': 'Greece',
+  'Polonia': 'Poland', 'Irlanda': 'Ireland', 'Dinamarca': 'Denmark', 'Noruega': 'Norway', 'Finlandia': 'Finland',
+  'Egipto': 'Egypt', 'Marruecos': 'Morocco', 'Sudáfrica': 'South Africa', 'Emiratos Árabes Unidos': 'United Arab Emirates',
+  'Arabia Saudita': 'Saudi Arabia', 'Canadá': 'Canada', 'Nueva Zelanda': 'New Zealand', 'Corea del Sur': 'South Korea',
+  'Ucrania': 'Ukraine', 'Letonia': 'Latvia', 'Chipre': 'Cyprus', 'Kenia': 'Kenya', 'Túnez': 'Tunisia', 'Irán': 'Iran',
+  'Singapur': 'Singapore', 'Rusia': 'Russia', 'Luxemburgo': 'Luxembourg', 'Croacia': 'Croatia', 'Eslovaquia': 'Slovakia',
+  'Eslovenia': 'Slovenia', 'Chequia': 'Czechia', 'Bielorrusia': 'Belarus', 'Malasia': 'Malaysia', 'Bangladés': 'Bangladesh',
+};
+export const countryEn = (name) => COUNTRY_EN[name] ?? name;

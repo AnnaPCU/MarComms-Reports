@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { ExternalLink } from 'lucide-react';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { getScoring } from '@/services/webinarsService';
-import { WBN_STR, SCORING_EN } from '@/utils/webinarsI18n';
+import { WBN_STR, SCORING_EN, countryEn } from '@/utils/webinarsI18n';
 import { initialLang } from '@/utils/reportLang';
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { SectionHeader } from '@/components/shared/SectionHeader';
@@ -46,6 +46,8 @@ export function WebinarMixReport({ ev, accName }) {
   const en = lang === 'en';
   // Texto narrativo del seed con variante EN (fallback al español).
   const tx = (obj, field) => (en ? (obj[`${field}En`] ?? obj[field]) : obj[field]);
+  // Marca del cliente de la cuenta: los textos «a Control Union» pasan a «a Peterson Solutions» en sus eventos.
+  const brandName = /peterson/i.test(accName ?? '') ? 'Peterson Solutions' : 'Control Union';
   const num = (v) => Number(v || 0).toLocaleString(en ? 'en-US' : 'es-AR');
   const p1 = (v) => Number(v || 0).toLocaleString(en ? 'en-US' : 'es-AR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const usd = (v) => '$' + Number(v || 0).toLocaleString(en ? 'en-US' : 'es-AR');
@@ -55,7 +57,11 @@ export function WebinarMixReport({ ev, accName }) {
   const scoring = en ? SCORING_EN : getScoring();
   const evScoring = ev.scoring ?? null;
   const classes = evScoring?.classes ?? scoring.classes;
-  const hotRange = classes[0].range;
+  // Rangos del scoring: «40 – 69,9» en ES, «40 – 69.9» en EN.
+  const rng = (r) => (en ? String(r).replace(',', '.') : r);
+  const hotRange = rng(classes[0].range);
+  // Nombres de país: el seed los guarda en español; en EN se traducen.
+  const countries = en ? ev.countries.map((c) => ({ ...c, name: countryEn(c.name) })) : ev.countries;
   const dealsOnly = ev.deals.total - ev.deals.hot;
   const prioritized = ev.deals.hot + (ev.deals.warm ?? 0);
   const hotRows = ev.hotLeads.rows.filter((r) => (r.tier ?? 'HOT') === 'HOT');
@@ -72,7 +78,7 @@ export function WebinarMixReport({ ev, accName }) {
       <SectionHeader title={ev.title} note={`${accName} · ${tx(ev, 'date')}`} />
       <div className="mb-5 grid gap-3 lg:grid-cols-3">
         <div className="overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu lg:col-span-2">
-          <FichaRow k={t.fTema} v={ev.tema ?? ev.subtitle} />
+          <FichaRow k={t.fTema} v={tx(ev, 'tema') ?? ev.subtitle} />
           <FichaRow k={t.fFecha} v={`${tx(ev, 'date')}${ev.reagendado ? t.reagendado : ''}`} />
           <FichaRow k={t.fIdioma} v={tx(ev, 'idioma')} />
           <FichaRow k={t.fAud} v={tx(ev, 'audiencia')} />
@@ -223,7 +229,7 @@ export function WebinarMixReport({ ev, accName }) {
           <div className="mb-3.5 text-[10px] text-cu-grey">{t.countriesSub(ev.regCountries, hasRegByCountry)}</div>
           <div className="relative" style={{ height: ev.countries.length * (hasRegByCountry ? 38 : 30) + 40 }}>
             <ResponsiveContainer>
-              <BarChart data={ev.countries} layout="vertical" margin={{ top: 0, right: 24, left: 8, bottom: 0 }}>
+              <BarChart data={countries} layout="vertical" margin={{ top: 0, right: 24, left: 8, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="0" stroke={CU.border2} horizontal={false} />
                 <XAxis type="number" tick={{ fontSize: 10, fill: CU.grey }} axisLine={false} tickLine={false} allowDecimals={false} />
                 <YAxis type="category" dataKey="name" width={104} tick={{ fontSize: 10.5, fill: CU.dgrey }} axisLine={false} tickLine={false} />
@@ -248,7 +254,7 @@ export function WebinarMixReport({ ev, accName }) {
             <div className="flex gap-8">
               <div>
                 <div className="text-[24px] font-bold leading-none text-cu-dblue">{ev.internos.total}</div>
-                <div className="mt-1 text-[11px] text-cu-grey">{t.cuLabel(ev.internos.attended)}</div>
+                <div className="mt-1 text-[11px] text-cu-grey">{t.cuLabel(ev.internos.attended, brandName)}</div>
               </div>
               <div>
                 <div className="text-[24px] font-bold leading-none text-cu-dblue">{ev.externos.registered}</div>
@@ -425,7 +431,7 @@ export function WebinarMixReport({ ev, accName }) {
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard label={ev.scoring ? t.kPrior : t.kDealsTot} value={num(ev.scoring ? prioritized : ev.deals.total)} footnote={ev.scoring ? t.priorFoot(ev.deals.hot, ev.deals.warm, num(ev.externos.attended)) : (tx(ev.deals, 'note') ?? t.dealsTotFoot)} />
         <KpiCard label={t.kHot} value={num(ev.deals.hot)} accent="green" delta={{ dir: 'up', label: t.scorePill(hotRange) }} footnote={t.hotFoot} />
-        <KpiCard label={ev.scoring ? t.kWarm : t.kRest} value={num(ev.deals.warm ?? dealsOnly)} footnote={t.warmFoot(classes[1].range)} />
+        <KpiCard label={ev.scoring ? t.kWarm : t.kRest} value={num(ev.deals.warm ?? dealsOnly)} footnote={t.warmFoot(rng(classes[1].range))} />
         <KpiCard label={t.kScoreHot} value={p1(avgScore)} footnote={hotRows.length === 1 ? hotRows[0].empresa : t.scoreHotFoot(hotRows.length)} />
       </div>
       {!external && ev.hotLeads.universeNote && <Note>{tx(ev.hotLeads, 'universeNote')}</Note>}
@@ -459,7 +465,7 @@ export function WebinarMixReport({ ev, accName }) {
             <tbody>
               {classes.map((c) => (
                 <tr key={c.name} className="border-b border-cu-border2 last:border-b-0">
-                  <td className={`${tdCls} w-36 font-medium text-cu-dblue`}>{c.name}<br /><span className="text-[10px] font-bold text-cu-cyan">{t.scoreWord} {c.range}</span></td>
+                  <td className={`${tdCls} w-36 font-medium text-cu-dblue`}>{c.name}<br /><span className="text-[10px] font-bold text-cu-cyan">{t.scoreWord} {rng(c.range)}</span></td>
                   <td className={`${tdCls} text-[11px]`}>{en ? (c.actionEn ?? c.action) : c.action}</td>
                 </tr>
               ))}
@@ -504,7 +510,7 @@ export function WebinarMixReport({ ev, accName }) {
       {/* ── Oportunidad comercial (general + webinar) ── */}
       {(isGeneral || view === 'webinar') && (
       <>
-      <SectionHeader title={t.comTitle} note={t.comNote} />
+      <SectionHeader title={t.comTitle(brandName)} note={t.comNote} />
       {ev.commercial.pipelinePotential != null ? (
         <>
           <div className="mb-3 grid gap-3 lg:grid-cols-2">

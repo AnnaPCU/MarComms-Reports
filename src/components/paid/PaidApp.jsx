@@ -139,14 +139,21 @@ export function PaidApp({ account, period }) {
     return (
       <div className="animate-fade-in">
         <NoDataScreen
+          lang={lang}
           detail={
-            <>
-              No hay datos de Paid Media importados de <strong>{accName}</strong> para{' '}
-              <strong>{periodLabel}</strong>.
-            </>
+            lang === 'en' ? (
+              <>
+                No Paid Media data imported for <strong>{accName}</strong> for <strong>{periodLabel}</strong>.
+              </>
+            ) : (
+              <>
+                No hay datos de Paid Media importados de <strong>{accName}</strong> para{' '}
+                <strong>{periodLabel}</strong>.
+              </>
+            )
           }
         />
-        <Glossary keys="paid" />
+        <Glossary keys={lang === 'en' ? 'paidEn' : 'paid'} />
       </div>
     );
   }
