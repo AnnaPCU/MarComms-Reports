@@ -294,10 +294,9 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 - Resueltos: el ticket promedio EUDR ya no hace falta (la proyección de
   pipeline se descartó); el 31/8 en cero de las campañas de CU Estados Unidos
   se corroboró y en septiembre fluyen normal.
-- **Webinar EmpCo 2026**: falta el costo de producción (figura como
-  pendiente) y las capturas de los otros dos posteos de LinkedIn del evento
-  que aparecen en el export de agosto de PS Iberia & Americas (video de
-  1.236 impresiones y orgánico de 1.172 al 31/8).
+- **Webinar EmpCo 2026**: faltan las capturas de los otros dos posteos de
+  LinkedIn del evento que aparecen en el export de agosto de PS Iberia &
+  Americas (video de 1.236 impresiones y orgánico de 1.172 al 31/8).
 - Opcional: extender drill-down/comparativa a Social por cuenta si se pide.
 
 ## 12. Problemas conocidos
@@ -399,8 +398,9 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   Jul 2026): Livestorm + Mailchimp + LinkedIn + HubSpot en un solo reporte
   (key insights, embudo, email, social, hot leads con scoring 0-100,
   diagnóstico de madurez, oportunidad comercial POTENCIAL). Inputs manuales
-  por evento: costo de producción y duración total (el link al pipeline es
-  fijo desde el 16/9/2026: `HUBSPOT_PIPELINE_URL`).
+  por evento: ninguno desde el 16/9/2026 (link al pipeline fijo,
+  `HUBSPOT_PIPELINE_URL`; el costo de producción ya no se pide ni se muestra;
+  la duración sale del export de Teams).
 - **Webinar EUDR (Ago 2026)**: segundo evento y el único visible hoy (el de ISO
   quedó oculto a pedido del equipo, con datos intactos). Sumó botonera de vistas
   con glosario por vista, atribución real del canal email (56 registrados con

@@ -4,8 +4,9 @@
 //  (posteos orgánicos) + HubSpot (deals / hot leads).
 //  Fuente: reporte de resultados del webinar (datos reales, nunca
 //  estimados). Los campos que dependen de un input manual por evento
-//  (costo de producción, duración total) pueden ser null → la vista
-//  los muestra como pendientes, no los inventa.
+//  (duración total) pueden ser null → la vista no los inventa. El costo
+//  de producción ya no se pide ni se muestra (16/9/2026); el campo queda
+//  en el seed por si vuelve a hacer falta.
 // ════════════════════════════════════════════════════════════════
 
 // Botón «Link al pipeline»: SIEMPRE la vista general de deals de HubSpot
@@ -823,7 +824,7 @@ export const WEBINARS_DB = {
 
       // ── Oportunidad comercial (POTENCIAL, no certeza) ──
       commercial: {
-        productionCost: null, // lo pasa el equipo por evento
+        productionCost: null, // no se pide ni se muestra (16/9/2026)
         pipelinePotential: null, // proyección descartada (docs/DECISIONES.md §3)
         pipelinePotentialNote: null,
         hotPipeline: null,
@@ -846,7 +847,6 @@ export const WEBINARS_DB = {
         '<strong>Pedir empresa y país como campos obligatorios en el próximo registro.</strong> 53 de los 94 leads priorizados no traen empresa ni país en el formulario de Teams: hoy solo se los identifica por el dominio del email.',
         '<strong>Repetir el formato de video en LinkedIn</strong> (8,9% de interacción y 513 visualizaciones) y conseguir las capturas de los otros dos posteos de agosto para cerrar la atribución del canal.',
         '<strong>Cambiar el post-webinar a los registrados que no asistieron.</strong> Abrió 19% sin ningún clic: mandar el replay con otro asunto y un solo CTA.',
-        '<strong>Pasar el costo de producción</strong> para cerrar la ficha del evento (hoy figura como pendiente).',
       ],
       actionPlanEn: [
         '<strong>Activate the 5 hot leads this week.</strong> Grupo Bimbo (Mexico, score 77.1) and the catenazapata.com contact (score 73.6) asked questions in the Q&A; Bio Vanda and two other contacts stayed the full 70 minutes.',
@@ -854,7 +854,6 @@ export const WEBINARS_DB = {
         '<strong>Make company and country mandatory fields at the next registration.</strong> 53 of the 94 prioritized leads have no company or country in the Teams form: today they can only be identified by their email domain.',
         '<strong>Repeat the video format on LinkedIn</strong> (8.9% interaction and 513 views) and get the screenshots of the other two August posts to close the channel attribution.',
         '<strong>Change the post-webinar for registrants who did not attend.</strong> It opened at 19% with no clicks: send the replay with a different subject line and a single CTA.',
-        '<strong>Provide the production cost</strong> to close the event sheet (it shows as pending today).',
       ],
     },
   },

@@ -1321,3 +1321,8 @@
 **#85**
 
 > [3 capturas de LinkedIn: video 1.265 impresiones / 513 visualizaciones; «¡Próximamente! ¿Tu empresa dice que es sostenible?» 793 impresiones (página Peterson Solutions Iberia & Americas); 368 impresiones] Las capturas que ya tenes de posteos son de plasticos. Y en este mensaje te adjunto captura posteos EmpCo. Tema Webinar empco es para Peterson Solutions Iberoamerica. Y si, usar el logo de Peterson Solutions. Por otro lado necesito que revises el tema traducion al ingles, que vi que mantenes ciertas palabras en español. Puntualmente vi un caso de el webinar plastic de el Topic que se mantuvo en castellano en la vista de ingles. Revisá todo por las dudas
+
+
+**#86**
+
+> A partir de ahora tampoco te voy a pedir que comentes el "Costo de producción del webinar: $xxx USD." Asi que tampoco me lo pidas a mi. Con las metricas qeu te pase ya podes saber bien cuando dura cada webinar? Por otro lado lo unico que queda medio en gris es saber donde alojar las capturas de posteos relacionados a un webinar. Ajustame este mensaje para el equipo para que sepa cuando y donde alojarlo correctamente en base a lo que ya se viene haciendo: [mensaje al equipo sobre la subida mensual de métricas al repositorio]

@@ -78,6 +78,13 @@
   corporativo** (EmpCo: 53 de 94 priorizados sin empresa ni país en el
   formulario de Teams). El dominio es un dato real del export, no una
   deducción; los proveedores genéricos (gmail, hotmail…) quedan en «—».
+- **El costo de producción no se pide ni se muestra** (16/9/2026). El campo
+  `commercial.productionCost` sigue en el seed (los tres eventos de CU lo
+  tienen en 600 USD) pero la vista no lo imprime ni lo marca como pendiente.
+- **La duración del evento sale del export de asistencia de Teams**: la
+  «duración total» es la ventana del organizador (incluye los minutos previos
+  al inicio, en los que el equipo ya está conectado) y el tiempo por asistente
+  es su propia ventana, con tope en el target del modelo de scoring.
 - **El botón «Link al pipeline» apunta siempre a la vista general de deals
   de HubSpot** (`HUBSPOT_PIPELINE_URL` en `webinarsSeed.js`, la vista
   «board»). Desde el 16/9/2026 no se arman links custom por evento; el de

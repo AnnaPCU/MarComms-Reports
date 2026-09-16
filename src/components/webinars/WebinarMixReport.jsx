@@ -532,14 +532,13 @@ export function WebinarMixReport({ ev, accName }) {
               label={t.roi}
               value={ev.commercial.roi}
               accent="amber"
-              footnote={ev.commercial.productionCost != null ? t.roiFoot(usd(ev.commercial.productionCost)) : t.costPend}
+              footnote={ev.commercial.productionCost != null ? t.roiFoot(usd(ev.commercial.productionCost)) : undefined}
             />
           </div>
         </>
       ) : null}
       <p className="mb-5 text-[10.5px] italic leading-relaxed text-cu-grey">
         {t.metod} {tx(ev.commercial, 'metodologia')}
-        {ev.commercial.productionCost != null && t.costLine(usd(ev.commercial.productionCost))}
       </p>
 
       {/* ── Plan de acción: SOLO en el descargable de uso interno ── */}

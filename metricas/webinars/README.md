@@ -13,10 +13,14 @@ Carpeta de ingesta de los exports de cada webinar. El tooling es
    (uno por envío) — van en `email-marketing/` (ver su README): el tooling los
    cruza con los registrados para la atribución del canal email.
 3. **LinkedIn** (opcional pero recomendado): las métricas de los posteos del
-   evento — el export, o capturas del panel «Rendimiento del anuncio» de cada
-   post (una por post; las cifras se transcriben tal cual). Si no vienen, el
-   reporte lo dice («Sin exports de LinkedIn para este evento») y no inventa
-   nada.
+   evento como **capturas** del panel «Rendimiento del anuncio» de cada post,
+   en la subcarpeta `linkedin/` del evento, una imagen por post
+   (`post-1.png`, `post-2.png`…). La captura tiene que mostrar el encabezado
+   del post (página que lo publicó y primeras líneas del texto) y el panel
+   completo de rendimiento (impresiones, interacciones, clics, reacciones,
+   comentarios, compartidos). Las cifras se transcriben tal cual. Si no
+   vienen, el reporte lo dice («Sin exports de LinkedIn para este evento») y
+   no inventa nada.
 
 Si Livestorm reemplaza a Teams, subir sus exports crudos: el parser se ajusta
 con el primer drop real de esa plataforma.
@@ -25,9 +29,9 @@ con el primer drop real de esa plataforma.
 
 ```
 webinars/
-└── 2026-09/                          ← una carpeta por mes (AAAA-MM); con dos
-    ├── <Webinar X> Leads.xlsx           eventos en el mes, `AAAA-MM-<evento>`
-    └── linkedin/ (opcional)             (ej. `2026-09-empco`)
+└── 2026-09-empco/                    ← una carpeta por evento: `AAAA-MM-<evento>`
+    ├── <Webinar X> Leads.xlsx        ← Excel de lead scoring (Teams)
+    └── linkedin/                     ← capturas de los posteos (post-1.png, post-2.png…)
 ```
 
 Sin dos puntos ni barras en los nombres de archivo (`10:09:2026 …` rompe un
@@ -47,10 +51,11 @@ checkout en Windows): usar `2026-09-10` o el nombre del evento.
    · Peterson Solutions Iberoamérica en español, con logo de Peterson).
 3. Verifica en el navegador, deploya y archiva la carpeta.
 
-**Input manual que provee el equipo por cada evento** (no sale de los
-exports): el costo de producción. Hasta que se pase, el reporte lo muestra
-como pendiente (nunca lo inventa). El link al pipeline ya no se pide: el
-botón apunta siempre a la vista general de deals de HubSpot
-(`HUBSPOT_PIPELINE_URL` en `src/data/webinarsSeed.js`).
+**No hay inputs manuales por evento.** El link al pipeline es fijo (el botón
+apunta a la vista general de deals de HubSpot, `HUBSPOT_PIPELINE_URL` en
+`src/data/webinarsSeed.js`) y el costo de producción no se pide ni se
+muestra (decisión del 16/9/2026). La duración del evento sale del export de
+asistencia de Teams (ventana del organizador y entradas/salidas de los
+asistentes).
 
 Pedido típico: **«Procesá las métricas nuevas de Webinars»**.

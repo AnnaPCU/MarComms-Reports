@@ -8,7 +8,7 @@ responsable:
 |---------|-------|---------|-------------|
 | `social-media/` | Social Media | LinkedIn Analytics | Persona de Social |
 | `email-marketing/` | Email Marketing | Mailchimp, Apollo | Persona de Email/Webinars |
-| `webinars/` | Webinars | Livestorm | Persona de Email/Webinars |
+| `webinars/` | Webinars | Teams (Excel de lead scoring) + capturas de LinkedIn | Persona de Email/Webinars |
 
 > Paid Media y Website **no usan esta carpeta**: Tomás sigue pasando esos
 > archivos directamente por su conversación de Claude.
