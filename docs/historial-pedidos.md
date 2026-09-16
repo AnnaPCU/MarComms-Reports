@@ -1308,3 +1308,11 @@
 
 > Procesá las métricas nuevas de Email Marketing / Webinars
 
+
+
+## 16 de septiembre de 2026
+
+
+**#84**
+
+> Estupendo trabajo. Ya podes deshacerte de este archivo. Necesito volver a la subida de metricas para un webinar en concreto... Tenes razon lo de Linkedin. Te lo adjunte recientemente al github y luego lo adjuntaras en la carpeta corrrespondiente y en la website. Link al pipeline: a partir de ahora nunca mas se hará un link custom a la vista de Deals especifica del caso. Usaras siempe para este boton el siguiente link: https://app.hubspot.com/contacts/47081900/objects/0-3/views/all/board. Costo de produccion: 600

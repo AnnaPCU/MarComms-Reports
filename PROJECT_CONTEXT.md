@@ -12,8 +12,9 @@
 > - `docs/historial-pedidos.md` — registro textual de lo que pidió el equipo,
 >   sesión por sesión. Las conversaciones no viajan entre cuentas: esto sí.
 
-_Última actualización: Webinar Plastic Packaging (Sep 2026) + su campaña de
-email, ingresados por `metricas/` con tooling nuevo (`scripts/webinars/`) ·
+_Última actualización: Webinar Plastic Packaging (Sep 2026) completo (LinkedIn
+desde capturas, costo, link fijo al pipeline) + su campaña de email, ingresados
+por `metricas/` con tooling nuevo (`scripts/webinars/`) ·
 Social Agosto 2026 · vista por CLIENTE (unidad de negocio + país/región, para clientes
 con más de un pilar) · Paid Agosto 2026 (CU Estados Unidos, EUR→ARS, campañas
 parciales) · marca MarComms como principal · toggle ES/EN en los 5 pilares ·
@@ -258,7 +259,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas) + drill-down + detalle por grupo + Resumen del Año + comparativa (tooling: `scripts/paid/`) |
 | Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas) + Resumen del Año + comparativa |
 | Email Marketing | ✅ Dos campañas reales: `cups` (CU + PS Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging (tooling: `scripts/mailchimp-to-seed.mjs`) |
-| Webinars | ✅ Reporte mixto por evento, dos cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo) y **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés, sin LinkedIn en el drop). Tooling: `scripts/webinars/build_event.py` |
+| Webinars | ✅ Reporte mixto por evento, dos cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo) y **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9). Tooling: `scripts/webinars/build_event.py` |
 | Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
 | Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
@@ -291,6 +292,10 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 - Resueltos: el ticket promedio EUDR ya no hace falta (la proyección de
   pipeline se descartó); el 31/8 en cero de las campañas de CU Estados Unidos
   se corroboró y en septiembre fluyen normal.
+- **Webinar EmpCo 2026** («¿Tu empresa dice que es sostenible?», 10/9/2026,
+  en español): el Excel de lead scoring está en `metricas/webinars/` sin
+  procesar (202 registrados, 120 asistentes). Faltan los exports de Mailchimp
+  de su campaña y confirmar que va en la cuenta CU Latinoamérica.
 - Opcional: extender drill-down/comparativa a Social por cuenta si se pide.
 
 ## 12. Problemas conocidos
@@ -392,7 +397,8 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   Jul 2026): Livestorm + Mailchimp + LinkedIn + HubSpot en un solo reporte
   (key insights, embudo, email, social, hot leads con scoring 0-100,
   diagnóstico de madurez, oportunidad comercial POTENCIAL). Inputs manuales
-  por evento: pipeline HubSpot, costo de producción, duración total.
+  por evento: costo de producción y duración total (el link al pipeline es
+  fijo desde el 16/9/2026: `HUBSPOT_PIPELINE_URL`).
 - **Webinar EUDR (Ago 2026)**: segundo evento y el único visible hoy (el de ISO
   quedó oculto a pedido del equipo, con datos intactos). Sumó botonera de vistas
   con glosario por vista, atribución real del canal email (56 registrados con
@@ -448,6 +454,12 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   El reporte mixto ahora tolera un evento sin posteos de LinkedIn. Cliente
   nuevo «Control Union Global» (Email + Webinars). Registry: Email y Webinars
   listan solo los períodos con datos de cada cuenta.
+- **Plastic Packaging cerrado** (16/9/2026): 4 posteos de LinkedIn de la
+  página Control Union España cargados desde capturas del panel de LinkedIn
+  (4.886 impresiones, 261 clics); costo de producción 600 USD; el botón
+  «Link al pipeline» de **todos** los eventos apunta ahora a la vista general
+  de deals de HubSpot (`HUBSPOT_PIPELINE_URL`), sin links custom por evento.
+  Capturas archivadas en `metricas/webinars/_procesados/2026-09/linkedin/`.
 - **Modo DEMO temporal** en `/demo` (10/9/2026): cifras visibles enmascaradas
   con «x» para grabar un recorrido del sistema. Se usó para la grabación y
   **se eliminó el mismo día** a pedido del equipo; si hiciera falta de nuevo,

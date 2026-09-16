@@ -13,8 +13,10 @@ Carpeta de ingesta de los exports de cada webinar. El tooling es
    (uno por envío) — van en `email-marketing/` (ver su README): el tooling los
    cruza con los registrados para la atribución del canal email.
 3. **LinkedIn** (opcional pero recomendado): las métricas de los posteos del
-   evento. Si no vienen, el reporte lo dice («Sin exports de LinkedIn para
-   este evento») y no inventa nada.
+   evento — el export, o capturas del panel «Rendimiento del anuncio» de cada
+   post (una por post; las cifras se transcriben tal cual). Si no vienen, el
+   reporte lo dice («Sin exports de LinkedIn para este evento») y no inventa
+   nada.
 
 Si Livestorm reemplaza a Teams, subir sus exports crudos: el parser se ajusta
 con el primer drop real de esa plataforma.
@@ -38,8 +40,10 @@ webinars/
    cuenta que corresponda (LATAM en español · Global en inglés).
 3. Verifica en el navegador, deploya y archiva la carpeta.
 
-**Inputs manuales que provee el equipo por cada evento** (no salen de los
-exports): link al pipeline de HubSpot y costo de producción. Hasta que se
-pasen, el reporte los muestra como pendientes (nunca los inventa).
+**Input manual que provee el equipo por cada evento** (no sale de los
+exports): el costo de producción. Hasta que se pase, el reporte lo muestra
+como pendiente (nunca lo inventa). El link al pipeline ya no se pide: el
+botón apunta siempre a la vista general de deals de HubSpot
+(`HUBSPOT_PIPELINE_URL` en `src/data/webinarsSeed.js`).
 
 Pedido típico: **«Procesá las métricas nuevas de Webinars»**.

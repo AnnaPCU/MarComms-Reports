@@ -4,9 +4,13 @@
 //  (posteos orgánicos) + HubSpot (deals / hot leads).
 //  Fuente: reporte de resultados del webinar (datos reales, nunca
 //  estimados). Los campos que dependen de un input manual por evento
-//  (link al pipeline, costo de producción, duración total) pueden ser
-//  null → la vista los muestra como pendientes, no los inventa.
+//  (costo de producción, duración total) pueden ser null → la vista
+//  los muestra como pendientes, no los inventa.
 // ════════════════════════════════════════════════════════════════
+
+// Botón «Link al pipeline»: SIEMPRE la vista general de deals de HubSpot
+// (board). Desde el 16/9/2026 no se arma un link custom por evento.
+export const HUBSPOT_PIPELINE_URL = 'https://app.hubspot.com/contacts/47081900/objects/0-3/views/all/board';
 
 // Una cuenta por audiencia: los webinars en español para LATAM y los
 // globales en inglés (base Américas + Europa) son series distintas.
@@ -121,7 +125,7 @@ export const WEBINARS_DB = {
         ],
         universeNote:
           "Universo más amplio de seguimiento: 7 de 20 respuestas a '¿te gustaría que te contactemos?' fueron Sí — vale la pena que Ventas revise esa lista completa además de estos 4.",
-        pipelineUrl: null, // lo pasa el equipo por evento (link al pipeline de HubSpot)
+        pipelineUrl: HUBSPOT_PIPELINE_URL,
         scoreNote: 'Score ≥70. Muestra chica, pero filtrada sin defaults: Livestorm trajo el detalle completo por persona.',
       },
 
@@ -306,7 +310,7 @@ export const WEBINARS_DB = {
           { empresa: 'Ochosur', pais: 'Perú', det: '47,5 min', score: 5, tier: 'WARM' },
         ],
         rowsNote: '17 de los 27 leads priorizados (el resto de los warm, con score 5 y menor permanencia, está en el tracker completo).',
-        pipelineUrl: 'https://app.hubspot.com/contacts/47081900/objects/0-3/views/71479376/list',
+        pipelineUrl: HUBSPOT_PIPELINE_URL, // antes apuntaba a una vista custom del evento; se unificó el 16/9/2026
         scoreNote: 'Scoring propio del evento (Teams): HOT ≥ 8 · WARM 5-7. Detalle completo por persona, sin defaults.',
       },
 
@@ -362,8 +366,8 @@ export const WEBINARS_DB = {
       idiomaEn: 'English',
       audiencia: 'Empresas de packaging plástico, marcas, recicladores y consultores — registrados de 48 países (Europa, Asia y Américas)',
       audienciaEn: 'Plastic packaging companies, brands, recyclers and consultants — registrants from 48 countries (Europe, Asia and the Americas)',
-      canales: 'Email marketing (9 envíos: Emails 1-3 segmentados Américas / Europa, reenvío del Email 3 y post-webinar a asistentes) · Plataforma: Microsoft Teams · Partners: ALPLA, ISCC y RecyClass · LinkedIn: sin export en este drop',
-      canalesEn: 'Email marketing (9 sends: Emails 1-3 split Americas / Europe, an Email 3 resend and a post-webinar to attendees) · Platform: Microsoft Teams · Partners: ALPLA, ISCC and RecyClass · LinkedIn: no export in this drop',
+      canales: 'Email marketing (9 envíos: Emails 1-3 segmentados Américas / Europa, reenvío del Email 3 y post-webinar a asistentes) · Plataforma: Microsoft Teams · Partners: ALPLA, ISCC y RecyClass · LinkedIn: 4 posteos orgánicos en la página de Control Union España',
+      canalesEn: 'Email marketing (9 sends: Emails 1-3 split Americas / Europe, an Email 3 resend and a post-webinar to attendees) · Platform: Microsoft Teams · Partners: ALPLA, ISCC and RecyClass · LinkedIn: 4 organic posts on the Control Union España page',
       serieEmails: ['Emails 1-3 segmentados Américas / Europa (+ reenvío del Email 3)', 'Post-webinar a asistentes (74 contactos)', 'Base total: 3,213 contactos únicos'.replace(',', '.')],
       serieEmailsEn: ['Emails 1-3 split Americas / Europe (+ Email 3 resend)', 'Post-webinar to attendees (74 contacts)', 'Total base: 3,213 unique contacts'],
 
@@ -459,18 +463,27 @@ export const WEBINARS_DB = {
           'Channel attribution is read in layers: 24 registrants clicked a campaign email (direct attribution — the floor), 50 opened at least one email, and 71 of the 163 were in the contact base (44%). The other 92 registrants (56%) came from outside the base: LinkedIn, the webinar partners or other channels — Teams registration carries no per-channel attribution.',
       },
 
-      // ── Sección 2: Social Media — este drop NO incluyó exports de LinkedIn ──
+      // ── Sección 2: Social Media (LinkedIn Control Union España) ──
+      // Fuente: capturas del panel «Rendimiento del anuncio» de LinkedIn tomadas
+      // el 16/9/2026 (no hubo export). El Post 2 coincide con el post del webinar
+      // del export mensual de CU España de agosto (3.311 impresiones al 31/8).
       social: {
-        posts: [], // sin datos: no se inventan (regla de honestidad)
-        totals: null,
-        regFromSocial: null,
+        posts: [
+          { name: 'Post 1 · «1 day to go» (8/9)', imp: 553, inter: 40, rate: 7.23, clicks: 17, ctr: 3.07, reactions: 18 },
+          { name: 'Post 2 · «Is your business ready?» (agosto)', imp: 3423, inter: 252, rate: 7.36, clicks: 194, ctr: 5.67, reactions: 43 },
+          { name: 'Post 3', imp: 542, inter: 51, rate: 9.41, clicks: 33, ctr: 6.09, reactions: 12 },
+          { name: 'Post 4', imp: 368, inter: 27, rate: 7.34, clicks: 17, ctr: 4.62, reactions: 9 },
+        ],
+        totals: { imp: 4886, inter: 370, rate: 7.6, clicks: 261, ctr: 5.3, reactions: 82, shares: 20 },
+        regFromSocial: null, // sin atribución directa: el registro corrió por Teams
         regFromSocialPct: null,
         regOutsideEmail: 92, // registrados que NO estaban en la base de emails → LinkedIn, partners u otros canales
         regOutsideEmailPct: 56,
+        postNamesEn: ['Post 1 · "1 day to go" (Sep 8)', 'Post 2 · "Is your business ready?" (August)', 'Post 3', 'Post 4'],
         lectura:
-          'Este drop no incluyó exports de LinkedIn para el evento, así que no hay métricas de posteos. Lo que sí se sabe: 92 de los 163 registrados (56%) no estaban en la base de email — llegaron por LinkedIn, por los partners del webinar (ALPLA, ISCC, RecyClass) o por otros canales, sin atribución individual.',
+          'Los 4 posteos orgánicos de Control Union España sumaron 4.886 impresiones y 261 clics (CTR 5,3%) con una tasa de interacción del 7,6%. El Post 2 («Is your business ready?», publicado en agosto) concentró el 70% del alcance (3.423 impresiones) y 194 de los 261 clics; el Post 3 fue el más eficiente (9,4% de interacción y 6,1% de CTR) con un alcance chico. El aviso «1 day to go» del 8/9 hizo 553 impresiones y 17 clics. No hay atribución individual (el registro corrió por Teams): 92 de los 163 registrados (56%) llegaron por fuera de la base de email, y LinkedIn y los partners (ALPLA, ISCC, RecyClass) son el origen más probable.',
         lecturaEn:
-          'This drop did not include LinkedIn exports for the event, so there are no post metrics. What is known: 92 of the 163 registrants (56%) were not in the email base — they came through LinkedIn, the webinar partners (ALPLA, ISCC, RecyClass) or other channels, with no individual attribution.',
+          'The 4 organic posts on Control Union España added up to 4,886 impressions and 261 clicks (5.3% CTR) with a 7.6% interaction rate. Post 2 ("Is your business ready?", published in August) took 70% of the reach (3,423 impressions) and 194 of the 261 clicks; Post 3 was the most efficient (9.4% interaction, 6.1% CTR) on a small reach. The "1 day to go" notice on Sep 8 did 553 impressions and 17 clicks. There is no individual attribution (registration ran through Teams): 92 of the 163 registrants (56%) came from outside the email base, and LinkedIn and the partners (ALPLA, ISCC, RecyClass) are the most likely origin.',
       },
 
       // ── Sección 3: leads priorizados (scoring del evento) ──
@@ -519,7 +532,7 @@ export const WEBINARS_DB = {
           { empresa: '—', pais: 'Reino Unido', det: '25,8 min', score: 41.5, tier: 'WARM' },
           { empresa: '—', pais: 'Austria', det: '24,7 min', score: 41.0, tier: 'WARM' },
         ],
-        pipelineUrl: null, // lo pasa el equipo por evento (link al pipeline de HubSpot)
+        pipelineUrl: HUBSPOT_PIPELINE_URL,
         scoreNote: 'Scoring del evento (Teams): HOT ≥ 70 · WARM 40-69,9. Permanencia = tiempo conectado sobre los 90 min objetivo (tope del modelo).',
         universeNote: 'Pregunta externa en el Q&A: Is ISCC also accredited for EN15343? (trinseo.com). Las otras 2 preguntas fueron internas (Control Union).',
         universeNoteEn: 'External Q&A question: Is ISCC also accredited for EN15343? (trinseo.com). The other 2 questions were internal (Control Union).',
@@ -529,7 +542,7 @@ export const WEBINARS_DB = {
 
       // ── Oportunidad comercial (POTENCIAL, no certeza) ──
       commercial: {
-        productionCost: null, // lo pasa el equipo por evento
+        productionCost: 600, // USD — lo pasó el equipo el 16/9/2026
         pipelinePotential: null, // proyección descartada (docs/DECISIONES.md §3)
         pipelinePotentialNote: null,
         hotPipeline: null,
@@ -549,18 +562,16 @@ export const WEBINARS_DB = {
       actionPlan: [
         '<strong>Activar los 11 hot leads esta semana.</strong> Diez de ellos se quedaron los 90 minutos completos; Trinseo (Países Bajos, score 88,9) además preguntó en el Q&A si ISCC está acreditado para EN 15343 — contacto comercial directo con la respuesta.',
         '<strong>Trabajar los 30 warm en nurturing activo.</strong> La mayoría superó los 45 minutos de permanencia: replay, casos de éxito de certificación de packaging (ISCC PLUS / RecyClass) e invitación al próximo webinar.',
-        '<strong>Conseguir el export de LinkedIn del evento</strong> para completar la atribución: 92 registrados (56%) llegaron por fuera de la base de email y hoy no se puede saber por dónde.',
+        '<strong>Repetir el formato del Post 2 de LinkedIn</strong> («Is your business ready?»): concentró 3.423 de las 4.886 impresiones y 194 de los 261 clics de la serie. El aviso «1 day to go» rindió menos (553 impresiones): la convocatoria hay que empezarla antes.',
         '<strong>Replicar el post-webinar y extenderlo a los que no asistieron.</strong> Fue el mejor envío de la serie (59,5% de apertura, 16,2% de clics) pero solo llegó a 74 asistentes; los 91 registrados que no asistieron merecen el replay.',
         '<strong>Probar asunto y CTA distintos en vez de reenviar.</strong> El reenvío del Email 3 sumó aperturas (13%) pero no clics (1,3-1,7%): la segunda oportunidad tiene que ser otro mensaje, no el mismo.',
-        '<strong>Pasar el costo de producción y el link al pipeline de HubSpot</strong> para cerrar la ficha del evento (hoy figuran como pendientes).',
       ],
       actionPlanEn: [
         '<strong>Activate the 11 hot leads this week.</strong> Ten of them stayed the full 90 minutes; Trinseo (Netherlands, score 88.9) also asked in the Q&A whether ISCC is accredited for EN 15343 — direct sales contact with the answer.',
         '<strong>Work the 30 warm leads with active nurturing.</strong> Most stayed past 45 minutes: replay, packaging certification success stories (ISCC PLUS / RecyClass) and an invitation to the next webinar.',
-        '<strong>Get the LinkedIn export for the event</strong> to complete attribution: 92 registrants (56%) came from outside the email base and there is no way to tell from where today.',
+        '<strong>Repeat the format of LinkedIn Post 2</strong> ("Is your business ready?"): it took 3,423 of the series\' 4,886 impressions and 194 of its 261 clicks. The "1 day to go" notice did less (553 impressions): the call-out has to start earlier.',
         '<strong>Replicate the post-webinar send and extend it to no-shows.</strong> It was the best send of the series (59.5% opens, 16.2% clicks) but only reached 74 attendees; the 91 registrants who did not attend deserve the replay.',
         '<strong>Test a different subject line and CTA instead of resending.</strong> The Email 3 resend added opens (13%) but no clicks (1.3-1.7%): the second chance has to be a different message, not the same one.',
-        '<strong>Provide the production cost and the HubSpot pipeline link</strong> to close the event sheet (both show as pending today).',
       ],
     },
   },

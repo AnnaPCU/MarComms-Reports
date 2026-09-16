@@ -61,10 +61,18 @@
   se mezclan en un mismo selector de eventos ni se comparan entre sí. La
   campaña de email de cada webinar va en la cuenta de Email del mismo nombre.
 - **Si el drop no trae LinkedIn, el reporte lo dice.** El webinar Plastic
-  Packaging llegó sin exports de posteos: la sección Social muestra «Sin
-  exports de LinkedIn para este evento» y solo el dato real que sí existe
-  (registrados fuera de la base de email). No se reconstruye desde
-  capturas ni se estima.
+  Packaging llegó primero sin métricas de posteos: la sección Social mostró
+  «Sin exports de LinkedIn para este evento» y solo el dato real que sí
+  existía (registrados fuera de la base de email). Nunca se estima.
+- **Las capturas del panel «Rendimiento del anuncio» de LinkedIn valen como
+  fuente** cuando no hay export (16/9/2026, Plastic Packaging): son cifras
+  reales de la plataforma. El seed anota que la fuente es la captura y la
+  fecha; la página se identifica por la captura misma (o por cruce con el
+  export mensual de Social, como se hizo con el Post 2 de CU España).
+- **El botón «Link al pipeline» apunta siempre a la vista general de deals
+  de HubSpot** (`HUBSPOT_PIPELINE_URL` en `webinarsSeed.js`, la vista
+  «board»). Desde el 16/9/2026 no se arman links custom por evento; el de
+  EUDR se reemplazó por el general.
 - **El modelo de scoring es el del Excel del equipo, evento por evento.** Cada
   webinar puede traer su propia fórmula (EUDR: +3/+2/+1, HOT ≥ 8; Plastic:
   registro 10 + asistencia 20 + tiempo hasta 40 + pregunta 20 + interacción
