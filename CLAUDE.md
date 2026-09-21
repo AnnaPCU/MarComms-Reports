@@ -47,6 +47,7 @@ commit → deploy. No hay import por UI ni base de datos.
 | **Email Marketing** | Mailchimp, Apollo | carpeta `metricas/email-marketing/` |
 | **Webinars** | Livestorm / Teams (+ Mailchimp, LinkedIn, HubSpot) | carpeta `metricas/webinars/` |
 | **Website** | GA4, Search Console | adjuntos en la conversación |
+| **Planes** (vista, no pilar) | Informe mensual del plan regional (PDF del equipo) | adjunto en la conversación |
 
 **Ingesta por carpeta:** ante «procesá las métricas nuevas de \<pilar\>», buscar en
 `metricas/<pilar>/` las carpetas `AAAA-MM` que no estén en `_procesados/`, correr
@@ -122,6 +123,13 @@ Orden común en todos los pilares: **Insights (Plan de Acción)** → **KPIs** �
   más de un pilar con datos**. El mapeo cliente → cuenta por pilar es explícito
   en `src/constants/clients.js`: al sumar una cuenta nueva a un pilar, agregarla
   ahí si pertenece a un cliente. Criterios en `docs/DECISIONES.md` §11.
+- **Vista Planes** («Planes» en la nav, después de Clientes): informes
+  mensuales de avance de los planes regionales de marketing (objetivo,
+  entregables, próximos pasos, tracker). Es información de gestión
+  transcripta del informe del equipo (`src/data/plansSeed.js`), no métricas
+  de plataforma: no se generan insights y los próximos pasos se muestran
+  siempre porque son contenido del informe. Criterios en
+  `docs/DECISIONES.md` §12.
 - Reutilizar los componentes de `src/components/shared/` (KpiCard, ChartCard,
   Funnel, InsightsPanel, PerformancePanels, SectionHeader, Glossary) para que la
   estética se mantenga uniforme entre pilares.

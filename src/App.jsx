@@ -93,7 +93,7 @@ export default function App() {
         : `${ids.length} períodos`
       : labelOf(ids[0]);
     // La vista por cliente se descarga como «Reporte Cliente» (solo la General).
-    const pilarLabel = pilar === 'clients' ? 'Cliente' : navLabel(pilar);
+    const pilarLabel = pilar === 'clients' ? 'Cliente' : pilar === 'plans' ? 'Plan' : navLabel(pilar);
     const title = [pilarLabel, expandAccountName(accountName), withCountry ? countryName : null, periodsLabel]
       .filter(Boolean)
       .join(' — ');

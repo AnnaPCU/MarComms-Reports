@@ -1326,3 +1326,11 @@
 **#86**
 
 > A partir de ahora tampoco te voy a pedir que comentes el "Costo de producción del webinar: $xxx USD." Asi que tampoco me lo pidas a mi. Con las metricas qeu te pase ya podes saber bien cuando dura cada webinar? Por otro lado lo unico que queda medio en gris es saber donde alojar las capturas de posteos relacionados a un webinar. Ajustame este mensaje para el equipo para que sepa cuando y donde alojarlo correctamente en base a lo que ya se viene haciendo: [mensaje al equipo sobre la subida mensual de métricas al repositorio]
+
+
+## 21 de septiembre de 2026
+
+
+**#87**
+
+> [PDF: draft-agosto-organicusa · Monthly Report No. 1 · Control Union USA Marketing — Organic Market] Necesito implementar, al lado de la vista de "clientes" una vista llamada "Planes", en el cual por el momento unicamente se verá a nivel informacion esto que te adjunto. A nivel estética y estructura que se maneje como nos venimos manejando con el resto de pilares. Lo unico que te pido a ajustar a nivel copy en este caso el parrafo "the marcomms team" para que haga mas foco en el objetivo.

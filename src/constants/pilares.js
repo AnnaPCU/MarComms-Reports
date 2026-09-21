@@ -11,6 +11,7 @@ import {
   Video,
   Globe,
   Building2,
+  ClipboardCheck,
 } from 'lucide-react';
 
 export const PILARES = [
@@ -63,7 +64,20 @@ export const CLIENTS_NAV = {
   ready: true,
 };
 
-// Etiqueta visible de una entrada de la nav (pilar o clientes).
+// Vista PLANES: informes mensuales de avance de los planes regionales de
+// marketing (entregables, próximos pasos, tracker). Tampoco es un pilar: es
+// información de gestión del servicio, no métricas de plataforma.
+export const PLANS_NAV = {
+  id: 'plans',
+  label: 'Planes',
+  icon: ClipboardCheck,
+  ready: true,
+};
+
+// Entradas de la nav que no son pilares (van después, separadas con una línea).
+export const EXTRA_NAV = [CLIENTS_NAV, PLANS_NAV];
+
+// Etiqueta visible de una entrada de la nav (pilar, clientes o planes).
 export function navLabel(id) {
-  return PILAR_BY_ID[id]?.label ?? (id === CLIENTS_NAV.id ? CLIENTS_NAV.label : id);
+  return PILAR_BY_ID[id]?.label ?? EXTRA_NAV.find((n) => n.id === id)?.label ?? id;
 }

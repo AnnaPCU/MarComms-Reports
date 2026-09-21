@@ -12,7 +12,8 @@
 > - `docs/historial-pedidos.md` — registro textual de lo que pidió el equipo,
 >   sesión por sesión. Las conversaciones no viajan entre cuentas: esto sí.
 
-_Última actualización: Webinar EmpCo 2026 (Peterson Solutions Iberoamérica,
+_Última actualización: vista **Planes** (informe mensual N.º 1 del plan de
+Control Union USA · mercado orgánico) · Webinar EmpCo 2026 (Peterson Solutions Iberoamérica,
 cuenta nueva `psi` en Webinars y Email) · Webinar Plastic Packaging (Sep 2026)
 completo (LinkedIn desde capturas, costo, link fijo al pipeline) + su campaña de
 email, ingresados por `metricas/` con tooling nuevo (`scripts/webinars/`) ·
@@ -262,6 +263,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas) + Resumen del Año + comparativa |
 | Email Marketing | ✅ Tres campañas reales: `cups` (CU + PS Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
+| Planes (vista) | ✅ Informe mensual N.º 1 del plan regional de Control Union USA · mercado orgánico (Mes 1 · 5 ago – 5 sep 2026): objetivo, 4 indicadores, 7 entregables, próximos pasos y tracker de 11 acciones. Seed: `src/data/plansSeed.js` |
 | Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
 | Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
@@ -472,6 +474,15 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   email cuando falta la empresa. Drop archivado en
   `metricas/webinars/_procesados/2026-09-empco/` y
   `metricas/email-marketing/_procesados/2026-09-empco/`.
+- **Vista Planes** (21/9/2026): nueva entrada en la nav, después de Clientes,
+  con el informe mensual N.º 1 del plan regional «Control Union USA
+  Marketing — Mercado Orgánico» (Mes 1 · 5 ago – 5 sep 2026), transcripto del
+  PDF del equipo en ES/EN: ficha, objetivo del mes, 4 indicadores, tabla de
+  entregables con estado, próximos pasos del Mes 2 y tracker de acciones con
+  prioridad. El párrafo de apertura se reescribió con foco en el objetivo del
+  plan. Archivos: `plansSeed.js`, `plansService.js`, `plansI18n.js`,
+  `components/plans/PlansApp.jsx`, `PLANS_NAV`/`EXTRA_NAV` en `pilares.js`,
+  entrada `plans` en el registry y en `snapshot.js` (descarga con ES/EN).
 - **Traducción EN revisada en los 5 pilares** (16/9/2026), con un barrido
   Playwright de 149 vistas en inglés buscando palabras en castellano. Se
   corrigió: el «Tema» de la ficha del webinar (no pasaba por el helper de

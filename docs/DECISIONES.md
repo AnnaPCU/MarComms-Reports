@@ -230,3 +230,23 @@ Quedó como práctica fija, y conviene sostenerla:
   quedara distinto entre dos descargas.
 - **«Clientes» no es un sexto pilar.** Va en la nav separado por una línea y no
   entra en `PILARES`: los pilares son las fuentes; los clientes las cruzan.
+
+## 12. Vista Planes (informes de avance de planes regionales)
+
+- **No es un pilar: es información de gestión.** Un plan regional de
+  marketing (hoy: Control Union USA · mercado orgánico, 6 meses) se reporta
+  al cliente con un informe mensual de objetivo, entregables, próximos pasos
+  y tracker de acciones. Eso no sale de ninguna plataforma: se transcribe del
+  informe del equipo al seed (`src/data/plansSeed.js`) tal cual, en ES y EN.
+  No se generan insights ni se cruzan métricas.
+- **Los próximos pasos se muestran siempre**, también en el descargable de
+  uso externo: no son la sección generada «Próximos Pasos» de los pilares,
+  son contenido del informe que el cliente tiene que ver.
+- **El párrafo de apertura pone el foco en el objetivo del plan** (pedido del
+  21/9/2026), no en la descripción del servicio de MarComms.
+- **Un período por informe** (Mes 1, Mes 2…) y una cuenta por plan. Al llegar
+  el informe del mes siguiente se agrega un período nuevo; los anteriores
+  quedan navegables.
+- El logo del cliente sale de la marca de la cuenta (`brandOf`), como en los
+  pilares. Estética y estructura: los mismos componentes compartidos (ficha,
+  KpiCard, tablas, NextStepsPanel) para que se lea como un reporte más.

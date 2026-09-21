@@ -10,6 +10,7 @@ import * as website from '@/services/websiteService';
 import * as email from '@/services/emailService';
 import * as webinars from '@/services/webinarsService';
 import * as clients from '@/services/clientService';
+import * as plans from '@/services/plansService';
 import { QUARTERS_2026 } from '@/constants/periods';
 
 import { SocialApp } from '@/components/social/SocialApp';
@@ -18,6 +19,7 @@ import { WebsiteApp } from '@/components/website/WebsiteApp';
 import { EmailApp } from '@/components/email/EmailApp';
 import { WebinarsApp } from '@/components/webinars/WebinarsApp';
 import { ClientApp } from '@/components/clients/ClientApp';
+import { PlansApp } from '@/components/plans/PlansApp';
 
 const COMPARATIVE = { id: 'cmp', label: 'Comparativa Multi-Cuenta' };
 // Vista temporal: resumen anual de progreso de una cuenta (pedido puntual).
@@ -99,6 +101,19 @@ export const REGISTRY = {
       const n = c ? clients.pillarsWithData(c).length : 0;
       return `Datos reales — ${n} pilares`;
     },
+  },
+  // Vista PLANES: informes mensuales de avance de un plan regional. Un
+  // período por informe (Mes 1, Mes 2…); la cuenta es el cliente del plan.
+  plans: {
+    Component: PlansApp,
+    accounts: plans.listAccounts(),
+    periods: [...plans.listPeriods()].reverse(),
+    periodsFor: (account) => [...plans.listPeriods()].reverse().filter((p) => plans.hasDataFor(account, p.id)),
+    periodFilterLabel: 'Informe',
+    accountFilterLabel: 'Plan',
+    defaultPeriod: plans.listPeriods().slice(-1)[0]?.id ?? null,
+    hasDataFor: plans.hasDataFor,
+    badgeText: () => 'Informe de avance del plan',
   },
 };
 
