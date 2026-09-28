@@ -474,6 +474,11 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   email cuando falta la empresa. Drop archivado en
   `metricas/webinars/_procesados/2026-09-empco/` y
   `metricas/email-marketing/_procesados/2026-09-empco/`.
+- **Descargas en el idioma elegido + logo nítido** (28/9/2026): el nombre
+  de archivo y el título de todo descargable (HTML de cualquier pilar, PDF
+  de Planes) salen en el idioma elegido en el diálogo (`reportFilename` con
+  `lang`, `localizeLabel`, `localizePilarLabel`). El logo de MarComms pasó a
+  1920 px para que no se vea pixelado en el PDF.
 - **Planes: informe de septiembre 2026 + descarga en PDF** (28/9/2026): el
   informe nuevo del equipo («MarComms Monthly Report · Control Union North
   America · Organic») **reemplazó** al del Mes 1. Estructura punto medio

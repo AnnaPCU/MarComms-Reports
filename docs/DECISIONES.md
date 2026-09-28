@@ -275,6 +275,14 @@ Quedó como práctica fija, y conviene sostenerla:
 - **El link al pipeline no va como botón en Planes**: va a ir en una columna
   «Link» de la tabla de entregables, en la fila que el equipo indique
   (campo `url` de la fila; la columna solo aparece si alguna fila lo trae).
+- **El nombre del archivo y el título del descargable van en el idioma
+  elegido en el diálogo**, en todos los pilares (28/9/2026): `Report_…` con
+  meses en inglés, `Comparison`, `Annual_Summary`, `Overview`, sufijo
+  `_External`; las etiquetas de período del seed (en español) se traducen
+  con `localizeLabel` o con `labelEn` cuando el período lo trae.
+- **Logo de MarComms a 1920 px** en `public/` (antes 640): en el PDF se
+  veía pixelado. El logo del cliente Control Union es SVG con dos rasters
+  chicos embebidos (el isotipo), que a tamaño de impresión se ven bien.
 - **El link al pipeline de un plan es propio del plan** (lo pasa el equipo),
   a diferencia de los webinars, donde es la vista general de deals. Va como
   link del entregable «Base de datos de la herramienta comercial».

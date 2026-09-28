@@ -12,7 +12,7 @@ import { LoginScreen } from '@/components/login/LoginScreen';
 import { DownloadDialog } from '@/components/shared/DownloadDialog';
 import { exportViewAsHtml } from '@/utils/exportHtml';
 import { buildSnapshot } from '@/utils/snapshot';
-import { reportFilename, expandAccountName } from '@/utils/reportFilename';
+import { reportFilename, expandAccountName, localizeLabel, localizePilarLabel } from '@/utils/reportFilename';
 import { brandOf } from '@/constants/brand';
 import { getSegConfig } from '@/services/socialService';
 import { viewState } from '@/utils/viewState';
@@ -72,7 +72,7 @@ export default function App() {
     // archivo viaja en document.title mientras dura el diálogo de impresión.
     if (audience === 'pdf') {
       window.dispatchEvent(new CustomEvent(SET_LANG_EVENT, { detail: lang }));
-      const base = reportFilename({ pilarLabel: 'Plan', accountName, period, periodLabel, audience: 'internal' }).replace(/\.html$/, '');
+      const base = reportFilename({ pilarLabel: 'Plan', accountName, period, periodLabel, audience: 'internal', lang }).replace(/\.html$/, '');
       const prevTitle = document.title;
       document.title = base;
       await new Promise((r) => setTimeout(r, 150));
@@ -93,7 +93,12 @@ export default function App() {
         countryName = cInfo.name;
       }
     }
-    const labelOf = (pid) => periods.find((p) => p.id === pid)?.label ?? pid;
+    // Etiqueta del período en el idioma elegido (labelEn del seed si existe; si no, traducción de la ES).
+    const labelOf = (pid) => {
+      const p = periods.find((x) => x.id === pid);
+      if (!p) return pid;
+      return lang === 'en' ? (p.labelEn ?? localizeLabel(p.label, lang)) : p.label;
+    };
     // El país aplica a los períodos segmentables (no a la comparativa).
     const withCountry = socialCountry && ids.some((pid) => pid !== 'cmp');
     // Varios períodos → UN solo archivo con botonera interna de período.
@@ -106,11 +111,12 @@ export default function App() {
     const periodsLabel = multi
       ? ids.length <= 3
         ? ids.map(labelOf).join(' · ')
-        : `${ids.length} períodos`
+        : `${ids.length} ${lang === 'en' ? 'periods' : 'períodos'}`
       : labelOf(ids[0]);
     // La vista por cliente se descarga como «Reporte Cliente» (solo la General).
     const pilarLabel = pilar === 'clients' ? 'Cliente' : pilar === 'plans' ? 'Plan' : navLabel(pilar);
-    const title = [pilarLabel, expandAccountName(accountName), withCountry ? countryName : null, periodsLabel]
+    // Título y nombre de archivo en el idioma elegido, sea cual sea el pilar.
+    const title = [localizePilarLabel(pilarLabel, lang), expandAccountName(accountName), withCountry ? countryName : null, periodsLabel]
       .filter(Boolean)
       .join(' — ');
     const filename = reportFilename({
@@ -118,8 +124,9 @@ export default function App() {
       // 'multi' evita que el nombre salga como el 1er período: cae al label.
       accountName: withCountry ? `${accountName} ${countryName}` : accountName,
       period: multi ? 'multi' : ids[0],
-      periodLabel: multi ? `Multi-Periodo (${ids.length})` : periodsLabel,
+      periodLabel: multi ? (lang === 'en' ? `Multi-Period (${ids.length})` : `Multi-Periodo (${ids.length})`) : periodsLabel,
       audience,
+      lang,
     });
     await exportViewAsHtml({
       pilar,

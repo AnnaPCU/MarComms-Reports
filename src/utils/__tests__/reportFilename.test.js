@@ -13,6 +13,36 @@ describe('expandAccountName', () => {
   });
 });
 
+describe('reportFilename en inglés (idioma elegido al descargar)', () => {
+  it('traduce Reporte, el mes y el sufijo externo', () => {
+    expect(
+      reportFilename({ pilarLabel: 'Paid Media', accountName: 'CU Portugal', period: 'm06', periodLabel: 'Junio 2026', lang: 'en' }),
+    ).toBe('Control_Union_Portugal__Report_Paid_Media_June_2026.html');
+    expect(
+      reportFilename({ pilarLabel: 'Social Media', accountName: 'CU España', period: 'm08', periodLabel: 'Ago 2026', audience: 'external', lang: 'en' }),
+    ).toBe('Control_Union_Espana__Report_Social_Media_August_2026_External.html');
+  });
+  it('traduce la vista, la comparativa, el resumen anual y las etiquetas de evento', () => {
+    expect(reportFilename({ pilarLabel: 'Cliente', accountName: 'Control Union España', period: 'overview', periodLabel: 'Vista General', lang: 'en' })).toBe(
+      'Control_Union_Espana__Report_Client_Overview.html',
+    );
+    expect(reportFilename({ pilarLabel: 'Paid Media', accountName: 'CU Portugal', period: 'cmp', periodLabel: 'Comparativa Multi-Cuenta', lang: 'en' })).toBe(
+      'Control_Union_Portugal__Report_Paid_Media_Comparison.html',
+    );
+    expect(reportFilename({ pilarLabel: 'Webinars', accountName: 'Control Union Global', period: 'wbn-plastic', periodLabel: 'Webinar Plastic Packaging · Sep 2026', lang: 'en' })).toBe(
+      'Control_Union_Global__Report_Webinars_Webinar_Plastic_Packaging_Sep_2026.html',
+    );
+    expect(reportFilename({ pilarLabel: 'Plan', accountName: 'Control Union USA', period: 'sep-2026', periodLabel: 'September 2026', lang: 'en' })).toBe(
+      'Control_Union_USA__Report_Plan_September_2026.html',
+    );
+  });
+  it('en español no cambia nada', () => {
+    expect(reportFilename({ pilarLabel: 'Paid Media', accountName: 'CU Portugal', period: 'm06', periodLabel: 'Junio 2026', lang: 'es' })).toBe(
+      'Control_Union_Portugal__Reporte_Paid_Media_Junio_2026.html',
+    );
+  });
+});
+
 describe('reportFilename', () => {
   it('usa el nombre completo de la marca (CU Portugal → Control_Union_Portugal)', () => {
     expect(
