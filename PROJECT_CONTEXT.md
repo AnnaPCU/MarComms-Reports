@@ -478,8 +478,9 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   informe nuevo del equipo («MarComms Monthly Report · Control Union North
   America · Organic») **reemplazó** al del Mes 1. Estructura punto medio
   entre el documento del equipo y la vista: ficha + resumen del mes, objetivo
-  del plan, KPIs en una sola fila con dos grupos etiquetados (operativos: 8
-  entregables, 9 reuniones, 800 contactos; performance: 2 MQLs y 6 ventas;
+  del plan, KPIs en una sola fila de 5 columnas iguales con dos grupos etiquetados
+  (operativos en KpiCard: 8 entregables, 9 reuniones, 800 contactos;
+  performance destacado en HeroCard azul marino: 2 MQLs y 6 ventas;
   «pipeline generado» se quitó a pedido del equipo), entregables completados (8) y en curso (4) en tablas
   numeradas, iniciativas de generación de demanda (5) y botón «Link al
   pipeline» con la vista de deals del plan. El diálogo de descarga de Planes

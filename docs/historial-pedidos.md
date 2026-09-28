@@ -1359,3 +1359,8 @@
 **#90**
 
 > Me vas a sacar la sección de "pipeline generado" y unificar en una misma linea horizontal los KPis operativos y performance respetando la aclaración de cual es cual.
+
+
+**#91**
+
+> Resaltame un poco mas las cards de performance y que tengan el mismo ancho x alto qeu las de opertaivos
