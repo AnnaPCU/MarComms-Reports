@@ -33,6 +33,7 @@ function FichaRow({ k, v }) {
 }
 
 // Tailwind no genera clases dinámicas: span de la etiqueta según la cantidad de KPIs del grupo.
+const GRIDCOLS_CLS = { 4: 'sm:grid-cols-4 print:grid-cols-4', 5: 'sm:grid-cols-5 print:grid-cols-5', 6: 'sm:grid-cols-6 print:grid-cols-6', 7: 'sm:grid-cols-7 print:grid-cols-7', 8: 'sm:grid-cols-8 print:grid-cols-8' };
 const COLSPAN_CLS = { 1: 'sm:col-span-1 print:col-span-1', 2: 'sm:col-span-2 print:col-span-2', 3: 'sm:col-span-3 print:col-span-3', 4: 'sm:col-span-4 print:col-span-4' };
 
 const thCls = 'bg-cu-dblue px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.5px] text-white';
@@ -75,10 +76,11 @@ export function PlansApp({ account, period }) {
   const done = plan.deliverables.filter((d) => d.status === 'done');
   const progress = plan.deliverables.filter((d) => d.status === 'progress');
 
-  // La columna «Link» aparece solo si algún entregable trae `url` (ej. el pipeline
-  // de HubSpot, que el equipo va a ubicar acá). En el PDF se imprime la URL.
-  const hasLinks = plan.deliverables.some((d) => d.url);
-  const deliverablesTable = (rows) => (
+  // La columna «Link» aparece solo en la tabla cuyas filas traen `links`
+  // ([{ label, labelEn?, url }]). En el PDF los links quedan clicables con su etiqueta.
+  const deliverablesTable = (rows) => {
+    const hasLinks = rows.some((d) => d.links?.length);
+    return (
     <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
       <table className="w-full border-collapse">
         <thead>
@@ -99,15 +101,20 @@ export function PlansApp({ account, period }) {
               <td className={tdCls}>{tx(d, 'desc')}</td>
               {hasLinks && (
                 <td className={`${tdCls} whitespace-nowrap`}>
-                  {d.url && (
-                    <>
-                      <a href={d.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-bold text-cu-cyan hover:underline print:hidden">
-                        <ExternalLink className="h-3 w-3" />
-                        {tx(d, 'urlLabel') ?? t.hLink}
+                  <div className="flex flex-col gap-1">
+                    {(d.links ?? []).map((l) => (
+                      <a
+                        key={l.url}
+                        href={l.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[11.5px] font-bold text-cu-cyan hover:underline print:underline"
+                      >
+                        <ExternalLink className="h-3 w-3 print:hidden" />
+                        {tx(l, 'label')}
                       </a>
-                      <a href={d.url} className="hidden text-[10px] text-cu-cyan print:inline">{d.url}</a>
-                    </>
-                  )}
+                    ))}
+                  </div>
                 </td>
               )}
             </tr>
@@ -115,7 +122,8 @@ export function PlansApp({ account, period }) {
         </tbody>
       </table>
     </div>
-  );
+    );
+  };
 
   return (
     <table className="print-page-wrap w-full table-fixed border-collapse">
@@ -167,7 +175,7 @@ export function PlansApp({ account, period }) {
       <SectionHeader title={t.kpisTitle} note={t.kpisNote} />
       {/* Una sola fila de 5 columnas iguales: etiqueta de cada grupo arriba, cards del
           mismo ancho y alto (grid). Performance va en la card destacada (azul marino). */}
-      <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-5 print:grid-cols-5 print:break-inside-avoid">
+      <div className={`mb-5 grid grid-cols-1 gap-3 print:break-inside-avoid ${GRIDCOLS_CLS[plan.kpiGroups.reduce((n, g) => n + g.items.length, 0)] ?? GRIDCOLS_CLS[6]}`}>
         {plan.kpiGroups.map((g, gi) => (
           <div
             key={`lbl-${g.name}`}
@@ -192,6 +200,7 @@ export function PlansApp({ account, period }) {
                 key={k.label}
                 label={tx(k, 'label')}
                 value={k.value == null ? '—' : tx(k, 'value')}
+                pill={k.pill}
                 footnote={k.value == null ? t.noValue : (tx(k, 'note') ?? undefined)}
               />
             ),

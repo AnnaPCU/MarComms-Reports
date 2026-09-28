@@ -23,13 +23,24 @@ describe('plansService', () => {
     for (const g of plan.kpiGroups) for (const k of g.items) expect(k.labelEn, k.label).toBeTruthy();
   });
 
-  it('los KPIs de performance son MQLs y ventas (el pipeline se quitó a pedido del equipo)', () => {
+  it('los KPIs de performance: pipeline, MQLs y ventas, con sus importes', () => {
     const perf = getPlan('cuus', 'sep-2026').kpiGroups[1].items;
-    expect(perf.map((k) => k.label)).toEqual(['MQLs generados', 'Ventas generadas']);
-    expect(perf.find((k) => k.label === 'MQLs generados').value).toBe('2');
-    expect(perf.find((k) => k.label === 'Ventas generadas').value).toBe('6');
+    expect(perf.map((k) => k.label)).toEqual(['Pipeline generado', 'MQLs generados', 'Ventas generadas']);
+    expect(perf[0].value).toBe('848.160');
+    expect(perf[0].valueEn).toBe('848,160');
+    expect(perf[0].noteEn).toBeTruthy();
+    expect(perf.find((k) => k.label === 'MQLs generados')).toMatchObject({ value: '2', pill: '$40k' });
+    expect(perf.find((k) => k.label === 'Ventas generadas')).toMatchObject({ value: '8', pill: '$10k' });
     // Un KPI sin dato se guardaría como null y la vista mostraría «—»: nunca se inventa.
     expect(perf.every((k) => k.value === null || typeof k.value === 'string')).toBe(true);
+  });
+
+  it('los links de entregables tienen etiqueta y URL, solo en completados', () => {
+    const plan = getPlan('cuus', 'sep-2026');
+    const withLinks = plan.deliverables.filter((d) => d.links?.length);
+    expect(withLinks.map((d) => d.name)).toEqual(['Optimización web 2.0', 'Branding CUC', 'Optimización de redes sociales: perfil']);
+    expect(withLinks.every((d) => d.status === 'done')).toBe(true);
+    for (const d of withLinks) for (const l of d.links) expect(l.label && /^https:\/\//.test(l.url), d.name).toBeTruthy();
   });
 
   it('período desconocido → null', () => {

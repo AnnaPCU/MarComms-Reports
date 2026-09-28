@@ -1369,3 +1369,8 @@
 **#92**
 
 > [PDF: scsc.pdf, exportado desde el navegador] Necesito hacer otras cosas en el PDF; el descargar el PDF está medio raro. Arriba de todo dice fecha, horario y "Control Union USA Reporte Plan": eso no tiene que decirse. Después, el pipeline de HubSpot: borralo, porque en realidad va en otra ubicación, en la zona de entregables; vas a agregar una columna que sea como link o botón, y el pipeline va a ir en un entregable específico que después te muestro. Por ahora eliminalo. Después, abajo de cada hoja dice "marcomms-reports.vercel.app": sacalo a nivel PDF, que no aparezca.
+
+
+**#93**
+
+> Agrega columna "Link" en entregables completados. Al final, en KPIs del mes: hay que volver a poner "pipeline generated" en performance como 1ra card, donde el número es "848.160" con una aclaración más abajo que diga "20 % proveniente de bases de datos creadas de la Commercial Tool", en sus respectivos idiomas. Ventas generadas es 8 en vez de 6. En MQL agregarás $40k y en Won 10k. En entregables, en la nueva columna de URLs/links poner según el caso: Optimización web 2.0: USDA Organic y PrimusGFS (landings de northamerica.controlunion.com); Branding CUC (imagen «Decisión de marca CUC» en SharePoint); Optimización de redes sociales: perfil (LinkedIn de Karl).

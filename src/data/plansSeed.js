@@ -40,9 +40,10 @@ export const PLANS_DB = {
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
       summary: ['8 entregables completados', '4 entregables en curso', '5 iniciativas de generación de demanda', '9 reuniones internas'],
+      // Links por entregable (columna «Link», solo en la tabla cuyas filas los traen).
       summaryEn: ['8 deliverables completed', '4 deliverables in progress', '5 demand-generation initiatives', '9 internal meetings'],
       // KPIs en dos grupos, en una sola fila (operativos + performance). `value: null` = sin dato
-      // (se muestra «—», nunca se inventa). «Pipeline generado» se quitó a pedido del equipo (28/9).
+      // (se muestra «—», nunca se inventa). `pill` = importe destacado; `note` = aclaración.
       kpiGroups: [
         {
           name: 'Operativos',
@@ -57,19 +58,32 @@ export const PLANS_DB = {
           name: 'Performance',
           nameEn: 'Performance',
           items: [
-            { value: '2', label: 'MQLs generados', labelEn: 'MQLs generated' },
-            { value: '6', label: 'Ventas generadas', labelEn: 'Sales generated' },
+            { value: '848.160', valueEn: '848,160', label: 'Pipeline generado', labelEn: 'Pipeline generated', note: '20 % proveniente de bases de datos creadas con la Commercial Tool', noteEn: '20% from databases created with the Commercial Tool' },
+            { value: '2', label: 'MQLs generados', labelEn: 'MQLs generated', pill: '$40k' },
+            { value: '8', label: 'Ventas generadas', labelEn: 'Sales generated', pill: '$10k', note: 'Won', noteEn: 'Won' },
           ],
         },
       ],
       // Entregables por estado: 'done' | 'progress'.
       deliverables: [
-        { status: 'done', name: 'Optimización web 2.0', nameEn: 'Web Optimization 2.0', desc: 'Landing pages de USDA Organic y PrimusGFS optimizadas.', descEn: 'Optimized landing pages for USDA Organic and PrimusGFS.' },
+        {
+          status: 'done', name: 'Optimización web 2.0', nameEn: 'Web Optimization 2.0', desc: 'Landing pages de USDA Organic y PrimusGFS optimizadas.', descEn: 'Optimized landing pages for USDA Organic and PrimusGFS.',
+          links: [
+            { label: 'USDA Organic', url: 'https://northamerica.controlunion.com/certification-program/usda-organic-nop-certification/' },
+            { label: 'PrimusGFS', url: 'https://northamerica.controlunion.com/certification-program/primusgfs-certification/' },
+          ],
+        },
         { status: 'done', name: 'Benchmarking: investigación competitiva', nameEn: 'Benchmarking: Competitive Research', desc: 'Investigación competitiva sobre 33 programas seleccionados.', descEn: 'Competitive research covering 33 selected programs.' },
         { status: 'done', name: 'Campaña de Google Ads', nameEn: 'Google Ads Campaign', desc: 'Creación de la campaña.', descEn: 'Campaign creation.' },
-        { status: 'done', name: 'Branding CUC', nameEn: 'CUC Branding', desc: 'Definición de branding.', descEn: 'Branding definition.' },
+        {
+          status: 'done', name: 'Branding CUC', nameEn: 'CUC Branding', desc: 'Definición de branding.', descEn: 'Branding definition.',
+          links: [{ label: 'Decisión de marca CUC', labelEn: 'CUC brand decision', url: 'https://pcugroup.sharepoint.com/:i:/r/sites/CommunicationsLATAM/Gedeelde%20documenten/General/000.Planes%20MarComms/CU%20-%20Certificaciones%20USA%20-%20Org%C3%A1nico/Branding/Decisi%C3%B3n%20de%20marca%20CUC.png?d=w776c45cffd994c2aa776053ea6b3e59f&csf=1&web=1&e=dI4D75' }],
+        },
         { status: 'done', name: 'Base de datos de la herramienta comercial', nameEn: 'Commercial Tool Database', desc: 'Base y contactos creados: 568 para Florida y Arizona; 800 para los 5 principales estados USDA (suma Nueva York, Texas y Nueva Jersey).', descEn: 'Database and contacts created: 568 for Florida and Arizona; 800 for the top 5 USDA states (adds New York, Texas and New Jersey).' },
-        { status: 'done', name: 'Optimización de redes sociales: perfil', nameEn: 'Social Media Optimization: Profile', desc: 'Profesionalización del perfil de Karl.', descEn: "Professionalization of Karl's profile." },
+        {
+          status: 'done', name: 'Optimización de redes sociales: perfil', nameEn: 'Social Media Optimization: Profile', desc: 'Profesionalización del perfil de Karl.', descEn: "Professionalization of Karl's profile.",
+          links: [{ label: 'Perfil de Karl en LinkedIn', labelEn: "Karl's LinkedIn profile", url: 'https://www.linkedin.com/in/karlosoriodiaz/' }],
+        },
         { status: 'done', name: 'Benchmarking digital: competidores', nameEn: 'Digital Benchmarking: Competitors', desc: 'Investigación del ecosistema digital de los competidores.', descEn: "Research of the competitors' digital ecosystem." },
         { status: 'done', name: 'Informe de mercado USDA', nameEn: 'USDA Market Report', desc: 'Informe de mercado USDA con principales clientes, estados y organismos de certificación.', descEn: 'USDA market report covering main clients, states and certification bodies.' },
         { status: 'progress', name: 'Paid Media para evento', nameEn: 'Paid Media for Event', desc: 'Campaña GEO para el evento orgánico.', descEn: 'GEO campaign for the organic event.' },
