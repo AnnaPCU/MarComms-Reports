@@ -276,5 +276,5 @@ Quedó como práctica fija, y conviene sostenerla:
   «Link» de la tabla de entregables, en la fila que el equipo indique
   (campo `url` de la fila; la columna solo aparece si alguna fila lo trae).
 - **El link al pipeline de un plan es propio del plan** (lo pasa el equipo),
-  a diferencia de los webinars, donde es la vista general de deals. Queda en
-  el seed (`pipelineUrl`) hasta que el equipo diga en qué entregable va.
+  a diferencia de los webinars, donde es la vista general de deals. Va como
+  link del entregable «Base de datos de la herramienta comercial».

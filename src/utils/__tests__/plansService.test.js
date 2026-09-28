@@ -38,7 +38,15 @@ describe('plansService', () => {
   it('los links de entregables tienen etiqueta y URL, solo en completados', () => {
     const plan = getPlan('cuus', 'sep-2026');
     const withLinks = plan.deliverables.filter((d) => d.links?.length);
-    expect(withLinks.map((d) => d.name)).toEqual(['Optimización web 2.0', 'Branding CUC', 'Optimización de redes sociales: perfil']);
+    expect(withLinks.map((d) => d.name)).toEqual([
+      'Optimización web 2.0',
+      'Benchmarking: investigación competitiva',
+      'Branding CUC',
+      'Base de datos de la herramienta comercial',
+      'Optimización de redes sociales: perfil',
+      'Benchmarking digital: competidores',
+      'Informe de mercado USDA',
+    ]);
     expect(withLinks.every((d) => d.status === 'done')).toBe(true);
     for (const d of withLinks) for (const l of d.links) expect(l.label && /^https:\/\//.test(l.url), d.name).toBeTruthy();
   });

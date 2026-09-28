@@ -27,10 +27,6 @@ export const PLANS_DB = {
       periodEn: 'September 2026',
       market: 'Certificación orgánica en Estados Unidos (USDA Organic, PrimusGFS)',
       marketEn: 'Organic certification in the United States (USDA Organic, PrimusGFS)',
-      // Vista de deals del plan en HubSpot (la pasó el equipo el 28/9/2026). No se
-      // muestra como botón: va a ir en la columna «Link» del entregable que el equipo
-      // indique (campo `url` + `urlLabel`/`urlLabelEn` en la fila).
-      pipelineUrl: 'https://app.hubspot.com/contacts/47081900/objects/0-3/views/73376389/board',
       // Párrafo de apertura: foco en el objetivo del plan (pedido del 21/9/2026).
       intro:
         'Objetivo del plan: posicionar a Control Union USA como organismo certificador de referencia en el mercado orgánico de Estados Unidos y convertir ese posicionamiento en leads calificados. Este informe resume lo entregado en el mes, los indicadores operativos y de performance, y las iniciativas de generación de demanda en marcha.',
@@ -73,19 +69,31 @@ export const PLANS_DB = {
             { label: 'PrimusGFS', url: 'https://northamerica.controlunion.com/certification-program/primusgfs-certification/' },
           ],
         },
-        { status: 'done', name: 'Benchmarking: investigación competitiva', nameEn: 'Benchmarking: Competitive Research', desc: 'Investigación competitiva sobre 33 programas seleccionados.', descEn: 'Competitive research covering 33 selected programs.' },
+        {
+          status: 'done', name: 'Benchmarking: investigación competitiva', nameEn: 'Benchmarking: Competitive Research', desc: 'Investigación competitiva sobre 33 programas seleccionados.', descEn: 'Competitive research covering 33 selected programs.',
+          links: [{ label: 'Benchmarking (Excel)', labelEn: 'Benchmarking (Excel)', url: 'https://pcugroup.sharepoint.com/:x:/r/sites/CommunicationsLATAM/Gedeelde%20documenten/General/000.Planes%20MarComms/CU%20-%20Certificaciones%20USA%20-%20Org%C3%A1nico/Reportes/Benchmarking%20-%20competitive%20research.xlsx?d=we8e5f90e90f64f6a952a8139908d6e0b&csf=1&web=1&e=cp8RqZ' }],
+        },
         { status: 'done', name: 'Campaña de Google Ads', nameEn: 'Google Ads Campaign', desc: 'Creación de la campaña.', descEn: 'Campaign creation.' },
         {
           status: 'done', name: 'Branding CUC', nameEn: 'CUC Branding', desc: 'Definición de branding.', descEn: 'Branding definition.',
           links: [{ label: 'Decisión de marca CUC', labelEn: 'CUC brand decision', url: 'https://pcugroup.sharepoint.com/:i:/r/sites/CommunicationsLATAM/Gedeelde%20documenten/General/000.Planes%20MarComms/CU%20-%20Certificaciones%20USA%20-%20Org%C3%A1nico/Branding/Decisi%C3%B3n%20de%20marca%20CUC.png?d=w776c45cffd994c2aa776053ea6b3e59f&csf=1&web=1&e=dI4D75' }],
         },
-        { status: 'done', name: 'Base de datos de la herramienta comercial', nameEn: 'Commercial Tool Database', desc: 'Base y contactos creados: 568 para Florida y Arizona; 800 para los 5 principales estados USDA (suma Nueva York, Texas y Nueva Jersey).', descEn: 'Database and contacts created: 568 for Florida and Arizona; 800 for the top 5 USDA states (adds New York, Texas and New Jersey).' },
+        {
+          status: 'done', name: 'Base de datos de la herramienta comercial', nameEn: 'Commercial Tool Database', desc: 'Base y contactos creados: 568 para Florida y Arizona; 800 para los 5 principales estados USDA (suma Nueva York, Texas y Nueva Jersey).', descEn: 'Database and contacts created: 568 for Florida and Arizona; 800 for the top 5 USDA states (adds New York, Texas and New Jersey).',
+          links: [{ label: 'Pipeline en HubSpot', labelEn: 'HubSpot pipeline', url: 'https://app.hubspot.com/contacts/47081900/objects/0-3/views/73376389/board' }],
+        },
         {
           status: 'done', name: 'Optimización de redes sociales: perfil', nameEn: 'Social Media Optimization: Profile', desc: 'Profesionalización del perfil de Karl.', descEn: "Professionalization of Karl's profile.",
           links: [{ label: 'Perfil de Karl en LinkedIn', labelEn: "Karl's LinkedIn profile", url: 'https://www.linkedin.com/in/karlosoriodiaz/' }],
         },
-        { status: 'done', name: 'Benchmarking digital: competidores', nameEn: 'Digital Benchmarking: Competitors', desc: 'Investigación del ecosistema digital de los competidores.', descEn: "Research of the competitors' digital ecosystem." },
-        { status: 'done', name: 'Informe de mercado USDA', nameEn: 'USDA Market Report', desc: 'Informe de mercado USDA con principales clientes, estados y organismos de certificación.', descEn: 'USDA market report covering main clients, states and certification bodies.' },
+        {
+          status: 'done', name: 'Benchmarking digital: competidores', nameEn: 'Digital Benchmarking: Competitors', desc: 'Investigación del ecosistema digital de los competidores.', descEn: "Research of the competitors' digital ecosystem.",
+          links: [{ label: 'Benchmarking digital (PowerPoint)', labelEn: 'Digital benchmarking (PowerPoint)', url: 'https://pcugroup.sharepoint.com/:p:/r/sites/CommunicationsLATAM/Gedeelde%20documenten/General/000.Planes%20MarComms/CU%20-%20Certificaciones%20USA%20-%20Org%C3%A1nico/Reportes/Digital%20Benchmarking%20-%20competitors.pptx?d=w4e030068a6734f899ca1e329d95278e0&csf=1&web=1&e=aGiRgH' }],
+        },
+        {
+          status: 'done', name: 'Informe de mercado USDA', nameEn: 'USDA Market Report', desc: 'Informe de mercado USDA con principales clientes, estados y organismos de certificación.', descEn: 'USDA market report covering main clients, states and certification bodies.',
+          links: [{ label: 'Informe de mercado USDA (PDF)', labelEn: 'USDA market report (PDF)', url: 'https://pcugroup.sharepoint.com/:b:/r/sites/CommunicationsLATAM/Gedeelde%20documenten/General/000.Planes%20MarComms/CU%20-%20Certificaciones%20USA%20-%20Org%C3%A1nico/Reportes/USDA%20Market%20report.pdf?d=wdeb81a494a394019aac6094650f7857e&csf=1&web=1&e=vUmHCw' }],
+        },
         { status: 'progress', name: 'Paid Media para evento', nameEn: 'Paid Media for Event', desc: 'Campaña GEO para el evento orgánico.', descEn: 'GEO campaign for the organic event.' },
         { status: 'progress', name: 'Comunicación interna', nameEn: 'Internal Communication', desc: 'Anuncio de Karl a PCU sobre la oportunidad de trabajar con la oficina de Estados Unidos en normas orgánicas; artículo interno en Sharenet.', descEn: 'Announcement from Karl to PCU on the opportunity to work with the US office on organic standards; internal Sharenet article.' },
         { status: 'progress', name: 'Newsletter externo – LinkedIn', nameEn: 'External Newsletter – LinkedIn', desc: 'Newsletter de LinkedIn en las cuentas de Karl y de Control Union North America sobre temas orgánicos.', descEn: "LinkedIn newsletter on Karl's and Control Union North America's accounts covering organic topics." },

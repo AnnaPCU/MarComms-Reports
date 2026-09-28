@@ -1374,3 +1374,8 @@
 **#93**
 
 > Agrega columna "Link" en entregables completados. Al final, en KPIs del mes: hay que volver a poner "pipeline generated" en performance como 1ra card, donde el número es "848.160" con una aclaración más abajo que diga "20 % proveniente de bases de datos creadas de la Commercial Tool", en sus respectivos idiomas. Ventas generadas es 8 en vez de 6. En MQL agregarás $40k y en Won 10k. En entregables, en la nueva columna de URLs/links poner según el caso: Optimización web 2.0: USDA Organic y PrimusGFS (landings de northamerica.controlunion.com); Branding CUC (imagen «Decisión de marca CUC» en SharePoint); Optimización de redes sociales: perfil (LinkedIn de Karl).
+
+
+**#94**
+
+> Más links a agregar en "Entregables - Completados": Benchmarking: investigación competitiva (Excel en SharePoint); Base de datos de la herramienta comercial (vista de deals en HubSpot); Benchmarking digital: competidores (PowerPoint en SharePoint); Informe de mercado USDA (PDF en SharePoint).
