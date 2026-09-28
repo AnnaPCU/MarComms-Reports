@@ -1,96 +1,93 @@
 // ════════════════════════════════════════════════════════════════
 //  SEED — Vista PLANES. Informes mensuales de avance de los planes
 //  regionales de marketing que MarComms presta a un cliente (hoy: el plan
-//  de 6 meses de Control Union USA para el mercado orgánico).
-//  Fuente: el informe mensual del plan (PDF del equipo). Es información
-//  de gestión (entregables, próximos pasos, tracker), no métricas de
-//  plataforma: se transcribe tal cual, no se generan insights.
+//  de Control Union USA para el mercado orgánico, «Control Union North
+//  America · Organic» en el informe del equipo).
+//  Fuente: el informe mensual del plan que arma el equipo. Es información
+//  de gestión (entregables, KPIs operativos y de performance, iniciativas),
+//  no métricas de plataforma: se transcribe tal cual, no se generan insights.
+//  Un período por informe; el informe nuevo REEMPLAZA al anterior cuando el
+//  equipo lo pide así (sep 2026 reemplazó al «Mes 1» del 21/9).
 //  Textos en ES (idioma base) con su variante `…En`.
 // ════════════════════════════════════════════════════════════════
 
 export const PLAN_CLIENTS = [{ id: 'cuus', name: 'Control Union USA' }];
 
 // Un período por informe mensual del plan (más antiguo primero).
-export const PLAN_PERIODS = [{ id: 'm1', label: 'Mes 1 · 5 ago – 5 sep 2026', labelEn: 'Month 1 · Aug 5 – Sep 5, 2026' }];
+export const PLAN_PERIODS = [{ id: 'sep-2026', label: 'Septiembre 2026', labelEn: 'September 2026' }];
 
 export const PLANS_DB = {
   cuus: {
-    m1: {
-      reportNo: 1,
-      title: 'Control Union USA Marketing — Mercado Orgánico',
-      titleEn: 'Control Union USA Marketing — Organic Market',
-      program: 'Plan regional de marketing · hoja de ruta de 6 meses',
-      programEn: 'Regional marketing plan · 6-month roadmap',
-      period: 'Mes 1 · 5 de agosto – 5 de septiembre de 2026',
-      periodEn: 'Month 1 · Aug 5 – Sep 5, 2026',
+    'sep-2026': {
+      title: 'Informe mensual MarComms — Control Union North America · Orgánico',
+      titleEn: 'MarComms Monthly Report — Control Union North America · Organic',
+      program: 'Plan regional de marketing · mercado orgánico',
+      programEn: 'Regional marketing plan · organic market',
+      period: 'Septiembre 2026',
+      periodEn: 'September 2026',
       market: 'Certificación orgánica en Estados Unidos (USDA Organic, PrimusGFS)',
       marketEn: 'Organic certification in the United States (USDA Organic, PrimusGFS)',
+      // Vista de deals del plan en HubSpot (la pasó el equipo el 28/9/2026).
+      pipelineUrl: 'https://app.hubspot.com/contacts/47081900/objects/0-3/views/73376389/board',
       // Párrafo de apertura: foco en el objetivo del plan (pedido del 21/9/2026).
       intro:
-        'Objetivo del plan: posicionar a Control Union USA como organismo certificador de referencia en el mercado orgánico de Estados Unidos y convertir ese posicionamiento en leads calificados en seis meses. El Mes 1 dejó armada la base sobre la que se apoya todo lo que sigue: definición de marca, benchmarking de competidores, estructura de campaña en Google Ads y audiencia objetivo definida.',
+        'Objetivo del plan: posicionar a Control Union USA como organismo certificador de referencia en el mercado orgánico de Estados Unidos y convertir ese posicionamiento en leads calificados. Este informe resume lo entregado en el mes, los indicadores operativos y de performance, y las iniciativas de generación de demanda en marcha.',
       introEn:
-        'Plan objective: position Control Union USA as a reference certification body in the U.S. organic market and turn that positioning into qualified leads within six months. Month 1 built the base every later action rests on: brand definition, competitor benchmarking, Google Ads campaign structure and a defined target audience.',
-      objectiveTitle: 'Objetivo del Mes 1: fundamentos',
-      objectiveTitleEn: 'Month 1 objective: foundations',
-      objective: [
-        'Branding definido para Control Union USA',
-        'Benchmarking: 33 programas de certificación de competidores mapeados',
-        'Estructura inicial de campaña de Google Ads',
-        'Base de datos comercial: 1.368 contactos',
-        'ICP Tier 1 y audiencia definidos',
+        'Plan objective: position Control Union USA as a reference certification body in the U.S. organic market and turn that positioning into qualified leads. This report summarizes what was delivered during the month, the operational and performance indicators, and the demand-generation initiatives under way.',
+      // Resumen del mes (tarjeta oscura).
+      summaryTitle: 'Resumen del mes',
+      summaryTitleEn: 'Month at a glance',
+      summary: ['8 entregables completados', '4 entregables en curso', '5 iniciativas de generación de demanda', '9 reuniones internas'],
+      summaryEn: ['8 deliverables completed', '4 deliverables in progress', '5 demand-generation initiatives', '9 internal meetings'],
+      // KPIs en dos grupos. `value: null` = sin dato todavía (se muestra «—», nunca se inventa).
+      kpiGroups: [
+        {
+          name: 'Operativos',
+          nameEn: 'Operational',
+          items: [
+            { value: '8', label: 'Entregables completados', labelEn: 'Deliverables completed' },
+            { value: '9', label: 'Reuniones internas', labelEn: 'Internal meetings' },
+            { value: '800', label: 'Contactos en la base comercial', labelEn: 'Database created · contacts', note: 'Top 5 estados USDA', noteEn: 'Top 5 USDA states' },
+          ],
+        },
+        {
+          name: 'Performance',
+          nameEn: 'Performance',
+          items: [
+            { value: null, label: 'Pipeline generado', labelEn: 'Pipeline generated' },
+            { value: '2', label: 'MQLs generados', labelEn: 'MQLs generated' },
+            { value: '6', label: 'Ventas generadas', labelEn: 'Sales generated' },
+          ],
+        },
       ],
-      objectiveEn: [
-        'Branding defined for Control Union USA',
-        'Benchmarking: 33 competitor certification programs mapped',
-        'Initial Google Ads campaign structure',
-        'Commercial database: 1,368 contacts',
-        'Tier 1 ICP and audience defined',
-      ],
-      kpis: [
-        { value: '6/7', label: 'Entregables completados', labelEn: 'Deliverables completed' },
-        { value: '33', label: 'Programas de competidores mapeados', labelEn: 'Competitor programs mapped' },
-        { value: '1.368', valueEn: '1,368', label: 'Contactos en la base comercial', labelEn: 'Contacts in commercial database' },
-        { value: '2', label: 'Landing pages optimizadas', labelEn: 'Landing pages optimized' },
-      ],
-      // Estados: 'done' | 'progress' | 'pending' (la etiqueta visible sale del diccionario).
+      // Entregables por estado: 'done' | 'progress'.
       deliverables: [
-        { name: 'Optimización de landing pages', nameEn: 'Landing page optimization', status: 'done', outcome: 'Landing pages de USDA Organic y PrimusGFS optimizadas', outcomeEn: 'USDA Organic and PrimusGFS landing pages optimized' },
-        { name: 'Benchmarking: SCS Global Services', nameEn: 'Benchmarking: SCS Global Services', status: 'done', outcome: '33 programas de certificación de competidores mapeados', outcomeEn: '33 competitor certification programs mapped' },
-        { name: 'Estructura de campaña de Google Ads', nameEn: 'Google Ads campaign structure', status: 'done', outcome: 'Arquitectura inicial de campaña armada', outcomeEn: 'Initial campaign architecture built' },
-        { name: 'Definición de branding — CU USA', nameEn: 'Branding definition — CU USA', status: 'done', outcome: 'Lineamientos de marca definidos', outcomeEn: 'Brand guidelines defined' },
-        { name: 'Base de datos comercial', nameEn: 'Commercial database', status: 'done', outcome: '1.368 contactos calificados incorporados', outcomeEn: '1,368 qualified contacts added' },
-        { name: 'Optimización de redes sociales', nameEn: 'Social media optimization', status: 'progress', outcome: 'Profesionalización de perfiles en marcha', outcomeEn: 'Profile professionalization underway' },
-        { name: 'Market brief: audiencia e ICP', nameEn: 'Market brief: audience & ICP', status: 'done', outcome: 'Target Tier 1 definido', outcomeEn: 'Tier 1 target defined' },
+        { status: 'done', name: 'Optimización web 2.0', nameEn: 'Web Optimization 2.0', desc: 'Landing pages de USDA Organic y PrimusGFS optimizadas.', descEn: 'Optimized landing pages for USDA Organic and PrimusGFS.' },
+        { status: 'done', name: 'Benchmarking: investigación competitiva', nameEn: 'Benchmarking: Competitive Research', desc: 'Investigación competitiva sobre 33 programas seleccionados.', descEn: 'Competitive research covering 33 selected programs.' },
+        { status: 'done', name: 'Campaña de Google Ads', nameEn: 'Google Ads Campaign', desc: 'Creación de la campaña.', descEn: 'Campaign creation.' },
+        { status: 'done', name: 'Branding CUC', nameEn: 'CUC Branding', desc: 'Definición de branding.', descEn: 'Branding definition.' },
+        { status: 'done', name: 'Base de datos de la herramienta comercial', nameEn: 'Commercial Tool Database', desc: 'Base y contactos creados: 568 para Florida y Arizona; 800 para los 5 principales estados USDA (suma Nueva York, Texas y Nueva Jersey).', descEn: 'Database and contacts created: 568 for Florida and Arizona; 800 for the top 5 USDA states (adds New York, Texas and New Jersey).' },
+        { status: 'done', name: 'Optimización de redes sociales: perfil', nameEn: 'Social Media Optimization: Profile', desc: 'Profesionalización del perfil de Karl.', descEn: "Professionalization of Karl's profile." },
+        { status: 'done', name: 'Benchmarking digital: competidores', nameEn: 'Digital Benchmarking: Competitors', desc: 'Investigación del ecosistema digital de los competidores.', descEn: "Research of the competitors' digital ecosystem." },
+        { status: 'done', name: 'Informe de mercado USDA', nameEn: 'USDA Market Report', desc: 'Informe de mercado USDA con principales clientes, estados y organismos de certificación.', descEn: 'USDA market report covering main clients, states and certification bodies.' },
+        { status: 'progress', name: 'Paid Media para evento', nameEn: 'Paid Media for Event', desc: 'Campaña GEO para el evento orgánico.', descEn: 'GEO campaign for the organic event.' },
+        { status: 'progress', name: 'Comunicación interna', nameEn: 'Internal Communication', desc: 'Anuncio de Karl a PCU sobre la oportunidad de trabajar con la oficina de Estados Unidos en normas orgánicas; artículo interno en Sharenet.', descEn: 'Announcement from Karl to PCU on the opportunity to work with the US office on organic standards; internal Sharenet article.' },
+        { status: 'progress', name: 'Newsletter externo – LinkedIn', nameEn: 'External Newsletter – LinkedIn', desc: 'Newsletter de LinkedIn en las cuentas de Karl y de Control Union North America sobre temas orgánicos.', descEn: "LinkedIn newsletter on Karl's and Control Union North America's accounts covering organic topics." },
+        { status: 'progress', name: 'Plan de contenidos: Social Media y Web Q4', nameEn: 'Content Plan: Social Media & Web Q4', desc: 'Calendario de contenidos orgánicos en nuestros canales para el Q4 2026.', descEn: 'Organic content calendar across our channels for Q4 2026.' },
       ],
-      nextTitle: 'Próximos pasos: prioridades del Mes 2',
-      nextTitleEn: 'Next steps: Month 2 priorities',
-      nextSteps: [
-        'Sumar casos de éxito a las landing pages de USDA Organic y PrimusGFS.',
-        'Terminar la profesionalización de los perfiles de redes sociales de los referentes del equipo.',
-        'Lanzar la campaña de Google Ads sobre la estructura definida en el Mes 1.',
-        'Activar la prospección comercial sobre la base de contactos, enfocada en el ICP definido.',
-      ],
-      nextStepsEn: [
-        'Add success stories to the USDA Organic and PrimusGFS landing pages.',
-        "Finish professionalizing key team members' social media profiles.",
-        'Launch the Google Ads campaign on the structure defined in Month 1.',
-        'Activate commercial prospecting on the contact database, focused on the defined ICP.',
-      ],
-      trackerTitle: 'Tracker de acciones — Mes 2',
-      trackerTitleEn: 'Month 2 action tracker',
-      // Prioridad: 'high' | 'medium' | null (sin asignar).
-      tracker: [
-        { name: 'Base de certificaciones de Perú', nameEn: 'Peru Certification Database', status: 'pending', priority: null },
-        { name: 'Calendario de webinars', nameEn: 'Webinar Calendar', status: 'pending', priority: null },
-        { name: 'Plan de Social Media H2', nameEn: 'Social Media Plan H2', status: 'pending', priority: null },
-        { name: 'Newsletter interno: benchmark, industria y competencia', nameEn: 'Internal Newsletter: Benchmark, Industry & Competition', status: 'pending', priority: null },
-        { name: 'Informe USDA', nameEn: 'USDA Report', status: 'pending', priority: 'medium' },
-        { name: 'Benchmarking: certificadoras prioritarias', nameEn: 'Benchmarking: Top Priority CBs', status: 'done', priority: 'high' },
-        { name: 'Investigación de Social Media', nameEn: 'Social Media Research', status: 'pending', priority: 'high' },
-        { name: 'POC de Sales Navigator', nameEn: 'Sales Navigator POC', status: 'pending', priority: null },
-        { name: 'Informe de mercado USDA', nameEn: 'USDA Market Report', status: 'done', priority: 'medium' },
-        { name: 'Artículo interno en Sharenet', nameEn: 'Internal Sharenet Article', status: 'pending', priority: null },
-        { name: 'Campaña GEO — evento orgánico', nameEn: 'GEO Campaign — Organic Event', status: 'progress', priority: 'high' },
+      // Iniciativas por grupo.
+      initiativeGroups: [
+        {
+          name: 'Generación de demanda',
+          nameEn: 'Demand generation',
+          items: [
+            { name: 'Webinars', nameEn: 'Webinars', desc: 'Temas a definir con WOLF y eventos a calendarizar.', descEn: 'Topics to be defined with WOLF and events to be scheduled.' },
+            { name: 'Base de datos de TC de Perú', nameEn: 'Peru TC Database', desc: 'Alineación con Fiorella y Álvaro para usar los leads de los TC de Perú para generar demanda.', descEn: 'Alignment with Fiorella and Alvaro to use leads from Peru TCs to generate demand.' },
+            { name: 'Seguimiento BDR', nameEn: 'BDR Follow-up', desc: 'Servicio de BDR montado desde MarComms, con una persona del equipo dedicada al seguimiento de leads.', descEn: 'BDR service set up from MarComms, with a team member dedicated to lead follow-up.' },
+            { name: 'Steal Services', nameEn: 'Steal Services', desc: 'Automatización de email marketing dirigida a la base de datos de los competidores.', descEn: "Email marketing automation targeting the competitors' database." },
+            { name: 'Seguimiento de leads del evento orgánico', nameEn: 'Organic Event Lead Follow-up', desc: 'Acción de seguimiento con los leads del evento orgánico.', descEn: 'Follow-up action with leads from the organic event.' },
+          ],
+        },
       ],
     },
   },

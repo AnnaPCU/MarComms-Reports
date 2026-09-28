@@ -5,7 +5,7 @@ import { PILARES, CLIENTS_NAV, EXTRA_NAV } from '@/constants/pilares';
 // pilares sin datos todavía muestran un punto tenue.
 export function PilarNav({ active, onChange }) {
   return (
-    <nav className="flex flex-wrap gap-1 border-b border-cu-border bg-white px-9">
+    <nav className="flex flex-wrap gap-1 border-b border-cu-border bg-white px-9 print:hidden">
       {[...PILARES, ...EXTRA_NAV].map((p) => {
         const Icon = p.icon;
         const isActive = p.id === active;

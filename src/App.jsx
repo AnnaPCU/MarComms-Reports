@@ -16,6 +16,7 @@ import { reportFilename, expandAccountName } from '@/utils/reportFilename';
 import { brandOf } from '@/constants/brand';
 import { getSegConfig } from '@/services/socialService';
 import { viewState } from '@/utils/viewState';
+import { SET_LANG_EVENT } from '@/components/plans/PlansApp';
 
 export default function App() {
   const { authed, login, logout } = useAuth();
@@ -65,6 +66,21 @@ export default function App() {
   // periodIds: períodos elegidos en el diálogo (cada uno baja su propio HTML).
   async function doDownload(audience, periodIds, lang = 'es') {
     setShowDownload(false);
+    // Planes: el diálogo ofrece HTML interactivo o PDF. El PDF sale de la
+    // impresión del navegador (sin backend): se fija el idioma en la vista,
+    // se ocultan los controles (`print:hidden`) y el nombre sugerido del
+    // archivo viaja en document.title mientras dura el diálogo de impresión.
+    if (audience === 'pdf') {
+      window.dispatchEvent(new CustomEvent(SET_LANG_EVENT, { detail: lang }));
+      const base = reportFilename({ pilarLabel: 'Plan', accountName, period, periodLabel, audience: 'internal' }).replace(/\.html$/, '');
+      const prevTitle = document.title;
+      document.title = base;
+      await new Promise((r) => setTimeout(r, 150));
+      window.print();
+      document.title = prevTitle;
+      return;
+    }
+    if (audience === 'html') audience = 'internal';
     const ids = periodIds?.length ? periodIds : [period];
     // Social segmentado: si hay un país seleccionado, la descarga es el
     // reporte de ESE país (queda fijo en el archivo, sin botonera).
@@ -174,6 +190,7 @@ export default function App() {
           onChoose={doDownload}
           periods={cfg.hasDataFor ? periods.filter((p) => cfg.hasDataFor(account, p.id)) : periods}
           currentPeriod={period}
+          mode={pilar === 'plans' ? 'format' : 'audience'}
         />
       )}
     </div>

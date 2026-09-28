@@ -1334,3 +1334,23 @@
 **#87**
 
 > [PDF: draft-agosto-organicusa · Monthly Report No. 1 · Control Union USA Marketing — Organic Market] Necesito implementar, al lado de la vista de "clientes" una vista llamada "Planes", en el cual por el momento unicamente se verá a nivel informacion esto que te adjunto. A nivel estética y estructura que se maneje como nos venimos manejando con el resto de pilares. Lo unico que te pido a ajustar a nivel copy en este caso el parrafo "the marcomms team" para que haga mas foco en el objetivo.
+
+
+## 23 de septiembre de 2026
+
+
+**#88**
+
+> Quiero que el nombre de la pestaña se llame "MarComms Reports"
+
+
+## 28 de septiembre de 2026
+
+
+**#89**
+
+> [HTML: cu-organic-monthly-report-sep2026 · MarComms Monthly Report · Control Union North America · Organic · September 2026] Te adjunto un archivo que va a reemplazar a lo que hoy hay a nivel contenido en la lista de planes de Control Union USA. Vas a reemplazar el contenido de ahí y vas a poner este, porque es la versión más actualizada. A nivel de estructura me gusta más cómo lo venís manejando vos, cómo se ve en el front de MarComms Reports, más que lo que te mando yo, que tiene otra estructura; pero podríamos hacer un punto medio a nivel ordenamiento de textos. A nivel estética, mantengamos cómo se viene manejando en MarComms Reports. De a poco te iré juntando cositas para que le vayas haciendo ajustes a esta vista. Lo que a priori necesito es que me lo actualices y que haya una opción para descargar en formato PDF, por lo menos a nivel planes por el momento. Al funcionar en PDF hay ciertas interacciones que no se van a poder hacer; contemplar eso a la hora de proponer la descarga en PDF o .html. Estaría bueno que cuando uno le dé a descargar te proponga las dos cosas, por lo menos para Planes. El resto de vistas por el momento no me interesa que se puedan descargar como PDF.
+>
+> En MQL generated poné 2 y en Sales generated poné 6.
+>
+> Link al pipeline: https://app.hubspot.com/contacts/47081900/objects/0-3/views/73376389/board

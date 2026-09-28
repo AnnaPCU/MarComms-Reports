@@ -249,4 +249,19 @@ Quedó como práctica fija, y conviene sostenerla:
   quedan navegables.
 - El logo del cliente sale de la marca de la cuenta (`brandOf`), como en los
   pilares. Estética y estructura: los mismos componentes compartidos (ficha,
-  KpiCard, tablas, NextStepsPanel) para que se lea como un reporte más.
+  KpiCard, tablas) para que se lea como un reporte más.
+- **El informe nuevo reemplaza al anterior cuando el equipo lo pide así**
+  (28/9/2026: el de septiembre reemplazó al «Mes 1»). El documento del equipo
+  puede venir con otra estructura; la vista mantiene la de MarComms Reports y
+  se busca un punto medio en el orden de los textos, no en la estética.
+- **Un KPI sin dato se guarda como `null` y se muestra «—»** con la nota «Sin
+  dato para este período»; nunca se rellena.
+- **Descarga en PDF solo en Planes.** Sale de la impresión del navegador
+  («Guardar como PDF»), sin backend ni librería: se fija el idioma elegido en
+  la vista, se ocultan nav, filtros, botones y toggle (`print:hidden`) y se
+  imprime con `@media print` (A4, fondo blanco, sin sombras, tablas sin
+  cortar). Es una copia fija: sin cambio de idioma ni interacciones, y el
+  botón del pipeline se imprime como URL. Los pilares no ofrecen PDF porque
+  sus reportes dependen de vistas, tooltips y botoneras.
+- **El link al pipeline de un plan es propio del plan** (lo pasa el equipo),
+  a diferencia de los webinars, donde es la vista general de deals.

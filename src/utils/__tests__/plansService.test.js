@@ -2,23 +2,32 @@ import { describe, it, expect } from 'vitest';
 import { listAccounts, listPeriods, getPlan, hasDataFor } from '@/services/plansService';
 
 describe('plansService', () => {
-  it('lista el plan de Control Union USA con su informe del Mes 1', () => {
+  it('lista el plan de Control Union USA con su informe de septiembre 2026', () => {
     expect(listAccounts().map((a) => a.id)).toContain('cuus');
-    expect(listPeriods().map((p) => p.id)).toContain('m1');
-    expect(hasDataFor('cuus', 'm1')).toBe(true);
-    expect(hasDataFor('cuus', 'm2')).toBe(false);
+    expect(listPeriods().map((p) => p.id)).toContain('sep-2026');
+    expect(hasDataFor('cuus', 'sep-2026')).toBe(true);
+    expect(hasDataFor('cuus', 'm1')).toBe(false);
   });
 
   it('cada informe trae los bloques del reporte con su variante en inglés', () => {
-    const plan = getPlan('cuus', 'm1');
-    expect(plan.kpis.length).toBeGreaterThan(0);
+    const plan = getPlan('cuus', 'sep-2026');
+    expect(plan.kpiGroups.length).toBe(2);
     expect(plan.deliverables.every((d) => ['done', 'progress', 'pending'].includes(d.status))).toBe(true);
-    expect(plan.tracker.every((a) => [null, 'high', 'medium'].includes(a.priority))).toBe(true);
-    for (const k of ['title', 'program', 'period', 'intro', 'objectiveTitle', 'nextTitle', 'trackerTitle']) {
+    expect(plan.deliverables.filter((d) => d.status === 'done').length).toBe(8);
+    expect(plan.deliverables.filter((d) => d.status === 'progress').length).toBe(4);
+    expect(plan.initiativeGroups[0].items.length).toBe(5);
+    for (const k of ['title', 'program', 'period', 'market', 'intro', 'summaryTitle']) {
       expect(plan[`${k}En`], k).toBeTruthy();
     }
-    expect(plan.objectiveEn.length).toBe(plan.objective.length);
-    expect(plan.nextStepsEn.length).toBe(plan.nextSteps.length);
+    for (const d of plan.deliverables) expect(d.nameEn && d.descEn, d.name).toBeTruthy();
+    for (const g of plan.kpiGroups) for (const k of g.items) expect(k.labelEn, k.label).toBeTruthy();
+  });
+
+  it('un KPI sin dato se guarda como null (nunca se inventa)', () => {
+    const perf = getPlan('cuus', 'sep-2026').kpiGroups[1].items;
+    expect(perf.find((k) => k.label === 'Pipeline generado').value).toBeNull();
+    expect(perf.find((k) => k.label === 'MQLs generados').value).toBe('2');
+    expect(perf.find((k) => k.label === 'Ventas generadas').value).toBe('6');
   });
 
   it('período desconocido → null', () => {

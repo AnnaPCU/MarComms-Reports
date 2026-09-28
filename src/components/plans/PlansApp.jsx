@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
+import { ExternalLink } from 'lucide-react';
 import { initialLang } from '@/utils/reportLang';
 import { listAccounts, getPlan } from '@/services/plansService';
 import { PLANS_STR } from '@/utils/plansI18n';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { KpiCard } from '@/components/shared/KpiCard';
-import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
 
 const EMBED = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
+
+// Evento con el que App fija el idioma de la vista antes de imprimir a PDF.
+export const SET_LANG_EVENT = 'marcomms:setlang';
 
 const STATUS_CLS = {
   done: 'bg-cu-cyan/10 text-[#1372a5]',
   progress: 'bg-[#d4a72c]/15 text-[#8a6a10]',
   pending: 'bg-cu-grey/10 text-cu-grey',
 };
-const PRIORITY_CLS = { high: 'font-bold text-[#a02020]', medium: 'text-cu-dgrey' };
 
 function FichaRow({ k, v }) {
   return (
@@ -29,12 +31,17 @@ function FichaRow({ k, v }) {
 const thCls = 'bg-cu-dblue px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.5px] text-white';
 const tdCls = 'border-b border-cu-border2 px-4 py-2.5 text-[12px] text-cu-dgrey';
 
+function StatusPill({ status, t }) {
+  return <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-[3px] text-[10.5px] font-medium ${STATUS_CLS[status]}`}>{t.status[status]}</span>;
+}
+
 // ════════════════════════════════════════════════════════════════
 //  Vista PLANES — informe mensual de avance de un plan regional de
-//  marketing. Es información de gestión (objetivo, entregables, próximos
-//  pasos y tracker), transcripta del informe del equipo: no se generan
-//  insights ni métricas. Misma estética y estructura que los pilares
-//  (ficha, KPIs, tablas, panel de próximos pasos) y toggle ES/EN.
+//  marketing. Es información de gestión (KPIs, entregables, iniciativas),
+//  transcripta del informe del equipo: no se generan insights ni métricas.
+//  Misma estética y estructura que los pilares (ficha, KPIs, tablas) y
+//  toggle ES/EN. Imprimible: la descarga en PDF usa la impresión del
+//  navegador con los controles ocultos (`print:hidden`).
 // ════════════════════════════════════════════════════════════════
 export function PlansApp({ account, period }) {
   const compute = () => getPlan(account, period);
@@ -44,6 +51,12 @@ export function PlansApp({ account, period }) {
     if (EMBED) return;
     setPlan(getPlan(account, period));
   }, [account, period]);
+  // App fija el idioma antes de imprimir a PDF (el toggle queda oculto en el papel).
+  useEffect(() => {
+    const onSet = (e) => e.detail && setLang(e.detail);
+    window.addEventListener(SET_LANG_EVENT, onSet);
+    return () => window.removeEventListener(SET_LANG_EVENT, onSet);
+  }, []);
 
   const t = PLANS_STR[lang];
   const en = lang === 'en';
@@ -52,107 +65,155 @@ export function PlansApp({ account, period }) {
 
   if (!plan) return <NoDataScreen lang={lang} detail={t.noData} />;
 
-  const langToggle = (
-    <SegmentedControl
-      value={lang}
-      onChange={setLang}
-      size="sm"
-      options={[
-        { id: 'es', label: 'ES' },
-        { id: 'en', label: 'EN' },
-      ]}
-    />
+  const done = plan.deliverables.filter((d) => d.status === 'done');
+  const progress = plan.deliverables.filter((d) => d.status === 'progress');
+
+  const deliverablesTable = (rows) => (
+    <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
+      <table className="w-full border-collapse">
+        <thead>
+          <tr>
+            <th className={`${thCls} w-10`}>#</th>
+            <th className={thCls}>{t.hDeliverable}</th>
+            <th className={thCls}>{t.hStatus}</th>
+            <th className={thCls}>{t.hDetail}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((d, i) => (
+            <tr key={d.name} className="last:[&>td]:border-b-0">
+              <td className={`${tdCls} text-cu-grey`}>{i + 1}</td>
+              <td className={`${tdCls} font-medium text-cu-dblue`}>{tx(d, 'name')}</td>
+              <td className={tdCls}><StatusPill status={d.status} t={t} /></td>
+              <td className={tdCls}>{tx(d, 'desc')}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 
   return (
     <div className="animate-fade-in">
       {/* ── Ficha del informe ── */}
-      <SectionHeader title={tx(plan, 'title')} note={`${accName} · ${t.reportNo(plan.reportNo)}`} />
-      <div className="mb-5 grid gap-3 lg:grid-cols-3">
-        <div className="overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu lg:col-span-2">
+      <SectionHeader title={tx(plan, 'title')} note={`${accName} · ${t.reportNote(tx(plan, 'period'))}`} />
+      <div className="mb-5 grid gap-3 lg:grid-cols-3 print:grid-cols-3">
+        <div className="overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu lg:col-span-2 print:col-span-2">
           <FichaRow k={t.fClient} v={accName} />
           <FichaRow k={t.fProgram} v={tx(plan, 'program')} />
           <FichaRow k={t.fPeriod} v={tx(plan, 'period')} />
           <FichaRow k={t.fMarket} v={tx(plan, 'market')} />
         </div>
         <div className="rounded-cu bg-cu-dblue px-5 py-4 text-white shadow-cu">
-          <div className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.5px]">{tx(plan, 'objectiveTitle')}</div>
+          <div className="mb-2.5 text-[11px] font-bold uppercase tracking-[0.5px]">{tx(plan, 'summaryTitle')}</div>
           <ul className="flex flex-col gap-1.5 text-[11.5px] text-white/80">
-            {tx(plan, 'objective').map((s) => (
+            {tx(plan, 'summary').map((s) => (
               <li key={s} className="flex gap-2"><span className="text-cu-cyan">●</span>{s}</li>
             ))}
           </ul>
         </div>
       </div>
 
-      <div className="mb-4 flex justify-end">{langToggle}</div>
+      {/* Idioma + link al pipeline (en el PDF el botón se reemplaza por la URL en texto) */}
+      <div className="mb-4 flex items-end justify-end gap-3 print:hidden">
+        <SegmentedControl
+          value={lang}
+          onChange={setLang}
+          size="sm"
+          options={[
+            { id: 'es', label: 'ES' },
+            { id: 'en', label: 'EN' },
+          ]}
+        />
+        {plan.pipelineUrl && (
+          <a
+            href={plan.pipelineUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-cu bg-cu-dblue px-4 py-2 text-[11px] font-bold text-white transition-opacity hover:opacity-90"
+          >
+            <ExternalLink className="h-3.5 w-3.5" />
+            {t.pipelineBtn}
+          </a>
+        )}
+      </div>
+      {plan.pipelineUrl && (
+        <p className="mb-3 hidden text-[10.5px] text-cu-grey print:block">
+          {t.pipelinePrint} <a href={plan.pipelineUrl} className="text-cu-cyan">{plan.pipelineUrl}</a>
+        </p>
+      )}
 
       {/* ── Objetivo del plan ── */}
       <div className="mb-5 rounded-cu border-l-4 border-cu-cyan bg-white px-5 py-4 text-[12.5px] leading-relaxed text-cu-dgrey shadow-cu">
         {tx(plan, 'intro')}
       </div>
 
-      {/* ── Indicadores del mes ── */}
-      <SectionHeader title={t.metricsTitle} note={tx(plan, 'period')} />
-      <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {plan.kpis.map((k) => (
-          <KpiCard key={k.label} label={tx(k, 'label')} value={tx(k, 'value')} />
-        ))}
-      </div>
+      {/* ── KPIs ── */}
+      <SectionHeader title={t.kpisTitle} note={t.kpisNote} />
+      {plan.kpiGroups.map((g) => (
+        <div key={g.name} className="mb-4 print:break-inside-avoid">
+          <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+            <span className="h-2 w-2 rounded-full bg-cu-cyan" />
+            {tx(g, 'name')}
+          </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 print:grid-cols-3">
+            {g.items.map((k) => (
+              <KpiCard
+                key={k.label}
+                label={tx(k, 'label')}
+                value={k.value == null ? '—' : tx(k, 'value')}
+                accent={k.value == null ? 'amber' : 'cyan'}
+                footnote={k.value == null ? t.noValue : (tx(k, 'note') ?? undefined)}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
 
       {/* ── Entregables ── */}
       <SectionHeader title={t.deliverablesTitle} note={t.deliverablesNote} />
-      <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              <th className={thCls}>{t.hDeliverable}</th>
-              <th className={thCls}>{t.hStatus}</th>
-              <th className={thCls}>{t.hOutcome}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {plan.deliverables.map((d) => (
-              <tr key={d.name} className="last:[&>td]:border-b-0">
-                <td className={`${tdCls} font-medium text-cu-dblue`}>{tx(d, 'name')}</td>
-                <td className={tdCls}>
-                  <span className={`inline-flex rounded-full px-2.5 py-[3px] text-[10.5px] font-medium ${STATUS_CLS[d.status]}`}>{t.status[d.status]}</span>
-                </td>
-                <td className={tdCls}>{tx(d, 'outcome')}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+        <span className="h-2 w-2 rounded-full bg-cu-cyan" />
+        {t.groupDone(done.length)}
       </div>
-
-      {/* ── Próximos pasos (son contenido del informe: se muestran siempre) ── */}
-      <NextStepsPanel steps={tx(plan, 'nextSteps')} title={tx(plan, 'nextTitle')} subtitle={`${tx(plan, 'title')} · ${t.reportNo(plan.reportNo)}`} />
-
-      {/* ── Tracker de acciones ── */}
-      <SectionHeader title={tx(plan, 'trackerTitle')} note={t.trackerNote} />
-      <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              <th className={thCls}>{t.hAction}</th>
-              <th className={thCls}>{t.hStatus}</th>
-              <th className={thCls}>{t.hPriority}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {plan.tracker.map((a) => (
-              <tr key={a.name} className="last:[&>td]:border-b-0">
-                <td className={`${tdCls} font-medium text-cu-dblue`}>{tx(a, 'name')}</td>
-                <td className={tdCls}>
-                  <span className={`inline-flex rounded-full px-2.5 py-[3px] text-[10.5px] font-medium ${STATUS_CLS[a.status]}`}>{t.status[a.status]}</span>
-                </td>
-                <td className={`${tdCls} ${a.priority ? PRIORITY_CLS[a.priority] : 'text-cu-grey'}`}>{a.priority ? t.priority[a.priority] : '—'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {deliverablesTable(done)}
+      <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+        <span className="h-2 w-2 rounded-full border-[1.5px] border-cu-cyan" />
+        {t.groupProgress(progress.length)}
       </div>
-      {EMBED && <p className="mb-2 text-[10.5px] italic text-cu-grey">{t.embedNote}</p>}
+      {deliverablesTable(progress)}
+
+      {/* ── Iniciativas ── */}
+      <SectionHeader title={t.initiativesTitle} note={t.initiativesNote} />
+      {plan.initiativeGroups.map((g) => (
+        <div key={g.name}>
+          <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+            <span className="h-2 w-2 rounded-full bg-cu-cyan" />
+            {tx(g, 'name')} · {g.items.length}
+          </div>
+          <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th className={`${thCls} w-10`}>#</th>
+                  <th className={thCls}>{t.hInitiative}</th>
+                  <th className={thCls}>{t.hDetail}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {g.items.map((it, i) => (
+                  <tr key={it.name} className="last:[&>td]:border-b-0">
+                    <td className={`${tdCls} text-cu-grey`}>{i + 1}</td>
+                    <td className={`${tdCls} font-medium text-cu-dblue`}>{tx(it, 'name')}</td>
+                    <td className={tdCls}>{tx(it, 'desc')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+      {EMBED && <p className="mb-2 text-[10.5px] italic text-cu-grey print:hidden">{t.embedNote}</p>}
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { X, Building2, Share2, Download, CalendarRange, Languages } from 'lucide-react';
+import { X, Building2, Share2, Download, CalendarRange, Languages, FileCode2, FileText } from 'lucide-react';
 
 // Modal de descarga: elegís QUÉ período/s bajar (por defecto el que estás
 // viendo) y si el reporte es para uso interno o externo. Cada período
 // seleccionado se descarga como su propio archivo HTML.
-export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod = null }) {
+// mode: 'audience' (uso interno / externo, HTML) | 'format' (HTML interactivo /
+// PDF, para las vistas que no tienen sección generada de próximos pasos).
+export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod = null, mode = 'audience' }) {
   const [selected, setSelected] = useState(() => new Set(currentPeriod != null ? [currentPeriod] : []));
   const [lang, setLang] = useState('es'); // idioma principal del descargable
   const many = periods.length > 1;
@@ -91,6 +93,38 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
             igual.
           </p>
 
+          {mode === 'format' ? (
+            <>
+              <p className="mb-4 text-[13px] text-cu-dgrey">
+                ¿En qué formato querés descargar el informe?
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => !none && onChoose('html', chosen, lang)}
+                  disabled={none}
+                  className="group flex flex-col items-center gap-2 rounded-cu border border-cu-border bg-white px-4 py-5 text-center transition-colors hover:border-cu-cyan hover:bg-cu-cyan/[0.04] disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <FileCode2 className="h-6 w-6 text-cu-dblue" />
+                  <span className="text-[13px] font-bold text-cu-dblue">HTML interactivo</span>
+                  <span className="text-[10.5px] leading-tight text-cu-grey">Funciona offline, con cambio de idioma adentro</span>
+                </button>
+                <button
+                  onClick={() => onChoose('pdf', [currentPeriod], lang)}
+                  className="group flex flex-col items-center gap-2 rounded-cu border border-cu-border bg-white px-4 py-5 text-center transition-colors hover:border-cu-cyan hover:bg-cu-cyan/[0.04]"
+                >
+                  <FileText className="h-6 w-6 text-cu-cyan" />
+                  <span className="text-[13px] font-bold text-cu-dblue">PDF</span>
+                  <span className="text-[10.5px] leading-tight text-cu-grey">Para imprimir o adjuntar, en el idioma elegido</span>
+                </button>
+              </div>
+              <div className="mt-4 rounded-cu border border-cu-border2 bg-cu-bg px-3.5 py-2.5 text-[11.5px] leading-relaxed text-cu-grey">
+                ℹ️ El <strong className="text-cu-dgrey">PDF</strong> se genera con la impresión del navegador: en el
+                diálogo que se abre elegí <strong className="text-cu-dgrey">«Guardar como PDF»</strong>. Es una copia fija de
+                la vista actual (sin cambio de idioma ni interacciones).
+              </div>
+            </>
+          ) : (
+          <>
           <p className="mb-4 text-[13px] text-cu-dgrey">
             ¿Deseás descargar el reporte para <strong className="text-cu-dblue">uso interno</strong> o{' '}
             <strong className="text-cu-dblue">uso externo</strong>?
@@ -118,7 +152,7 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
             </button>
           </div>
 
-          {none && (
+          {none && mode !== 'format' && (
             <p className="mt-3 text-center text-[11px] font-medium text-amber-700">
               Seleccioná al menos un período para descargar.
             </p>
@@ -128,6 +162,8 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
             ℹ️ En el reporte de <strong className="text-cu-dgrey">uso externo</strong>, la sección
             <strong className="text-cu-dgrey"> «Conclusión — Próximos Pasos»</strong> no estará visible.
           </div>
+          </>
+          )}
         </div>
       </div>
     </div>

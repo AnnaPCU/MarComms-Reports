@@ -26,7 +26,7 @@ export function Header({
   const brand = brandOf(account, accountName);
 
   return (
-    <header className="sticky top-[5px] z-50 flex min-h-[68px] flex-wrap items-center gap-4 border-b border-cu-border bg-white px-9">
+    <header className="sticky top-[5px] z-50 flex min-h-[68px] flex-wrap items-center gap-4 border-b border-cu-border bg-white px-9 print:static">
       <MarCommsLogo className="h-8" />
       <div className="h-9 w-px shrink-0 bg-cu-border" />
       <div className="text-[11px] text-cu-grey">
@@ -40,7 +40,7 @@ export function Header({
         </>
       )}
 
-      <div className="ml-auto flex flex-wrap items-end gap-3">
+      <div className="ml-auto flex flex-wrap items-end gap-3 print:hidden">
         {showFilters && (
           <>
             <Select label={accountFilterLabel} value={account} onChange={onAccountChange} options={accounts} />

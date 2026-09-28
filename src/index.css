@@ -43,3 +43,45 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #3eb2ed;
 }
+
+/* ── Impresión / «Guardar como PDF» (descarga en PDF de la vista Planes) ──
+   Se imprime la vista tal cual se ve, con fondo blanco, sin sombras ni
+   controles (los que no van llevan `print:hidden`). Los paneles oscuros
+   conservan su color. */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm 10mm;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  main {
+    max-width: none !important;
+    padding: 12px 0 0 !important;
+  }
+  .shadow-cu,
+  .shadow-cu-h {
+    box-shadow: none !important;
+  }
+  .animate-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  /* Las tablas pueden cortarse entre páginas, pero nunca por la mitad de una fila;
+     los títulos y etiquetas de grupo se quedan con lo que encabezan. */
+  tr,
+  thead {
+    break-inside: avoid;
+  }
+  h2,
+  thead,
+  .print-keep {
+    break-after: avoid;
+  }
+}
