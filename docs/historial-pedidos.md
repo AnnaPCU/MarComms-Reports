@@ -1399,3 +1399,8 @@
 **#98**
 
 > Sacá la aclaración de "won"
+
+
+**#99**
+
+> En vez de 40k y 10k pondrás "40000" y "10000", y en "848.160" ponete USD por detrás.

@@ -485,9 +485,9 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   entre el documento del equipo y la vista: ficha + resumen del mes, objetivo
   del plan, KPIs en una sola fila de 5 columnas iguales con dos grupos etiquetados
   (operativos en KpiCard: 8 entregables, 9 reuniones, 800 contactos;
-  performance destacado en HeroCard azul marino: pipeline generado 848.160
+  performance destacado en HeroCard azul marino: pipeline generado 848.160 USD
   con nota «20 % proveniente de bases de datos creadas con la Commercial
-  Tool», MQLs USD 40k (8 MQLs) y ventas USD 10k (2 ventas)), entregables completados (8) y en curso (4) en tablas
+  Tool», MQLs 40.000 USD (8 MQLs) y ventas 10.000 USD (2 ventas)), entregables completados (8) y en curso (4) en tablas
   numeradas, iniciativas de generación de demanda (5) y botón «Link al
   pipeline» con la vista de deals del plan. El diálogo de descarga de Planes
   ofrece **HTML interactivo o PDF**: el PDF sale de la impresión del navegador

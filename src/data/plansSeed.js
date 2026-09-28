@@ -39,7 +39,7 @@ export const PLANS_DB = {
       // Links por entregable (columna «Link», solo en la tabla cuyas filas los traen).
       summaryEn: ['8 deliverables completed', '4 deliverables in progress', '5 demand-generation initiatives', '9 internal meetings'],
       // KPIs en dos grupos, en una sola fila (operativos + performance). `value: null` = sin dato
-      // (se muestra «—», nunca se inventa). `pill` = importe destacado; `note` = aclaración.
+      // (se muestra «—», nunca se inventa). `unit` = unidad chica al lado del valor (USD); `pill` = etiqueta destacada; `note` = aclaración.
       kpiGroups: [
         {
           name: 'Operativos',
@@ -54,9 +54,9 @@ export const PLANS_DB = {
           name: 'Performance',
           nameEn: 'Performance',
           items: [
-            { value: '848.160', valueEn: '848,160', label: 'Pipeline generado', labelEn: 'Pipeline generated', note: '20 % proveniente de bases de datos creadas con la Commercial Tool', noteEn: '20% from databases created with the Commercial Tool' },
-            { value: 'USD 40k', label: 'MQLs generados', labelEn: 'MQLs generated', pill: '8 MQLs', pillEn: '8 MQLs' },
-            { value: 'USD 10k', label: 'Ventas generadas', labelEn: 'Sales generated', pill: '2 ventas', pillEn: '2 sales' },
+            { value: '848.160', valueEn: '848,160', unit: 'USD', label: 'Pipeline generado', labelEn: 'Pipeline generated', note: '20 % proveniente de bases de datos creadas con la Commercial Tool', noteEn: '20% from databases created with the Commercial Tool' },
+            { value: '40.000', valueEn: '40,000', unit: 'USD', label: 'MQLs generados', labelEn: 'MQLs generated', pill: '8 MQLs', pillEn: '8 MQLs' },
+            { value: '10.000', valueEn: '10,000', unit: 'USD', label: 'Ventas generadas', labelEn: 'Sales generated', pill: '2 ventas', pillEn: '2 sales' },
           ],
         },
       ],
