@@ -200,7 +200,7 @@ export function PlansApp({ account, period }) {
                 key={k.label}
                 label={tx(k, 'label')}
                 value={k.value == null ? '—' : tx(k, 'value')}
-                pill={k.pill}
+                pill={tx(k, 'pill')}
                 footnote={k.value == null ? t.noValue : (tx(k, 'note') ?? undefined)}
               />
             ),

@@ -1389,3 +1389,8 @@
 **#96**
 
 > mql 8 y sales 2
+
+
+**#97**
+
+> Los 40k y 10k que sean los grandes aclarando que es USD, y el 8 y 2 pasarán a estar debajo.
