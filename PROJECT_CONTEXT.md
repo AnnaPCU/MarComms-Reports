@@ -487,7 +487,7 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   (operativos en KpiCard: 8 entregables, 9 reuniones, 800 contactos;
   performance destacado en HeroCard azul marino: pipeline generado 848.160
   con nota «20 % proveniente de bases de datos creadas con la Commercial
-  Tool», 2 MQLs ($40k) y 8 ventas ($10k, Won)), entregables completados (8) y en curso (4) en tablas
+  Tool», 8 MQLs ($40k) y 2 ventas ($10k, Won)), entregables completados (8) y en curso (4) en tablas
   numeradas, iniciativas de generación de demanda (5) y botón «Link al
   pipeline» con la vista de deals del plan. El diálogo de descarga de Planes
   ofrece **HTML interactivo o PDF**: el PDF sale de la impresión del navegador

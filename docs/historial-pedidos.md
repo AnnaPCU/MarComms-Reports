@@ -1384,3 +1384,8 @@
 **#95**
 
 > Sacá las aclaraciones en paréntesis y fijate que cuando lo descargo en PDF los logos se muestran medio pixelados. Por otro lado, al descargarlo, quiero que el nomenclado de la descarga esté siempre en el idioma correspondiente seleccionado, no importa de dónde venga el informe ni de qué pilar estemos hablando.
+
+
+**#96**
+
+> mql 8 y sales 2

@@ -29,8 +29,8 @@ describe('plansService', () => {
     expect(perf[0].value).toBe('848.160');
     expect(perf[0].valueEn).toBe('848,160');
     expect(perf[0].noteEn).toBeTruthy();
-    expect(perf.find((k) => k.label === 'MQLs generados')).toMatchObject({ value: '2', pill: '$40k' });
-    expect(perf.find((k) => k.label === 'Ventas generadas')).toMatchObject({ value: '8', pill: '$10k' });
+    expect(perf.find((k) => k.label === 'MQLs generados')).toMatchObject({ value: '8', pill: '$40k' });
+    expect(perf.find((k) => k.label === 'Ventas generadas')).toMatchObject({ value: '2', pill: '$10k' });
     // Un KPI sin dato se guardaría como null y la vista mostraría «—»: nunca se inventa.
     expect(perf.every((k) => k.value === null || typeof k.value === 'string')).toBe(true);
   });
