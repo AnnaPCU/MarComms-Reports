@@ -8,6 +8,9 @@ import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { KpiCard } from '@/components/shared/KpiCard';
 import { HeroCard } from '@/components/shared/HeroCard';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
+import { BarBottom } from '@/components/brand/BrandBars';
+import { MarCommsLogo } from '@/components/brand/Logo';
+import { Tagline } from '@/components/brand/Tagline';
 
 const EMBED = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
 
@@ -72,6 +75,9 @@ export function PlansApp({ account, period }) {
   const done = plan.deliverables.filter((d) => d.status === 'done');
   const progress = plan.deliverables.filter((d) => d.status === 'progress');
 
+  // La columna «Link» aparece solo si algún entregable trae `url` (ej. el pipeline
+  // de HubSpot, que el equipo va a ubicar acá). En el PDF se imprime la URL.
+  const hasLinks = plan.deliverables.some((d) => d.url);
   const deliverablesTable = (rows) => (
     <div className="mb-5 overflow-x-auto rounded-cu border border-cu-border bg-white shadow-cu">
       <table className="w-full border-collapse">
@@ -81,6 +87,7 @@ export function PlansApp({ account, period }) {
             <th className={thCls}>{t.hDeliverable}</th>
             <th className={thCls}>{t.hStatus}</th>
             <th className={thCls}>{t.hDetail}</th>
+            {hasLinks && <th className={thCls}>{t.hLink}</th>}
           </tr>
         </thead>
         <tbody>
@@ -90,6 +97,19 @@ export function PlansApp({ account, period }) {
               <td className={`${tdCls} font-medium text-cu-dblue`}>{tx(d, 'name')}</td>
               <td className={tdCls}><StatusPill status={d.status} t={t} /></td>
               <td className={tdCls}>{tx(d, 'desc')}</td>
+              {hasLinks && (
+                <td className={`${tdCls} whitespace-nowrap`}>
+                  {d.url && (
+                    <>
+                      <a href={d.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-bold text-cu-cyan hover:underline print:hidden">
+                        <ExternalLink className="h-3 w-3" />
+                        {tx(d, 'urlLabel') ?? t.hLink}
+                      </a>
+                      <a href={d.url} className="hidden text-[10px] text-cu-cyan print:inline">{d.url}</a>
+                    </>
+                  )}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
@@ -98,6 +118,14 @@ export function PlansApp({ account, period }) {
   );
 
   return (
+    <table className="print-page-wrap w-full table-fixed border-collapse">
+      {/* Solo al imprimir: filas espaciadoras que se repiten en cada hoja como
+          margen superior e inferior (con @page margin 0 no hay otro modo). */}
+      <thead className="print-page-spacer hidden print:table-header-group"><tr><td /></tr></thead>
+      <tfoot className="print-page-spacer hidden print:table-footer-group"><tr><td /></tr></tfoot>
+      <tbody>
+      <tr>
+      <td className="p-0 align-top">
     <div className="animate-fade-in">
       {/* ── Ficha del informe ── */}
       <SectionHeader title={tx(plan, 'title')} note={`${accName} · ${t.reportNote(tx(plan, 'period'))}`} />
@@ -118,8 +146,7 @@ export function PlansApp({ account, period }) {
         </div>
       </div>
 
-      {/* Idioma + link al pipeline (en el PDF el botón se reemplaza por la URL en texto) */}
-      <div className="mb-4 flex items-end justify-end gap-3 print:hidden">
+      <div className="mb-4 flex justify-end print:hidden">
         <SegmentedControl
           value={lang}
           onChange={setLang}
@@ -129,23 +156,7 @@ export function PlansApp({ account, period }) {
             { id: 'en', label: 'EN' },
           ]}
         />
-        {plan.pipelineUrl && (
-          <a
-            href={plan.pipelineUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-cu bg-cu-dblue px-4 py-2 text-[11px] font-bold text-white transition-opacity hover:opacity-90"
-          >
-            <ExternalLink className="h-3.5 w-3.5" />
-            {t.pipelineBtn}
-          </a>
-        )}
       </div>
-      {plan.pipelineUrl && (
-        <p className="mb-3 hidden text-[10.5px] text-cu-grey print:block">
-          {t.pipelinePrint} <a href={plan.pipelineUrl} className="text-cu-cyan">{plan.pipelineUrl}</a>
-        </p>
-      )}
 
       {/* ── Objetivo del plan ── */}
       <div className="mb-5 rounded-cu border-l-4 border-cu-cyan bg-white px-5 py-4 text-[12.5px] leading-relaxed text-cu-dgrey shadow-cu">
@@ -232,6 +243,20 @@ export function PlansApp({ account, period }) {
         </div>
       ))}
       {EMBED && <p className="mb-2 text-[10.5px] italic text-cu-grey print:hidden">{t.embedNote}</p>}
+      {/* Cierre de marca solo en el PDF (en pantalla lo dibuja App al pie): barra
+          azul + logo MarComms enfrentado al tagline, dentro del flujo para que
+          no quede solo en una hoja aparte. */}
+      <div className="hidden print:block print:break-inside-avoid">
+        <BarBottom />
+        <div className="flex items-center justify-between pt-3.5">
+          <MarCommsLogo className="h-5" />
+          <Tagline />
+        </div>
+      </div>
     </div>
+      </td>
+      </tr>
+      </tbody>
+    </table>
   );
 }

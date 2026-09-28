@@ -1364,3 +1364,8 @@
 **#91**
 
 > Resaltame un poco mas las cards de performance y que tengan el mismo ancho x alto qeu las de opertaivos
+
+
+**#92**
+
+> [PDF: scsc.pdf, exportado desde el navegador] Necesito hacer otras cosas en el PDF; el descargar el PDF está medio raro. Arriba de todo dice fecha, horario y "Control Union USA Reporte Plan": eso no tiene que decirse. Después, el pipeline de HubSpot: borralo, porque en realidad va en otra ubicación, en la zona de entregables; vas a agregar una columna que sea como link o botón, y el pipeline va a ir en un entregable específico que después te muestro. Por ahora eliminalo. Después, abajo de cada hoja dice "marcomms-reports.vercel.app": sacalo a nivel PDF, que no aparezca.

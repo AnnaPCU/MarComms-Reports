@@ -49,9 +49,14 @@ body {
    controles (los que no van llevan `print:hidden`). Los paneles oscuros
    conservan su color. */
 @media print {
+  /* Margen 0 en @page: el navegador dibuja su encabezado (fecha, título) y su
+     pie (URL, N.º de página) DENTRO del margen; sin margen, no hay dónde
+     dibujarlos. Los márgenes laterales van en los contenedores y los de
+     arriba/abajo en las filas espaciadoras de la vista (thead/tfoot que se
+     repiten en cada hoja). */
   @page {
     size: A4;
-    margin: 12mm 10mm;
+    margin: 0;
   }
   html,
   body {
@@ -63,7 +68,20 @@ body {
   }
   main {
     max-width: none !important;
-    padding: 12px 0 0 !important;
+    padding: 0 10mm !important;
+  }
+  .print-page-spacer td {
+    height: 10mm;
+    padding: 0;
+    border: 0;
+  }
+  /* La tabla envolvente de la vista SÍ puede cortarse entre hojas (la regla de
+     abajo, `tr { break-inside: avoid }`, es para las filas de datos). */
+  .print-page-wrap,
+  .print-page-wrap > tbody,
+  .print-page-wrap > tbody > tr,
+  .print-page-wrap > tbody > tr > td {
+    break-inside: auto !important;
   }
   .shadow-cu,
   .shadow-cu-h {

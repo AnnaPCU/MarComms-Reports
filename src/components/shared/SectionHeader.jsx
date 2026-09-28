@@ -2,12 +2,12 @@
 export function SectionHeader({ title, note }) {
   return (
     <div className="mb-3 mt-1 flex items-center gap-2.5">
-      <h2 className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.8px] text-cu-cyan">
+      <h2 className="whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.8px] text-cu-cyan print:whitespace-normal">
         {title}
       </h2>
       <div className="h-px flex-1 bg-cu-border" />
       {note && (
-        <span className="whitespace-nowrap text-[9px] italic text-cu-grey">
+        <span className="whitespace-nowrap text-[9px] italic text-cu-grey print:whitespace-normal print:text-right">
           {note}
         </span>
       )}

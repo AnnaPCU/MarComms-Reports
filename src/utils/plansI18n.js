@@ -6,8 +6,7 @@
 export const PLANS_STR = {
   es: {
     reportNote: (period) => `Informe mensual · ${period}`,
-    pipelineBtn: 'Link al pipeline',
-    pipelinePrint: 'Pipeline de HubSpot:',
+    hLink: 'Link',
     fProgram: 'Programa',
     fPeriod: 'Período',
     fMarket: 'Mercado',
@@ -31,8 +30,7 @@ export const PLANS_STR = {
   },
   en: {
     reportNote: (period) => `Monthly report · ${period}`,
-    pipelineBtn: 'Pipeline link',
-    pipelinePrint: 'HubSpot pipeline:',
+    hLink: 'Link',
     fProgram: 'Program',
     fPeriod: 'Period',
     fMarket: 'Market',

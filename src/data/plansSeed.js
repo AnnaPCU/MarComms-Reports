@@ -27,7 +27,9 @@ export const PLANS_DB = {
       periodEn: 'September 2026',
       market: 'Certificación orgánica en Estados Unidos (USDA Organic, PrimusGFS)',
       marketEn: 'Organic certification in the United States (USDA Organic, PrimusGFS)',
-      // Vista de deals del plan en HubSpot (la pasó el equipo el 28/9/2026).
+      // Vista de deals del plan en HubSpot (la pasó el equipo el 28/9/2026). No se
+      // muestra como botón: va a ir en la columna «Link» del entregable que el equipo
+      // indique (campo `url` + `urlLabel`/`urlLabelEn` en la fila).
       pipelineUrl: 'https://app.hubspot.com/contacts/47081900/objects/0-3/views/73376389/board',
       // Párrafo de apertura: foco en el objetivo del plan (pedido del 21/9/2026).
       intro:

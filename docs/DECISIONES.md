@@ -259,9 +259,22 @@ Quedó como práctica fija, y conviene sostenerla:
 - **Descarga en PDF solo en Planes.** Sale de la impresión del navegador
   («Guardar como PDF»), sin backend ni librería: se fija el idioma elegido en
   la vista, se ocultan nav, filtros, botones y toggle (`print:hidden`) y se
-  imprime con `@media print` (A4, fondo blanco, sin sombras, tablas sin
-  cortar). Es una copia fija: sin cambio de idioma ni interacciones, y el
-  botón del pipeline se imprime como URL. Los pilares no ofrecen PDF porque
-  sus reportes dependen de vistas, tooltips y botoneras.
+  imprime con `@media print` (A4, fondo blanco, sin sombras, tablas que
+  cortan por fila). Es una copia fija: sin cambio de idioma ni
+  interacciones. Los pilares no ofrecen PDF porque sus reportes dependen de
+  vistas, tooltips y botoneras.
+- **`@page { margin: 0 }` para que el navegador no imprima fecha, título,
+  URL ni número de página** (28/9/2026: el equipo los vio en el PDF). El
+  navegador dibuja esos encabezados y pies dentro del margen de página; sin
+  margen no hay dónde. Los márgenes se recuperan a mano: laterales en los
+  contenedores (`print:px-[10mm]`) y arriba/abajo con una tabla envolvente
+  cuyo `thead`/`tfoot` espaciadores se repiten en cada hoja
+  (`.print-page-spacer`). El cierre de marca (barra azul, logo, tagline) lo
+  dibuja la propia vista dentro del flujo, para que no caiga solo en una
+  hoja aparte.
+- **El link al pipeline no va como botón en Planes**: va a ir en una columna
+  «Link» de la tabla de entregables, en la fila que el equipo indique
+  (campo `url` de la fila; la columna solo aparece si alguna fila lo trae).
 - **El link al pipeline de un plan es propio del plan** (lo pasa el equipo),
-  a diferencia de los webinars, donde es la vista general de deals.
+  a diferencia de los webinars, donde es la vista general de deals. Queda en
+  el seed (`pipelineUrl`) hasta que el equipo diga en qué entregable va.

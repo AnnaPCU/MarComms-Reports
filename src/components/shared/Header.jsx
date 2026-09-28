@@ -26,7 +26,7 @@ export function Header({
   const brand = brandOf(account, accountName);
 
   return (
-    <header className="sticky top-[5px] z-50 flex min-h-[68px] flex-wrap items-center gap-4 border-b border-cu-border bg-white px-9 print:static">
+    <header className="sticky top-[5px] z-50 flex min-h-[68px] flex-wrap items-center gap-4 border-b border-cu-border bg-white px-9 print:static print:px-[10mm] print:pt-[6mm]">
       <MarCommsLogo className="h-8" />
       <div className="h-9 w-px shrink-0 bg-cu-border" />
       <div className="text-[11px] text-cu-grey">
