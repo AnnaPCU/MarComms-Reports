@@ -56,7 +56,7 @@ export const PLANS_DB = {
           items: [
             { value: '848.160', valueEn: '848,160', label: 'Pipeline generado', labelEn: 'Pipeline generated', note: '20 % proveniente de bases de datos creadas con la Commercial Tool', noteEn: '20% from databases created with the Commercial Tool' },
             { value: 'USD 40k', label: 'MQLs generados', labelEn: 'MQLs generated', pill: '8 MQLs', pillEn: '8 MQLs' },
-            { value: 'USD 10k', label: 'Ventas generadas', labelEn: 'Sales generated', pill: '2 ventas', pillEn: '2 sales', note: 'Won', noteEn: 'Won' },
+            { value: 'USD 10k', label: 'Ventas generadas', labelEn: 'Sales generated', pill: '2 ventas', pillEn: '2 sales' },
           ],
         },
       ],
