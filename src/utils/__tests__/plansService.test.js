@@ -23,11 +23,13 @@ describe('plansService', () => {
     for (const g of plan.kpiGroups) for (const k of g.items) expect(k.labelEn, k.label).toBeTruthy();
   });
 
-  it('un KPI sin dato se guarda como null (nunca se inventa)', () => {
+  it('los KPIs de performance son MQLs y ventas (el pipeline se quitó a pedido del equipo)', () => {
     const perf = getPlan('cuus', 'sep-2026').kpiGroups[1].items;
-    expect(perf.find((k) => k.label === 'Pipeline generado').value).toBeNull();
+    expect(perf.map((k) => k.label)).toEqual(['MQLs generados', 'Ventas generadas']);
     expect(perf.find((k) => k.label === 'MQLs generados').value).toBe('2');
     expect(perf.find((k) => k.label === 'Ventas generadas').value).toBe('6');
+    // Un KPI sin dato se guardaría como null y la vista mostraría «—»: nunca se inventa.
+    expect(perf.every((k) => k.value === null || typeof k.value === 'string')).toBe(true);
   });
 
   it('período desconocido → null', () => {

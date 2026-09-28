@@ -263,7 +263,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas) + Resumen del Año + comparativa |
 | Email Marketing | ✅ Tres campañas reales: `cups` (CU + PS Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
-| Planes (vista) | ✅ Informe mensual de septiembre 2026 del plan regional de Control Union USA · mercado orgánico («Control Union North America · Organic»): objetivo, resumen del mes, KPIs operativos (3) y de performance (3), 8 entregables completados + 4 en curso, 5 iniciativas de generación de demanda, link al pipeline de HubSpot. Descarga en HTML interactivo o **PDF** (impresión del navegador). Seed: `src/data/plansSeed.js` |
+| Planes (vista) | ✅ Informe mensual de septiembre 2026 del plan regional de Control Union USA · mercado orgánico («Control Union North America · Organic»): objetivo, resumen del mes, KPIs operativos (3) y de performance (2) en una fila, 8 entregables completados + 4 en curso, 5 iniciativas de generación de demanda, link al pipeline de HubSpot. Descarga en HTML interactivo o **PDF** (impresión del navegador). Seed: `src/data/plansSeed.js` |
 | Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
 | Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
@@ -478,8 +478,9 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   informe nuevo del equipo («MarComms Monthly Report · Control Union North
   America · Organic») **reemplazó** al del Mes 1. Estructura punto medio
   entre el documento del equipo y la vista: ficha + resumen del mes, objetivo
-  del plan, KPIs en dos grupos (operativos; performance con pipeline sin dato,
-  2 MQLs y 6 ventas), entregables completados (8) y en curso (4) en tablas
+  del plan, KPIs en una sola fila con dos grupos etiquetados (operativos: 8
+  entregables, 9 reuniones, 800 contactos; performance: 2 MQLs y 6 ventas;
+  «pipeline generado» se quitó a pedido del equipo), entregables completados (8) y en curso (4) en tablas
   numeradas, iniciativas de generación de demanda (5) y botón «Link al
   pipeline» con la vista de deals del plan. El diálogo de descarga de Planes
   ofrece **HTML interactivo o PDF**: el PDF sale de la impresión del navegador

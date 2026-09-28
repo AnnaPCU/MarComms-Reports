@@ -28,6 +28,9 @@ function FichaRow({ k, v }) {
   );
 }
 
+// Tailwind no genera clases dinámicas: columnas por cantidad de KPIs del grupo.
+const COLS_CLS = { 1: 'sm:grid-cols-1 print:grid-cols-1', 2: 'sm:grid-cols-2 print:grid-cols-2', 3: 'sm:grid-cols-3 print:grid-cols-3', 4: 'sm:grid-cols-4 print:grid-cols-4' };
+
 const thCls = 'bg-cu-dblue px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.5px] text-white';
 const tdCls = 'border-b border-cu-border2 px-4 py-2.5 text-[12px] text-cu-dgrey';
 
@@ -150,25 +153,28 @@ export function PlansApp({ account, period }) {
 
       {/* ── KPIs ── */}
       <SectionHeader title={t.kpisTitle} note={t.kpisNote} />
-      {plan.kpiGroups.map((g) => (
-        <div key={g.name} className="mb-4 print:break-inside-avoid">
-          <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
-            <span className="h-2 w-2 rounded-full bg-cu-cyan" />
-            {tx(g, 'name')}
+      {/* Una sola fila: los grupos van uno al lado del otro, cada uno con su etiqueta. */}
+      <div className="mb-5 flex flex-col gap-3 lg:flex-row print:flex-row print:break-inside-avoid">
+        {plan.kpiGroups.map((g, gi) => (
+          <div key={g.name} className="min-w-0" style={{ flex: `${g.items.length} 1 0%` }}>
+            <div className={`print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue ${gi > 0 ? 'lg:border-l lg:border-cu-border lg:pl-3 print:border-l print:pl-3' : ''}`}>
+              <span className={`h-2 w-2 rounded-full ${gi === 0 ? 'bg-cu-cyan' : 'border-[1.5px] border-cu-cyan'}`} />
+              {tx(g, 'name')}
+            </div>
+            <div className={`grid grid-cols-1 gap-3 ${COLS_CLS[g.items.length] ?? COLS_CLS[3]} ${gi > 0 ? 'lg:border-l lg:border-cu-border lg:pl-3 print:border-l print:pl-3' : ''}`}>
+              {g.items.map((k) => (
+                <KpiCard
+                  key={k.label}
+                  label={tx(k, 'label')}
+                  value={k.value == null ? '—' : tx(k, 'value')}
+                  accent={k.value == null ? 'amber' : 'cyan'}
+                  footnote={k.value == null ? t.noValue : (tx(k, 'note') ?? undefined)}
+                />
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 print:grid-cols-3">
-            {g.items.map((k) => (
-              <KpiCard
-                key={k.label}
-                label={tx(k, 'label')}
-                value={k.value == null ? '—' : tx(k, 'value')}
-                accent={k.value == null ? 'amber' : 'cyan'}
-                footnote={k.value == null ? t.noValue : (tx(k, 'note') ?? undefined)}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
       {/* ── Entregables ── */}
       <SectionHeader title={t.deliverablesTitle} note={t.deliverablesNote} />

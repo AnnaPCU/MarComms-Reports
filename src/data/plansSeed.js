@@ -39,7 +39,8 @@ export const PLANS_DB = {
       summaryTitleEn: 'Month at a glance',
       summary: ['8 entregables completados', '4 entregables en curso', '5 iniciativas de generación de demanda', '9 reuniones internas'],
       summaryEn: ['8 deliverables completed', '4 deliverables in progress', '5 demand-generation initiatives', '9 internal meetings'],
-      // KPIs en dos grupos. `value: null` = sin dato todavía (se muestra «—», nunca se inventa).
+      // KPIs en dos grupos, en una sola fila (operativos + performance). `value: null` = sin dato
+      // (se muestra «—», nunca se inventa). «Pipeline generado» se quitó a pedido del equipo (28/9).
       kpiGroups: [
         {
           name: 'Operativos',
@@ -54,7 +55,6 @@ export const PLANS_DB = {
           name: 'Performance',
           nameEn: 'Performance',
           items: [
-            { value: null, label: 'Pipeline generado', labelEn: 'Pipeline generated' },
             { value: '2', label: 'MQLs generados', labelEn: 'MQLs generated' },
             { value: '6', label: 'Ventas generadas', labelEn: 'Sales generated' },
           ],

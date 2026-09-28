@@ -1354,3 +1354,8 @@
 > En MQL generated poné 2 y en Sales generated poné 6.
 >
 > Link al pipeline: https://app.hubspot.com/contacts/47081900/objects/0-3/views/73376389/board
+
+
+**#90**
+
+> Me vas a sacar la sección de "pipeline generado" y unificar en una misma linea horizontal los KPis operativos y performance respetando la aclaración de cual es cual.
