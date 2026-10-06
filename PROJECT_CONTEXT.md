@@ -261,7 +261,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Social Media | ✅ Completo (Ene–Ago 2026, 9 cuentas) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
 | Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas) + drill-down + detalle por grupo + Resumen del Año + comparativa (tooling: `scripts/paid/`) |
 | Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas) + Resumen del Año + comparativa |
-| Email Marketing | ✅ Tres campañas reales: `cups` (CU + PS Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 (tooling: `scripts/mailchimp-to-seed.mjs`) |
+| Email Marketing | ✅ Cuatro campañas reales: `cups` (CU + PS Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union USA) m10 — «PCU x Fairly Made · Networking Event» (Textile Exchange), envío único (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
 | Planes (vista) | ✅ Informe mensual de septiembre 2026 del plan regional de Control Union USA · mercado orgánico («Control Union North America · Organic»): objetivo, resumen del mes, KPIs operativos (3) y de performance (2) en una fila, 8 entregables completados + 4 en curso, 5 iniciativas de generación de demanda. Descarga en HTML interactivo o **PDF** (impresión del navegador, sin encabezados ni pies del navegador). Columna «Link» en entregables completados: landings USDA Organic y PrimusGFS, benchmarking (Excel), decisión de marca CUC (imagen), pipeline en HubSpot (en «Base de datos de la herramienta comercial»), perfil de LinkedIn de Karl, benchmarking digital (PowerPoint) e informe de mercado USDA (PDF). Seed: `src/data/plansSeed.js` |
 | Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
@@ -474,6 +474,14 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   email cuando falta la empresa. Drop archivado en
   `metricas/webinars/_procesados/2026-09-empco/` y
   `metricas/email-marketing/_procesados/2026-09-empco/`.
+- **Email Control Union USA · octubre 2026** (6/10/2026): envío único «PCU x
+  Fairly Made · Networking Event» (Textile Exchange): 1.350 enviados, 20,6 %
+  de apertura, 2,7 % de clics, 36 hot leads. Cuenta nueva `cuus` «Control
+  Union USA» (marca CU: el 98 % de los contactos los cargó la oficina de
+  CU USA; confirmado por el equipo). Se suma al cliente CU Estados Unidos en
+  la vista Clientes. Drop archivado en
+  `metricas/email-marketing/_procesados/2026-10-textile-exchange-event/` (la
+  carpeta decía 2026-09, pero el envío es del 6/10).
 - **Descargas en el idioma elegido + logo nítido** (28/9/2026): el nombre
   de archivo y el título de todo descargable (HTML de cualquier pilar, PDF
   de Planes) salen en el idioma elegido en el diálogo (`reportFilename` con

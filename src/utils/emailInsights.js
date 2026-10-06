@@ -244,10 +244,14 @@ export function genEmailNextSteps(campaign, lang = 'es') {
         : `<strong>Mejorar el clic</strong>: dejar un CTA único y visible arriba del pliegue y acortar el cuerpo para reducir la fricción hacia la acción.`,
   );
 
-  steps.push(
-    en
-      ? `<strong>Compare the sequence</strong>: track opens, clicks and CTOR send by send to identify the best format and adjust the cadence.`
-      : `<strong>Comparar la secuencia</strong>: seguir apertura, clics y CTOR envío por envío para identificar el mejor formato y ajustar la cadencia.`,
-  );
+  // Solo tiene sentido comparar envío por envío si la campaña tiene más de uno
+  // (una campaña de envío único, como la de CU USA de oct 2026, no tiene secuencia).
+  if ((campaign.emails?.length ?? 0) > 1) {
+    steps.push(
+      en
+        ? `<strong>Compare the sequence</strong>: track opens, clicks and CTOR send by send to identify the best format and adjust the cadence.`
+        : `<strong>Comparar la secuencia</strong>: seguir apertura, clics y CTOR envío por envío para identificar el mejor formato y ajustar la cadencia.`,
+    );
+  }
   return steps;
 }

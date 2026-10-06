@@ -117,7 +117,12 @@ export const CLIENTS = [
     name: 'Control Union Estados Unidos',
     unit: 'cu',
     region: 'North America',
-    pillars: { social: { account: 'cuna', country: 'us' }, paid: { account: 'cuus' }, website: { account: 'cuus' } },
+    pillars: {
+      social: { account: 'cuna', country: 'us' },
+      paid: { account: 'cuus' },
+      website: { account: 'cuus' },
+      email: { account: 'cuus' },
+    },
   },
   {
     id: 'cu-ca',

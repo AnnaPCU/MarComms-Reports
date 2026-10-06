@@ -62,4 +62,12 @@ describe('emailInsights', () => {
   it('benchmarks expuestos', () => {
     expect(EMAIL_BENCHMARKS.openRate).toBe(21);
   });
+
+  it('el paso «Comparar la secuencia» solo aparece con más de un envío', () => {
+    const one = { ...campaign, emails: [{ name: 'Email 1' }] };
+    const two = { ...campaign, emails: [{ name: 'Email 1' }, { name: 'Email 2' }] };
+    expect(genEmailNextSteps(one).some((s) => s.includes('Comparar la secuencia'))).toBe(false);
+    expect(genEmailNextSteps(two).some((s) => s.includes('Comparar la secuencia'))).toBe(true);
+    expect(genEmailNextSteps(two, 'en').some((s) => s.includes('Compare the sequence'))).toBe(true);
+  });
 });

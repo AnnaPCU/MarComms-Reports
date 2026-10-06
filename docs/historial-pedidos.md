@@ -1404,3 +1404,13 @@
 **#99**
 
 > En vez de 40k y 10k pondrás "40000" y "10000", y en "848.160" ponete USD por detrás.
+
+
+## 6 de octubre de 2026
+
+
+**#100**
+
+> Necesito hacer un stop de esto, y que me proceses las métricas de email marketing nuevas
+
+(Respuestas a la consulta: cuenta «Control Union USA»; publicar ya, es un único envío, no hay Email 2.)

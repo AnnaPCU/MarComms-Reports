@@ -6211,6 +6211,490 @@ EMAIL_DB['psi'] = {
   },
 };
 
+// Control Union USA · m10 — generado con scripts/mailchimp-to-seed.mjs
+EMAIL_DB['cuus'] = {
+  name: 'Control Union USA',
+  periods: {
+    'm10': {
+        campaignName: 'PCU x Fairly Made · Networking Event (Textile Exchange) · Octubre 2026',
+        emails: [
+          {
+            name: 'Email 1 · Invitación',
+            subject: '',
+            metrics: {
+              sent: 1350,
+              uniqueOpens: 278,
+              uniqueClicks: 36,
+              totalOpens: 470,
+              totalClicks: 187,
+              openRate: 20.59,
+              clickRate: 2.67,
+              ctor: 12.95
+            }
+          }
+        ],
+        totals: {
+          emailCount: 1,
+          totalSent: 1350,
+          totalDelivered: 1350,
+          totalOpens: 278,
+          totalClicks: 36,
+          totalBounces: null,
+          totalUnsubs: null,
+          openRate: 20.59,
+          clickRate: 2.67,
+          ctor: 12.95,
+          bounceRate: null,
+          unsubRate: null
+        },
+        comparison: [
+          {
+            name: 'Email 1 · Invitación',
+            aperturas: 20.6,
+            clics: 2.7,
+            ctor: 12.9
+          }
+        ],
+        hotLeads: [
+          {
+            email: 'shippingmanager@csfibers.com',
+            clicks: 12,
+            opens: 3,
+            company: 'Custom Synthetic Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'jamirtharaj@premierefibers.com',
+            clicks: 12,
+            opens: 2,
+            company: 'Premiere Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'certifications@csfibers.com',
+            clicks: 12,
+            opens: 1,
+            company: 'Custom Synthetic Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'hr@csfibers.com',
+            clicks: 12,
+            opens: 1,
+            company: 'Custom Synthetic Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'glupercio@hybridapparel.com',
+            clicks: 8,
+            opens: 5,
+            company: 'Hybrid Promotions LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'brenda@csfibers.com',
+            clicks: 8,
+            opens: 1,
+            company: 'Custom Synthetic Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'ehatley@premierefibers.com',
+            clicks: 8,
+            opens: 1,
+            company: 'Premiere Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'emilyf@burton.com',
+            clicks: 8,
+            opens: 1,
+            company: 'The Burton Corporation',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'jfaulkner@premierefibers.com',
+            clicks: 8,
+            opens: 1,
+            company: 'Premiere Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'jrose@echodesign.com',
+            clicks: 8,
+            opens: 1,
+            company: 'The Echo Design Group',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'jyoo@hybridapparel.com',
+            clicks: 8,
+            opens: 1,
+            company: 'Hybrid Promotions LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'receptionist@csfibers.com',
+            clicks: 8,
+            opens: 1,
+            company: 'Custom Synthetic Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'taylor@csfibers.com',
+            clicks: 8,
+            opens: 1,
+            company: 'Custom Synthetic Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'taylorr@burton.com',
+            clicks: 8,
+            opens: 1,
+            company: 'The Burton Corporation',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'tracy@csfibers.com',
+            clicks: 8,
+            opens: 1,
+            company: 'Custom Synthetic Fibers, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'ttawil@o5group.com',
+            clicks: 8,
+            opens: 1,
+            company: 'O5 LE, LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'vsireci@echodesign.com',
+            clicks: 8,
+            opens: 1,
+            company: 'The Echo Design Group',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'jgretton@wlgore.com',
+            clicks: 3,
+            opens: 6,
+            company: 'W.L. Gore & Associates',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'gallant@gallantintl.com',
+            clicks: 3,
+            opens: 2,
+            company: 'Gallant International Inc',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'xime.sanchez@arcteryx.com',
+            clicks: 3,
+            opens: 2,
+            company: 'Arc\'teryx Equipment',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'ktaillefer@roots.com',
+            clicks: 3,
+            opens: 1,
+            company: 'Roots Corporation',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'elepri@teddy.it',
+            clicks: 2,
+            opens: 7,
+            company: 'Teddy S.p.A',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'kiran.badiger@suminter.com',
+            clicks: 2,
+            opens: 6,
+            company: 'Suminter India Organics',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'calvin.huelsman@elevatetextiles.com',
+            clicks: 2,
+            opens: 2,
+            company: 'CONE DENIM LLC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'jitendra.bhuyan@hm.com',
+            clicks: 2,
+            opens: 2,
+            company: 'H&M Group',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'dalyah@downdecor.com',
+            clicks: 2,
+            opens: 1,
+            company: 'Ohio Feather Company',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'dsouzaf@welspunusa.com',
+            clicks: 2,
+            opens: 1,
+            company: 'Welspun USA, INC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'simran.vadher@syre.com',
+            clicks: 2,
+            opens: 1,
+            company: 'H&M Group',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 't.matiz@lenzing.com',
+            clicks: 2,
+            opens: 1,
+            company: 'Lenzing Fibers',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'ariana@ecofashioncorp.com',
+            clicks: 1,
+            opens: 1,
+            company: 'Ecofashion Corp S.P.C. DBA MARCI ZAROFF SUSTAINABLE BRANDS LLC, FARM TO HOME, YES AND, SEED TO STYLE, FARM TO FLIGHT.',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'fugarte@cofaco.com',
+            clicks: 1,
+            opens: 1,
+            company: 'Cofaco Industries S.A.C.',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'kerry@bollandbranch.com',
+            clicks: 1,
+            opens: 1,
+            company: 'Boll & Branch LLC.',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'kuljit.rakhra@takasa.co',
+            clicks: 1,
+            opens: 1,
+            company: 'Takasa Lifestyle Company Inc.',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'pwhitener@defeet.com',
+            clicks: 1,
+            opens: 1,
+            company: 'DeFeet International',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'mariela.calderon@bergmanrivera.com',
+            clicks: 1,
+            opens: 0,
+            company: 'Bergman/Rivera SAC',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          },
+          {
+            email: 'tmartin@anodynewool.com',
+            clicks: 1,
+            opens: 0,
+            company: 'Anodyne Wool Inc.',
+            firstName: '',
+            lastName: '',
+            campaigns: 1,
+            emailAppearances: [
+              1
+            ]
+          }
+        ],
+        hotLeadsCount: 36,
+        allLeadsCount: 1350
+      },
+  },
+};
+
 // Cuentas derivadas del seed (vacío hasta el primer import real).
 export const EMAIL_CLIENTS = Object.entries(EMAIL_DB).map(([id, v]) => ({ id, name: v.name }));
 
