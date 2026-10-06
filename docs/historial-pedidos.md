@@ -1453,3 +1453,10 @@
 >
 > A nivel STEAL no es un canal tradicional como sí lo son los 5 pilares que te vengo comentando. Así que lo pondría como una vista aparte de deals generados, no como el número final principal. Lo mismo para BDR.
 
+
+**#106**
+
+> [Excel: Seguimiento_Planes_Marketing_v2.xlsx] Necesito frenar por un momento esto de HubSpot y que me hagas un informe para un nuevo plan «Peterson Solutions Argentina». Te adjunto el Excel en relación a. Solo tomá la hoja específica de.
+
+(El mensaje llegó cortado; se tomó la hoja «PS Argentina».)
+

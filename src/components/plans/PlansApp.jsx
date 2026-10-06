@@ -11,6 +11,7 @@ import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { BarBottom } from '@/components/brand/BrandBars';
 import { MarCommsLogo } from '@/components/brand/Logo';
 import { Tagline } from '@/components/brand/Tagline';
+import { brandOf } from '@/constants/brand';
 
 const EMBED = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
 
@@ -75,6 +76,7 @@ export function PlansApp({ account, period }) {
 
   const done = plan.deliverables.filter((d) => d.status === 'done');
   const progress = plan.deliverables.filter((d) => d.status === 'progress');
+  const pending = plan.deliverables.filter((d) => d.status === 'pending');
 
   // La columna «Link» aparece solo en la tabla cuyas filas traen `links`
   // ([{ label, labelEn?, url }]). En el PDF los links quedan clicables con su etiqueta.
@@ -221,6 +223,15 @@ export function PlansApp({ account, period }) {
         {t.groupProgress(progress.length)}
       </div>
       {deliverablesTable(progress)}
+      {pending.length > 0 && (
+        <>
+          <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+            <span className="h-2 w-2 rounded-full border-[1.5px] border-cu-grey" />
+            {t.groupPending(pending.length)}
+          </div>
+          {deliverablesTable(pending)}
+        </>
+      )}
 
       {/* ── Iniciativas ── */}
       <SectionHeader title={t.initiativesTitle} note={t.initiativesNote} />
@@ -260,7 +271,7 @@ export function PlansApp({ account, period }) {
         <BarBottom />
         <div className="flex items-center justify-between pt-3.5">
           <MarCommsLogo className="h-5" />
-          <Tagline />
+          <Tagline brand={brandOf(account, accName) ?? 'cu'} />
         </div>
       </div>
     </div>

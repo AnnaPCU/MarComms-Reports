@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { listAccounts, listPeriods, getPlan, hasDataFor } from '@/services/plansService';
+import { TAGLINES, brandOf } from '@/constants/brand';
 
 describe('plansService', () => {
   it('lista el plan de Control Union Estados Unidos con su informe de septiembre 2026', () => {
@@ -50,6 +51,25 @@ describe('plansService', () => {
     ]);
     expect(withLinks.every((d) => d.status === 'done')).toBe(true);
     for (const d of withLinks) for (const l of d.links) expect(l.label && /^https:\/\//.test(l.url), d.name).toBeTruthy();
+  });
+
+  it('plan de Peterson Solutions Argentina (hoja «PS Argentina»): 10 completados, 2 en curso y 1 pendiente', () => {
+    expect(listAccounts()).toContainEqual({ id: 'psar', name: 'Peterson Solutions Argentina' });
+    expect(hasDataFor('psar', 'sep-2026')).toBe(true);
+    const plan = getPlan('psar', 'sep-2026');
+    const count = (st) => plan.deliverables.filter((d) => d.status === st).length;
+    expect([count('done'), count('progress'), count('pending')]).toEqual([10, 2, 1]);
+    expect(plan.kpiGroups[1].items.map((k) => k.value)).toEqual(['94', '202', '1']);
+    // Metas de pipeline, MQL y revenue vacías en la hoja: no se cargan como KPI.
+    expect(plan.kpiGroups.flatMap((g) => g.items).some((k) => /pipeline|mql|revenue/i.test(k.label))).toBe(false);
+    for (const d of plan.deliverables) expect(d.nameEn && d.descEn, d.name).toBeTruthy();
+    for (const d of plan.deliverables) for (const l of d.links ?? []) expect(/^https:\/\//.test(l.url), d.name).toBe(true);
+  });
+
+  it('el tagline sigue la marca del reporte: Peterson no lleva el de Control Union', () => {
+    expect(TAGLINES.peterson).toBe('For the world, for ourselves, for our families');
+    expect(TAGLINES.cu).toBe('The Proof to Your Promise');
+    expect(brandOf('psar', 'Peterson Solutions Argentina')).toBe('peterson');
   });
 
   it('período desconocido → null', () => {

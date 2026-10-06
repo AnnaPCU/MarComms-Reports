@@ -267,6 +267,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Email Marketing | ✅ Cuatro campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — «PCU x Fairly Made · Networking Event» (Textile Exchange), envío único (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
 | Planes (vista) | ✅ Informe mensual de septiembre 2026 del plan regional de Control Union USA · mercado orgánico («Control Union North America · Organic»): objetivo, resumen del mes, KPIs operativos (3) y de performance (2) en una fila, 8 entregables completados + 4 en curso, 5 iniciativas de generación de demanda. Descarga en HTML interactivo o **PDF** (impresión del navegador, sin encabezados ni pies del navegador). Columna «Link» en entregables completados: landings USDA Organic y PrimusGFS, benchmarking (Excel), decisión de marca CUC (imagen), pipeline en HubSpot (en «Base de datos de la herramienta comercial»), perfil de LinkedIn de Karl, benchmarking digital (PowerPoint) e informe de mercado USDA (PDF). Seed: `src/data/plansSeed.js` |
+| Planes · Peterson Solutions Argentina | ✅ Informe de septiembre 2026 (incluye el arranque de agosto), desde la hoja «PS Argentina» del Excel de seguimiento: 3 KPIs operativos y 3 de performance (webinar EmpCo y Paid Media), 10 entregables completados, 2 en curso y 1 pendiente, y próximos pasos. Las metas de pipeline, MQL y revenue están vacías en la hoja: no se muestran números |
 | Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
 | Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
@@ -389,6 +390,13 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Planes: Peterson Solutions Argentina** (6/10/2026): segundo plan en la
+  vista Planes, transcripto de la hoja «PS Argentina» de
+  `Seguimiento_Planes_Marketing_v2.xlsx`. La tabla de entregables suma el
+  grupo «Pendientes». El **tagline del pie sigue la marca del reporte**:
+  Peterson lleva «For the world, for ourselves, for our families» y ya no el
+  de Control Union (app, HTML descargado y PDF de Planes).
 
 - **CRM (HubSpot)** (6/10/2026): deals originados por MarComms, desde HubSpot
   (solo lectura). Vista por cliente: bloque «Resultados comerciales —

@@ -287,6 +287,18 @@ Quedó como práctica fija, y conviene sostenerla:
   a diferencia de los webinars, donde es la vista general de deals. Va como
   link del entregable «Base de datos de la herramienta comercial».
 
+- **Plan de Peterson Solutions Argentina** (6/10/2026): sale de la hoja
+  «PS Argentina» del Excel de seguimiento de planes (solo esa hoja). Los
+  contadores de la hoja («Tareas 8 · Completadas 5 · Abiertas 3») cuentan
+  desde la fila 32 y dejan afuera las tareas de agosto y dos de septiembre;
+  el informe cuenta todas las filas (13: 10 completadas, 2 en curso, 1
+  pendiente). Las metas y resultados de pipeline, MQL y revenue están vacíos
+  en la hoja: no se cargan como KPI y la introducción aclara que todavía no
+  están definidos.
+- **Tagline por marca**: el pie (app, HTML descargado y PDF) usa el tagline
+  de la marca del cliente del reporte (`TAGLINES` en `constants/brand.js`).
+  Un reporte de Peterson Solutions nunca lleva «The Proof to Your Promise».
+
 ## 13. Nombres de cuenta
 
 - **Un mismo cliente se llama igual en todos los filtros** (6/10/2026): marca

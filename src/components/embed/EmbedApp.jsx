@@ -62,7 +62,7 @@ export function EmbedApp({ embed }) {
       {/* Al pie: logo MarComms (autor del reporte) enfrentado al tagline. */}
       <footer className="flex flex-wrap items-center justify-between gap-3 px-9 pb-5 pt-3.5">
         <MarCommsLogo className="h-5" />
-        <Tagline />
+        <Tagline brand={embed.brand ?? 'cu'} />
       </footer>
     </div>
   );

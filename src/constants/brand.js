@@ -27,6 +27,10 @@ export const PAL = [
 
 export const TAGLINE = 'The Proof to Your Promise';
 
+// Tagline por marca: las dos marcas nunca se mezclan, así que un reporte de
+// Peterson Solutions no lleva el de Control Union. Sin marca → el de CU.
+export const TAGLINES = { cu: TAGLINE, peterson: 'For the world, for ourselves, for our families' };
+
 // ════════════════════════════════════════════════════════════════
 //  TOOLTIP DE CHARTS — única fuente de verdad para Recharts.
 //  Fondo dark blue + texto SIEMPRE blanco (Recharts por defecto pinta
