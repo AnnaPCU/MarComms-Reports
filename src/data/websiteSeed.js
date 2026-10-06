@@ -12,8 +12,8 @@ export const WEBSITE_CLIENTS = [
   { id: 'cucl', name: 'Control Union Chile' },
   { id: 'cumx', name: 'Control Union México' },
   { id: 'cunam', name: 'Control Union North America' },
-  { id: 'cuca', name: 'Control Union Canada' },
-  { id: 'cuus', name: 'Control Union United States' },
+  { id: 'cuca', name: 'Control Union Canadá' },
+  { id: 'cuus', name: 'Control Union Estados Unidos' },
   { id: 'cupe', name: 'Control Union Perú' },
   { id: 'cupt', name: 'Control Union Portugal' },
   { id: 'cues', name: 'Control Union España' },
@@ -175,7 +175,7 @@ export const WEBSITE_DB = {
   },
 
   cuca: {
-    name: 'Control Union Canada',
+    name: 'Control Union Canadá',
     handle: '@controlunionnorthamerica',
     periods: {
       'q2-2026': {
@@ -201,7 +201,7 @@ export const WEBSITE_DB = {
   },
 
   cuus: {
-    name: 'Control Union United States',
+    name: 'Control Union Estados Unidos',
     handle: '@controlunionnorthamerica',
     periods: {
       'q2-2026': {

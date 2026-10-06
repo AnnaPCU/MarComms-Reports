@@ -24,10 +24,10 @@ import { MONTHS_2026 } from '@/constants/periods';
 // { [accountId]: { name, handle?, periods: { [periodId]: <campaña> } } }
 export const EMAIL_DB = {};
 
-// CU + PS Latinoamérica · m08 — generado con scripts/mailchimp-to-seed.mjs
+// Control Union + Peterson Solutions Latinoamérica · m08 — generado con scripts/mailchimp-to-seed.mjs
 // (allLeads omitido del bundle: solo se usa hotLeads en la vista)
 EMAIL_DB['cups'] = {
-  name: "CU + PS Latinoamérica",
+  name: "Control Union + Peterson Solutions Latinoamérica",
   periods: {
     m08: {
       campaignName: "Webinar EUDR — CU + Peterson · Agosto 2026",
@@ -6211,9 +6211,9 @@ EMAIL_DB['psi'] = {
   },
 };
 
-// Control Union USA · m10 — generado con scripts/mailchimp-to-seed.mjs
+// Control Union Estados Unidos · m10 — generado con scripts/mailchimp-to-seed.mjs
 EMAIL_DB['cuus'] = {
-  name: 'Control Union USA',
+  name: 'Control Union Estados Unidos',
   periods: {
     'm10': {
         campaignName: 'PCU x Fairly Made · Networking Event (Textile Exchange) · Octubre 2026',

@@ -286,3 +286,18 @@ Quedó como práctica fija, y conviene sostenerla:
 - **El link al pipeline de un plan es propio del plan** (lo pasa el equipo),
   a diferencia de los webinars, donde es la vista general de deals. Va como
   link del entregable «Base de datos de la herramienta comercial».
+
+## 13. Nombres de cuenta
+
+- **Un mismo cliente se llama igual en todos los filtros** (6/10/2026): marca
+  completa y país en español. «Control Union Estados Unidos», nunca «CU
+  Estados Unidos», «Control Union USA» ni «Control Union United States»;
+  «Peterson Solutions Argentina», nunca «PS Argentina». Lo controla
+  `src/utils/__tests__/accountNames.test.js`.
+- Excepciones: los nombres que son el de la página o cuenta en la plataforma
+  (p. ej. «Peterson Solutions (Iberia & Americas)» en LinkedIn, «Control
+  Union North America») se dejan como están. Los textos de posteos y del
+  contenido de los informes no se tocan.
+- **El logo del cliente se decide por id de cuenta** (`BRAND_BY_ID` en
+  `constants/brand.js`), no por el nombre: la cuenta conjunta «Control Union +
+  Peterson Solutions Latinoamérica» lleva logo de CU.

@@ -11,7 +11,7 @@
 //  Textos en ES (idioma base) con su variante `…En`.
 // ════════════════════════════════════════════════════════════════
 
-export const PLAN_CLIENTS = [{ id: 'cuus', name: 'Control Union USA' }];
+export const PLAN_CLIENTS = [{ id: 'cuus', name: 'Control Union Estados Unidos' }];
 
 // Un período por informe mensual del plan (más antiguo primero).
 export const PLAN_PERIODS = [{ id: 'sep-2026', label: 'Septiembre 2026', labelEn: 'September 2026' }];

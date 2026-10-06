@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { listAccounts, listPeriods, getPlan, hasDataFor } from '@/services/plansService';
 
 describe('plansService', () => {
-  it('lista el plan de Control Union USA con su informe de septiembre 2026', () => {
+  it('lista el plan de Control Union Estados Unidos con su informe de septiembre 2026', () => {
     expect(listAccounts().map((a) => a.id)).toContain('cuus');
     expect(listPeriods().map((p) => p.id)).toContain('sep-2026');
     expect(hasDataFor('cuus', 'sep-2026')).toBe(true);

@@ -255,8 +255,8 @@ for (const [id, months] of Object.entries(SOCIAL_MONTHLY_2026)) {
 // Comparativa multi-cuenta (Mayo 2026) — alineada al seed mensual unificado.
 export const CMP_DATA = [
   {id:'cul', name:'CU Latinoamérica',    imp:95563, clk:9816,  er:11.41, fol:400, vis:1007},
-  {id:'cue', name:'CU España',           imp:11179, clk:2238,  er:21.57, fol:61,  vis:117 },
-  {id:'cup', name:'CU Portugal',         imp:1166,  clk:85,    er:10.21, fol:8,   vis:29  },
+  {id:'cue', name:'Control Union España',           imp:11179, clk:2238,  er:21.57, fol:61,  vis:117 },
+  {id:'cup', name:'Control Union Portugal',         imp:1166,  clk:85,    er:10.21, fol:8,   vis:29  },
   {id:'cun', name:'CU Norte',            imp:26982, clk:14477, er:55.28, fol:74,  vis:87  },
   {id:'cuna',name:'CU North America',    imp:4849,  clk:636,   er:16.13, fol:38,  vis:52  },
   {id:'ps',  name:'Peterson Solutions',  imp:12676, clk:1810,  er:15.94, fol:76,  vis:281 },

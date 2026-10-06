@@ -61,6 +61,9 @@ const BRAND_BY_ID = {
   // Website
   cua: 'cu', cubr: 'cu', cucl: 'cu', cumx: 'cu', cunam: 'cu', cuca: 'cu', cuus: 'cu', cupe: 'cu', cupt: 'cu', cues: 'cu',
   psam: 'peterson', psib: 'peterson',
+  // Email / Webinars / Planes: marca fijada por id, no por nombre (la cuenta
+  // conjunta «Control Union + Peterson Solutions Latinoamérica» va con logo CU).
+  cups: 'cu', cug: 'cu', psi: 'peterson', cu: 'cu',
 };
 
 export function brandOf(id, name = '') {

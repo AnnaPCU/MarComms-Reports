@@ -1414,3 +1414,8 @@
 > Necesito hacer un stop de esto, y que me proceses las métricas de email marketing nuevas
 
 (Respuestas a la consulta: cuenta «Control Union USA»; publicar ya, es un único envío, no hay Email 2.)
+
+
+**#101**
+
+> Unificá nomenclados a la hora de filtrar por cliente. Veo casos que dice Control Union USA y luego Control Union Estados Unidos (el ideal justo en este caso).

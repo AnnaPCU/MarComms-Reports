@@ -12,13 +12,13 @@
 // ════════════════════════════════════════════════════════════════
 
 export const PAID_CLIENTS = [
-  { id: 'pt', name: 'CU Portugal' },
-  { id: 'es', name: 'CU España' },
-  { id: 'cuc', name: 'CU Canadá' },
-  { id: 'psar', name: 'PS Argentina' },
-  { id: 'cuus', name: 'CU Estados Unidos' },
+  { id: 'pt', name: 'Control Union Portugal' },
+  { id: 'es', name: 'Control Union España' },
+  { id: 'cuc', name: 'Control Union Canadá' },
+  { id: 'psar', name: 'Peterson Solutions Argentina' },
+  { id: 'cuus', name: 'Control Union Estados Unidos' },
   // Solo Meta Ads GEO por ahora (ver src/data/paidMetaGeo.js).
-  { id: 'cuar', name: 'CU Argentina' },
+  { id: 'cuar', name: 'Control Union Argentina' },
 ];
 
 // Helper para no repetir campañas en cero.
@@ -44,7 +44,7 @@ function ptMonth(active) {
 
 export const PAID_DB = {
   pt: {
-    name: 'CU Portugal',
+    name: 'Control Union Portugal',
     periods: {
       m02: {
         channel: 'Google Ads Search',
@@ -144,7 +144,7 @@ export const PAID_DB = {
   },
 
   es: {
-    name: 'CU España',
+    name: 'Control Union España',
     periods: {
       m04: {
         channel: 'Google Ads Search',
@@ -215,7 +215,7 @@ export const PAID_DB = {
   },
 
   cuc: {
-    name: 'CU Canadá',
+    name: 'Control Union Canadá',
     periods: {
       m06: {
         channel: 'Google Ads Search',
@@ -265,7 +265,7 @@ export const PAID_DB = {
   },
 
   psar: {
-    name: 'PS Argentina',
+    name: 'Peterson Solutions Argentina',
     periods: {
       m06: {
         channel: 'Google Ads Search',
@@ -324,7 +324,7 @@ export const PAID_DB = {
   // CU Estados Unidos — cuenta nueva: arranca en agosto 2026 con las dos
   // campañas de Organic (USDA NOP y PrimusGFS), creadas el 21/8.
   cuus: {
-    name: 'CU Estados Unidos',
+    name: 'Control Union Estados Unidos',
     periods: {
       m08: {
         channel: 'Google Ads Search',

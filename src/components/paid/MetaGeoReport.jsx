@@ -112,13 +112,13 @@ export function MetaGeoReport({ account, period }) {
             en ? (
               <>
                 No Meta Ads GEO campaigns loaded for <strong>{accName}</strong> for this event. The accounts with
-                data are <strong>CU Argentina</strong> and <strong>PS Argentina</strong>.
+                data are <strong>Control Union Argentina</strong> and <strong>Peterson Solutions Argentina</strong>.
               </>
             ) : (
               <>
                 No hay campañas Meta Ads GEO cargadas de <strong>{accName}</strong> para este
-                evento. Las cuentas con datos son <strong>CU Argentina</strong> y{' '}
-                <strong>PS Argentina</strong>.
+                evento. Las cuentas con datos son <strong>Control Union Argentina</strong> y{' '}
+                <strong>Peterson Solutions Argentina</strong>.
               </>
             )
           }

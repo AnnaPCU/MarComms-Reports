@@ -158,7 +158,7 @@ export const CLIENTS = [
         note: 'Cuenta regional Iberia & Americas (no se puede separar por país)',
         noteEn: 'Regional Iberia & Americas account (cannot be split by country)',
       },
-      paid: { account: 'psar', note: 'Cuenta de Google Ads de PS Argentina', noteEn: 'PS Argentina Google Ads account' },
+      paid: { account: 'psar', note: 'Cuenta de Google Ads de Peterson Solutions Argentina', noteEn: 'Peterson Solutions Argentina Google Ads account' },
       website: { account: 'psam' },
     },
   },
