@@ -62,14 +62,19 @@ describe('plansService', () => {
     const ago = getPlan('psar', 'ago-2026');
     const sep = getPlan('psar', 'sep-2026');
     expect(ago.deliverables.map((d) => d.status)).toEqual(['done', 'done', 'done']);
-    expect(sep.deliverables).toHaveLength(7);
-    expect(sep.deliverables.every((d) => d.status === 'done')).toBe(true);
-    // Las tareas de octubre no van en el informe de septiembre.
-    expect(sep.deliverables.some((d) => /octubre|Carrefour|puestos/i.test(d.name))).toBe(false);
-    expect(sep.kpiGroups[1].items.map((k) => k.value)).toEqual(['94', '202', '1']);
-    // Metas de pipeline, MQL y revenue vacías en la hoja: no se cargan como KPI.
+    expect(sep.deliverables.filter((d) => d.status === 'done')).toHaveLength(7);
+    // Las tareas de octubre van «en curso» en septiembre, como en el informe de CU USA.
+    expect(sep.deliverables.filter((d) => d.status === 'progress').map((d) => d.name)).toEqual([
+      'Campañas de Paid Media · octubre',
+      'Propuesta para Carrefour',
+      'Base de datos por puestos de trabajo',
+    ]);
+    // Mismos KPIs que el informe de CU USA; lo que la hoja no trae queda en null («—»).
+    const labels = (plan) => plan.kpiGroups.flatMap((g) => g.items).map((k) => k.label);
+    expect(labels(sep)).toEqual(labels(getPlan('cuus', 'sep-2026')));
+    expect(labels(ago)).toEqual(labels(getPlan('cuus', 'sep-2026')));
+    expect(sep.kpiGroups[1].items.every((k) => k.value === null)).toBe(true);
     for (const plan of [ago, sep]) {
-      expect(plan.kpiGroups.flatMap((g) => g.items).some((k) => /pipeline|mql|revenue/i.test(k.label))).toBe(false);
       for (const d of plan.deliverables) expect(d.nameEn && d.descEn, d.name).toBeTruthy();
       for (const d of plan.deliverables) for (const l of d.links ?? []) expect(/^https:\/\//.test(l.url), d.name).toBe(true);
     }

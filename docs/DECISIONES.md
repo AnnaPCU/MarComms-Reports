@@ -296,9 +296,16 @@ Quedó como práctica fija, y conviene sostenerla:
   el equipo: base de datos del webinar el 2/9 y comunicación el 4/9.
 - **Un informe por mes, cada tarea en el mes de su fila** (6/10/2026): agosto
   (arranque, 3 tareas) y septiembre (7 tareas) son informes separados. Las
-  tareas de octubre no se muestran hasta que se arme el informe de octubre,
-  con el mes cerrado. Los grupos vacíos («En curso», «Pendientes») no se
-  dibujan. Las metas y resultados de pipeline, MQL y revenue están vacíos
+  tareas de octubre van **«En curso» en el informe de septiembre**, como en
+  el de CU USA (también la que la hoja marca «Pendiente»), y pasan a
+  completadas en el informe de octubre, con el mes cerrado. Los grupos
+  vacíos («En curso», «Pendientes») no se dibujan.
+- **Los KPIs de un plan son los mismos que los del informe de CU USA**:
+  operativos (entregables completados, reuniones internas, contactos en la
+  base comercial) y performance (pipeline, MQLs y ventas generadas, en USD).
+  Lo que el equipo no informó queda en `null` y se muestra «—» con «Sin dato
+  para este período». Las reuniones internas de PS Argentina salen de las
+  filas de reunión de la hoja (agosto: 12/8 y 19/8; septiembre: 16/9). Las metas y resultados de pipeline, MQL y revenue están vacíos
   en la hoja: no se cargan como KPI y la introducción aclara que todavía no
   están definidos.
 - **Tagline por marca**: el pie (app, HTML descargado y PDF) usa el tagline

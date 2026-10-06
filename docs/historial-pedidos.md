@@ -1477,3 +1477,10 @@
 
 > Las de octubre que no salgan del informe. Saldrán una vez se completen y se haga el informe del mes de octubre cerrado.
 
+
+**#110**
+
+> Las tareas de octubre sí quiero que aparezcan en septiembre, como «en proceso», tal y como se muestra en el caso de CU USA.
+>
+> Por otro lado, respetame los KPIs del mes de CU USA para PS ARG. Si te llega a faltar alguna información, hacémela saber.
+

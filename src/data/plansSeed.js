@@ -128,8 +128,10 @@ export const PLANS_DB = {
   // (reunión de seguimiento del 30/9/2026). Plan de 6 meses, septiembre 2026
   // → febrero 2027. Un informe por mes: cada tarea va en el informe del mes
   // de su fila (agosto = arranque, previo al inicio formal). Las tareas de
-  // octubre quedan para el informe de octubre. Las metas y resultados de los
-  // objetivos (pipeline, MQL, revenue) están vacíos en la hoja: no se cargan.
+  // octubre van «en curso» en el informe de septiembre, como en el de CU USA,
+  // y como completadas en el de octubre cuando cierre el mes.
+  // KPIs: mismos que el informe de CU USA. Los que la hoja no trae (contactos
+  // en la base comercial, pipeline, MQLs, ventas) quedan en null → «—».
   // Las dos tareas de septiembre sin fecha en la hoja son del 2/9 (base de
   // datos) y del 4/9 (comunicación), según el equipo.
   psar: {
@@ -156,7 +158,17 @@ export const PLANS_DB = {
           nameEn: 'Operational',
           items: [
             { value: '3', label: 'Entregables completados', labelEn: 'Deliverables completed' },
-            { value: '2', label: 'Reuniones con el equipo', labelEn: 'Meetings with the team', note: '12/8 y 19/8', noteEn: '8/12 and 8/19' },
+            { value: '2', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '12/8 y 19/8', noteEn: '8/12 and 8/19' },
+            { value: null, label: 'Contactos en la base comercial', labelEn: 'Database created · contacts' },
+          ],
+        },
+        {
+          name: 'Performance',
+          nameEn: 'Performance',
+          items: [
+            { value: null, unit: 'USD', label: 'Pipeline generado', labelEn: 'Pipeline generated' },
+            { value: null, unit: 'USD', label: 'MQLs generados', labelEn: 'MQLs generated' },
+            { value: null, unit: 'USD', label: 'Ventas generadas', labelEn: 'Sales generated' },
           ],
         },
       ],
@@ -195,25 +207,25 @@ export const PLANS_DB = {
         'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In September we supported the end-to-end management of the EmpCo webinar, launched the Paid Media campaigns and built two databases. Focus of the month: analyze results and start building the 2027 strategy. The pipeline, MQL and revenue targets have not been set in the plan yet.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
-      summary: ['7 entregables completados', 'Webinar EmpCo: 202 registros y 94 deals en HubSpot', '8 campañas de Paid Media en marcha', 'Próxima reunión de seguimiento: 13/10/2026'],
-      summaryEn: ['7 deliverables completed', 'EmpCo webinar: 202 registrations and 94 deals in HubSpot', '8 Paid Media campaigns running', 'Next follow-up meeting: 10/13/2026'],
+      summary: ['7 entregables completados', '3 entregables en curso', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
+      summaryEn: ['7 deliverables completed', '3 deliverables in progress', 'EmpCo webinar: 202 registrations, 120 attendees and 94 deals in HubSpot', 'Next follow-up meeting: 10/13/2026'],
       kpiGroups: [
         {
           name: 'Operativos',
           nameEn: 'Operational',
           items: [
             { value: '7', label: 'Entregables completados', labelEn: 'Deliverables completed' },
-            { value: '5.479', valueEn: '5,479', label: 'Contactos en bases creadas', labelEn: 'Contacts in databases built', note: '5.403 webinar EmpCo + 76 Ígaris', noteEn: '5,403 EmpCo webinar + 76 Ígaris' },
-            { value: '8', label: 'Campañas de Paid Media', labelEn: 'Paid Media campaigns', note: 'SuSo, SuSe y Bioenergía', noteEn: 'SuSo, SuSe and Bioenergy' },
+            { value: '1', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '16/9', noteEn: '9/16' },
+            { value: null, label: 'Contactos en la base comercial', labelEn: 'Database created · contacts' },
           ],
         },
         {
           name: 'Performance',
           nameEn: 'Performance',
           items: [
-            { value: '94', label: 'Deals en HubSpot · webinar EmpCo', labelEn: 'Deals in HubSpot · EmpCo webinar', pill: '5 hot deals', pillEn: '5 hot deals' },
-            { value: '202', label: 'Registros al webinar EmpCo', labelEn: 'EmpCo webinar registrations', pill: '120 asistentes', pillEn: '120 attendees' },
-            { value: '1', label: 'Leads de Paid Media', labelEn: 'Paid Media leads' },
+            { value: null, unit: 'USD', label: 'Pipeline generado', labelEn: 'Pipeline generated' },
+            { value: null, unit: 'USD', label: 'MQLs generados', labelEn: 'MQLs generated' },
+            { value: null, unit: 'USD', label: 'Ventas generadas', labelEn: 'Sales generated' },
           ],
         },
       ],
@@ -234,6 +246,9 @@ export const PLANS_DB = {
           status: 'done', name: 'Base de datos Ígaris', nameEn: 'Ígaris database', desc: '30/9: base y nurturing para calificar leads: 76 contactos en 24 empresas.', descEn: '9/30: database and nurturing to qualify leads: 76 contacts across 24 companies.',
           links: [{ label: 'Base Ígaris', labelEn: 'Ígaris database', url: 'https://share.gemini.google/cCuqFrENzN2q' }],
         },
+        { status: 'progress', name: 'Campañas de Paid Media · octubre', nameEn: 'Paid Media campaigns · October', desc: 'Siguen las 8 campañas para SuSo, SuSe y Bioenergía, con foco en generar leads.', descEn: 'The 8 campaigns for SuSo, SuSe and Bioenergy continue, focused on lead generation.' },
+        { status: 'progress', name: 'Propuesta para Carrefour', nameEn: 'Proposal for Carrefour', desc: 'Propuesta en preparación a pedido de Simón (desde el 5/10).', descEn: 'Proposal being prepared at Simón’s request (since 10/5).' },
+        { status: 'progress', name: 'Base de datos por puestos de trabajo', nameEn: 'Database by job title', desc: 'Definir entre 6 y 7 puestos relevantes como criterio de búsqueda para identificar potenciales contactos en Argentina (13/10). Seguimiento en 2 a 3 semanas.', descEn: 'Define 6 to 7 relevant job titles as search criteria to identify potential contacts in Argentina (10/13). Follow-up in 2 to 3 weeks.' },
       ],
       initiativeGroups: [
         {
