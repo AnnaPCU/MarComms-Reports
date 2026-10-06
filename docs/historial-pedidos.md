@@ -1460,3 +1460,10 @@
 
 (El mensaje llegó cortado; se tomó la hoja «PS Argentina».)
 
+
+**#107**
+
+> Las dos de septiembre no las dejes afuera. Poné que uno se hizo el 2 de septiembre y el otro el 4 de septiembre.
+
+(Base de datos para la difusión del webinar → 2/9; comunicación del webinar EmpCo → 4/9, en el orden de la hoja.)
+

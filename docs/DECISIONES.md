@@ -292,7 +292,8 @@ Quedó como práctica fija, y conviene sostenerla:
   contadores de la hoja («Tareas 8 · Completadas 5 · Abiertas 3») cuentan
   desde la fila 32 y dejan afuera las tareas de agosto y dos de septiembre;
   el informe cuenta todas las filas (13: 10 completadas, 2 en curso, 1
-  pendiente). Las metas y resultados de pipeline, MQL y revenue están vacíos
+  pendiente). Las dos de septiembre sin fecha en la hoja van con la que dio
+  el equipo: base de datos del webinar el 2/9 y comunicación el 4/9. Las metas y resultados de pipeline, MQL y revenue están vacíos
   en la hoja: no se cargan como KPI y la introducción aclara que todavía no
   están definidos.
 - **Tagline por marca**: el pie (app, HTML descargado y PDF) usa el tagline
