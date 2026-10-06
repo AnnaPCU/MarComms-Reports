@@ -1419,3 +1419,8 @@
 **#101**
 
 > Unificá nomenclados a la hora de filtrar por cliente. Veo casos que dice Control Union USA y luego Control Union Estados Unidos (el ideal justo en este caso).
+
+
+**#102**
+
+> Volviendo al nuevo email marketing importado, es correcto, no hay ni nombre ni país. Excluime estas columnas en el reporte.

@@ -482,9 +482,11 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 - **Email Control Union USA · octubre 2026** (6/10/2026): envío único «PCU x
   Fairly Made · Networking Event» (Textile Exchange): 1.350 enviados, 20,6 %
   de apertura, 2,7 % de clics, 36 hot leads. Cuenta nueva `cuus` «Control
-  Union USA» (marca CU: el 98 % de los contactos los cargó la oficina de
+  Union USA» (hoy «Control Union Estados Unidos»; marca CU: el 98 % de los contactos los cargó la oficina de
   CU USA; confirmado por el equipo). Se suma al cliente CU Estados Unidos en
-  la vista Clientes. Drop archivado en
+  la vista Clientes. El export no trae nombre ni país: la tabla de hot leads
+  oculta la columna «Contacto» cuando ningún lead tiene nombre (el reporte de
+  Email no tiene columna de país). Drop archivado en
   `metricas/email-marketing/_procesados/2026-10-textile-exchange-event/` (la
   carpeta decía 2026-09, pero el envío es del 6/10).
 - **Descargas en el idioma elegido + logo nítido** (28/9/2026): el nombre

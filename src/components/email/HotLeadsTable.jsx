@@ -20,6 +20,10 @@ function fullName(l) {
 export function HotLeadsTable({ leads = [], lang = 'es' }) {
   const t = EMAIL_STR[lang];
   const numL = (v) => Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR');
+  // Si el export de Mailchimp no trae nombres (ej. CU Estados Unidos, oct 2026),
+  // la columna «Contacto» se oculta en vez de mostrar una fila de «—».
+  const hasNames = leads.some((l) => fullName(l) !== '—');
+  const headers = hasNames ? t.th : t.th.filter((_, i) => i !== 1);
 
   if (!leads.length) {
     return (
@@ -45,7 +49,7 @@ export function HotLeadsTable({ leads = [], lang = 'es' }) {
       <table className="w-full min-w-[720px] border-collapse">
         <thead>
           <tr>
-            {t.th.map((h) => (
+            {headers.map((h) => (
               <th
                 key={h}
                 className="whitespace-nowrap border-b-2 border-cu-cyan px-3 py-2 text-left text-[9px] font-bold uppercase tracking-[0.5px] text-cu-grey"
@@ -61,8 +65,8 @@ export function HotLeadsTable({ leads = [], lang = 'es' }) {
             return (
               <tr key={l.email} className="border-b border-cu-border2 transition-colors hover:bg-cu-cyan/[0.03]">
                 <td className="px-3 py-2 text-[11px] font-semibold text-cu-grey">{i + 1}</td>
-                <td className="px-3 py-2 text-[12px] font-semibold text-cu-dblue">{fullName(l)}</td>
-                <td className="px-3 py-2 text-[12px] text-cu-dgrey">{l.company || '—'}</td>
+                {hasNames && <td className="px-3 py-2 text-[12px] font-semibold text-cu-dblue">{fullName(l)}</td>}
+                <td className={`px-3 py-2 text-[12px] text-cu-dgrey ${hasNames ? '' : 'font-semibold text-cu-dblue'}`}>{l.company || '—'}</td>
                 <td className="px-3 py-2 text-[11.5px] text-cu-dgrey">{l.email}</td>
                 <td className="px-3 py-2 text-[12px] font-bold text-cu-dblue">{numL(l.clicks)}</td>
                 <td className="px-3 py-2 text-[12px] text-cu-dgrey">{numL(l.opens)}</td>
