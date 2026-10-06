@@ -14,7 +14,11 @@
 //   · `note` / `noteEn`: alcance distinto al del cliente (cuenta regional,
 //     campaña conjunta, solo GEO de Meta). Se muestra en la vista, para
 //     no hacer pasar un dato regional por uno del país.
+//
+//  `crmEntities`: entidades de HubSpot («PCU Entity») cuyos deals se
+//  muestran en el bloque CRM del cliente (vacío = sin entidad asignable).
 // ════════════════════════════════════════════════════════════════
+import { CU_US, CU_LATAM, CU_NA, PS_AMERICAS, PS_IBEROAM } from '@/constants/crm';
 
 export const BUSINESS_UNITS = {
   cu: { name: 'Control Union', brand: 'cu' },
@@ -25,6 +29,7 @@ export const CLIENTS = [
   // ── Control Union · Iberia ──
   {
     id: 'cu-es',
+    crmEntities: ['518'],
     name: 'Control Union España',
     unit: 'cu',
     region: 'Iberia',
@@ -32,6 +37,7 @@ export const CLIENTS = [
   },
   {
     id: 'cu-pt',
+    crmEntities: ['522'],
     name: 'Control Union Portugal',
     unit: 'cu',
     region: 'Iberia',
@@ -41,6 +47,7 @@ export const CLIENTS = [
   // ── Control Union · Latinoamérica ──
   {
     id: 'cu-latam',
+    crmEntities: CU_LATAM,
     name: 'Control Union Latinoamérica',
     unit: 'cu',
     region: 'Latinoamérica',
@@ -56,6 +63,7 @@ export const CLIENTS = [
   },
   {
     id: 'cu-global',
+    crmEntities: [],
     name: 'Control Union Global',
     unit: 'cu',
     region: 'Global (Américas + Europa)',
@@ -66,6 +74,7 @@ export const CLIENTS = [
   },
   {
     id: 'cu-ar',
+    crmEntities: ['538'],
     name: 'Control Union Argentina',
     unit: 'cu',
     region: 'Latinoamérica',
@@ -77,6 +86,7 @@ export const CLIENTS = [
   },
   {
     id: 'cu-br',
+    crmEntities: ['584'],
     name: 'Control Union Brasil',
     unit: 'cu',
     region: 'Latinoamérica',
@@ -84,6 +94,7 @@ export const CLIENTS = [
   },
   {
     id: 'cu-cl',
+    crmEntities: ['848'],
     name: 'Control Union Chile',
     unit: 'cu',
     region: 'Latinoamérica',
@@ -91,6 +102,7 @@ export const CLIENTS = [
   },
   {
     id: 'cu-mx',
+    crmEntities: ['598'],
     name: 'Control Union México',
     unit: 'cu',
     region: 'Latinoamérica',
@@ -98,6 +110,7 @@ export const CLIENTS = [
   },
   {
     id: 'cu-pe',
+    crmEntities: ['536'],
     name: 'Control Union Perú',
     unit: 'cu',
     region: 'Latinoamérica',
@@ -107,6 +120,7 @@ export const CLIENTS = [
   // ── Control Union · North America ──
   {
     id: 'cu-na',
+    crmEntities: CU_NA,
     name: 'Control Union North America',
     unit: 'cu',
     region: 'North America',
@@ -114,6 +128,7 @@ export const CLIENTS = [
   },
   {
     id: 'cu-us',
+    crmEntities: CU_US,
     name: 'Control Union Estados Unidos',
     unit: 'cu',
     region: 'North America',
@@ -126,6 +141,7 @@ export const CLIENTS = [
   },
   {
     id: 'cu-ca',
+    crmEntities: ['583'],
     name: 'Control Union Canadá',
     unit: 'cu',
     region: 'North America',
@@ -135,6 +151,7 @@ export const CLIENTS = [
   // ── Peterson Solutions ──
   {
     id: 'ps-ib',
+    crmEntities: ['765'],
     name: 'Peterson Solutions Iberia',
     unit: 'ps',
     region: 'Iberia',
@@ -149,6 +166,7 @@ export const CLIENTS = [
   },
   {
     id: 'ps-am',
+    crmEntities: PS_AMERICAS,
     name: 'Peterson Solutions Americas',
     unit: 'ps',
     region: 'Americas',
@@ -164,6 +182,7 @@ export const CLIENTS = [
   },
   {
     id: 'ps-iberoam',
+    crmEntities: PS_IBEROAM,
     name: 'Peterson Solutions Iberoamérica',
     unit: 'ps',
     region: 'Iberoamérica',

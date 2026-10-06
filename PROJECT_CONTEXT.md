@@ -90,7 +90,8 @@ src/
   pilares/registry.jsx        conecta cada pilar con su vista, cuentas y períodos (+ clientes)
   constants/
     pilares.js                los 5 pilares (id, fuentes, ícono, ready) + entrada de nav Clientes
-    clients.js                mapa cliente (unidad + país) → cuenta de cada pilar (ver §7)
+    clients.js                mapa cliente (unidad + país) → cuenta de cada pilar (ver §7) + entidades de HubSpot (`crmEntities`)
+    crm.js                    cuenta de cada pilar → entidades de HubSpot (card «Deals generados»)
     periods.js                meses y trimestres 2026
     brand.js                  tokens de color CU, paleta charts, logos por cuenta
     glossaries.js             glosarios de los 5 pilares
@@ -100,8 +101,10 @@ src/
     socialLatam.js / socialNorthAm.js  segmentación por país de CU Latinoamérica y CU North America
     paidSeed.js               datos reales Paid (pt, es, cuc, psar; ver §6)
     websiteSeed.js            datos reales Website (CU Argentina, Q1 2026)
+    crmSeed.js                deals de MarComms en HubSpot (generados/MQL/WON por origen, entidad y mes), generado por scripts/crm/
   services/                   socialService, paidService, websiteService… (seed-only)
                               clientService: qué pilares/períodos tiene cada cliente + paquete de la vista General
+                              crmService: totales de HubSpot por cliente, cuenta de pilar y período (sin mezclar monedas)
   hooks/                      useSocialMonthly, usePaidMonthly, useClientOverview (seed-only + embed)
   components/
     shared/                   KpiCard, ChartCard, SectionHeader, Funnel, InsightsPanel,
@@ -269,6 +272,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
 | Login compartido | ✅ Funciona (localStorage) |
 | Vista por cliente | ✅ 13 clientes con más de un pilar (mapa en `constants/clients.js`), vista General + entrada a cada pilar, descarga de la General |
+| CRM (HubSpot) | ✅ Datos al 6/10/2026. Vista por cliente: bloque «Resultados comerciales — HubSpot» (deals generados, MQLs y WON de los 5 pilares, tabla por pilar y bloque aparte de otros orígenes: STEAL, Database, Commercial Tool, eventos presenciales y BDR MarComms, este último todavía sin deals). Pilares Social, Paid, Website y Email: card «Deals generados» en Indicadores clave. Criterios en `docs/DECISIONES.md` §14; tooling `scripts/crm/` |
 
 ## 10. Decisiones tomadas
 
@@ -300,6 +304,14 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
   LinkedIn del evento que aparecen en el export de agosto de PS Iberia &
   Americas (video de 1.236 impresiones y orgánico de 1.172 al 31/8).
 - Opcional: extender drill-down/comparativa a Social por cuenta si se pide.
+- **CRM (HubSpot)**, a validar con el equipo (supuestos de `docs/DECISIONES.md`
+  §14): Database, Commercial Tool y eventos presenciales van con STEAL y BDR
+  en «otros orígenes»; Colombia no entra en CU Latinoamérica; PS Estados
+  Unidos entra en PS Americas pero no en PS Iberoamérica; CU Global no tiene
+  entidad (los deals de sus webinars quedan en Control Union Alemania);
+  «Control Union Canadá (Solutions)» (servicios de Peterson) no se asigna a
+  ningún cliente. El seed se actualiza a mano (consultas →
+  `scripts/crm/build_crm_seed.py`).
 
 ## 12. Problemas conocidos
 
@@ -377,6 +389,17 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **CRM (HubSpot)** (6/10/2026): deals originados por MarComms, desde HubSpot
+  (solo lectura). Vista por cliente: bloque «Resultados comerciales —
+  HubSpot» con acumulado 2026 o por mes, número principal de los 5 pilares y
+  bloque aparte de otros orígenes (STEAL, Database, Commercial Tool, eventos
+  presenciales, BDR MarComms). Pilares: card «Deals generados» en Indicadores
+  clave (Social, también por país; Paid; Website; Email). MQL = Qualified o
+  más avanzado no LOST, en el mes en que llegó; WON por fecha de cierre;
+  importes por moneda sin convertir. Archivos: `crmSeed.js`, `crmService.js`,
+  `crmI18n.js`, `constants/crm.js`, `ClientCrm.jsx`, `CrmDealsCard.jsx`,
+  `scripts/crm/`.
 
 - Auditoría inicial del repo (recuperación de contexto).
 - Integración GitHub→Vercel documentada; deploy desde `main`.

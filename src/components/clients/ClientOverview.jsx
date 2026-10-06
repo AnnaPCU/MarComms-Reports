@@ -6,6 +6,7 @@ import { HeroCard } from '@/components/shared/HeroCard';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { Glossary } from '@/components/shared/Glossary';
+import { ClientCrm } from '@/components/clients/ClientCrm';
 import { isExternalReport, isEmbedReport } from '@/utils/reportAudience';
 
 function FichaRow({ k, v }) {
@@ -82,6 +83,9 @@ export function ClientOverview({ overview, lang = 'es', onOpen }) {
           <HeroCard key={s.pilar} label={`${s.title} — ${s.hero.label}`} value={s.hero.value} pill={s.hero.pill} footnote={s.periodLabel} />
         ))}
       </div>
+
+      {/* ── Resultados comerciales (HubSpot): número principal = 5 pilares ── */}
+      <ClientCrm clientId={client.id} lang={lang} />
 
       {/* ── Plan de acción consolidado ── */}
       <InsightsPanel

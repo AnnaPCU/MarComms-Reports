@@ -18,6 +18,7 @@ import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { BrandIcon } from '@/components/shared/BrandIcon';
 import { PostsTable } from '@/components/social/PostsTable';
 import { Glossary } from '@/components/shared/Glossary';
+import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 
 // ════════════════════════════════════════════════════════════════
 //  Reporte mensual POR PAÍS dentro de una cuenta LinkedIn segmentada
@@ -97,6 +98,7 @@ export function CountryView({ account, country, period, lang = 'es' }) {
             <KpiCard label={t.fClk} value={fmt(d.clk)} delta={computeDelta(d.clk, prev?.clk, lang)} />
             <KpiCard label={t.kPosts} value={d.np} delta={computeDelta(d.np, prev?.np, lang)} footnote={t.cPostsFoot} />
           </div>
+          <CrmDealsCard pilar="social" account={account} period={period} country={country} lang={lang} />
 
           <SectionHeader title={t.cTopSection(name)} note={t.byImpressions} />
           <PostsTable posts={d.posts} lang={lang} />

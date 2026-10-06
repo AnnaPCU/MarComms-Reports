@@ -36,6 +36,7 @@ import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/Performanc
 import { isExternalReport } from '@/utils/reportAudience';
 import { WebsiteAnnualReview } from '@/components/website/WebsiteAnnualReview';
 import { WebsiteComparative } from '@/components/website/WebsiteComparative';
+import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 
 const pctL = (v, lang) =>
   Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
@@ -110,7 +111,7 @@ export function WebsiteApp({ account, period }) {
       </div>
 
       {tab === 'site' ? (
-        <SiteView data={data?.site} accName={accName} periodLabel={periodLabel} lang={lang} />
+        <SiteView data={data?.site} account={account} period={period} accName={accName} periodLabel={periodLabel} lang={lang} />
       ) : (
         <SeoView data={data?.seo} accName={accName} periodLabel={periodLabel} lang={lang} />
       )}
@@ -121,7 +122,7 @@ export function WebsiteApp({ account, period }) {
 }
 
 // ── Sub-vista Website (Google Analytics) ──
-function SiteView({ data, accName, periodLabel, lang = 'es' }) {
+function SiteView({ data, account, period, accName, periodLabel, lang = 'es' }) {
   const t = WEB_STR[lang];
   const pctv = (v) => pctL(v, lang);
   if (!hasData([data].filter(Boolean))) {
@@ -162,6 +163,7 @@ function SiteView({ data, accName, periodLabel, lang = 'es' }) {
         <KpiCard label="Impressions" value={num(data.impressions)} />
         <KpiCard label="Conversions" value={num(data.conversions)} accent="green" />
       </div>
+      <CrmDealsCard pilar="website" account={account} period={period} lang={lang} />
 
       <SectionHeader title={t.siteFunnelSection} note="Google Analytics" />
       <FunnelCard>

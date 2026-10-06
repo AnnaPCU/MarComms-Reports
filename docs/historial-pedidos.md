@@ -1424,3 +1424,32 @@
 **#102**
 
 > Volviendo al nuevo email marketing importado, es correcto, no hay ni nombre ni país. Excluime estas columnas en el reporte.
+
+
+**#103**
+
+(Mensaje de voz anterior al #100; transcripción: «Mark Holmes» = MarComms, «disgenerados» = deals generados, «ones» = WONs.)
+
+> Bueno, se han podido ir respondiendo un par de preguntas. […] lo que yo quiero es, como te dije, los tres puntos que serían deals generados, MQLs y WONs. MQLs a definir qué es el concepto de MQL […] para que sea un deal o un won de MarComms, tuvo que haber en el recorrido de su deal haber salido ese lead proveniente de algún pilar de MarComms: que provenga de website, o de email marketing, o de social media, o de paid media, o de un webinar. Esos son los cinco puntos principales. Y en cuanto a unidad de negocios, en general lo clasificamos así: certifications, inspections y Peterson Solutions […] Dentro de cada están los países. Eso es importante. […] Estaría bueno en cada apartado de cada pilar por cada país mostrar justamente esto. […] también me gustaría que salga en la vista de clientes; las dos cosas, y que la gente pueda tener esos famosos indicadores clave donde se destaquen estos que son los más importantes […] No pretendo que me lo hagas ya automáticamente, sino que me digas los limitantes en todo este proceso, cómo te puedo ayudar y qué información más necesitás de mí.
+
+
+**#104**
+
+> [Excel: Webinar_Lead_Scoring_Methodology.xlsx] Excelente trabajo. Volvemos al tema de HubSpot para traer la data que buscábamos, para el punto tuyo de «qué necesito de vos»:
+> 1. Los pilares son los servicios, no importa de dónde vengan: Social Media - Paid Media - Email Marketing - Webinars - Website. Esos puntos que tocaste también cuentan como deals de MarComms, aunque no sean los pilares principales.
+> 2. Webinars también son deals de MarComms. Entiendo que este pilar tenga una cantidad masiva de deals, pero luego se segmentará por pilar aclarando de dónde proviene cada uno, y aclarando en el caso de Webinars qué es un deal de webinar; para eso te adjunto un Excel.
+> 3. MQL es el stage «Qualified».
+> 4. Contá por fecha de cierre, sí. Si en x mes hubo x deals WON, esos estarán para ese mes respectivo.
+> 5. La moneda que muestre HubSpot: respetemos los números originales y no hagamos traspasos de divisas.
+> 6. […] Tenés que incluir a todos los stages para deals generated.
+> 7. ¿Necesitás vistas custom para traer la data o podés filtrar por país-servicio y listo?
+
+
+**#105**
+
+> Algo que me faltó aclarar: New & Renewals también es, depende el servicio, «new».
+> 1. Me gustó tu propuesta pero te ajusto algo: Qualified o stages más avanzados que no sean LOST tienen que ser catalogados como «qualified».
+> 2. Los KPIs de los planes se mantienen, pero en la vista de países estaría bueno agregar estos datos de valor del CRM y, dependiendo el pilar, agregarás una card en «Indicadores clave» más llamativa comentando los deals generados.
+>
+> A nivel STEAL no es un canal tradicional como sí lo son los 5 pilares que te vengo comentando. Así que lo pondría como una vista aparte de deals generados, no como el número final principal. Lo mismo para BDR.
+

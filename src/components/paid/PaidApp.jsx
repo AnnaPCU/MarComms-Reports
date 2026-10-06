@@ -26,6 +26,7 @@ import { MetaGeoReport } from '@/components/paid/MetaGeoReport';
 import { PaidAnnualReview } from '@/components/paid/PaidAnnualReview';
 import { PaidComparative } from '@/components/paid/PaidComparative';
 import { isExternalReport } from '@/utils/reportAudience';
+import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct = (v) =>
@@ -223,6 +224,7 @@ export function PaidApp({ account, period }) {
 
           <SectionHeader title={t.kpiSection} note={[accName, mo.objetivo].filter(Boolean).join(' · ')} />
           <KpiRow d={tt} currency={c} partial={partial} t={t} />
+          <CrmDealsCard pilar="paid" account={account} period={period} lang={lang} />
 
           <SectionHeader title={t.funnelSection} note={t.funnelNote} />
           <PaidFunnel totals={tt} campaigns={mo.campaigns} lang={lang} />

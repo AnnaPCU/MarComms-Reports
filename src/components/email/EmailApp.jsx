@@ -17,6 +17,7 @@ import { isExternalReport } from '@/utils/reportAudience';
 import { EmailCharts } from '@/components/email/EmailCharts';
 import { HotLeadsTable } from '@/components/email/HotLeadsTable';
 import { Glossary } from '@/components/shared/Glossary';
+import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 
 // Pilar Email Marketing (Mailchimp / Apollo). Reporte de secuencia/campaña.
 // Idioma base español; toggle EN disponible (también en el descargable).
@@ -176,6 +177,8 @@ export function EmailApp({ account, period }) {
           )}
         </div>
       )}
+
+      <CrmDealsCard pilar="email" account={account} period={period} lang={lang} />
 
       <SectionHeader title={t9.funnelSection} note="Mailchimp" />
       <div className="mb-5 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">

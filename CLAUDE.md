@@ -48,6 +48,7 @@ commit → deploy. No hay import por UI ni base de datos.
 | **Webinars** | Livestorm / Teams (+ Mailchimp, LinkedIn, HubSpot) | carpeta `metricas/webinars/` |
 | **Website** | GA4, Search Console | adjuntos en la conversación |
 | **Planes** (vista, no pilar) | Informe mensual del plan regional (PDF del equipo) | adjunto en la conversación |
+| **CRM** (deals, MQL, WON) | HubSpot, consultas de solo lectura por el conector | `scripts/crm/build_crm_seed.py` → `src/data/crmSeed.js` |
 
 **Ingesta por carpeta:** ante «procesá las métricas nuevas de \<pilar\>», buscar en
 `metricas/<pilar>/` las carpetas `AAAA-MM` que no estén en `_procesados/`, correr
@@ -130,6 +131,11 @@ Orden común en todos los pilares: **Insights (Plan de Acción)** → **KPIs** �
   de plataforma: no se generan insights y los próximos pasos se muestran
   siempre porque son contenido del informe. Criterios en
   `docs/DECISIONES.md` §12.
+- **Datos de CRM (HubSpot)**: número principal = deals de los 5 pilares
+  («Deal Source»); STEAL, Database, Commercial Tool, eventos presenciales y
+  BDR MarComms van aparte. Importes por moneda, sin convertir. Al sumar una cuenta o
+  un cliente, mapear sus entidades de HubSpot (`constants/crm.js`,
+  `crmEntities` en `clients.js`). Criterios en `docs/DECISIONES.md` §14.
 - Reutilizar los componentes de `src/components/shared/` (KpiCard, ChartCard,
   Funnel, InsightsPanel, PerformancePanels, SectionHeader, Glossary) para que la
   estética se mantenga uniforme entre pilares.
@@ -175,4 +181,5 @@ igual; lo que no se hace es `git push` de esa rama.
 | `docs/historial-pedidos.md` | Registro textual de lo que pidió el equipo, por fecha |
 | `metricas/README.md` | Cómo se entregan los exports de cada pilar |
 | `scripts/paid/README.md` | Tooling de Google Ads (los 3 CSV, validaciones, cuentas) |
+| `scripts/crm/README.md` | Tooling de HubSpot (consultas, validaciones, seed del CRM) |
 | `DEPLOY.md` | Integración GitHub → Vercel |

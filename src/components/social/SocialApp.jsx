@@ -23,6 +23,7 @@ import { CountryView } from '@/components/social/CountryView';
 import { CountryYearView } from '@/components/social/CountryYearView';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { Glossary } from '@/components/shared/Glossary';
+import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 
 // Vista del pilar Social Media (LinkedIn).
 // Idioma base español; toggle EN disponible (también en el descargable).
@@ -221,6 +222,7 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
           footnote={t.visFoot}
         />
       </div>
+      <CrmDealsCard pilar="social" account={account} period={period} lang={lang} />
 
       <SectionHeader title={t.funnelSection} note={t.funnelNote} />
       <div className="mb-5 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">

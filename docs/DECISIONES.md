@@ -301,3 +301,64 @@ Quedó como práctica fija, y conviene sostenerla:
 - **El logo del cliente se decide por id de cuenta** (`BRAND_BY_ID` en
   `constants/brand.js`), no por el nombre: la cuenta conjunta «Control Union +
   Peterson Solutions Latinoamérica» lleva logo de CU.
+
+## 14. Datos de CRM (HubSpot)
+
+Pedido del 6/10/2026 (historial #103–#105). Deals originados por MarComms en
+HubSpot, en la vista por cliente y como card en «Indicadores clave» de cada
+pilar. Los KPIs de **Planes** no se tocan: siguen tal cual los informa el
+equipo.
+
+- **Qué es un deal de MarComms**: la propiedad «Deal Source»
+  (`contact_origin_real`) del deal. **Número principal = los 5 pilares**
+  (Social Media, Paid Media, Email Marketing, Webinar, Website). STEAL,
+  Database, Commercial Tool, InPerson Event y **BDR MarComms** también son
+  de MarComms pero **no son canales tradicionales**: van en un bloque aparte
+  («Otros orígenes MarComms») y no suman al número principal. El origen
+  «BDR MarComms» existe en HubSpot pero al 6/10/2026 no tiene ningún deal
+  (la vista lo aclara). Ojo: «InPerson Event» se guarda internamente como
+  `Event`; las consultas tienen que usar el valor interno, no la etiqueta.
+- **Deals generados**: todos los stages (New & Renewals también es «new»
+  según el servicio), contados por **fecha de creación**.
+- **MQL**: stage actual **Qualified o uno más avanzado que no sea LOST**
+  (Proposal Sent, WON), contado en el **mes en que llegó por primera vez** a
+  ese nivel (la fecha de entrada más temprana a Qualified, Proposal o WON).
+  Motivo: el 96 % de los WON de 2026 del pipeline de Certifications saltean
+  el stage Qualified; contar solo «entró a Qualified» los dejaba afuera. Se
+  leen los deals creados desde el 1/1/2025.
+- **WON**: por **fecha de cierre**. Dos WON de Database (Perú) no tienen
+  fecha de cierre en HubSpot: no se ubican en ningún mes y se avisan en el
+  acumulado.
+- **Monedas**: cada importe va en la moneda del deal (EUR, USD, CAD, BRL…),
+  **nunca se convierte ni se suman monedas distintas**. Los deals sin monto
+  cargado se cuentan y se informa cuántos son.
+- **País / unidad de negocio**: la propiedad «PCU Entity» (`pcu_office`).
+  Mapeo explícito: por cliente en `constants/clients.js` (`crmEntities`),
+  por cuenta de pilar en `constants/crm.js`. Regionales: CU Latinoamérica =
+  Argentina + Brasil + Chile + México + Perú; CU North America = Estados
+  Unidos + Canadá; PS Americas = Argentina + Brasil + Estados Unidos + Chile;
+  PS Iberoamérica = España (Peterson Ibero America) + Argentina + Brasil +
+  Chile + México. Control Union Estados Unidos suma Certifications (537) e
+  **Inspections** (entidad propia en HubSpot). Peterson Solutions México
+  (880) entra en PS Americas y PS Iberoamérica.
+- **Las marcas no se mezclan** también acá: «Control Union Canadá
+  (Solutions)» registra servicios de Peterson Solutions con la entidad de CU
+  Canadá; no se suma a Control Union Canadá (pendiente de validar con el
+  equipo). Colombia, Ecuador, Uruguay, Paraguay y PS Technologies no se leen
+  (ningún cliente los usa).
+- **Sin entidad no se infiere**: CU Global (Email y Webinars) no tiene
+  entidad, porque los deals de los webinars globales quedan en la entidad del
+  dueño del webinar (Control Union Alemania). Tampoco las cuentas de LinkedIn
+  `cun`, `ps`, `tlr` y `bel`. Ahí no hay card ni bloque con números.
+- **Webinars en los pilares**: el reporte por evento ya tiene su propio
+  bloque de HubSpot; la card por pilar no se agrega ahí (los deals del pilar
+  no se pueden atribuir a un evento sin el detalle de origen). En la vista por
+  cliente sí aparece la fila Webinars. Según la metodología de scoring
+  (Excel v2026-10-05), solo los leads Hot y Warm se convierten en deal.
+- **Período**: en la vista por cliente, acumulado 2026 o un mes con
+  actividad. En la card del pilar, los meses del período del reporte (mes,
+  trimestre o año); los GEO de Meta y las comparativas no tienen card.
+- **Cómo se actualiza**: consultas de solo lectura a HubSpot → 
+  `scripts/crm/build_crm_seed.py` → `src/data/crmSeed.js` (solo agregados,
+  sin nombres de empresas) → commit → deploy. Ver `scripts/crm/README.md`.
+
