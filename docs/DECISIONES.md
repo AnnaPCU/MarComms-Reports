@@ -293,7 +293,12 @@ Quedó como práctica fija, y conviene sostenerla:
   desde la fila 32 y dejan afuera las tareas de agosto y dos de septiembre;
   el informe cuenta todas las filas (13: 10 completadas, 2 en curso, 1
   pendiente). Las dos de septiembre sin fecha en la hoja van con la que dio
-  el equipo: base de datos del webinar el 2/9 y comunicación el 4/9. Las metas y resultados de pipeline, MQL y revenue están vacíos
+  el equipo: base de datos del webinar el 2/9 y comunicación el 4/9.
+- **Un informe por mes, cada tarea en el mes de su fila** (6/10/2026): agosto
+  (arranque, 3 tareas) y septiembre (7 tareas) son informes separados. Las
+  tareas de octubre no se muestran hasta que se arme el informe de octubre,
+  con el mes cerrado. Los grupos vacíos («En curso», «Pendientes») no se
+  dibujan. Las metas y resultados de pipeline, MQL y revenue están vacíos
   en la hoja: no se cargan como KPI y la introducción aclara que todavía no
   están definidos.
 - **Tagline por marca**: el pie (app, HTML descargado y PDF) usa el tagline

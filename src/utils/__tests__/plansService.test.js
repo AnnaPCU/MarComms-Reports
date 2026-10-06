@@ -53,17 +53,26 @@ describe('plansService', () => {
     for (const d of withLinks) for (const l of d.links) expect(l.label && /^https:\/\//.test(l.url), d.name).toBeTruthy();
   });
 
-  it('plan de Peterson Solutions Argentina (hoja «PS Argentina»): 10 completados, 2 en curso y 1 pendiente', () => {
+  it('plan de Peterson Solutions Argentina: un informe por mes, cada tarea en el mes de su fila', () => {
     expect(listAccounts()).toContainEqual({ id: 'psar', name: 'Peterson Solutions Argentina' });
+    expect(listPeriods().map((p) => p.id)).toEqual(['ago-2026', 'sep-2026']);
+    expect(hasDataFor('psar', 'ago-2026')).toBe(true);
     expect(hasDataFor('psar', 'sep-2026')).toBe(true);
-    const plan = getPlan('psar', 'sep-2026');
-    const count = (st) => plan.deliverables.filter((d) => d.status === st).length;
-    expect([count('done'), count('progress'), count('pending')]).toEqual([10, 2, 1]);
-    expect(plan.kpiGroups[1].items.map((k) => k.value)).toEqual(['94', '202', '1']);
+    expect(hasDataFor('cuus', 'ago-2026')).toBe(false);
+    const ago = getPlan('psar', 'ago-2026');
+    const sep = getPlan('psar', 'sep-2026');
+    expect(ago.deliverables.map((d) => d.status)).toEqual(['done', 'done', 'done']);
+    expect(sep.deliverables).toHaveLength(7);
+    expect(sep.deliverables.every((d) => d.status === 'done')).toBe(true);
+    // Las tareas de octubre no van en el informe de septiembre.
+    expect(sep.deliverables.some((d) => /octubre|Carrefour|puestos/i.test(d.name))).toBe(false);
+    expect(sep.kpiGroups[1].items.map((k) => k.value)).toEqual(['94', '202', '1']);
     // Metas de pipeline, MQL y revenue vacías en la hoja: no se cargan como KPI.
-    expect(plan.kpiGroups.flatMap((g) => g.items).some((k) => /pipeline|mql|revenue/i.test(k.label))).toBe(false);
-    for (const d of plan.deliverables) expect(d.nameEn && d.descEn, d.name).toBeTruthy();
-    for (const d of plan.deliverables) for (const l of d.links ?? []) expect(/^https:\/\//.test(l.url), d.name).toBe(true);
+    for (const plan of [ago, sep]) {
+      expect(plan.kpiGroups.flatMap((g) => g.items).some((k) => /pipeline|mql|revenue/i.test(k.label))).toBe(false);
+      for (const d of plan.deliverables) expect(d.nameEn && d.descEn, d.name).toBeTruthy();
+      for (const d of plan.deliverables) for (const l of d.links ?? []) expect(/^https:\/\//.test(l.url), d.name).toBe(true);
+    }
   });
 
   it('el tagline sigue la marca del reporte: Peterson no lleva el de Control Union', () => {

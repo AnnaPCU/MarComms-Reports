@@ -77,6 +77,10 @@ export function PlansApp({ account, period }) {
   const done = plan.deliverables.filter((d) => d.status === 'done');
   const progress = plan.deliverables.filter((d) => d.status === 'progress');
   const pending = plan.deliverables.filter((d) => d.status === 'pending');
+  // Columnas de la fila de KPIs: una por card, mínimo 4 (cards del mismo ancho
+  // que en un informe completo), máximo 8.
+  const kpiTotal = plan.kpiGroups.reduce((n, g) => n + g.items.length, 0);
+  const kpiCols = Math.min(Math.max(kpiTotal, 4), 8);
 
   // La columna «Link» aparece solo en la tabla cuyas filas traen `links`
   // ([{ label, labelEn?, url }]). En el PDF los links quedan clicables con su etiqueta.
@@ -177,7 +181,7 @@ export function PlansApp({ account, period }) {
       <SectionHeader title={t.kpisTitle} note={t.kpisNote} />
       {/* Una sola fila de 5 columnas iguales: etiqueta de cada grupo arriba, cards del
           mismo ancho y alto (grid). Performance va en la card destacada (azul marino). */}
-      <div className={`mb-5 grid grid-cols-1 gap-3 print:break-inside-avoid ${GRIDCOLS_CLS[plan.kpiGroups.reduce((n, g) => n + g.items.length, 0)] ?? GRIDCOLS_CLS[6]}`}>
+      <div className={`mb-5 grid grid-cols-1 gap-3 print:break-inside-avoid ${GRIDCOLS_CLS[kpiCols]}`}>
         {plan.kpiGroups.map((g, gi) => (
           <div
             key={`lbl-${g.name}`}
@@ -187,6 +191,8 @@ export function PlansApp({ account, period }) {
             {tx(g, 'name')}
           </div>
         ))}
+        {/* Con menos de 4 KPIs, relleno para que las cards bajen a la fila de abajo. */}
+        {kpiTotal < kpiCols && <div aria-hidden className={`hidden sm:block print:block ${COLSPAN_CLS[kpiCols - kpiTotal]}`} />}
         {plan.kpiGroups.flatMap((g, gi) =>
           g.items.map((k) =>
             gi === 0 ? (
@@ -218,11 +224,16 @@ export function PlansApp({ account, period }) {
         {t.groupDone(done.length)}
       </div>
       {deliverablesTable(done)}
-      <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
-        <span className="h-2 w-2 rounded-full border-[1.5px] border-cu-cyan" />
-        {t.groupProgress(progress.length)}
-      </div>
-      {deliverablesTable(progress)}
+      {/* Cada informe muestra solo las tareas de su mes: un grupo vacío no se dibuja. */}
+      {progress.length > 0 && (
+        <>
+          <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+            <span className="h-2 w-2 rounded-full border-[1.5px] border-cu-cyan" />
+            {t.groupProgress(progress.length)}
+          </div>
+          {deliverablesTable(progress)}
+        </>
+      )}
       {pending.length > 0 && (
         <>
           <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">

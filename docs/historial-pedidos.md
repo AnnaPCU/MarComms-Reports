@@ -1467,3 +1467,13 @@
 
 (Base de datos para la difusión del webinar → 2/9; comunicación del webinar EmpCo → 4/9, en el orden de la hoja.)
 
+
+**#108**
+
+> Respetá bien poner las cosas por mes. Pusiste cosas de agosto en el informe de septiembre.
+
+
+**#109**
+
+> Las de octubre que no salgan del informe. Saldrán una vez se completen y se haga el informe del mes de octubre cerrado.
+
