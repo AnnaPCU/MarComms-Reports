@@ -267,7 +267,8 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Email Marketing | ✅ Cuatro campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — «PCU x Fairly Made · Networking Event» (Textile Exchange), envío único (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
 | Planes (vista) | ✅ Informe mensual de septiembre 2026 del plan regional de Control Union USA · mercado orgánico («Control Union North America · Organic»): objetivo, resumen del mes, KPIs operativos (3) y de performance (2) en una fila, 8 entregables completados + 4 en curso, 5 iniciativas de generación de demanda. Descarga en HTML interactivo o **PDF** (impresión del navegador, sin encabezados ni pies del navegador). Columna «Link» en entregables completados: landings USDA Organic y PrimusGFS, benchmarking (Excel), decisión de marca CUC (imagen), pipeline en HubSpot (en «Base de datos de la herramienta comercial»), perfil de LinkedIn de Karl, benchmarking digital (PowerPoint) e informe de mercado USDA (PDF). Seed: `src/data/plansSeed.js` |
-| Planes · Peterson Solutions Argentina | ✅ Desde la hoja «PS Argentina» del Excel de seguimiento (más datos actualizados por el equipo), **un informe por mes**: agosto 2026 (arranque: 4 entregables, base de difusión del webinar con 2.001 contactos propios) y septiembre 2026 (6 completados + 3 tareas de octubre «En curso»; 3 reuniones internas). KPIs iguales a los de CU USA; **los de performance (pipeline, MQLs, ventas) los tiene que pasar el equipo** y se muestran «—» |
+| Planes · Peterson Solutions Argentina | ✅ Hoja «PS Argentina» del Excel de seguimiento (versión 8/10), **un informe por mes**: agosto 2026 (4 entregables; 2.001 contactos por BBDD) y septiembre 2026 (6 completados + 4 tareas de octubre en marcha; 3 reuniones; 76 contactos por BBDD; 70 deals y 1 MQL). Agosto sin deals/MQLs informados («—») |
+| Planes · Control Union Argentina | ✅ Hoja «CU Argentina», informe de septiembre 2026 (8 completados, 2 en curso del mes y 5 tareas de octubre; 2 reuniones; 340 deals y 2 MQLs). **Falta**: contactos de la base GHG (la hoja no los trae) |
 | Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
 | Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
@@ -390,6 +391,13 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Planes: KPIs por plan y plan de CU Argentina** (8/10/2026): «Pipeline
+  generado» → «Deals generados». CU USA mide en USD y pasa a «Contactos
+  generados en el CRM» (dato manual pendiente). PS y CU Argentina miden deals
+  y MQLs en cantidad, sin ventas, y toman «Contactos generados por BBDD» del
+  Excel. Nuevo plan de Control Union Argentina (septiembre). PS Argentina
+  actualizado con el Excel del 8/10.
 
 - **HubSpot en la tira de indicadores clave** (8/10/2026): las cards del CRM
   pasan a la misma fila que los KPIs (cliente y pilares), sin bloques

@@ -244,8 +244,8 @@ export function PlansApp({ account, period }) {
         </>
       )}
 
-      {/* ── Iniciativas ── */}
-      <SectionHeader title={t.initiativesTitle} note={t.initiativesNote} />
+      {/* ── Iniciativas (solo si el informe trae alguna) ── */}
+      {plan.initiativeGroups.length > 0 && <SectionHeader title={t.initiativesTitle} note={t.initiativesNote} />}
       {plan.initiativeGroups.map((g) => (
         <div key={g.name}>
           <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">

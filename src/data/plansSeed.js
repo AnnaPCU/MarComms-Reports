@@ -1,10 +1,14 @@
 // ════════════════════════════════════════════════════════════════
 //  SEED — Vista PLANES. Informes mensuales de avance de los planes
-//  regionales de marketing que MarComms presta a un cliente (hoy: el plan
-//  de Control Union USA para el mercado orgánico, «Control Union North
-//  America · Organic» en el informe del equipo).
-//  Planes cargados: Control Union USA (mercado orgánico) y Peterson
-//  Solutions Argentina (hoja «PS Argentina» del Excel de seguimiento).
+//  regionales de marketing que MarComms presta a un cliente.
+//  Planes cargados: Control Union USA (mercado orgánico, «Control Union
+//  North America · Organic» en el informe del equipo), Peterson Solutions
+//  Argentina y Control Union Argentina (hojas «PS Argentina» y «CU
+//  Argentina» del Excel de seguimiento de planes).
+//  KPIs (pedido del 8/10/2026): operativos (entregables, reuniones,
+//  contactos) y performance («Deals generados» + MQLs; ventas solo en CU USA).
+//  CU USA mide deals, MQLs y ventas en USD; los planes de Argentina, en
+//  cantidad.
 //  Fuente: el informe mensual del plan que arma el equipo. Es información
 //  de gestión (entregables, KPIs operativos y de performance, iniciativas),
 //  no métricas de plataforma: se transcribe tal cual, no se generan insights.
@@ -16,6 +20,7 @@
 export const PLAN_CLIENTS = [
   { id: 'cuus', name: 'Control Union Estados Unidos' },
   { id: 'psar', name: 'Peterson Solutions Argentina' },
+  { id: 'cuar', name: 'Control Union Argentina' },
 ];
 
 // Un período por informe mensual del plan (más antiguo primero).
@@ -55,14 +60,15 @@ export const PLANS_DB = {
           items: [
             { value: '8', label: 'Entregables completados', labelEn: 'Deliverables completed' },
             { value: '9', label: 'Reuniones internas', labelEn: 'Internal meetings' },
-            { value: '800', label: 'Contactos en la base comercial', labelEn: 'Database created · contacts', note: 'Top 5 estados USDA', noteEn: 'Top 5 USDA states' },
+            // Dato que pasa el equipo a mano (todavía no llegó).
+            { value: null, label: 'Contactos generados en el CRM', labelEn: 'Contacts generated in the CRM' },
           ],
         },
         {
           name: 'Performance',
           nameEn: 'Performance',
           items: [
-            { value: '848.160', valueEn: '848,160', unit: 'USD', label: 'Pipeline generado', labelEn: 'Pipeline generated', note: '20 % proveniente de bases de datos creadas con la Commercial Tool', noteEn: '20% from databases created with the Commercial Tool' },
+            { value: '848.160', valueEn: '848,160', unit: 'USD', label: 'Deals generados', labelEn: 'Deals generated', note: '20 % proveniente de bases de datos creadas con la Commercial Tool', noteEn: '20% from databases created with the Commercial Tool' },
             { value: '40.000', valueEn: '40,000', unit: 'USD', label: 'MQLs generados', labelEn: 'MQLs generated', pill: '8 MQLs', pillEn: '8 MQLs' },
             { value: '10.000', valueEn: '10,000', unit: 'USD', label: 'Ventas generadas', labelEn: 'Sales generated', pill: '2 ventas', pillEn: '2 sales' },
           ],
@@ -128,10 +134,12 @@ export const PLANS_DB = {
   // (reunión de seguimiento del 30/9/2026). Plan de 6 meses, septiembre 2026
   // → febrero 2027. Un informe por mes: cada tarea va en el informe del mes
   // de su fila (agosto = arranque, previo al inicio formal). Las tareas de
-  // octubre van «en curso» en el informe de septiembre, como en el de CU USA,
-  // y como completadas en el de octubre cuando cierre el mes.
-  // KPIs: mismos que el informe de CU USA. Los que la hoja no trae (contactos
-  // en la base comercial, pipeline, MQLs, ventas) quedan en null → «—».
+  // octubre aparecen en el informe de septiembre como trabajo en marcha
+  // («En curso», o «Pendiente» si el Excel lo marca así), con los nombres
+  // del Excel del 8/10; sus resultados van en el informe de octubre.
+  // KPIs (8/10): deals y MQLs en cantidad (septiembre: 70 y 1, del equipo);
+  // agosto sin dato → «—». Contactos generados por BBDD: agosto 2.001,
+  // septiembre 76 (Ígaris), del Excel.
   // La base de difusión del webinar es de agosto (dato actualizado por el
   // equipo el 8/10: base total 5.403, hecha por MarComms 2.001). La
   // comunicación del webinar es del 4/9. Reuniones internas de septiembre:
@@ -161,16 +169,15 @@ export const PLANS_DB = {
           items: [
             { value: '4', label: 'Entregables completados', labelEn: 'Deliverables completed' },
             { value: '2', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '12/8 y 19/8', noteEn: '8/12 and 8/19' },
-            { value: '2.001', valueEn: '2,001', label: 'Contactos en la base comercial', labelEn: 'Database created · contacts', note: 'Hecha por MarComms · base total 5.403', noteEn: 'Built by MarComms · total database 5,403' },
+            { value: '2.001', valueEn: '2,001', label: 'Contactos generados por BBDD', labelEn: 'Contacts generated from databases', note: 'Hecha por MarComms · base total 5.403', noteEn: 'Built by MarComms · total database 5,403' },
           ],
         },
         {
           name: 'Performance',
           nameEn: 'Performance',
           items: [
-            { value: null, unit: 'USD', label: 'Pipeline generado', labelEn: 'Pipeline generated' },
-            { value: null, unit: 'USD', label: 'MQLs generados', labelEn: 'MQLs generated' },
-            { value: null, unit: 'USD', label: 'Ventas generadas', labelEn: 'Sales generated' },
+            { value: null, label: 'Deals generados', labelEn: 'Deals generated' },
+            { value: null, label: 'MQLs generados', labelEn: 'MQLs generated' },
           ],
         },
       ],
@@ -210,8 +217,8 @@ export const PLANS_DB = {
         'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In September we supported the end-to-end management of the EmpCo webinar, launched the Paid Media campaigns and built the Ígaris database. Focus of the month: analyze results and start building the 2027 strategy. The pipeline, MQL and revenue targets have not been set in the plan yet.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
-      summary: ['6 entregables completados', '3 entregables en curso', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
-      summaryEn: ['6 deliverables completed', '3 deliverables in progress', 'EmpCo webinar: 202 registrations, 120 attendees and 94 deals in HubSpot', 'Next follow-up meeting: 10/13/2026'],
+      summary: ['6 entregables completados', '4 tareas de octubre en marcha', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
+      summaryEn: ['6 deliverables completed', '4 October tasks under way', 'EmpCo webinar: 202 registrations, 120 attendees and 94 deals in HubSpot', 'Next follow-up meeting: 10/13/2026'],
       kpiGroups: [
         {
           name: 'Operativos',
@@ -219,16 +226,15 @@ export const PLANS_DB = {
           items: [
             { value: '6', label: 'Entregables completados', labelEn: 'Deliverables completed' },
             { value: '3', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '16/9, 17/9 y 30/9', noteEn: '9/16, 9/17 and 9/30' },
-            { value: '76', label: 'Contactos en la base comercial', labelEn: 'Database created · contacts', note: 'Base Ígaris · 24 empresas', noteEn: 'Ígaris database · 24 companies' },
+            { value: '76', label: 'Contactos generados por BBDD', labelEn: 'Contacts generated from databases', note: 'Base Ígaris · 24 empresas', noteEn: 'Ígaris database · 24 companies' },
           ],
         },
         {
           name: 'Performance',
           nameEn: 'Performance',
           items: [
-            { value: null, unit: 'USD', label: 'Pipeline generado', labelEn: 'Pipeline generated' },
-            { value: null, unit: 'USD', label: 'MQLs generados', labelEn: 'MQLs generated' },
-            { value: null, unit: 'USD', label: 'Ventas generadas', labelEn: 'Sales generated' },
+            { value: '70', label: 'Deals generados', labelEn: 'Deals generated' },
+            { value: '1', label: 'MQLs generados', labelEn: 'MQLs generated' },
           ],
         },
       ],
@@ -249,8 +255,9 @@ export const PLANS_DB = {
           links: [{ label: 'Base Ígaris', labelEn: 'Ígaris database', url: 'https://share.gemini.google/cCuqFrENzN2q' }],
         },
         { status: 'progress', name: 'Campañas de Paid Media · octubre', nameEn: 'Paid Media campaigns · October', desc: 'Siguen las 8 campañas para SuSo, SuSe y Bioenergía, con foco en generar leads.', descEn: 'The 8 campaigns for SuSo, SuSe and Bioenergy continue, focused on lead generation.' },
-        { status: 'progress', name: 'Propuesta para Carrefour', nameEn: 'Proposal for Carrefour', desc: 'Propuesta en preparación a pedido de Simón (desde el 5/10).', descEn: 'Proposal being prepared at Simón’s request (since 10/5).' },
-        { status: 'progress', name: 'Base de datos por puestos de trabajo', nameEn: 'Database by job title', desc: 'Definir entre 6 y 7 puestos relevantes como criterio de búsqueda para identificar potenciales contactos en Argentina (13/10). Seguimiento en 2 a 3 semanas.', descEn: 'Define 6 to 7 relevant job titles as search criteria to identify potential contacts in Argentina (10/13). Follow-up in 2 to 3 weeks.' },
+        { status: 'progress', name: 'Presentación comercial para Carrefour', nameEn: 'Sales presentation for Carrefour', desc: 'Presentación simple con un mensaje preciso para Carrefour (5/10).', descEn: 'Simple presentation with a precise message for Carrefour (10/5).' },
+        { status: 'progress', name: 'Base de datos genérica para newsletter comercial', nameEn: 'Generic database for a sales newsletter', desc: 'Base para armar un newsletter comercial (7/10).', descEn: 'Database to build a sales newsletter (10/7).' },
+        { status: 'pending', name: 'Base de datos por puestos de trabajo', nameEn: 'Database by job title', desc: 'Definir entre 6 y 7 puestos relevantes como criterio de búsqueda para identificar potenciales contactos en Argentina (13/10). Seguimiento en 2 a 3 semanas.', descEn: 'Define 6 to 7 relevant job titles as search criteria to identify potential contacts in Argentina (10/13). Follow-up in 2 to 3 weeks.' },
       ],
       initiativeGroups: [
         {
@@ -262,6 +269,88 @@ export const PLANS_DB = {
           ],
         },
       ],
+    },
+  },
+
+  // ── Control Union Argentina ──
+  // Fuente: hoja «CU Argentina» del Excel de seguimiento (versión del
+  // 8/10/2026). Plan de 6 meses, agosto 2026 → enero 2027. La hoja no tiene
+  // tareas en agosto: el primer informe es el de septiembre. Las tareas de
+  // octubre aparecen como trabajo en marcha, con su estado del Excel. La hoja
+  // no trae objetivos ni decisiones del mes: no se inventan.
+  // KPIs: deals (340) y MQLs (2) de septiembre, del equipo; los contactos de
+  // la base de la campaña GHG no figuran en la hoja → «—».
+  cuar: {
+    'sep-2026': {
+      title: 'Informe mensual MarComms — Control Union Argentina',
+      titleEn: 'MarComms Monthly Report — Control Union Argentina',
+      program: 'Plan de marketing de 6 meses · revisión mensual',
+      programEn: '6-month marketing plan · monthly review',
+      period: 'Septiembre 2026',
+      periodEn: 'September 2026',
+      market: 'Argentina · plan agosto 2026 → enero 2027',
+      marketEn: 'Argentina · plan August 2026 → January 2027',
+      intro:
+        'En septiembre se crearon las campañas de Google Ads para las certificaciones, se relevó la oferta de la competencia en SMETA, ISO 27001 e ISCC mediante mystery shopping y se armó la base de datos de la campaña GHG del Q4, ya cargada en las plataformas de Paid Media.',
+      introEn:
+        'In September the Google Ads campaigns for the certifications were created, competitors’ offering for SMETA, ISO 27001 and ISCC was surveyed through mystery shopping, and the database for the Q4 GHG campaign was built and uploaded to the Paid Media platforms.',
+      summaryTitle: 'Resumen del mes',
+      summaryTitleEn: 'Month at a glance',
+      summary: ['8 entregables completados', '2 entregables del mes en curso', 'Mystery shopping: SMETA, ISO 27001 e ISCC', '5 tareas de octubre en marcha'],
+      summaryEn: ['8 deliverables completed', '2 deliverables of the month in progress', 'Mystery shopping: SMETA, ISO 27001 and ISCC', '5 October tasks under way'],
+      kpiGroups: [
+        {
+          name: 'Operativos',
+          nameEn: 'Operational',
+          items: [
+            { value: '8', label: 'Entregables completados', labelEn: 'Deliverables completed' },
+            { value: '2', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '28/9', noteEn: '9/28' },
+            { value: null, label: 'Contactos generados por BBDD', labelEn: 'Contacts generated from databases' },
+          ],
+        },
+        {
+          name: 'Performance',
+          nameEn: 'Performance',
+          items: [
+            { value: '340', label: 'Deals generados', labelEn: 'Deals generated' },
+            { value: '2', label: 'MQLs generados', labelEn: 'MQLs generated' },
+          ],
+        },
+      ],
+      deliverables: [
+        { status: 'done', name: 'Campañas de Google Ads', nameEn: 'Google Ads campaigns', desc: 'Creación de todas las campañas de Google Ads para las certificaciones.', descEn: 'Creation of all the Google Ads campaigns for the certifications.' },
+        {
+          status: 'done', name: 'Mystery shopping de SMETA', nameEn: 'SMETA mystery shopping', desc: '21/9: benchmarking de organismos certificadores que ofrecen SMETA (valor de la auditoría, cotización por día o total, formulario de aplicación, alcance de la oferta, material del programa, auditoría remota). Se contactaron 11 y respondieron 6; la tasa de respuesta fue la más baja por el nivel de detalle pedido.', descEn: '9/21: benchmarking of certification bodies offering SMETA (audit price, per-day or total quote, application form, scope of the offer, programme materials, remote audit). 11 were contacted and 6 replied; the response rate was the lowest because of the level of detail requested.',
+          links: [{ label: 'Investigación SMETA', labelEn: 'SMETA research', url: 'https://pcugroup.sharepoint.com/:f:/r/sites/CommunicationsLATAM/Gedeelde%20documenten/General/000.Planes%20MarComms/CU%20-%20Certificaciones%20Argentina/Market%20Research/Smeta%20-%202026?d=wd1a3d06288544375bd6e43af13ff0859&csf=1&web=1&e=XRurLW' }],
+        },
+        {
+          status: 'done', name: 'Mystery shopping de ISO 27001', nameEn: 'ISO 27001 mystery shopping', desc: '21/9: benchmarking de organismos certificadores que ofrecen ISO 27001 (valor, plazo de emisión del certificado, formulario de aplicación). Se contactaron 12 y respondieron 8: la tasa de respuesta fue alta porque se pedía menos información.', descEn: '9/21: benchmarking of certification bodies offering ISO 27001 (price, certificate issuance time, application form). 12 were contacted and 8 replied: the response rate was high because less information was requested.',
+          links: [{ label: 'Investigación ISO 27001', labelEn: 'ISO 27001 research', url: 'https://pcugroup.sharepoint.com/:f:/r/sites/CommunicationsLATAM/Gedeelde%20documenten/General/000.Planes%20MarComms/CU%20-%20Certificaciones%20Argentina/Market%20Research/ISO%2027001%20%E2%80%93%202026?d=wcc5890dde7834abfaf048af62a3bbf22&csf=1&web=1&e=n11MGZ' }],
+        },
+        {
+          status: 'done', name: 'Mystery shopping de ISCC', nameEn: 'ISCC mystery shopping', desc: '21/9: benchmarking de organismos certificadores que ofrecen ISCC EU (valor de la auditoría, manejo de las fees de ISCC, plazo de emisión, auditores propios o freelance). Se contactaron 6 y respondieron 4: la oferta es más limitada y con foco principalmente europeo.', descEn: '9/21: benchmarking of certification bodies offering ISCC EU (audit price, handling of ISCC fees, issuance time, in-house or freelance auditors). 6 were contacted and 4 replied: the offering is more limited and mainly focused on Europe.',
+          links: [{ label: 'Investigación ISCC', labelEn: 'ISCC research', url: 'https://pcugroup.sharepoint.com/:f:/r/sites/CommunicationsLATAM/Gedeelde%20documenten/General/000.Planes%20MarComms/CU%20-%20Certificaciones%20Argentina/Market%20Research/ISCC%20%E2%80%93%202026?d=wc5571a514a174ddaaa90996f7918bcf6&csf=1&web=1&e=f53BtB' }],
+        },
+        {
+          status: 'done', name: 'Base de datos de la campaña GHG', nameEn: 'GHG campaign database', desc: '17/9: base de datos creada para la campaña de ads de GHG del Q4.', descEn: '9/17: database built for the Q4 GHG ads campaign.',
+          links: [
+            { label: 'Base GHG (1)', labelEn: 'GHG database (1)', url: 'https://share.gemini.google/wJ2cextk1cRb' },
+            { label: 'Base GHG (2)', labelEn: 'GHG database (2)', url: 'https://share.gemini.google/sVCbi6127LHI' },
+            { label: 'Base GHG (Excel)', labelEn: 'GHG database (Excel)', url: 'https://pcugroup-my.sharepoint.com/:x:/p/fsenorans/IQBgAnsD742oRpxpbc2tID0VAUm1DO3lPAufVIBQMfJO4sQ' },
+          ],
+        },
+        { status: 'done', name: 'Reunión: investigaciones de mercado', nameEn: 'Meeting: market research', desc: '28/9: organización de las investigaciones de mercado.', descEn: '9/28: planning of the market research.' },
+        { status: 'done', name: 'Reunión de catch-up', nameEn: 'Catch-up meeting', desc: '28/9: catch-up y organización.', descEn: '9/28: catch-up and planning.' },
+        { status: 'done', name: 'Carga de la base en Paid Media', nameEn: 'Database upload to Paid Media', desc: '28/9: carga de la base de datos en las plataformas de Paid Media.', descEn: '9/28: database uploaded to the Paid Media platforms.' },
+        { status: 'progress', name: 'Newsletter recurrente', nameEn: 'Recurring newsletter', desc: 'Newsletter recurrente en preparación.', descEn: 'Recurring newsletter in preparation.' },
+        { status: 'progress', name: 'Contenidos y campaña GHG', nameEn: 'GHG content and campaign', desc: 'Desde el 28/9: contenidos y campaña de GHG.', descEn: 'Since 9/28: GHG content and campaign.' },
+        { status: 'progress', name: 'Evento del 25/11 en el CPIA de General Roca', nameEn: 'November 25 event at CPIA General Roca', desc: 'Octubre: organización del evento.', descEn: 'October: event planning.' },
+        { status: 'progress', name: 'Estrategia AEO', nameEn: 'AEO strategy', desc: 'Octubre (desde el 5/10): posicionamiento en motores de búsqueda de IA. Se armaron 4 prompts de PrimusGFS y USDA para ver si mencionan a Control Union.', descEn: 'October (since 10/5): positioning in AI search engines. 4 PrimusGFS and USDA prompts were built to check whether Control Union is mentioned.' },
+        { status: 'progress', name: 'Apoyo en el evento de noviembre', nameEn: 'Support for the November event', desc: 'Octubre: apoyo en la organización del evento.', descEn: 'October: support with event planning.' },
+        { status: 'pending', name: 'Mystery shopping de ISO 9001, 14001 y 45001', nameEn: 'ISO 9001, 14001 and 45001 mystery shopping', desc: 'Octubre: cotización y plazo de emisión del certificado de la competencia en estas normas.', descEn: 'October: competitors’ quotes and certificate issuance times for these standards.' },
+        { status: 'pending', name: 'Mystery shopping de GLOBALG.A.P.', nameEn: 'GLOBALG.A.P. mystery shopping', desc: 'Octubre: cotización, plazo de emisión del certificado y add-ons de la competencia.', descEn: 'October: competitors’ quotes, certificate issuance times and add-ons.' },
+      ],
+      initiativeGroups: [],
     },
   },
 };

@@ -24,9 +24,11 @@ describe('plansService', () => {
     for (const g of plan.kpiGroups) for (const k of g.items) expect(k.labelEn, k.label).toBeTruthy();
   });
 
-  it('los KPIs de performance: pipeline, MQLs y ventas, con sus importes', () => {
-    const perf = getPlan('cuus', 'sep-2026').kpiGroups[1].items;
-    expect(perf.map((k) => k.label)).toEqual(['Pipeline generado', 'MQLs generados', 'Ventas generadas']);
+  it('CU USA: deals, MQLs y ventas en USD; contactos del CRM pendientes del equipo', () => {
+    const plan = getPlan('cuus', 'sep-2026');
+    expect(plan.kpiGroups[0].items[2]).toMatchObject({ label: 'Contactos generados en el CRM', value: null });
+    const perf = plan.kpiGroups[1].items;
+    expect(perf.map((k) => k.label)).toEqual(['Deals generados', 'MQLs generados', 'Ventas generadas']);
     expect(perf[0].value).toBe('848.160');
     expect(perf[0].valueEn).toBe('848,160');
     expect(perf[0].unit).toBe('USD');
@@ -61,28 +63,47 @@ describe('plansService', () => {
     expect(hasDataFor('cuus', 'ago-2026')).toBe(false);
     const ago = getPlan('psar', 'ago-2026');
     const sep = getPlan('psar', 'sep-2026');
-    expect(ago.deliverables.map((d) => d.status)).toEqual(['done', 'done', 'done', 'done']);
-    // La base de difusión del webinar es de agosto (dato del equipo, 8/10).
+    const count = (plan, st) => plan.deliverables.filter((d) => d.status === st).length;
+    expect([count(ago, 'done'), count(ago, 'progress'), count(ago, 'pending')]).toEqual([4, 0, 0]);
+    expect([count(sep, 'done'), count(sep, 'progress'), count(sep, 'pending')]).toEqual([6, 3, 1]);
+    // La base de difusión del webinar es de agosto (Excel del 8/10).
     expect(ago.deliverables.some((d) => d.name === 'Base de datos para la difusión del webinar')).toBe(true);
     expect(sep.deliverables.some((d) => d.name === 'Base de datos para la difusión del webinar')).toBe(false);
-    expect(sep.deliverables.filter((d) => d.status === 'done')).toHaveLength(6);
-    expect(ago.kpiGroups[0].items.map((k) => k.value)).toEqual(['4', '2', '2.001']);
-    expect(sep.kpiGroups[0].items.map((k) => k.value)).toEqual(['6', '3', '76']);
-    // Las tareas de octubre van «en curso» en septiembre, como en el informe de CU USA.
-    expect(sep.deliverables.filter((d) => d.status === 'progress').map((d) => d.name)).toEqual([
-      'Campañas de Paid Media · octubre',
-      'Propuesta para Carrefour',
-      'Base de datos por puestos de trabajo',
-    ]);
-    // Mismos KPIs que el informe de CU USA; lo que la hoja no trae queda en null («—»).
-    const labels = (plan) => plan.kpiGroups.flatMap((g) => g.items).map((k) => k.label);
-    expect(labels(sep)).toEqual(labels(getPlan('cuus', 'sep-2026')));
-    expect(labels(ago)).toEqual(labels(getPlan('cuus', 'sep-2026')));
-    expect(sep.kpiGroups[1].items.every((k) => k.value === null)).toBe(true);
     for (const plan of [ago, sep]) {
       for (const d of plan.deliverables) expect(d.nameEn && d.descEn, d.name).toBeTruthy();
       for (const d of plan.deliverables) for (const l of d.links ?? []) expect(/^https:\/\//.test(l.url), d.name).toBe(true);
     }
+  });
+
+  it('planes de Argentina: deals y MQLs en cantidad, sin ventas', () => {
+    const kpis = (a, p) => getPlan(a, p).kpiGroups.flatMap((g) => g.items).map((k) => [k.label, k.value]);
+    expect(kpis('psar', 'ago-2026')).toEqual([
+      ['Entregables completados', '4'], ['Reuniones internas', '2'], ['Contactos generados por BBDD', '2.001'],
+      ['Deals generados', null], ['MQLs generados', null],
+    ]);
+    expect(kpis('psar', 'sep-2026')).toEqual([
+      ['Entregables completados', '6'], ['Reuniones internas', '3'], ['Contactos generados por BBDD', '76'],
+      ['Deals generados', '70'], ['MQLs generados', '1'],
+    ]);
+    expect(kpis('cuar', 'sep-2026')).toEqual([
+      ['Entregables completados', '8'], ['Reuniones internas', '2'], ['Contactos generados por BBDD', null],
+      ['Deals generados', '340'], ['MQLs generados', '2'],
+    ]);
+    // Sin unidad: son cantidades, no importes.
+    for (const [a, p] of [['psar', 'sep-2026'], ['cuar', 'sep-2026']]) {
+      expect(getPlan(a, p).kpiGroups[1].items.every((k) => !k.unit)).toBe(true);
+    }
+  });
+
+  it('plan de Control Union Argentina: solo septiembre (la hoja no tiene tareas en agosto)', () => {
+    expect(listAccounts()).toContainEqual({ id: 'cuar', name: 'Control Union Argentina' });
+    expect(hasDataFor('cuar', 'ago-2026')).toBe(false);
+    const plan = getPlan('cuar', 'sep-2026');
+    const count = (st) => plan.deliverables.filter((d) => d.status === st).length;
+    expect([count('done'), count('progress'), count('pending')]).toEqual([8, 5, 2]);
+    expect(brandOf('cuar', 'Control Union Argentina')).toBe('cu');
+    for (const d of plan.deliverables) expect(d.nameEn && d.descEn, d.name).toBeTruthy();
+    for (const d of plan.deliverables) for (const l of d.links ?? []) expect(/^https:\/\//.test(l.url), d.name).toBe(true);
   });
 
   it('el tagline sigue la marca del reporte: Peterson no lleva el de Control Union', () => {

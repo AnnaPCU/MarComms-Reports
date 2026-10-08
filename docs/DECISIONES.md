@@ -319,6 +319,25 @@ Quedó como práctica fija, y conviene sostenerla:
   de la marca del cliente del reporte (`TAGLINES` en `constants/brand.js`).
   Un reporte de Peterson Solutions nunca lleva «The Proof to Your Promise».
 
+- **KPIs por plan (8/10/2026)**, reemplaza al criterio «mismos KPIs que CU
+  USA»: «Pipeline generado» pasa a llamarse **«Deals generados»** en todos
+  los planes.
+  - **CU USA**: deals, MQLs y ventas en USD (como los informa el equipo);
+    «Contactos en la base comercial» pasa a **«Contactos generados en el
+    CRM»**, dato que el equipo pasa a mano (hasta entonces, «—»).
+  - **PS Argentina y CU Argentina**: «Contactos generados por BBDD» (del
+    Excel de seguimiento); deals y MQLs **en cantidad**, sin importes; **no
+    se muestran ventas (WON)**. Septiembre: PS Argentina 70 deals y 1 MQL;
+    CU Argentina 340 deals y 2 MQLs (datos del equipo).
+- **Lo que manda es el Excel, mes por mes**: cada tarea va en el informe del
+  mes de su fila. Las tareas del mes siguiente aparecen en el informe como
+  trabajo en marcha, con el estado del Excel («En curso» o «Pendiente»); sus
+  resultados entran en el informe de ese mes cuando cierre.
+- **Plan de Control Union Argentina** (8/10/2026): hoja «CU Argentina». No
+  tiene tareas en agosto (aunque el plan arranca en agosto), así que el
+  primer informe es el de septiembre. La hoja no trae objetivos, decisiones
+  del mes ni la cantidad de contactos de la base GHG: no se completan.
+
 ## 13. Nombres de cuenta
 
 - **Un mismo cliente se llama igual en todos los filtros** (6/10/2026): marca

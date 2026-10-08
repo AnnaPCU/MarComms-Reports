@@ -1497,3 +1497,13 @@
 
 (Mensaje de voz; transcripción ajustada.)
 
+
+**#112**
+
+> [Excel: Seguimiento_Planes_Marketing_v2.xlsx, versión actualizada] Vos respetá lo que veas en el Excel por mes. A nivel KPIs puntualmente en PS Argentina van a cambiar un poco. Lo mismo con un futuro plan que haremos de CU ARG. Vamos con ajustes por plan:
+> * Cambios para todos los planes: «Pipeline generado» será «Deals generados»; en el caso de CU USA será un monto en $ y en el caso de PS y CU ARG será una cantidad exacta, un número suelto.
+> * CU Estados Unidos: «Contactos en la base comercial» cambialo por «Contactos generados en el CRM»; es una data que tendré que pasarte manualmente.
+> * PS Argentina y CU Argentina: «Contactos en la base comercial» → «Contactos generados por BBDD»; es una data que ya podés traer del Excel de plan de seguimientos (te adjunto la versión más actualizada). Tanto MQLs como WONs generados se medirán en cantidad, no en $ como se hace con CU USA. Y por otro lado no se mostrará más WONs.
+> * PS Argentina para septiembre: Deals generados es 70 y MQLs es 1.
+> * CU Argentina para septiembre: Deals generados es 340 y MQLs es 2.
+
