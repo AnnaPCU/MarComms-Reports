@@ -132,8 +132,10 @@ export const PLANS_DB = {
   // y como completadas en el de octubre cuando cierre el mes.
   // KPIs: mismos que el informe de CU USA. Los que la hoja no trae (contactos
   // en la base comercial, pipeline, MQLs, ventas) quedan en null → «—».
-  // Las dos tareas de septiembre sin fecha en la hoja son del 2/9 (base de
-  // datos) y del 4/9 (comunicación), según el equipo.
+  // La base de difusión del webinar es de agosto (dato actualizado por el
+  // equipo el 8/10: base total 5.403, hecha por MarComms 2.001). La
+  // comunicación del webinar es del 4/9. Reuniones internas de septiembre:
+  // 16/9, 17/9 y 30/9.
   psar: {
     'ago-2026': {
       title: 'Informe mensual MarComms — Peterson Solutions Argentina',
@@ -145,21 +147,21 @@ export const PLANS_DB = {
       market: 'Argentina · plan septiembre 2026 → febrero 2027',
       marketEn: 'Argentina · plan September 2026 → February 2027',
       intro:
-        'Objetivo del plan: generar pipeline, MQLs y revenue para Peterson Solutions Argentina, con una estrategia puntual para los tres servicios prioritarios que defina el equipo comercial. En agosto presentamos el plan, pedimos la información comercial y financiera para dimensionar el pipeline y arrancamos la gestión del webinar de EmpCo. Las metas de pipeline, MQL y revenue todavía no están definidas en el plan.',
+        'Objetivo del plan: generar pipeline, MQLs y revenue para Peterson Solutions Argentina, con una estrategia puntual para los tres servicios prioritarios que defina el equipo comercial. En agosto presentamos el plan, pedimos la información comercial y financiera para dimensionar el pipeline y arrancamos la gestión del webinar de EmpCo, con su landing de registro y su base de difusión. Las metas de pipeline, MQL y revenue todavía no están definidas en el plan.',
       introEn:
-        'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In August we presented the plan, requested the commercial and financial data to size the pipeline, and started managing the EmpCo webinar. The pipeline, MQL and revenue targets have not been set in the plan yet.',
+        'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In August we presented the plan, requested the commercial and financial data to size the pipeline, and started managing the EmpCo webinar, with its registration landing page and promotion database. The pipeline, MQL and revenue targets have not been set in the plan yet.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
-      summary: ['3 entregables completados', 'Presentación del plan MarComms (12/8)', 'Pedido de información comercial y financiera (19/8)', 'Landing de registro del webinar EmpCo (10/8)'],
-      summaryEn: ['3 deliverables completed', 'MarComms plan presentation (8/12)', 'Commercial and financial data request (8/19)', 'EmpCo webinar registration landing page (8/10)'],
+      summary: ['4 entregables completados', 'Presentación del plan MarComms (12/8)', 'Pedido de información comercial y financiera (19/8)', 'Base de difusión del webinar EmpCo: 2.001 contactos propios'],
+      summaryEn: ['4 deliverables completed', 'MarComms plan presentation (8/12)', 'Commercial and financial data request (8/19)', 'EmpCo webinar promotion database: 2,001 own contacts'],
       kpiGroups: [
         {
           name: 'Operativos',
           nameEn: 'Operational',
           items: [
-            { value: '3', label: 'Entregables completados', labelEn: 'Deliverables completed' },
+            { value: '4', label: 'Entregables completados', labelEn: 'Deliverables completed' },
             { value: '2', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '12/8 y 19/8', noteEn: '8/12 and 8/19' },
-            { value: null, label: 'Contactos en la base comercial', labelEn: 'Database created · contacts' },
+            { value: '2.001', valueEn: '2,001', label: 'Contactos en la base comercial', labelEn: 'Database created · contacts', note: 'Hecha por MarComms · base total 5.403', noteEn: 'Built by MarComms · total database 5,403' },
           ],
         },
         {
@@ -179,6 +181,7 @@ export const PLANS_DB = {
         },
         { status: 'done', name: 'Presentación del plan MarComms', nameEn: 'MarComms plan presentation', desc: 'Reunión del 12/8: arranque del plan, con prioridad en el webinar de EmpCo. Se pidió al equipo comercial el Top 3 de servicios prioritarios, con sus drivers de mercado y ventajas competitivas, como insumo para contenidos, campañas, LinkedIn y web.', descEn: 'Meeting on 8/12: plan kickoff, prioritizing the EmpCo webinar. The sales team was asked for the Top 3 priority services, with their market drivers and competitive advantages, as input for content, campaigns, LinkedIn and web.' },
         { status: 'done', name: 'Follow-up de información comercial y financiera', nameEn: 'Commercial and financial data follow-up', desc: 'Reunión del 19/8: pedido de información de los servicios del budget (objetivos y revenue actual, mix renovaciones / clientes nuevos, ticket promedio, conversión y competencia) para armar un pipeline tentativo por Revenue Growth Stream.', descEn: 'Meeting on 8/19: request for data on the budgeted services (targets and current revenue, renewal / new-client mix, average ticket, conversion and competition) to build a tentative pipeline by Revenue Growth Stream.' },
+        { status: 'done', name: 'Base de datos para la difusión del webinar', nameEn: 'Database for webinar promotion', desc: 'Base para la difusión del webinar de EmpCo: empresas de Iberoamérica que comunican atributos ambientales (bodegas, agroindustria, alimentos, energía, consultoras). Base total: 5.403 contactos únicos; base hecha por MarComms: 2.001. Hubo registrados de 18 países; entre los externos con país informado, Argentina concentra 66 de 95.', descEn: 'Database for promoting the EmpCo webinar: Ibero-American companies that communicate environmental attributes (wineries, agribusiness, food, energy, consultancies). Total database: 5,403 unique contacts; database built by MarComms: 2,001. Registrants came from 18 countries; among external registrants with a stated country, Argentina accounts for 66 of 95.' },
       ],
       initiativeGroups: [
         {
@@ -187,7 +190,7 @@ export const PLANS_DB = {
           items: [
             { name: 'Top 3 de servicios', nameEn: 'Top 3 services', desc: 'El equipo comercial define los tres servicios prioritarios, con drivers de mercado y ventajas competitivas, como insumo para contenidos, campañas, LinkedIn y web.', descEn: 'The sales team defines the three priority services, with market drivers and competitive advantages, as input for content, campaigns, LinkedIn and web.' },
             { name: 'Pipeline tentativo', nameEn: 'Tentative pipeline', desc: 'Con la información comercial y financiera de los servicios del budget, armar un pipeline tentativo por Revenue Growth Stream.', descEn: 'With the commercial and financial data on the budgeted services, build a tentative pipeline by Revenue Growth Stream.' },
-            { name: 'Webinar EmpCo', nameEn: 'EmpCo webinar', desc: 'Gestión integral del webinar del 10/9: base de datos, comunicación por email y LinkedIn, y reporte.', descEn: 'End-to-end management of the 9/10 webinar: database, email and LinkedIn communication, and report.' },
+            { name: 'Webinar EmpCo', nameEn: 'EmpCo webinar', desc: 'Gestión integral del webinar del 10/9: comunicación por email y LinkedIn, y reporte.', descEn: 'End-to-end management of the 9/10 webinar: email and LinkedIn communication, and report.' },
           ],
         },
       ],
@@ -202,21 +205,21 @@ export const PLANS_DB = {
       market: 'Argentina · plan septiembre 2026 → febrero 2027',
       marketEn: 'Argentina · plan September 2026 → February 2027',
       intro:
-        'Objetivo del plan: generar pipeline, MQLs y revenue para Peterson Solutions Argentina, con una estrategia puntual para los tres servicios prioritarios que defina el equipo comercial. En septiembre acompañamos la gestión integral del webinar de EmpCo, pusimos en marcha las campañas de Paid Media y armamos dos bases de datos. Foco del mes: analizar resultados y empezar a armar la estrategia 2027. Las metas de pipeline, MQL y revenue todavía no están definidas en el plan.',
+        'Objetivo del plan: generar pipeline, MQLs y revenue para Peterson Solutions Argentina, con una estrategia puntual para los tres servicios prioritarios que defina el equipo comercial. En septiembre acompañamos la gestión integral del webinar de EmpCo, pusimos en marcha las campañas de Paid Media y armamos la base de Ígaris. Foco del mes: analizar resultados y empezar a armar la estrategia 2027. Las metas de pipeline, MQL y revenue todavía no están definidas en el plan.',
       introEn:
-        'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In September we supported the end-to-end management of the EmpCo webinar, launched the Paid Media campaigns and built two databases. Focus of the month: analyze results and start building the 2027 strategy. The pipeline, MQL and revenue targets have not been set in the plan yet.',
+        'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In September we supported the end-to-end management of the EmpCo webinar, launched the Paid Media campaigns and built the Ígaris database. Focus of the month: analyze results and start building the 2027 strategy. The pipeline, MQL and revenue targets have not been set in the plan yet.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
-      summary: ['7 entregables completados', '3 entregables en curso', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
-      summaryEn: ['7 deliverables completed', '3 deliverables in progress', 'EmpCo webinar: 202 registrations, 120 attendees and 94 deals in HubSpot', 'Next follow-up meeting: 10/13/2026'],
+      summary: ['6 entregables completados', '3 entregables en curso', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
+      summaryEn: ['6 deliverables completed', '3 deliverables in progress', 'EmpCo webinar: 202 registrations, 120 attendees and 94 deals in HubSpot', 'Next follow-up meeting: 10/13/2026'],
       kpiGroups: [
         {
           name: 'Operativos',
           nameEn: 'Operational',
           items: [
-            { value: '7', label: 'Entregables completados', labelEn: 'Deliverables completed' },
-            { value: '1', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '16/9', noteEn: '9/16' },
-            { value: null, label: 'Contactos en la base comercial', labelEn: 'Database created · contacts' },
+            { value: '6', label: 'Entregables completados', labelEn: 'Deliverables completed' },
+            { value: '3', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '16/9, 17/9 y 30/9', noteEn: '9/16, 9/17 and 9/30' },
+            { value: '76', label: 'Contactos en la base comercial', labelEn: 'Database created · contacts', note: 'Base Ígaris · 24 empresas', noteEn: 'Ígaris database · 24 companies' },
           ],
         },
         {
@@ -230,7 +233,6 @@ export const PLANS_DB = {
         },
       ],
       deliverables: [
-        { status: 'done', name: 'Base de datos para la difusión del webinar', nameEn: 'Database for webinar promotion', desc: 'Base creada el 2/9: empresas de Iberoamérica que comunican atributos ambientales (bodegas, agroindustria, alimentos, energía, consultoras): 5.403 contactos únicos. Hubo registrados de 18 países; entre los externos con país informado, Argentina concentra 66 de 95.', descEn: 'Database built on 9/2: Ibero-American companies that communicate environmental attributes (wineries, agribusiness, food, energy, consultancies): 5,403 unique contacts. Registrants came from 18 countries; among external registrants with a stated country, Argentina accounts for 66 of 95.' },
         { status: 'done', name: 'Comunicación del webinar EmpCo', nameEn: 'EmpCo webinar communication', desc: 'Comunicación hecha el 4/9: email marketing con 7 envíos (Emails 1 a 4 a la base completa y post-webinar en tres versiones: base, asistentes y registrados), 2 posteos en Peterson Solutions Iberia & Americas y artículo para web y LinkedIn.', descEn: 'Communication done on 9/4: email marketing with 7 sends (Emails 1 to 4 to the full database and a post-webinar email in three versions: database, attendees and registrants), 2 posts on Peterson Solutions Iberia & Americas and an article for the website and LinkedIn.' },
         {
           status: 'done', name: 'Webinar EmpCo', nameEn: 'EmpCo webinar', desc: 'Webinar del 10/9 sobre la regulación que entra en vigencia en septiembre, con gestión completa (landing de registro, email, LinkedIn y reporte): 202 registros, 120 asistentes, 94 deals en HubSpot y 5 hot deals.', descEn: 'Webinar on 9/10 about the regulation taking effect in September, managed end to end (registration landing page, email, LinkedIn and report): 202 registrations, 120 attendees, 94 deals in HubSpot and 5 hot deals.',

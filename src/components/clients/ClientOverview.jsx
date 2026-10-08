@@ -6,7 +6,9 @@ import { HeroCard } from '@/components/shared/HeroCard';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { Glossary } from '@/components/shared/Glossary';
-import { ClientCrm } from '@/components/clients/ClientCrm';
+import { ClientCrm, crmStripCards } from '@/components/clients/ClientCrm';
+import { getClientCrm } from '@/services/crmService';
+import { lgCols } from '@/utils/gridCols';
 import { isExternalReport, isEmbedReport } from '@/utils/reportAudience';
 
 function FichaRow({ k, v }) {
@@ -25,6 +27,8 @@ function FichaRow({ k, v }) {
 export function ClientOverview({ overview, lang = 'es', onOpen }) {
   const t = CLIENT_STR[lang];
   const summary = useMemo(() => buildClientSummary(overview, lang), [overview, lang]);
+  // HubSpot, acumulado del año: va en la misma tira que los indicadores de cada pilar.
+  const crmYear = useMemo(() => (overview ? getClientCrm(overview.client.id, 'year-2026') : null), [overview]);
   if (!overview || !summary) return null;
   const { client } = overview;
   const { pillars, insights, conclusions, nextSteps, glossaryKeys } = summary;
@@ -32,6 +36,7 @@ export function ClientOverview({ overview, lang = 'es', onOpen }) {
   const external = isExternalReport();
   const cols = { 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4', 5: 'lg:grid-cols-5' }[pillars.length] ?? 'lg:grid-cols-3';
   const unitName = t.units[client.unit] ?? client.unitName;
+  const crmCards = crmStripCards(crmYear, lang);
 
   return (
     <div className="animate-fade-in">
@@ -78,14 +83,13 @@ export function ClientOverview({ overview, lang = 'es', onOpen }) {
 
       {/* ── Indicadores clave: una hero card por pilar ── */}
       <SectionHeader title={t.heroSection} note={t.heroNote} />
-      <div className={`mb-5 grid grid-cols-2 gap-3 ${cols}`}>
+      {/* Una sola tira: una card por pilar + las de HubSpot que no den cero. */}
+      <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols(pillars.length + crmCards.length)}`}>
         {pillars.map((s) => (
           <HeroCard key={s.pilar} label={`${s.title} — ${s.hero.label}`} value={s.hero.value} pill={s.hero.pill} footnote={s.periodLabel} />
         ))}
+        {crmCards}
       </div>
-
-      {/* ── Resultados comerciales (HubSpot): número principal = 5 pilares ── */}
-      <ClientCrm clientId={client.id} lang={lang} />
 
       {/* ── Plan de acción consolidado ── */}
       <InsightsPanel
@@ -133,6 +137,9 @@ export function ClientOverview({ overview, lang = 'es', onOpen }) {
           </div>
         ))}
       </div>
+
+      {/* ── Detalle de HubSpot: por pilar y otros orígenes, con período ── */}
+      <ClientCrm clientId={client.id} lang={lang} />
 
       {/* ── Lectura de performance ── */}
       <SectionHeader title={t.perfSection} />

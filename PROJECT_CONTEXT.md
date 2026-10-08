@@ -267,13 +267,13 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Email Marketing | ✅ Cuatro campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — «PCU x Fairly Made · Networking Event» (Textile Exchange), envío único (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
 | Planes (vista) | ✅ Informe mensual de septiembre 2026 del plan regional de Control Union USA · mercado orgánico («Control Union North America · Organic»): objetivo, resumen del mes, KPIs operativos (3) y de performance (2) en una fila, 8 entregables completados + 4 en curso, 5 iniciativas de generación de demanda. Descarga en HTML interactivo o **PDF** (impresión del navegador, sin encabezados ni pies del navegador). Columna «Link» en entregables completados: landings USDA Organic y PrimusGFS, benchmarking (Excel), decisión de marca CUC (imagen), pipeline en HubSpot (en «Base de datos de la herramienta comercial»), perfil de LinkedIn de Karl, benchmarking digital (PowerPoint) e informe de mercado USDA (PDF). Seed: `src/data/plansSeed.js` |
-| Planes · Peterson Solutions Argentina | ✅ Desde la hoja «PS Argentina» del Excel de seguimiento, **un informe por mes**: agosto 2026 (arranque, 3 entregables) y septiembre 2026 (7 completados + 3 tareas de octubre «En curso»). KPIs iguales a los de CU USA; **faltan datos del equipo**: contactos en la base comercial, pipeline, MQLs y ventas (se muestran «—») |
+| Planes · Peterson Solutions Argentina | ✅ Desde la hoja «PS Argentina» del Excel de seguimiento (más datos actualizados por el equipo), **un informe por mes**: agosto 2026 (arranque: 4 entregables, base de difusión del webinar con 2.001 contactos propios) y septiembre 2026 (6 completados + 3 tareas de octubre «En curso»; 3 reuniones internas). KPIs iguales a los de CU USA; **los de performance (pipeline, MQLs, ventas) los tiene que pasar el equipo** y se muestran «—» |
 | Descarga HTML | ✅ Funciona (snapshot embebido, multi-período en un archivo, elección de idioma) |
 | Idioma ES/EN | ✅ En los 5 pilares + elección al descargar |
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
 | Login compartido | ✅ Funciona (localStorage) |
 | Vista por cliente | ✅ 13 clientes con más de un pilar (mapa en `constants/clients.js`), vista General + entrada a cada pilar, descarga de la General |
-| CRM (HubSpot) | ✅ Datos al 6/10/2026. Vista por cliente: bloque «Resultados comerciales — HubSpot» (deals generados, MQLs y WON de los 5 pilares, tabla por pilar y bloque aparte de otros orígenes: STEAL, Database, Commercial Tool, eventos presenciales y BDR MarComms, este último todavía sin deals). Pilares Social, Paid, Website y Email: card «Deals generados» en Indicadores clave. Criterios en `docs/DECISIONES.md` §14; tooling `scripts/crm/` |
+| CRM (HubSpot) | ✅ Datos al 6/10/2026. Vista por cliente: «Deals generados», «MQLs» y «Ventas (WON)» del acumulado 2026 en la **misma tira** que los indicadores clave de cada pilar; más abajo, el desglose por pilar y por otros orígenes (STEAL, Database, Commercial Tool, eventos presenciales, BDR MarComms) con selector de período. Pilares Social, Paid, Website y Email: card «Deals generados» dentro de la fila de KPIs. Lo que da cero no se muestra. Criterios en `docs/DECISIONES.md` §14; tooling `scripts/crm/` |
 
 ## 10. Decisiones tomadas
 
@@ -390,6 +390,12 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **HubSpot en la tira de indicadores clave** (8/10/2026): las cards del CRM
+  pasan a la misma fila que los KPIs (cliente y pilares), sin bloques
+  debajo, y las que dan cero no se muestran. Plan de PS Argentina: la base
+  de difusión del webinar pasa a agosto (2.001 contactos propios) y
+  septiembre cuenta 3 reuniones internas.
 
 - **Planes: Peterson Solutions Argentina** (6/10/2026): segundo plan en la
   vista Planes, transcripto de la hoja «PS Argentina» de

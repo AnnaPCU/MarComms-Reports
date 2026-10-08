@@ -61,8 +61,13 @@ describe('plansService', () => {
     expect(hasDataFor('cuus', 'ago-2026')).toBe(false);
     const ago = getPlan('psar', 'ago-2026');
     const sep = getPlan('psar', 'sep-2026');
-    expect(ago.deliverables.map((d) => d.status)).toEqual(['done', 'done', 'done']);
-    expect(sep.deliverables.filter((d) => d.status === 'done')).toHaveLength(7);
+    expect(ago.deliverables.map((d) => d.status)).toEqual(['done', 'done', 'done', 'done']);
+    // La base de difusión del webinar es de agosto (dato del equipo, 8/10).
+    expect(ago.deliverables.some((d) => d.name === 'Base de datos para la difusión del webinar')).toBe(true);
+    expect(sep.deliverables.some((d) => d.name === 'Base de datos para la difusión del webinar')).toBe(false);
+    expect(sep.deliverables.filter((d) => d.status === 'done')).toHaveLength(6);
+    expect(ago.kpiGroups[0].items.map((k) => k.value)).toEqual(['4', '2', '2.001']);
+    expect(sep.kpiGroups[0].items.map((k) => k.value)).toEqual(['6', '3', '76']);
     // Las tareas de octubre van «en curso» en septiembre, como en el informe de CU USA.
     expect(sep.deliverables.filter((d) => d.status === 'progress').map((d) => d.name)).toEqual([
       'Campañas de Paid Media · octubre',

@@ -1484,3 +1484,16 @@
 >
 > Por otro lado, respetame los KPIs del mes de CU USA para PS ARG. Si te llega a faltar alguna información, hacémela saber.
 
+
+## 8 de octubre de 2026
+
+
+**#111**
+
+> 1. Contá las 3.
+> 2. Te paso actualizada esta info: Agosto · Creación de BBDD para difusión del webinar de EmpCo · Felipe · Completado · Empresas de Iberoamérica que comunican atributos ambientales (bodegas, agroindustria, alimentos, energía, consultoras) — registrados de 18 países; entre los externos con país informado, Argentina concentra 66 de 95 · Base total: 5.403 contactos únicos. Base hecha por nosotros: 2.001.
+> 3. Buenísimo este punto. Lo que sí, dos aclaraciones. Veo que muchas veces lo que serían deals generados o cosas parecidas […] le dedicás como una sección aparte debajo de indicadores clave. Yo creo que es bueno mostrarlo del lado derecho, en paralelo a los indicadores clave ya existentes. No lo pondría debajo. Y en el caso de que sea un cero, yo no lo pondría: no pondría indicadores clave que se terminen y se resuman en cero. Si hay uno o más, los pondrás. Intentá siempre que estén en una misma tira horizontal y no que ocupen un espacio debajo. Entiendo que a veces hay como cinco indicadores clave y puede ser mucho, pero prefiero que queden seis en una tira que 5 y 1 abajo. Me gusta que esté resaltado igual.
+> 4. Un punto que todavía vamos a tener que tratar, que me tienen que pasar información, son los KPIs de performance del plan de Peterson Solutions Argentina. Todavía me queda pendiente pasártelo.
+
+(Mensaje de voz; transcripción ajustada.)
+

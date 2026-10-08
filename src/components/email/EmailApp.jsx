@@ -18,6 +18,8 @@ import { EmailCharts } from '@/components/email/EmailCharts';
 import { HotLeadsTable } from '@/components/email/HotLeadsTable';
 import { Glossary } from '@/components/shared/Glossary';
 import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
+import { usePillarCrm } from '@/hooks/usePillarCrm';
+import { lgCols } from '@/utils/gridCols';
 
 // Pilar Email Marketing (Mailchimp / Apollo). Reporte de secuencia/campaña.
 // Idioma base español; toggle EN disponible (también en el descargable).
@@ -37,6 +39,7 @@ export function EmailApp({ account, period }) {
       : MONTHS_2026.find((p) => p.id === period)?.label ?? period;
 
   const { campaign, loading } = useEmailCampaign(account, period);
+  const crm = usePillarCrm('email', account, period);
 
   if (loading) {
     return (
@@ -124,7 +127,7 @@ export function EmailApp({ account, period }) {
         title={t9.kpiSection}
         note={[accName, `${numL(t.emailCount)} ${t9.sendsWord(t.emailCount)}`].filter(Boolean).join(' · ')}
       />
-      <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols(4 + (crm ? 1 : 0))}`}>
         <KpiCard
           label={t9.kSent}
           value={numL(t.totalSent)}
@@ -153,6 +156,7 @@ export function EmailApp({ account, period }) {
           delta={{ dir: t.ctor >= 11 ? 'up' : 'down', label: t9.refCtor }}
           footnote={t9.ctorFoot}
         />
+        {crm && <CrmDealsCard d={crm} lang={lang} />}
       </div>
 
       {(t.bounceRate != null || t.unsubRate != null) && (
@@ -177,8 +181,6 @@ export function EmailApp({ account, period }) {
           )}
         </div>
       )}
-
-      <CrmDealsCard pilar="email" account={account} period={period} lang={lang} />
 
       <SectionHeader title={t9.funnelSection} note="Mailchimp" />
       <div className="mb-5 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">

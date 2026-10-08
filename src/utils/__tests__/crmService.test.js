@@ -3,6 +3,7 @@ import { CRM_GENERATED, CRM_ENTITIES, CRM_MQL, CRM_WON } from '@/data/crmSeed';
 import { CLIENTS } from '@/constants/clients';
 import { getClientCrm, getPillarCrm, summarize, monthsOfPeriod, MAIN_SOURCES, OTHER_SOURCES } from '@/services/crmService';
 import { fmtMoney } from '@/utils/crmI18n';
+import { crmStripCards } from '@/components/clients/ClientCrm';
 
 const ALL_ENTS = Object.keys(CRM_ENTITIES);
 const sumGen = (src) => Object.values(CRM_GENERATED[src]).reduce((a, m) => a + Object.values(m).reduce((x, y) => x + y, 0), 0);
@@ -62,6 +63,15 @@ describe('crmService', () => {
     expect(d.other.rows.find((r) => r.id === 'steal').generated).toBe(441);
     expect(d.other.total.generated).toBe(486); // STEAL 441 + Database 43 + eventos presenciales 2
     expect(d.other.rows.find((r) => r.id === 'bdr').generated).toBe(0);
+  });
+
+  it('tira de Indicadores clave: las cards de HubSpot que dan cero no se muestran', () => {
+    const keys = (id) => crmStripCards(getClientCrm(id, 'year-2026')).map((c) => c.key);
+    expect(keys('cu-us')).toEqual(['crm-gen', 'crm-mql', 'crm-won']);
+    // Control Union España no tiene WON de los 5 pilares en 2026: esa card no va.
+    expect(getClientCrm('cu-es', 'year-2026').main.total.won.deals).toBe(0);
+    expect(keys('cu-es')).toEqual(['crm-gen', 'crm-mql']);
+    expect(crmStripCards(null)).toEqual([]);
   });
 
   it('meses de un período: mes, trimestre y año; los especiales no aplican', () => {

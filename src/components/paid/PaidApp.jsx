@@ -27,6 +27,8 @@ import { PaidAnnualReview } from '@/components/paid/PaidAnnualReview';
 import { PaidComparative } from '@/components/paid/PaidComparative';
 import { isExternalReport } from '@/utils/reportAudience';
 import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
+import { usePillarCrm } from '@/hooks/usePillarCrm';
+import { lgCols } from '@/utils/gridCols';
 
 const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const pct = (v) =>
@@ -38,9 +40,9 @@ const ALL = 'all';
 const CMP = 'cmp';
 
 // Fila de KPIs (sirve para totales de cuenta o para una campaña).
-function KpiRow({ d, currency, partial, t }) {
+function KpiRow({ d, currency, partial, t, extra = null }) {
   return (
-    <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols(4 + (extra ? 1 : 0))}`}>
       <KpiCard
         label={`${t.kImp}${partial ? t.partial : ''}`}
         value={numEs(d.impressions)}
@@ -60,6 +62,7 @@ function KpiRow({ d, currency, partial, t }) {
         accent="amber"
         delta={(d.conversions || 0) > 0 ? { dir: 'flat', label: `${money(d.costPerConv, currency)}${t.perLead}` } : { dir: 'flat', label: t.noConv }}
       />
+      {extra}
     </div>
   );
 }
@@ -108,6 +111,7 @@ function CampaignDetail({ c, currency, accName, periodLabel, t, lang, detailGrou
 // Idioma base español; toggle EN disponible (también en el descargable).
 export function PaidApp({ account, period }) {
   const { mo, detail, loading } = usePaidMonthly(account, period);
+  const crm = usePillarCrm('paid', account, period);
   const [view, setView] = useState(ALL);
   const [lang, setLang] = useState(() => initialLang('es'));
   useEffect(() => setView(ALL), [account, period]);
@@ -223,8 +227,7 @@ export function PaidApp({ account, period }) {
           />
 
           <SectionHeader title={t.kpiSection} note={[accName, mo.objetivo].filter(Boolean).join(' · ')} />
-          <KpiRow d={tt} currency={c} partial={partial} t={t} />
-          <CrmDealsCard pilar="paid" account={account} period={period} lang={lang} />
+          <KpiRow d={tt} currency={c} partial={partial} t={t} extra={crm && <CrmDealsCard d={crm} lang={lang} />} />
 
           <SectionHeader title={t.funnelSection} note={t.funnelNote} />
           <PaidFunnel totals={tt} campaigns={mo.campaigns} lang={lang} />

@@ -53,7 +53,24 @@ function CrmTable({ rows, total, t, names, lang }) {
   );
 }
 
-// Bloque «Resultados comerciales — HubSpot» de la vista por cliente.
+// Cards de HubSpot para la tira de Indicadores clave del cliente (acumulado
+// del año, 5 pilares). Solo las que no dan cero: un indicador en cero no se
+// muestra (pedido del equipo, 8/10/2026).
+export function crmStripCards(d, lang = 'es') {
+  if (!d) return [];
+  const t = CRM_STR[lang];
+  const tot = d.main.total;
+  const foot = (s) => [t.stripFoot, s?.noAmount ? t.stripNoAmount(fmtInt(s.noAmount, lang)) : null].filter(Boolean).join(' · ');
+  const money = (s) => (Object.keys(s.byCurrency).length ? fmtMoney(s.byCurrency, lang) : null);
+  const cards = [];
+  if (tot.generated > 0) cards.push(<HeroCard key="crm-gen" label={t.stripGenerated} value={fmtInt(tot.generated, lang)} footnote={foot()} />);
+  if (tot.mql.deals > 0) cards.push(<HeroCard key="crm-mql" label={t.stripMql} value={fmtInt(tot.mql.deals, lang)} pill={money(tot.mql)} footnote={foot(tot.mql)} />);
+  if (tot.won.deals > 0) cards.push(<HeroCard key="crm-won" label={t.stripWon} value={fmtInt(tot.won.deals, lang)} pill={money(tot.won)} pillTone="green" footnote={foot(tot.won)} />);
+  return cards;
+}
+
+// Detalle «Resultados comerciales — HubSpot» de la vista por cliente: los
+// totales van arriba, en la tira de Indicadores clave; acá, el desglose.
 // Número principal = los 5 pilares; STEAL, Database, Commercial Tool y
 // eventos presenciales y BDR van aparte (pedido del equipo, 6/10/2026).
 export function ClientCrm({ clientId, lang = 'es' }) {
@@ -80,24 +97,12 @@ export function ClientCrm({ clientId, lang = 'es' }) {
     { id: 'year-2026', label: t.yearLabel },
     ...d.months.map((m) => ({ id: m, label: `${MONTH_SHORT[lang][Number(m.slice(1)) - 1]} 2026` })),
   ];
-  const moneyPill = (s) => {
-    const parts = [];
-    if (Object.keys(s.byCurrency).length) parts.push(fmtMoney(s.byCurrency, lang));
-    if (s.noAmount) parts.push(`${fmtInt(s.noAmount, lang)} ${t.noAmountPill}`);
-    return parts.join(' · ') || null;
-  };
 
   return (
     <div className="mb-1">
       <SectionHeader title={t.section} note={t.sectionNote(asOf)} />
       <div className="mb-3 print:hidden">
         <SegmentedControl label={t.periodLabel} value={period} onChange={setPeriod} size="sm" options={options} />
-      </div>
-
-      <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <HeroCard label={`${t.kGenerated} — ${t.mainScope}`} value={fmtInt(main.total.generated, lang)} footnote={options.find((o) => o.id === period)?.label} />
-        <HeroCard label={t.kMql} value={fmtInt(main.total.mql.deals, lang)} pill={moneyPill(main.total.mql)} />
-        <HeroCard label={t.kWon} value={fmtInt(main.total.won.deals, lang)} pill={moneyPill(main.total.won)} pillTone="green" />
       </div>
 
       <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{t.byPillar}</div>

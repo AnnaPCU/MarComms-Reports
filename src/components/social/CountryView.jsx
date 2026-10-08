@@ -19,6 +19,8 @@ import { BrandIcon } from '@/components/shared/BrandIcon';
 import { PostsTable } from '@/components/social/PostsTable';
 import { Glossary } from '@/components/shared/Glossary';
 import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
+import { usePillarCrm } from '@/hooks/usePillarCrm';
+import { lgCols } from '@/utils/gridCols';
 
 // ════════════════════════════════════════════════════════════════
 //  Reporte mensual POR PAÍS dentro de una cuenta LinkedIn segmentada
@@ -43,6 +45,7 @@ export function CountryView({ account, country, period, lang = 'es' }) {
   const prev = useMemo(() => getPrevSegCountry(account, country, period), [account, country, period]);
   const tot = useMemo(() => getSegMonthTotals(account, period), [account, period]);
   const folBase = useMemo(() => getSegFolBase(account, country), [account, country]);
+  const crm = usePillarCrm('social', account, period, country);
   const mesLabel = en ? ML_EN[period] ?? ML[period] ?? period : ML[period] || period;
 
   const hasPosts = d && d.np > 0;
@@ -92,13 +95,13 @@ export function CountryView({ account, country, period, lang = 'es' }) {
       {hasPosts ? (
         <>
           <SectionHeader title={t.cKpiSection(name)} note={t.cKpiNote(d.np, mesLabel)} />
-          <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols(4 + (crm ? 1 : 0))}`}>
             <KpiCard label={t.fImp} value={fmt(d.imp)} delta={computeDelta(d.imp, prev?.imp, lang)} footnote={t.cImpFoot} />
             <KpiCard label={t.kEr} value={Number(d.er).toFixed(1)} unit="%" delta={computeDelta(d.er, prev?.er, lang)} />
             <KpiCard label={t.fClk} value={fmt(d.clk)} delta={computeDelta(d.clk, prev?.clk, lang)} />
             <KpiCard label={t.kPosts} value={d.np} delta={computeDelta(d.np, prev?.np, lang)} footnote={t.cPostsFoot} />
+            {crm && <CrmDealsCard d={crm} lang={lang} />}
           </div>
-          <CrmDealsCard pilar="social" account={account} period={period} country={country} lang={lang} />
 
           <SectionHeader title={t.cTopSection(name)} note={t.byImpressions} />
           <PostsTable posts={d.posts} lang={lang} />

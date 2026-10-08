@@ -37,6 +37,8 @@ import { isExternalReport } from '@/utils/reportAudience';
 import { WebsiteAnnualReview } from '@/components/website/WebsiteAnnualReview';
 import { WebsiteComparative } from '@/components/website/WebsiteComparative';
 import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
+import { usePillarCrm } from '@/hooks/usePillarCrm';
+import { lgCols } from '@/utils/gridCols';
 
 const pctL = (v, lang) =>
   Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
@@ -124,6 +126,7 @@ export function WebsiteApp({ account, period }) {
 // ── Sub-vista Website (Google Analytics) ──
 function SiteView({ data, account, period, accName, periodLabel, lang = 'es' }) {
   const t = WEB_STR[lang];
+  const crm = usePillarCrm('website', account, period);
   const pctv = (v) => pctL(v, lang);
   if (!hasData([data].filter(Boolean))) {
     return (
@@ -157,13 +160,13 @@ function SiteView({ data, account, period, accName, periodLabel, lang = 'es' }) 
       <InsightsPanel title={t.siteInsightsTitle} label={t.insightLabel} actionLabel={t.actionLabel} emptyText={t.emptyInsights} subtitle={`${accName} · ${periodLabel}`} items={genSiteInsights(data, lang)} />
 
       <SectionHeader title={`Website — ${periodLabel}`} note={accName} />
-      <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols(4 + (crm ? 1 : 0))}`}>
         <KpiCard label="Single Traffic" value={num(data.singleTraffic)} />
         <KpiCard label="Total Traffic" value={num(data.totalTraffic)} />
         <KpiCard label="Impressions" value={num(data.impressions)} />
         <KpiCard label="Conversions" value={num(data.conversions)} accent="green" />
+        {crm && <CrmDealsCard d={crm} lang={lang} />}
       </div>
-      <CrmDealsCard pilar="website" account={account} period={period} lang={lang} />
 
       <SectionHeader title={t.siteFunnelSection} note="Google Analytics" />
       <FunnelCard>

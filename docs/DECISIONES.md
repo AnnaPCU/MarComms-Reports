@@ -305,7 +305,14 @@ Quedó como práctica fija, y conviene sostenerla:
   base comercial) y performance (pipeline, MQLs y ventas generadas, en USD).
   Lo que el equipo no informó queda en `null` y se muestra «—» con «Sin dato
   para este período». Las reuniones internas de PS Argentina salen de las
-  filas de reunión de la hoja (agosto: 12/8 y 19/8; septiembre: 16/9). Las metas y resultados de pipeline, MQL y revenue están vacíos
+  filas de reunión de la hoja (agosto: 12/8 y 19/8) y, en septiembre, de
+  las tres que confirmó el equipo (16/9, 17/9 y 30/9).
+- **Datos actualizados por el equipo (8/10/2026)**: la base de difusión del
+  webinar de EmpCo es de **agosto** (base total 5.403 contactos; hecha por
+  MarComms 2.001). «Contactos en la base comercial» = la base hecha por
+  MarComms en el mes: agosto 2.001, septiembre 76 (Ígaris; a confirmar).
+  Los KPIs de performance de PS Argentina siguen pendientes de que el equipo
+  los pase. Las metas y resultados de pipeline, MQL y revenue están vacíos
   en la hoja: no se cargan como KPI y la introducción aclara que todavía no
   están definidos.
 - **Tagline por marca**: el pie (app, HTML descargado y PDF) usa el tagline
@@ -386,4 +393,14 @@ equipo.
 - **Cómo se actualiza**: consultas de solo lectura a HubSpot → 
   `scripts/crm/build_crm_seed.py` → `src/data/crmSeed.js` (solo agregados,
   sin nombres de empresas) → commit → deploy. Ver `scripts/crm/README.md`.
+- **Dónde y cuándo se muestran** (8/10/2026): los indicadores de HubSpot van
+  **en la misma tira horizontal que los indicadores clave**, a la derecha y
+  destacados (card azul marino), nunca en un bloque debajo. En la vista por
+  cliente, la tira suma «Deals generados», «MQLs» y «Ventas (WON)» del
+  acumulado 2026 a las cards de cada pilar; el desglose por pilar y por
+  otros orígenes (con su selector de período) queda más abajo, antes de la
+  lectura de performance. En cada pilar, «Deals generados» entra como una
+  card más de la fila de KPIs. **Un indicador que da cero no se muestra**
+  (card, o parte de la pill «MQLs · WON»). La tira es siempre una sola fila:
+  mejor 6 cards en una fila que 5 + 1 abajo (`utils/gridCols.js`).
 

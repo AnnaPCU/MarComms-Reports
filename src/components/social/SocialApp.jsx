@@ -24,6 +24,8 @@ import { CountryYearView } from '@/components/social/CountryYearView';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { Glossary } from '@/components/shared/Glossary';
 import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
+import { usePillarCrm } from '@/hooks/usePillarCrm';
+import { lgCols } from '@/utils/gridCols';
 
 // Vista del pilar Social Media (LinkedIn).
 // Idioma base español; toggle EN disponible (también en el descargable).
@@ -41,6 +43,7 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
   // Hook reactivo (seed local o Supabase + realtime). Se llama siempre,
   // antes de cualquier return, por las reglas de hooks.
   const { mo, prev, audience, loading } = useSocialMonthly(account, period);
+  const crm = usePillarCrm('social', account, period);
 
   // Segmentación por país (CU Latinoamérica, CU North America): el reporte
   // de la cuenta se mantiene igual ('all') y se puede abrir el reporte de
@@ -208,7 +211,7 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
       />
 
       <SectionHeader title={t.kpiSection} />
-      <div className={`mb-5 grid grid-cols-2 gap-3 ${mo.np != null ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
+      <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols((mo.np != null ? 5 : 4) + (crm ? 1 : 0))}`}>
         <KpiCard label={t.kImp} value={fmt(mo.imp)} delta={computeDelta(mo.imp, prev?.imp, lang)} />
         <KpiCard label={t.kEr} value={Number(mo.er).toFixed(1)} unit="%" delta={computeDelta(mo.er, prev?.er, lang)} />
         <KpiCard label={t.kClk} value={fmt(mo.clk)} delta={computeDelta(mo.clk, prev?.clk, lang)} />
@@ -221,8 +224,8 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
           delta={computeDelta(mo.vis, prev?.vis, lang)}
           footnote={t.visFoot}
         />
+        {crm && <CrmDealsCard d={crm} lang={lang} />}
       </div>
-      <CrmDealsCard pilar="social" account={account} period={period} lang={lang} />
 
       <SectionHeader title={t.funnelSection} note={t.funnelNote} />
       <div className="mb-5 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">
