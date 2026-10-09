@@ -470,7 +470,7 @@ equipo.
 - **Mapeo de cuentas**: el nombre de la sección es el de la cuenta, salvo
   «Peterson Solutions South America», que es el sitio
   americas.peterson-solutions.com = cuenta **Peterson Solutions Americas**
-  (`psam`).
+  (`psam`); confirmado por el equipo el 9/10/2026.
 - **CU Estados Unidos y CU Canadá**: el reporte de Q3 solo trae **CU North
   America** (el sitio compartido). Esas dos cuentas quedan sin Q3 («Sin
   información suficiente»): no se reparte el dato regional entre países.
@@ -478,5 +478,10 @@ equipo.
   glosario) lo generan las reglas de siempre; la card «Deals generados —
   HubSpot» sale del CRM para los meses del trimestre.
 - Las conversiones muestran el desglose email / formulario como nota de la
-  card (en Peterson, click_email no registró eventos en Q3: se ve «Email 0»).
+  card, solo con las partes que tienen eventos. En Peterson, click_email no
+  registró eventos en Q3: la conversión es el form_submit (pedido del
+  equipo, 9/10/2026).
+- **SEM (Google Ads)** no viene en estos reportes: va en Paid Media, que se
+  reporta **por mes** (no por trimestre). Septiembre de Paid está pendiente
+  de que el equipo pase los exports.
 

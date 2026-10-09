@@ -5,8 +5,9 @@
 
 export const WEB_STR = {
   es: {
-    // Desglose de conversiones de GA4 (desde Q3 2026).
-    convSplit: (email, form) => `Email ${email} · Formulario ${form}`,
+    // Desglose de conversiones de GA4 (desde Q3 2026). Solo las partes con
+    // eventos: si click_email no registró nada (Peterson), queda el formulario.
+    convSplit: (email, form) => [email ? `Email ${email}` : null, form ? `Formulario ${form}` : null].filter(Boolean).join(' · ') || undefined,
     siteInsightsTitle: 'Plan de Acción — Insights Website',
     seoInsightsTitle: 'Plan de Acción — Insights SEO',
     insightLabel: 'Insight',
@@ -79,7 +80,7 @@ export const WEB_STR = {
   },
 
   en: {
-    convSplit: (email, form) => `Email ${email} · Form ${form}`,
+    convSplit: (email, form) => [email ? `Email ${email}` : null, form ? `Form ${form}` : null].filter(Boolean).join(' · ') || undefined,
     siteInsightsTitle: 'Action Plan — Website Insights',
     seoInsightsTitle: 'Action Plan — SEO Insights',
     insightLabel: 'Insight',

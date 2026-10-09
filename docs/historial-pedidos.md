@@ -1559,3 +1559,10 @@
 
 (Mensaje de voz; transcripción ajustada.)
 
+
+**#119**
+
+> Vamos punto por punto. Ahí te paso las métricas segmentadas por país: Estados Unidos y Canadá. Y sí, Peterson Solutions South America tomalo como Americas (americas.peterson-solutions.com), correcto; guardado en tu memoria. Lo de SEM todavía no subí los reportes, no tenés que hacer nada de tu lado; sí tengo que hacerlo para septiembre en Paid Media (en Paid separamos por mes, no por Q). La prioridad es Website y SEO: Google Analytics y Google Search Console. Clics en email de Peterson: no pasa nada, tomarás el form submit y listo.
+
+(Mensaje de voz, llegó cortado. Las métricas de Estados Unidos y Canadá no vinieron adjuntas.)
+

@@ -168,7 +168,7 @@ function SiteView({ data, account, period, accName, periodLabel, lang = 'es' }) 
           label="Conversions"
           value={num(data.conversions)}
           accent="green"
-          footnote={data.conversionsBreakdown ? t.convSplit(num(data.conversionsBreakdown.clickEmail), num(data.conversionsBreakdown.formSubmit)) : undefined}
+          footnote={data.conversionsBreakdown ? t.convSplit(data.conversionsBreakdown.clickEmail && num(data.conversionsBreakdown.clickEmail), data.conversionsBreakdown.formSubmit && num(data.conversionsBreakdown.formSubmit)) : undefined}
         />
         {crm && <CrmDealsCard d={crm} lang={lang} />}
       </div>
