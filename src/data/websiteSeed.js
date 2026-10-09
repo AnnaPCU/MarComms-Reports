@@ -1,8 +1,12 @@
 // ════════════════════════════════════════════════════════════════
 //  SEED — Pilar Website · GA (tráfico/sitio) + GSC (SEO). Trimestral.
 //  · CU Argentina: Q1 (capturas originales) + Q2 2026.
-//  · Resto de cuentas: Q2 2026 (de los PDFs de reporte por cuenta).
-//  · Peterson Americas / Iberia: solo Website (sin datos SEO en el período).
+//  · Resto de cuentas: Q1 y Q2 2026 (de los PDFs de reporte por cuenta).
+//  · Q3 2026: de los reportes trimestrales en .md (GA4 + Search Console,
+//    extraídos el 9/10/2026; archivados en metricas/website/_procesados/2026-Q3/),
+//    convertidos con scripts/website/md_to_seed.py. CU Estados Unidos y CU
+//    Canadá no vienen por separado en Q3: solo CU North America.
+//  · Peterson Americas / Iberia: sin datos SEO en Q1 y Q2; desde Q3 sí.
 //  Datos reales tomados de los reportes. Seed en código (sin base de datos).
 // ════════════════════════════════════════════════════════════════
 
@@ -476,4 +480,196 @@ const WEBSITE_Q1_2026 = {
 // Mergea Q1 dentro de periods de cada cuenta (CU Argentina ya lo tiene arriba).
 for (const [id, data] of Object.entries(WEBSITE_Q1_2026)) {
   if (WEBSITE_DB[id]) WEBSITE_DB[id].periods['q1-2026'] = data;
+}
+
+// ── Q3 2026 (reportes trimestrales en .md: GA4 + Search Console) ────
+// Generado con scripts/website/md_to_seed.py, que valida CTR, embudo y la
+// suma de conversiones (click_email + form_submit) contra el archivo.
+// «Peterson Solutions South America» del reporte = sitio americas.peterson-solutions.com
+// = cuenta «Peterson Solutions Americas» (psam).
+const WEBSITE_Q3_2026 = {
+  // Control Union Argentina
+  cua: {
+    site: {
+      singleTraffic: 2920, totalTraffic: 4098, impressions: 8566, conversions: 218,
+      conversionsBreakdown: { clickEmail: 153, formSubmit: 65 },
+      topLandingPages: [
+        lp("https://argentina.controlunion.com/", 1545),
+        lp("https://argentina.controlunion.com/nosotros/", 552),
+        lp("https://argentina.controlunion.com/vacantes/", 512),
+        lp("https://argentina.controlunion.com/programas-de-certificacion/", 429),
+        lp("https://argentina.controlunion.com/contacto/", 310),
+      ],
+    },
+    seo: {
+      averagePosition: 9.11, impressions: 76744, totalClicks: 1855,
+      topKeywords: [kw("control union", 489), kw("control union argentina", 181), kw("control union argentina s.a", 30), kw("control union tucuman", 29), kw("visec", 26)],
+    },
+  },
+  // Control Union Brasil
+  cubr: {
+    site: {
+      singleTraffic: 3040, totalTraffic: 3793, impressions: 7258, conversions: 297,
+      conversionsBreakdown: { clickEmail: 234, formSubmit: 63 },
+      topLandingPages: [
+        lp("https://brasil.controlunion.com/", 2288),
+        lp("https://brasil.controlunion.com/contato/", 576),
+        lp("https://brasil.controlunion.com/vagas/", 496),
+        lp("https://brasil.controlunion.com/programas-de-certificacao/", 413),
+        lp("https://brasil.controlunion.com/quem-somos/", 352),
+      ],
+    },
+    seo: {
+      averagePosition: 10.49, impressions: 62175, totalClicks: 1874,
+      topKeywords: [kw("control union", 689), kw("controlunion", 117), kw("control union brasil", 77), kw("control union latinoamérica", 52), kw("control union warrants ltda", 50)],
+    },
+  },
+  // Control Union Chile
+  cucl: {
+    site: {
+      singleTraffic: 957, totalTraffic: 1197, impressions: 2628, conversions: 104,
+      conversionsBreakdown: { clickEmail: 71, formSubmit: 33 },
+      topLandingPages: [
+        lp("https://chile.controlunion.com/", 490),
+        lp("https://chile.controlunion.com/programas-de-certificacion/", 209),
+        lp("https://chile.controlunion.com/contacto/", 122),
+        lp("https://chile.controlunion.com/service/certificaciones/", 114),
+        lp("https://chile.controlunion.com/nosotros/", 87),
+      ],
+    },
+    seo: {
+      averagePosition: 11.3, impressions: 29122, totalClicks: 463,
+      topKeywords: [kw("control union", 69), kw("control union chile", 51), kw("grasp", 11), kw("bap", 10), kw("controlunion", 8)],
+    },
+  },
+  // Control Union España
+  cues: {
+    site: {
+      singleTraffic: 2370, totalTraffic: 2798, impressions: 5961, conversions: 69,
+      conversionsBreakdown: { clickEmail: 28, formSubmit: 41 },
+      topLandingPages: [
+        lp("https://espana.controlunion.com/", 518),
+        lp("https://espana.controlunion.com/programa-de-certificacion/certification-program-iso-27001-certification/", 393),
+        lp("https://espana.controlunion.com/programas-de-certificacion/", 270),
+        lp("https://espana.controlunion.com/programa-de-certificacion/iso-9001/", 237),
+        lp("https://espana.controlunion.com/contacto/", 174),
+      ],
+    },
+    seo: {
+      averagePosition: 14.11, impressions: 171269, totalClicks: 1393,
+      topKeywords: [kw("control union", 221), kw("control union españa", 48), kw("controlunion", 39), kw("iso 21401", 22), kw("sure", 11)],
+    },
+  },
+  // Control Union México
+  cumx: {
+    site: {
+      singleTraffic: 2092, totalTraffic: 2493, impressions: 4445, conversions: 121,
+      conversionsBreakdown: { clickEmail: 95, formSubmit: 26 },
+      topLandingPages: [
+        lp("https://mexico.controlunion.com/", 1379),
+        lp("https://mexico.controlunion.com/contacto-mexico/", 284),
+        lp("https://mexico.controlunion.com/programas-de-certificacion/", 221),
+        lp("https://mexico.controlunion.com/service/certificaciones/", 154),
+        lp("https://mexico.controlunion.com/nosotros/", 141),
+      ],
+    },
+    seo: {
+      averagePosition: 11.46, impressions: 59107, totalClicks: 738,
+      topKeywords: [kw("control union", 114), kw("control union mexico", 63), kw("controlunion", 8), kw("organico mexico", 8), kw("grs", 7)],
+    },
+  },
+  // Control Union North America
+  cunam: {
+    site: {
+      singleTraffic: 2475, totalTraffic: 3200, impressions: 6388, conversions: 180,
+      conversionsBreakdown: { clickEmail: 78, formSubmit: 102 },
+      topLandingPages: [
+        lp("https://northamerica.controlunion.com/", 1474),
+        lp("https://northamerica.controlunion.com/certification-programs/", 600),
+        lp("https://northamerica.controlunion.com/vacancies/", 296),
+        lp("https://northamerica.controlunion.com/contact/", 289),
+        lp("https://northamerica.controlunion.com/service/certification/", 218),
+      ],
+    },
+    seo: {
+      averagePosition: 14.63, impressions: 30970, totalClicks: 313,
+      topKeywords: [kw("control union canada", 37), kw("control union usa", 29), kw("control union", 17), kw("temo", 2), kw("control union job vacancy", 1)],
+    },
+  },
+  // Control Union Perú
+  cupe: {
+    site: {
+      singleTraffic: 4080, totalTraffic: 6009, impressions: 11431, conversions: 265,
+      conversionsBreakdown: { clickEmail: 155, formSubmit: 110 },
+      topLandingPages: [
+        lp("https://peru.controlunion.com/", 2585),
+        lp("https://peru.controlunion.com/programas-de-certificacion/", 572),
+        lp("https://peru.controlunion.com/service/certificaciones/", 466),
+        lp("https://peru.controlunion.com/vacantes/", 440),
+        lp("https://peru.controlunion.com/nosotros/", 406),
+      ],
+    },
+    seo: {
+      averagePosition: 7.83, impressions: 274322, totalClicks: 3993,
+      topKeywords: [kw("control union", 393), kw("control union peru", 182), kw("control union services", 175), kw("control union services s.a.c", 43), kw("smeta 7.0 standard pdf", 41)],
+    },
+  },
+  // Control Union Portugal
+  cupt: {
+    site: {
+      singleTraffic: 1525, totalTraffic: 1686, impressions: 3456, conversions: 91,
+      conversionsBreakdown: { clickEmail: 54, formSubmit: 37 },
+      topLandingPages: [
+        lp("https://portugal.controlunion.com/", 663),
+        lp("https://portugal.controlunion.com/esquemas-de-certificacao/", 156),
+        lp("https://portugal.controlunion.com/contacto/", 132),
+        lp("https://portugal.controlunion.com/certificacoes/", 89),
+        lp("https://portugal.controlunion.com/quem-somos/", 66),
+      ],
+    },
+    seo: {
+      averagePosition: 14.4, impressions: 46940, totalClicks: 692,
+      topKeywords: [kw("control union", 144), kw("control union portugal", 58), kw("controlunion", 28), kw("grs", 28), kw("gots", 8)],
+    },
+  },
+  // Peterson Solutions South America
+  psam: {
+    site: {
+      singleTraffic: 1421, totalTraffic: 1861, impressions: 3414, conversions: 27,
+      conversionsBreakdown: { clickEmail: 0, formSubmit: 27 },
+      topLandingPages: [
+        lp("https://americas.peterson-solutions.com/", 368),
+        lp("https://americas.peterson-solutions.com/service/sostenibilidad-en-la-cadena-de-suministro/agricultura-regenerativa/", 301),
+        lp("https://americas.peterson-solutions.com/pt-br/", 246),
+        lp("https://americas.peterson-solutions.com/en/privacy-policy/", 194),
+        lp("https://americas.peterson-solutions.com/service/estrategia-y-gestion-de-sostenibilidad/gei-y-servicios-medioambientales/", 127),
+      ],
+    },
+    seo: {
+      averagePosition: 10.06, impressions: 26163, totalClicks: 486,
+      topKeywords: [kw("peterson solutions", 116), kw("peterson solutions brasil", 31), kw("peterson", 15), kw("peterson projects and solutions", 3), kw("peterson solution", 3)],
+    },
+  },
+  // Peterson Solutions Iberia
+  psib: {
+    site: {
+      singleTraffic: 476, totalTraffic: 702, impressions: 1452, conversions: 24,
+      conversionsBreakdown: { clickEmail: 0, formSubmit: 24 },
+      topLandingPages: [
+        lp("https://iberia.peterson-solutions.com/", 219),
+        lp("https://iberia.peterson-solutions.com/service/estrategia-y-gestion-de-sostenibilidad/eu-green-consumer-directive-ecgt-compliance/", 57),
+        lp("https://iberia.peterson-solutions.com/eudr/", 51),
+        lp("https://iberia.peterson-solutions.com/packaging-and-packaging-waste-regulation-ppwr/", 51),
+        lp("https://iberia.peterson-solutions.com/vacantes/", 49),
+      ],
+    },
+    seo: {
+      averagePosition: 10.53, impressions: 17478, totalClicks: 389,
+      topKeywords: [kw("peterson solutions", 102), kw("peterson solutions iberia", 30), kw("one peterson", 4), kw("peterson's solution", 3), kw("ecgt", 2)],
+    },
+  },
+};
+
+for (const [id, data] of Object.entries(WEBSITE_Q3_2026)) {
+  if (WEBSITE_DB[id]) WEBSITE_DB[id].periods['q3-2026'] = data;
 }

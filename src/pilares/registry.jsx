@@ -61,7 +61,7 @@ export const REGISTRY = {
     accounts: website.listAccounts(),
     // trimestres + resumen anual + comparativa
     periods: [...website.listPeriods(), YEAR_2026, COMPARATIVE],
-    defaultPeriod: 'q2-2026', // último trimestre cargado
+    defaultPeriod: 'q3-2026', // último trimestre cargado
     hasDataFor: website.hasDataFor,
   },
   email: {

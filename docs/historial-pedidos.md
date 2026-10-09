@@ -1549,3 +1549,13 @@
 > procesá las métricas nuevas de email marketing.
 
 (Respuestas a la consulta: «Harás una botonera tal y como funciona hoy en día con "Social Media" con los distintos países dentro de una misma cuenta pero, en el caso de email marketing, distintas campañas con un mismo cliente y mes.» · «Es de un one shot esta campaña. Si no te lo aclaro tomalo siempre como un one shot. Guardalo en tu instructivo-one shot».)
+
+
+**#118**
+
+> [reporte_ps_2026-Q3.md, reporte_cu_2026-Q3.md] Te acabo de pasar la información de los informes en los cuales vas a poder ver todas las métricas en lo que respecta a website para SEO-SEM, para poder hacer los reportes de estos pilares: el concepto de website para SEO y SEM.
+>
+> (Durante el trabajo:) Claro está que esto quede bien guardado en tu memoria; si sentís que te falta algo para que realmente esté, no dudes en decírmelo. La idea es que nos ayudemos mutuamente.
+
+(Mensaje de voz; transcripción ajustada.)
+

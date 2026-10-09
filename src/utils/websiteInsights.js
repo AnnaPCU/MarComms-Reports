@@ -149,7 +149,7 @@ export function genSeoInsights(d, lang = 'es') {
           a: `There is room to climb ➜ <strong>reinforce content and internal links</strong> for keywords in positions 5–15 to bring them closer to the top 3.`,
         }
       : {
-          m: `Posición promedio de ${Number(d.averagePosition).toFixed(2)} en los resultados de búsqueda.`,
+          m: `Posición promedio de ${Number(d.averagePosition).toFixed(2).replace('.', ',')} en los resultados de búsqueda.`,
           a: `Hay margen para escalar ➜ <strong>reforzar contenido y enlaces internos</strong> de las keywords en posiciones 5–15 para acercarlas al top 3.`,
         },
   );
@@ -199,7 +199,7 @@ export function genSeoConclusions(d, lang = 'es') {
         { label: 'Opportunity', text: `<strong>Grow in non-brand keywords</strong> (services and certifications) and raise the CTR of pages with many impressions.` },
       ]
     : [
-        { label: 'Visibilidad', text: `<strong>${n(d.impressions)} impresiones</strong> en búsqueda, con una posición promedio de <strong>${Number(d.averagePosition).toFixed(2)}</strong>.` },
+        { label: 'Visibilidad', text: `<strong>${n(d.impressions)} impresiones</strong> en búsqueda, con una posición promedio de <strong>${Number(d.averagePosition).toFixed(2).replace('.', ',')}</strong>.` },
         { label: 'Tráfico orgánico', text: `<strong>${n(d.totalClicks)} clics</strong> — un CTR de <strong>${p(ctr)}</strong> sobre las impresiones.` },
         {
           label: 'Demanda',

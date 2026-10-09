@@ -62,7 +62,7 @@ describe('periodsFor / latestPeriod', () => {
   it('el último período nunca es el anual ni un GEO', () => {
     expect(latestPeriod('paid', { account: 'pt' }).id).toBe('m08');
     expect(latestPeriod('paid', { account: 'cuar' })).toBeNull(); // solo GEO
-    expect(latestPeriod('website', { account: 'cua' }).id).toBe('q2-2026');
+    expect(latestPeriod('website', { account: 'cua' }).id).toBe('q3-2026');
   });
 
   it('devuelve vacío para un pilar desconocido o sin referencia', () => {

@@ -5,6 +5,8 @@
 
 export const WEB_STR = {
   es: {
+    // Desglose de conversiones de GA4 (desde Q3 2026).
+    convSplit: (email, form) => `Email ${email} · Formulario ${form}`,
     siteInsightsTitle: 'Plan de Acción — Insights Website',
     seoInsightsTitle: 'Plan de Acción — Insights SEO',
     insightLabel: 'Insight',
@@ -19,7 +21,7 @@ export const WEB_STR = {
     fConv: 'Conversiones',
     fConvDesc: (p) => `${p} de las sesiones`,
     fConvDropNote: 'sesión → conversión',
-    topPagesTitle: 'Top 3 landing pages — vistas',
+    topPagesTitle: (n) => `Top ${n} landing pages — vistas`,
     kpisChartTitle: 'Generals KPIs',
     siteKpisChartSub: 'Comparativa de indicadores del trimestre',
     seoKpisChartSub: 'Indicadores SEO del trimestre',
@@ -28,7 +30,7 @@ export const WEB_STR = {
     fImpDesc: (p) => `Posición promedio ${p}`,
     fClk: 'Clics',
     fClkDropNote: 'impresión → clic',
-    topKeywordsTitle: 'Top 3 keywords — clics',
+    topKeywordsTitle: (n) => `Top ${n} keywords — clics`,
     perfSection: 'Lectura de Performance',
     conclusionsTitle: 'Diagnóstico y recomendaciones',
     nextSection: 'Conclusión — Próximos Pasos',
@@ -77,6 +79,7 @@ export const WEB_STR = {
   },
 
   en: {
+    convSplit: (email, form) => `Email ${email} · Form ${form}`,
     siteInsightsTitle: 'Action Plan — Website Insights',
     seoInsightsTitle: 'Action Plan — SEO Insights',
     insightLabel: 'Insight',
@@ -91,7 +94,7 @@ export const WEB_STR = {
     fConv: 'Conversions',
     fConvDesc: (p) => `${p} of sessions`,
     fConvDropNote: 'session → conversion',
-    topPagesTitle: 'Top 3 landing pages — views',
+    topPagesTitle: (n) => `Top ${n} landing pages — views`,
     kpisChartTitle: 'General KPIs',
     siteKpisChartSub: 'Quarter indicators comparison',
     seoKpisChartSub: 'Quarter SEO indicators',
@@ -100,7 +103,7 @@ export const WEB_STR = {
     fImpDesc: (p) => `Average position ${p}`,
     fClk: 'Clicks',
     fClkDropNote: 'impression → click',
-    topKeywordsTitle: 'Top 3 keywords — clicks',
+    topKeywordsTitle: (n) => `Top ${n} keywords — clicks`,
     perfSection: 'Performance Reading',
     conclusionsTitle: 'Diagnosis and recommendations',
     nextSection: 'Conclusion — Next Steps',

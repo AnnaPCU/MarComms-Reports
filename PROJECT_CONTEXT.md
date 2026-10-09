@@ -263,7 +263,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 |--------|--------|
 | Social Media | ✅ Completo (Ene–Ago 2026, 9 cuentas) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
 | Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas) + drill-down + detalle por grupo + Resumen del Año + comparativa (tooling: `scripts/paid/`) |
-| Website (GA + SEO) | ✅ Completo (Q1+Q2 2026, 12 cuentas) + Resumen del Año + comparativa |
+| Website (GA + SEO) | ✅ Q1+Q2 2026 (12 cuentas) y **Q3 2026** (10 cuentas, de los reportes trimestrales .md de GA4 + Search Console del 9/10; ahora también con SEO de Peterson). Q3 no trae CU Estados Unidos ni CU Canadá por separado (solo CU North America): esas dos cuentas quedan sin Q3. + Resumen del Año + comparativa. Tooling: `scripts/website/md_to_seed.py` |
 | Email Marketing | ✅ Cinco campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — dos campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange) y «SMETA · Campaign 3» (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
 | Planes (vista) | ✅ Informe mensual de septiembre 2026 del plan regional de Control Union USA · mercado orgánico («Control Union North America · Organic»): objetivo, resumen del mes, KPIs operativos (3) y de performance (2) en una fila, 8 entregables completados + 4 en curso, 5 iniciativas de generación de demanda. Descarga en HTML interactivo o **PDF** (impresión del navegador, sin encabezados ni pies del navegador). Columna «Link» en entregables completados: landings USDA Organic y PrimusGFS, benchmarking (Excel), decisión de marca CUC (imagen), pipeline en HubSpot (en «Base de datos de la herramienta comercial»), perfil de LinkedIn de Karl, benchmarking digital (PowerPoint) e informe de mercado USDA (PDF). Seed: `src/data/plansSeed.js` |
@@ -391,6 +391,14 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Website Q3 2026** (9/10/2026): GA4 + Search Console de 10 cuentas desde
+  los reportes trimestrales en .md (archivados en
+  `metricas/website/_procesados/2026-Q3/`), convertidos y validados con
+  `scripts/website/md_to_seed.py` (CTR, embudo y suma de conversiones).
+  Peterson suma SEO por primera vez. Conversiones con desglose email /
+  formulario, top 5 páginas y keywords (títulos «Top N» dinámicos), posición
+  promedio con coma decimal en español. Período por defecto: Q3 2026.
 
 - **CU USA: «Contactos generados por BBDD» = 800** (9/10/2026), del Excel
   de seguimiento (base de la Commercial Tool, top 5 estados USDA). El informe

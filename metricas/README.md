@@ -10,8 +10,12 @@ responsable:
 | `email-marketing/` | Email Marketing | Mailchimp, Apollo | Persona de Email/Webinars |
 | `webinars/` | Webinars | Teams (Excel de lead scoring) + capturas de LinkedIn | Persona de Email/Webinars |
 
-> Paid Media y Website **no usan esta carpeta**: Tomás sigue pasando esos
-> archivos directamente por su conversación de Claude.
+> Paid Media y Website **no usan esta carpeta** para subir: los archivos
+> llegan como adjunto en la conversación de Claude. En Website, el reporte
+> trimestral ya procesado (`reporte_cu_AAAA-QN.md` / `reporte_ps_AAAA-QN.md`:
+> GA4 + Search Console por cuenta) se archiva igual en
+> `website/_procesados/AAAA-QN/` como fuente, y se convierte con
+> `scripts/website/md_to_seed.py`.
 
 ## Reglas generales
 

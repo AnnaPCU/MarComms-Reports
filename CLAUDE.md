@@ -46,7 +46,7 @@ commit → deploy. No hay import por UI ni base de datos.
 | **Paid Media** | Google Ads, Meta Ads | adjuntos en la conversación |
 | **Email Marketing** | Mailchimp, Apollo | carpeta `metricas/email-marketing/` |
 | **Webinars** | Livestorm / Teams (+ Mailchimp, LinkedIn, HubSpot) | carpeta `metricas/webinars/` |
-| **Website** | GA4, Search Console | adjuntos en la conversación |
+| **Website** | GA4, Search Console | adjuntos en la conversación (reporte trimestral .md → `scripts/website/md_to_seed.py`; se archiva en `metricas/website/_procesados/AAAA-QN/`) |
 | **Planes** (vista, no pilar) | Informe mensual del plan regional (PDF del equipo) | adjunto en la conversación |
 | **CRM** (deals, MQL, WON) | HubSpot, consultas de solo lectura por el conector | `scripts/crm/build_crm_seed.py` → `src/data/crmSeed.js` |
 

@@ -164,7 +164,12 @@ function SiteView({ data, account, period, accName, periodLabel, lang = 'es' }) 
         <KpiCard label="Single Traffic" value={num(data.singleTraffic)} />
         <KpiCard label="Total Traffic" value={num(data.totalTraffic)} />
         <KpiCard label="Impressions" value={num(data.impressions)} />
-        <KpiCard label="Conversions" value={num(data.conversions)} accent="green" />
+        <KpiCard
+          label="Conversions"
+          value={num(data.conversions)}
+          accent="green"
+          footnote={data.conversionsBreakdown ? t.convSplit(num(data.conversionsBreakdown.clickEmail), num(data.conversionsBreakdown.formSubmit)) : undefined}
+        />
         {crm && <CrmDealsCard d={crm} lang={lang} />}
       </div>
 
@@ -204,7 +209,7 @@ function SiteView({ data, account, period, accName, periodLabel, lang = 'es' }) 
         <div className="rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
           <div className="mb-3.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
             <span className="h-3 w-[3px] rounded-sm bg-cu-cyan" />
-            {t.topPagesTitle}
+            {t.topPagesTitle(data.topLandingPages.length)}
           </div>
           <ul className="space-y-3">
             {data.topLandingPages.map((p) => (
@@ -252,6 +257,8 @@ function SiteView({ data, account, period, accName, periodLabel, lang = 'es' }) 
 function SeoView({ data, accName, periodLabel, lang = 'es' }) {
   const t = WEB_STR[lang];
   const pctv = (v) => pctL(v, lang);
+  // Posición promedio con 2 decimales, con coma en español.
+  const posL = (v) => (lang === 'en' ? Number(v).toFixed(2) : Number(v).toFixed(2).replace('.', ','));
   if (!hasData([data].filter(Boolean))) {
     return (
       <NoDataScreen
@@ -283,7 +290,7 @@ function SeoView({ data, accName, periodLabel, lang = 'es' }) {
 
       <SectionHeader title={`SEO — ${periodLabel}`} note={accName} />
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <KpiCard label="Average Position" value={data.averagePosition.toFixed(2)} />
+        <KpiCard label="Average Position" value={posL(data.averagePosition)} />
         <KpiCard label="Impressions" value={num(data.impressions)} />
         <KpiCard label="Total Clicks" value={num(data.totalClicks)} />
       </div>
@@ -292,7 +299,7 @@ function SeoView({ data, accName, periodLabel, lang = 'es' }) {
       <FunnelCard>
         <Funnel
           stages={[
-            { name: t.fImp, value: num(data.impressions), desc: t.fImpDesc(data.averagePosition.toFixed(2)), retention: '100 %' },
+            { name: t.fImp, value: num(data.impressions), desc: t.fImpDesc(posL(data.averagePosition)), retention: '100 %' },
             {
               name: t.fClk,
               value: num(data.totalClicks),
@@ -312,7 +319,7 @@ function SeoView({ data, accName, periodLabel, lang = 'es' }) {
         <div className="rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
           <div className="mb-3.5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
             <span className="h-3 w-[3px] rounded-sm bg-cu-cyan" />
-            {t.topKeywordsTitle}
+            {t.topKeywordsTitle(data.topKeywords.length)}
           </div>
           <ul className="space-y-3">
             {data.topKeywords.map((k) => (

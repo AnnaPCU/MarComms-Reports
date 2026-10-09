@@ -458,3 +458,25 @@ equipo.
 - **La descarga queda fija en la campaña elegida** (sin botonera adentro), y
   su nombre va en el título y en el nombre del archivo, como el país en
   Social.
+
+## 15. Website trimestral desde los reportes .md (Q3 2026)
+
+- **Fuente**: dos reportes por trimestre (`reporte_cu_AAAA-QN.md`,
+  `reporte_ps_AAAA-QN.md`) con GA4 (hoja Website) y Search Console (hoja SEO)
+  por cuenta. Se archivan en `metricas/website/_procesados/AAAA-QN/` y se
+  convierten con `scripts/website/md_to_seed.py`, que **corta si no
+  coinciden** el CTR, los % del embudo o la suma de conversiones
+  (click_email + form_submit) con lo que dice el archivo.
+- **Mapeo de cuentas**: el nombre de la sección es el de la cuenta, salvo
+  «Peterson Solutions South America», que es el sitio
+  americas.peterson-solutions.com = cuenta **Peterson Solutions Americas**
+  (`psam`).
+- **CU Estados Unidos y CU Canadá**: el reporte de Q3 solo trae **CU North
+  America** (el sitio compartido). Esas dos cuentas quedan sin Q3 («Sin
+  información suficiente»): no se reparte el dato regional entre países.
+- Lo que el reporte no trae (insights, diagnóstico, próximos pasos,
+  glosario) lo generan las reglas de siempre; la card «Deals generados —
+  HubSpot» sale del CRM para los meses del trimestre.
+- Las conversiones muestran el desglose email / formulario como nota de la
+  card (en Peterson, click_email no registró eventos en Q3: se ve «Email 0»).
+
