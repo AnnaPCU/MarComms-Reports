@@ -97,7 +97,7 @@ src/
     glossaries.js             glosarios de los 5 pilares
   data/
     socialSeed.js             estructura + audiencia Social (9 cuentas); los meses vienen de socialMonthly.js
-    socialMonthly.js          KPIs y top posts por cuenta y mes (Ene–Ago 2026), generado por scripts/linkedin/
+    socialMonthly.js          KPIs y top posts por cuenta y mes (Ene–Sep 2026), generado por scripts/linkedin/
     socialLatam.js / socialNorthAm.js  segmentación por país de CU Latinoamérica y CU North America
     paidSeed.js               datos reales Paid (pt, es, cuc, psar; ver §6)
     websiteSeed.js            datos reales Website (CU Argentina, Q1 2026)
@@ -261,7 +261,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 | Módulo | Estado |
 |--------|--------|
-| Social Media | ✅ Completo (Ene–Ago 2026, 9 cuentas) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
+| Social Media | ✅ Completo (Ene–Sep 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
 | Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas) + drill-down + detalle por grupo + Resumen del Año + comparativa (tooling: `scripts/paid/`) |
 | Website (GA + SEO) | ✅ Q1+Q2 2026 (12 cuentas) y **Q3 2026** (10 cuentas, de los reportes trimestrales .md de GA4 + Search Console del 9/10; ahora también con SEO de Peterson). CU Estados Unidos y CU Canadá en Q3 salen del reporte de North America segmentado por país (12 cuentas en total). + Resumen del Año + comparativa. Tooling: `scripts/website/md_to_seed.py` |
 | Email Marketing | ✅ Cinco campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — dos campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange) y «SMETA · Campaign 3» (tooling: `scripts/mailchimp-to-seed.mjs`) |
@@ -391,6 +391,15 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Social Septiembre 2026 + trimestres** (9/10/2026): septiembre de LinkedIn
+  ingresado por `metricas/social-media/` (9 cuentas + países de CU
+  Latinoamérica y CU North America). Social suma períodos trimestrales
+  (Q1, Q2, Q3 2026 = suma de sus 3 meses) como opciones más del selector y
+  de la descarga, con textos que hablan de «trimestre» y comparan contra el
+  trimestre anterior (`socialService.getQuarterly`, `utils/periodWording.js`).
+  `scripts/linkedin/xls_tolerant.py` abre los .xls de LinkedIn con texto mal
+  codificado. Carpeta de entrega al cliente: Website y Social **solo Q3**.
 
 - **Website Q3: conversiones con la definición nueva** (9/10/2026):
   formularios por página de gracias + emails, de los reportes actualizados

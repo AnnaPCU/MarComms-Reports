@@ -11,6 +11,7 @@ import { ML } from '@/data/socialSeed';
 import { genCountryInsights } from '@/utils/socialInsights';
 import { SOCIAL_STR, ML_EN } from '@/utils/socialI18n';
 import { fmt, num, computeDelta } from '@/utils/format';
+import { isQuarterPeriod, periodItems, periodDelta, periodText } from '@/utils/periodWording';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
@@ -77,7 +78,7 @@ export function CountryView({ account, country, period, lang = 'es' }) {
     );
   }
 
-  const insights = genCountryInsights(d, prev, tot, name, lang);
+  const insights = periodItems(genCountryInsights(d, prev, tot, name, lang), period, lang);
 
   return (
     <div className="animate-fade-in">
@@ -96,10 +97,10 @@ export function CountryView({ account, country, period, lang = 'es' }) {
         <>
           <SectionHeader title={t.cKpiSection(name)} note={t.cKpiNote(d.np, mesLabel)} />
           <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols(4 + (crm ? 1 : 0))}`}>
-            <KpiCard label={t.fImp} value={fmt(d.imp)} delta={computeDelta(d.imp, prev?.imp, lang)} footnote={t.cImpFoot} />
-            <KpiCard label={t.kEr} value={Number(d.er).toFixed(1)} unit="%" delta={computeDelta(d.er, prev?.er, lang)} />
-            <KpiCard label={t.fClk} value={fmt(d.clk)} delta={computeDelta(d.clk, prev?.clk, lang)} />
-            <KpiCard label={t.kPosts} value={d.np} delta={computeDelta(d.np, prev?.np, lang)} footnote={t.cPostsFoot} />
+            <KpiCard label={t.fImp} value={fmt(d.imp)} delta={periodDelta(computeDelta(d.imp, prev?.imp, lang), period, lang)} footnote={t.cImpFoot} />
+            <KpiCard label={t.kEr} value={Number(d.er).toFixed(1)} unit="%" delta={periodDelta(computeDelta(d.er, prev?.er, lang), period, lang)} />
+            <KpiCard label={t.fClk} value={fmt(d.clk)} delta={periodDelta(computeDelta(d.clk, prev?.clk, lang), period, lang)} />
+            <KpiCard label={t.kPosts} value={d.np} delta={periodDelta(computeDelta(d.np, prev?.np, lang), period, lang)} footnote={t.cPostsFoot} />
             {crm && <CrmDealsCard d={crm} lang={lang} />}
           </div>
 
@@ -137,7 +138,7 @@ export function CountryView({ account, country, period, lang = 'es' }) {
             {num(folBase)}
           </div>
           <div className="mt-1.5 text-[9px] italic leading-tight text-cu-grey">
-            {t.cFolFoot}
+            {periodText(t.cFolFoot, period, lang)}
           </div>
         </div>
       </div>
@@ -149,9 +150,9 @@ export function CountryView({ account, country, period, lang = 'es' }) {
             each post is attributed to {name} by its hashtag ({cInfo?.tag}) or country
             mention; content metrics are those posts' accumulated figures at export time
             {tot?.un ? (
-              <> ({tot.un} regional {tot.un === 1 ? 'post' : 'posts'} of the month not attributed to any country)</>
+              <> ({tot.un} regional {tot.un === 1 ? 'post' : 'posts'} of the {isQuarterPeriod(period) ? 'quarter' : 'month'} not attributed to any country)</>
             ) : null}
-            . LinkedIn does not segment new monthly followers or unique visitors by
+            . LinkedIn does not segment {isQuarterPeriod(period) ? 'new quarterly followers' : 'new monthly followers'} or unique visitors by
             country, so those indicators only exist at the {cfg.label} level.
           </>
         ) : (
@@ -161,9 +162,9 @@ export function CountryView({ account, country, period, lang = 'es' }) {
             país; las métricas de contenido son las acumuladas de esos posts al momento del
             export
             {tot?.un ? (
-              <> ({tot.un} {tot.un === 1 ? 'publicación regional del mes no se atribuye' : 'publicaciones regionales del mes no se atribuyen'} a ningún país)</>
+              <> ({tot.un} {tot.un === 1 ? 'publicación regional' : 'publicaciones regionales'} {isQuarterPeriod(period) ? 'del trimestre' : 'del mes'} {tot.un === 1 ? 'no se atribuye' : 'no se atribuyen'} a ningún país)</>
             ) : null}
-            . LinkedIn no segmenta por país los seguidores nuevos del mes ni los visitantes
+            . LinkedIn no segmenta por país los seguidores nuevos {isQuarterPeriod(period) ? 'del trimestre' : 'del mes'} ni los visitantes
             únicos, por eso esos indicadores solo existen a nivel {cfg.label}.
           </>
         )}

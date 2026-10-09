@@ -501,7 +501,7 @@ equipo.
   form_submit (inflaba la cifra). La cifra viene calculada en el reporte; no
   se aclara en la vista. Se muestran sin desglose; el desglose formularios /
   emails queda en el seed (`conversionsBreakdown`). En Peterson,
-  click_email no registró eventos en Q3: la conversión es el form_submit.
+  los emails dan 0 en Q3: la conversión son solo los formularios.
 - **Nombres de métricas en el idioma del reporte**: en ES, Visitantes únicos,
   Sesiones, Vistas de página, Conversiones, Posición promedio, Impresiones y
   Clics totales (también en el glosario); en EN, los nombres del reporte
@@ -510,4 +510,27 @@ equipo.
 - **SEM (Google Ads)** no viene en estos reportes: va en Paid Media, que se
   reporta **por mes** (no por trimestre). Septiembre de Paid está pendiente
   de que el equipo pase los exports.
+
+## 16. Social por trimestre (suma de 3 meses)
+
+Pedido del equipo el 9/10/2026, para entregar al cliente un reporte de Q3 en
+Social igual que en Website.
+
+- **Qué es un trimestre en Social**: la suma de sus 3 meses ya cargados
+  (Q1 = ene–mar, Q2 = abr–jun, Q3 = jul–sep). Si falta alguno de los 3 meses,
+  el trimestre **no existe** para esa cuenta (Sin información suficiente):
+  no se arma un trimestre con 2 meses.
+- **Cómo se suma**: impresiones, clics, visitas, seguidores nuevos y
+  publicaciones se suman. El engagement rate se pondera por impresiones (no
+  se promedian los tres %). Los seguidores totales son los del último mes
+  (es una foto, no un flujo). Top posts: los 5 mejores de los 3 meses.
+  Competidores: seguidores nuevos, engagement y publicaciones sumados;
+  seguidores totales del último mes.
+- **Por país** (CU Latinoamérica, CU North America): misma regla con los
+  posts atribuidos al país; la audiencia por ubicación es la del último mes.
+- **Comparación**: contra el trimestre anterior («vs trim. ant.» / «vs prev.
+  quarter»). Los insights y notas, que hablan de «mes», se reescriben a
+  «trimestre» con `utils/periodWording.js`.
+- **Social sigue siendo mensual**: el período por defecto es el último mes;
+  los trimestres son opciones más del selector y de la descarga.
 

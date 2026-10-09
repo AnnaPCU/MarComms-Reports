@@ -250,7 +250,7 @@ export const LATAM_DB = {
     pe: {np:13, imp:26020, clk:3672, er:15.69, vis:274, folBase:1975, posts:[
       {t:"#ControlUnionServices #WeAreHiring #Lima #Perú #Certificador #Organicos",url:"https://www.linkedin.com/feed/update/urn:li:activity:7498340755770449920",imp:3415,clk:82,er:3.19,tp:"Orgánico"},
       {t:"#ControlUnionServices #Perú La segunda edición de Control Conecta nos llevó a Piura, reuniendo a representante",url:"https://www.linkedin.com/feed/update/urn:li:activity:7492637155970756608",imp:3356,clk:1573,er:49.2,tp:"Orgánico"},
-      {t:"#ControlUnionServices #Perú 📢 Convocatoria abierta | Curso Normas ISO – Sistema Integrado de Gestión",url:"https://www.linkedin.com/feed/update/urn:li:activity:7498789779728195584",imp:2740,clk:89,er:5.0,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Perú 📢 Convocatoria abierta | Curso Normas ISO – Sistema Integrado de Gestión",url:"https://www.linkedin.com/feed/update/urn:li:activity:7498789779728195584",imp:2740,clk:89,er:5,tp:"Orgánico"},
       {t:"#ControlUnionServices #WeAreHiring #Lima #Perú #Asistente #Certificaciones",url:"https://www.linkedin.com/feed/update/urn:li:activity:7498339798542118912",imp:2701,clk:77,er:3.52,tp:"Orgánico"},
       {t:"#ControlUnionServices #Peru Ayer realizamos en Lima la tercera edición de Control Conecta, un espacio que segu",url:"https://www.linkedin.com/feed/update/urn:li:activity:7496618934687887360",imp:2668,clk:668,er:26.99,tp:"Orgánico"}
     ]},
@@ -263,5 +263,40 @@ export const LATAM_DB = {
       {t:"#ControlUnionEcuador 🍫 ¡Nos vemos en CHOKAO 2026!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7490818667870568448",imp:1459,clk:23,er:3.84,tp:"Orgánico"}
     ]},
     _tot: {np:44, imp:74848, clk:13769, un:8},
+  },
+  m09: {
+    ar: {np:14, imp:16722, clk:4852, er:30.65, vis:369, folBase:4864, posts:[
+      {t:"#ControlUnionArgentina 🔎 ¿Cómo es una auditoría de certificación?",url:"https://www.linkedin.com/feed/update/urn:li:activity:7511048854268579840",imp:2648,clk:246,er:11.67,tp:"Vídeo"},
+      {t:"#ControlUnionArgentina 🌱 ¿Estás pensando en exportar tu producto como orgánico?",url:"https://www.linkedin.com/feed/update/urn:li:activity:7508975589689769984",imp:1870,clk:110,er:8.13,tp:"Vídeo"},
+      {t:"#ControlUnionArgentina ♻️ El futuro de los envases plásticos está cambiando. ¿Está tu organización preparada?",url:"https://www.linkedin.com/feed/update/urn:li:activity:7501362878676000768",imp:1560,clk:25,er:2.44,tp:"Orgánico"},
+      {t:"#ControlUnionArgentina #AgriReport PERIODO: 14/08/2026 A 28/08/2026",url:"https://www.linkedin.com/feed/update/urn:li:activity:7500536492981944321",imp:1222,clk:798,er:65.63,tp:"Orgánico"},
+      {t:"#ControlUnionArgentina 🌱 ¿Medís tu huella de carbono? El próximo paso es verificarla.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7504158559560069120",imp:1129,clk:21,er:4.69,tp:"Orgánico"}
+    ]},
+    br: {np:4, imp:3301, clk:603, er:20.72, vis:845, folBase:4022, posts:[
+      {t:"#ControlUnionBrasil 🌱 Sustentabilidade e rastreabilidade em toda a cadeia agrícola.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7511132764302254080",imp:970,clk:584,er:62.27,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil Parabéns à Potencial Agro por essa importante conquista! 👏",url:"https://www.linkedin.com/feed/update/urn:li:activity:7508615404542656512",imp:936,clk:10,er:2.46,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil O mercado está mudando. Sua empresa está preparada?",url:"https://www.linkedin.com/feed/update/urn:li:activity:7501282072053846016",imp:730,clk:5,er:3.42,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil 𝐂𝐞𝐥𝐞𝐛𝐫𝐚𝐭𝐢𝐧𝐠 𝐅𝐨𝐫𝐞𝐬𝐭 𝐖𝐞𝐞𝐤 | 𝟐𝟏–𝟐𝟕 𝐒𝐞𝐩𝐭𝐞𝐦𝐛𝐞𝐫 𝟐𝟎𝟐𝟔",url:"https://www.linkedin.com/feed/update/urn:li:activity:7508959112488202240",imp:665,clk:4,er:4.81,tp:"Orgánico"}
+    ]},
+    cl: {np:4, imp:6782, clk:617, er:10.84, vis:38, folBase:552, posts:[
+      {t:"#ControlUnionChile CONSTRUYENDO ESTÁNDARES DESDE EL DIÁLOGO Y LA EXPERIENCIA EN TERRENO 🌊",url:"https://www.linkedin.com/feed/update/urn:li:activity:7505312729042235393",imp:2467,clk:474,er:20.88,tp:"Orgánico"},
+      {t:"#ControlUnionChile CONTROL UNION PRESENTE EN LA FERIA DE CULTURA DE INOCUIDAD DE ACME CHILE",url:"https://www.linkedin.com/feed/update/urn:li:activity:7503434823189872641",imp:2435,clk:99,er:5.59,tp:"Vídeo"},
+      {t:"#ControlUnionChile 🇨🇱 En estas Fiestas Patrias, quienes formamos parte de Control Union Chile queremos enviar ",url:"https://www.linkedin.com/feed/update/urn:li:activity:7506790811687219200",imp:1168,clk:34,er:5.05,tp:"Vídeo"},
+      {t:"#ControlUnionChile 🌱 ¿Las declaraciones ambientales de tus productos y envases cuentan con evidencia verificab",url:"https://www.linkedin.com/feed/update/urn:li:activity:7505604588100845568",imp:712,clk:10,er:3.51,tp:"Orgánico"}
+    ]},
+    pe: {np:10, imp:21545, clk:737, er:4.63, vis:376, folBase:2021, posts:[
+      {t:"#ControlUnionServices #WeAreHiring #Lima #Perú #Asistente #Adiministrativo",url:"https://www.linkedin.com/feed/update/urn:li:activity:7505279521944887297",imp:3222,clk:82,er:3.17,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Perú #Lima #WeAreHiring #Asistente #Certificaciones",url:"https://www.linkedin.com/feed/update/urn:li:activity:7511057034449002497",imp:3213,clk:99,er:3.83,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Perú #Lima #WeAreHiring #Certificador #Food #Safety",url:"https://www.linkedin.com/feed/update/urn:li:activity:7507823494043316224",imp:3016,clk:104,er:4.51,tp:"Orgánico"},
+      {t:"#ControlUnionServices #WeAreHiring #Lima #Perú #Certificador #Sociales",url:"https://www.linkedin.com/feed/update/urn:li:activity:7501303777862254593",imp:2657,clk:67,er:3.46,tp:"Orgánico"},
+      {t:"#ControlUnionServices #WeAreHiring #Lima #Perú #Asistente #Adiministrativo",url:"https://www.linkedin.com/feed/update/urn:li:activity:7509207208828575744",imp:2369,clk:86,er:4.73,tp:"Orgánico"}
+    ]},
+    mx: {np:3, imp:2498, clk:1308, er:53.64, vis:46, folBase:558, posts:[
+      {t:"#ControlUnionMexico ✅ Control Union Certifications Región América es verificador aprobado para ZDHC InCheck.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7503834409138184192",imp:1396,clk:906,er:66.19,tp:"Orgánico"},
+      {t:"#ControlUnionMexico 🌱 Una cadena de suministro más sostenible no se construye solo auditando. Se construye col",url:"https://www.linkedin.com/feed/update/urn:li:activity:7506011522436063233",imp:650,clk:399,er:62.46,tp:"Orgánico"},
+      {t:"#ControlUnionMexico 📘 How to HIGG 4.0 | Entrenamiento FEM en español",url:"https://www.linkedin.com/feed/update/urn:li:activity:7507788853869699072",imp:452,clk:3,er:2.21,tp:"Orgánico"}
+    ]},
+    ec: {np:0, imp:0, clk:0, er:0, vis:47, folBase:427, posts:[]},
+    _tot: {np:41, imp:57893, clk:8647, un:6},
   },
 };

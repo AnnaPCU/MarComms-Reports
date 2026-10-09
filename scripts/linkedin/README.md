@@ -71,6 +71,14 @@ de la cuenta) o el `.xlsx` unificado de la cuenta. Metodología:
 Al cargar un mes nuevo, correr `build_monthly.py` y `build_country_seg.py`
 **una vez por cuenta segmentada** (`acc=cul` y `acc=cuna`).
 
+Los .xls de LinkedIn a veces traen texto mal codificado (pasó con CU España y
+PS Iberia & Americas en septiembre 2026) y `xlrd` corta con
+`UnicodeDecodeError`. `xls_tolerant.open_xls` reintenta descartando solo los
+caracteres ilegibles; los números no se tocan.
+
+Los trimestres (Q1–Q3) no se generan acá: los arma `socialService` sumando
+los meses ya cargados (`docs/DECISIONES.md` §16).
+
 ## Cuentas reconocidas
 
 `cul` CU Latinoamérica · `cue` CU España · `cup` CU Portugal · `cun` CU Norte ·

@@ -3,6 +3,7 @@
 # Reusa los helpers de mc_extract.py; el .xls viejo se lee con xlrd.
 import os, sys, glob, json
 import xlrd
+from xls_tolerant import open_xls
 from extract_unified import find_header, col, ssum, clean_title
 
 # Los nombres de subcarpeta varían según quién arma el drop ("Peterson
@@ -34,7 +35,7 @@ def resolve_folders(base):
     return out
 
 def xls_rows(path, sheet_sub):
-    wb = xlrd.open_workbook(path)
+    wb = open_xls(path)
     for name in wb.sheet_names():
         if sheet_sub in name.lower():
             sh = wb.sheet_by_name(name)

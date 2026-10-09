@@ -120,4 +120,15 @@ export const NA_DB = {
     ]},
     _tot: {np:6, imp:2642, clk:65, un:0},
   },
+  m09: {
+    us: {np:3, imp:3011, clk:675, er:27.07, vis:43, folBase:138, posts:[
+      {t:"#ControlUnionUSA Connecting the cotton value chain in West Texas.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7505963628857171969",imp:1741,clk:554,er:35.78,tp:"Orgánico"},
+      {t:"#ControlUnionUSA 🎉 Control Union is now officially approved by Sedex to conduct the newly introduced SMETA Ser",url:"https://www.linkedin.com/feed/update/urn:li:activity:7503081692816130049",imp:907,clk:115,er:17.75,tp:"Orgánico"},
+      {t:"#ControlUnionUSA 🌎 Important update for companies operating in California’s low-carbon fuel market.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7501732006909747200",imp:363,clk:6,er:8.54,tp:"Orgánico"}
+    ]},
+    ca: {np:1, imp:389, clk:4, er:6.17, vis:16, folBase:91, posts:[
+      {t:"#ControlUnionCanada 🌲 We’re heading to the 2026 WPAC Conference",url:"https://www.linkedin.com/feed/update/urn:li:activity:7501278124584693760",imp:389,clk:4,er:6.17,tp:"Orgánico"}
+    ]},
+    _tot: {np:11, imp:5616, clk:793, un:7},
+  },
 };

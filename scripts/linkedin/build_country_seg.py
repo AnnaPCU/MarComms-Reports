@@ -29,6 +29,7 @@ import xlrd, openpyxl
 
 sys.path.insert(0, os.path.dirname(__file__))
 from extract_unified import find_header, col, clean_title  # noqa: E402
+from xls_tolerant import open_xls  # noqa: E402
 
 
 def norm(s):
@@ -139,7 +140,7 @@ def account_raw_folder(base, sub):
 
 
 def xls_sheet(path, sub):
-    wb = xlrd.open_workbook(path)
+    wb = open_xls(path)
     for name in wb.sheet_names():
         if sub in norm(name):
             sh = wb.sheet_by_name(name)

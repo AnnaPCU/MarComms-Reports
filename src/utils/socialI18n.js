@@ -147,4 +147,5 @@ export const ML_EN = {
   m01: 'January 2026', m02: 'February 2026', m03: 'March 2026', m04: 'April 2026',
   m05: 'May 2026', m06: 'June 2026', m07: 'July 2026', m08: 'August 2026',
   m09: 'September 2026', m10: 'October 2026', m11: 'November 2026', m12: 'December 2026',
+  'q1-2026': 'Q1 2026', 'q2-2026': 'Q2 2026', 'q3-2026': 'Q3 2026',
 };

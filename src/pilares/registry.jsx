@@ -29,9 +29,9 @@ export const REGISTRY = {
   social: {
     Component: SocialApp,
     accounts: social.listAccounts(),
-    // meses (más reciente primero) + resumen anual + comparativa
-    periods: [...social.listPeriods()].reverse().concat(YEAR_2026, COMPARATIVE),
-    defaultPeriod: 'm08', // Agosto 2026: último mes cargado
+    // trimestres (suma de 3 meses) + meses (más reciente primero) + resumen anual + comparativa
+    periods: [...social.listQuarters(), ...[...social.listPeriods()].reverse(), YEAR_2026, COMPARATIVE],
+    defaultPeriod: 'm09', // Septiembre 2026: último mes cargado
     hasDataFor: social.hasDataFor,
   },
   paid: {

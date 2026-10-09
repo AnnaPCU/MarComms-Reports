@@ -1590,3 +1590,10 @@
 
 > [reporte_cu_2026-Q3.md, reporte_ps_2026-Q3.md, reporte_cu_2026-Q3_northamerica_por_pais.md, actualizados] Te adjunto archivos actualizados de las conversiones, que estaban mal hechas. No hace falta que lo aclares en ningún lado. Las conversiones las vamos a medir como las personas que llegan a una thank-you page (Gravity Forms y HubSpot Forms siempre redirigen a una), sumado a los click emails. No tenés que hacer ninguna suma: está todo en los archivos. Con esas actualizaciones, enviame lo que te pedí: las carpetas con sus subcarpetas, con el idioma y siempre en vista externa.
 
+
+**#124**
+
+> Muy buen trabajo con las carpetas; sigamos como venimos trabajando. Lo único: los reportes me muestran el Q1, el Q2, el Q3 y el resumen del año, y no quiero eso. Quiero que me muestres únicamente el Q3 de estos dos pilares (Website y Social Media) y sus subpilares. Social Media se viene manejando mes a mes: implementá sumar las métricas de los tres meses y contemplarlo como un Q3, que aparezca como una opción más para descargar. Después descargalos y subilos a la carpeta, que únicamente se muestre el Q3 en todos estos reportes.
+
+(Mensaje de voz; transcripción ajustada.)
+

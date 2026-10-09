@@ -7,6 +7,7 @@ import { monthHasData } from '@/utils/hasData';
 import { genMonthlyInsights, genSocialConclusions, genSocialNextSteps } from '@/utils/socialInsights';
 import { SOCIAL_STR, ML_EN } from '@/utils/socialI18n';
 import { fmt, num, computeDelta } from '@/utils/format';
+import { isQuarterPeriod, periodItems, periodDelta, periodText } from '@/utils/periodWording';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
@@ -66,7 +67,7 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
     };
   }, [country]);
   const segCfg = getSegConfig(account);
-  const isSeg = !!segCfg && (/^m\d\d$/.test(period) || period === 'year-2026');
+  const isSeg = !!segCfg && (/^m\d\d$/.test(period) || isQuarterPeriod(period) || period === 'year-2026');
   // El selector de país solo se muestra en la app y si nadie lo fijó desde afuera.
   const showCountrySel = isSeg && !isEmbedReport() && !forcedCountry;
 
@@ -196,7 +197,7 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
     );
   }
 
-  const insights = genMonthlyInsights(mo, prev, lang);
+  const insights = periodItems(genMonthlyInsights(mo, prev, lang), period, lang);
 
   return (
     <div className="animate-fade-in">
@@ -212,16 +213,16 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
 
       <SectionHeader title={t.kpiSection} />
       <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols((mo.np != null ? 5 : 4) + (crm ? 1 : 0))}`}>
-        <KpiCard label={t.kImp} value={fmt(mo.imp)} delta={computeDelta(mo.imp, prev?.imp, lang)} />
-        <KpiCard label={t.kEr} value={Number(mo.er).toFixed(1)} unit="%" delta={computeDelta(mo.er, prev?.er, lang)} />
-        <KpiCard label={t.kClk} value={fmt(mo.clk)} delta={computeDelta(mo.clk, prev?.clk, lang)} />
+        <KpiCard label={t.kImp} value={fmt(mo.imp)} delta={periodDelta(computeDelta(mo.imp, prev?.imp, lang), period, lang)} />
+        <KpiCard label={t.kEr} value={Number(mo.er).toFixed(1)} unit="%" delta={periodDelta(computeDelta(mo.er, prev?.er, lang), period, lang)} />
+        <KpiCard label={t.kClk} value={fmt(mo.clk)} delta={periodDelta(computeDelta(mo.clk, prev?.clk, lang), period, lang)} />
         {mo.np != null && (
-          <KpiCard label={t.kPosts} value={mo.np} delta={computeDelta(mo.np, prev?.np, lang)} footnote={t.postsFoot} />
+          <KpiCard label={t.kPosts} value={mo.np} delta={periodDelta(computeDelta(mo.np, prev?.np, lang), period, lang)} footnote={periodText(t.postsFoot, period, lang)} />
         )}
         <KpiCard
           label={t.kVis}
           value={mo.vis}
-          delta={computeDelta(mo.vis, prev?.vis, lang)}
+          delta={periodDelta(computeDelta(mo.vis, prev?.vis, lang), period, lang)}
           footnote={t.visFoot}
         />
         {crm && <CrmDealsCard d={crm} lang={lang} />}
@@ -275,12 +276,12 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
           NO se muestra: los competidores del set son cuentas globales y la
           comparación no aplica. El dato queda disponible para uso futuro. */}
       <SectionHeader title={t.perfSection} />
-      <ConclusionsPanel items={genSocialConclusions(mo, prev, lang)} title={t.conclusionsTitle} />
+      <ConclusionsPanel items={periodItems(genSocialConclusions(mo, prev, lang), period, lang)} title={t.conclusionsTitle} />
 
       {!isExternalReport() && (
         <>
           <SectionHeader title={t.nextSection} />
-          <NextStepsPanel steps={genSocialNextSteps(mo, prev, lang)} subtitle={`${accName} · ${periodLabel}`} title={t.nextTitle} />
+          <NextStepsPanel steps={periodItems(genSocialNextSteps(mo, prev, lang), period, lang)} subtitle={`${accName} · ${periodLabel}`} title={t.nextTitle} />
         </>
       )}
 

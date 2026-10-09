@@ -9,8 +9,10 @@
 
 import { SOCIAL_MONTHLY_2026 } from '@/data/socialMonthly';
 
-export const ML = {m01:'Ene 2026',m02:'Feb 2026',m03:'Mar 2026',m04:'Abr 2026',m05:'May 2026',m06:'Jun 2026',m07:'Jul 2026',m08:'Ago 2026'};
-export const MO = ['m01','m02','m03','m04','m05','m06','m07','m08'];
+export const ML = {m01:'Ene 2026',m02:'Feb 2026',m03:'Mar 2026',m04:'Abr 2026',m05:'May 2026',m06:'Jun 2026',m07:'Jul 2026',m08:'Ago 2026',m09:'Sep 2026',
+  // Trimestres: suma de sus 3 meses (socialService). Pedido del 9/10/2026.
+  'q1-2026':'Q1 2026','q2-2026':'Q2 2026','q3-2026':'Q3 2026'};
+export const MO = ['m01','m02','m03','m04','m05','m06','m07','m08','m09'];
 
 export const DB = {
 
