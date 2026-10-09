@@ -134,9 +134,9 @@ export const PLANS_DB = {
   // (reunión de seguimiento del 30/9/2026). Plan de 6 meses, septiembre 2026
   // → febrero 2027. Un informe por mes: cada tarea va en el informe del mes
   // de su fila (agosto = arranque, previo al inicio formal). Las tareas de
-  // octubre aparecen en el informe de septiembre como trabajo en marcha
-  // («En curso», o «Pendiente» si el Excel lo marca así), con los nombres
-  // del Excel del 8/10; sus resultados van en el informe de octubre.
+  // octubre aparecen en el informe de septiembre en su propio grupo
+  // («Tareas de octubre»), con el estado del Excel (captura del 9/10): no
+  // suman a los entregables de septiembre.
   // KPIs (8/10): deals y MQLs en cantidad (septiembre: 70 y 1, del equipo);
   // agosto sin dato → «—». Contactos generados por BBDD: agosto 2.001,
   // septiembre 76 (Ígaris), del Excel.
@@ -213,6 +213,8 @@ export const PLANS_DB = {
       programEn: '6-month marketing plan · monthly review',
       period: 'Septiembre 2026',
       periodEn: 'September 2026',
+      nextLabel: 'Tareas de octubre',
+      nextLabelEn: 'October tasks',
       market: 'Argentina · plan septiembre 2026 → febrero 2027',
       marketEn: 'Argentina · plan September 2026 → February 2027',
       intro:
@@ -221,8 +223,8 @@ export const PLANS_DB = {
         'In September we supported the end-to-end management of the EmpCo webinar, launched the Paid Media campaigns and built the Ígaris database. Focus of the month: analyze results and start building the 2027 strategy.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
-      summary: ['5 entregables completados', '4 tareas de octubre en marcha', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
-      summaryEn: ['5 deliverables completed', '4 October tasks under way', 'EmpCo webinar: 202 registrations, 120 attendees and 94 deals in HubSpot', 'Next follow-up meeting: 10/13/2026'],
+      summary: ['5 entregables completados', 'Tareas de octubre: 2 completadas, 1 en curso y 1 pendiente', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
+      summaryEn: ['5 deliverables completed', 'October tasks: 2 completed, 1 in progress and 1 pending', 'EmpCo webinar: 202 registrations, 120 attendees and 94 deals in HubSpot', 'Next follow-up meeting: 10/13/2026'],
       kpiGroups: [
         {
           name: 'Operativos',
@@ -257,10 +259,13 @@ export const PLANS_DB = {
           status: 'done', name: 'Base de datos Ígaris', nameEn: 'Ígaris database', desc: '30/9: base y nurturing para calificar leads: 76 contactos en 24 empresas.', descEn: '9/30: database and nurturing to qualify leads: 76 contacts across 24 companies.',
           links: [{ label: 'Base Ígaris', labelEn: 'Ígaris database', url: 'https://share.gemini.google/cCuqFrENzN2q' }],
         },
-        { status: 'progress', name: 'Campañas de Paid Media · octubre', nameEn: 'Paid Media campaigns · October', desc: 'Siguen las 8 campañas para SuSo, SuSe y Bioenergía, con foco en generar leads.', descEn: 'The 8 campaigns for SuSo, SuSe and Bioenergy continue, focused on lead generation.' },
-        { status: 'progress', name: 'Presentación comercial para Carrefour', nameEn: 'Sales presentation for Carrefour', desc: 'Presentación simple con un mensaje preciso para Carrefour (5/10).', descEn: 'Simple presentation with a precise message for Carrefour (10/5).' },
-        { status: 'progress', name: 'Base de datos genérica para newsletter comercial', nameEn: 'Generic database for a sales newsletter', desc: 'Base para armar un newsletter comercial (7/10).', descEn: 'Database to build a sales newsletter (10/7).' },
-        { status: 'pending', name: 'Base de datos por puestos de trabajo', nameEn: 'Database by job title', desc: 'Definir entre 6 y 7 puestos relevantes como criterio de búsqueda para identificar potenciales contactos en Argentina (13/10). Seguimiento en 2 a 3 semanas.', descEn: 'Define 6 to 7 relevant job titles as search criteria to identify potential contacts in Argentina (10/13). Follow-up in 2 to 3 weeks.' },
+        { nextMonth: true, status: 'progress', name: 'Campañas de Paid Media · octubre', nameEn: 'Paid Media campaigns · October', desc: 'Siguen las 8 campañas para SuSo, SuSe y Bioenergía, con foco en generar leads.', descEn: 'The 8 campaigns for SuSo, SuSe and Bioenergy continue, focused on lead generation.' },
+        {
+          nextMonth: true, status: 'done', name: 'Base de datos por puestos de trabajo', nameEn: 'Database by job title', desc: '13/10: 6 a 7 puestos relevantes como criterio de búsqueda para identificar potenciales contactos en Argentina: 3.568 contactos en 1.793 empresas.', descEn: '10/13: 6 to 7 relevant job titles as search criteria to identify potential contacts in Argentina: 3,568 contacts across 1,793 companies.',
+          links: [{ label: 'Base por puestos', labelEn: 'Job-title database', url: 'https://share.gemini.google/qAoPrO2KhbBx' }],
+        },
+        { nextMonth: true, status: 'done', name: 'Presentación comercial para Carrefour', nameEn: 'Sales presentation for Carrefour', desc: '5/10: presentación simple con un mensaje preciso para Carrefour.', descEn: '10/5: simple presentation with a precise message for Carrefour.' },
+        { nextMonth: true, status: 'pending', name: 'Base de datos genérica para newsletter comercial', nameEn: 'Generic database for a sales newsletter', desc: '7/10: base para armar un newsletter comercial.', descEn: '10/7: database to build a sales newsletter.' },
       ],
       initiativeGroups: [
         {
@@ -279,7 +284,7 @@ export const PLANS_DB = {
   // Fuente: hoja «CU Argentina» del Excel de seguimiento (versión del
   // 8/10/2026). Plan de 6 meses, agosto 2026 → enero 2027. La hoja no tiene
   // tareas en agosto: el primer informe es el de septiembre. Las tareas de
-  // octubre aparecen como trabajo en marcha, con su estado del Excel. La hoja
+  // octubre van en su propio grupo, con su estado del Excel. La hoja
   // no trae decisiones del mes: no se inventan. Sin objetivo del plan (pedido
   // del equipo, 9/10: los planes de Argentina no muestran objetivos).
   // KPIs: deals (340), MQLs (2) y contactos por BBDD (786, base de la
@@ -292,6 +297,8 @@ export const PLANS_DB = {
       programEn: '6-month marketing plan · monthly review',
       period: 'Septiembre 2026',
       periodEn: 'September 2026',
+      nextLabel: 'Tareas de octubre',
+      nextLabelEn: 'October tasks',
       market: 'Argentina · plan agosto 2026 → enero 2027',
       marketEn: 'Argentina · plan August 2026 → January 2027',
       intro:
@@ -300,8 +307,8 @@ export const PLANS_DB = {
         'In September the Google Ads campaigns for the certifications were created, competitors’ offering for SMETA, ISO 27001 and ISCC was surveyed through mystery shopping, and the database for the Q4 GHG campaign was built and uploaded to the Paid Media platforms.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
-      summary: ['8 entregables completados', '2 entregables del mes en curso', 'Mystery shopping: SMETA, ISO 27001 e ISCC', '5 tareas de octubre en marcha'],
-      summaryEn: ['8 deliverables completed', '2 deliverables of the month in progress', 'Mystery shopping: SMETA, ISO 27001 and ISCC', '5 October tasks under way'],
+      summary: ['8 entregables completados', '2 entregables del mes en curso', 'Mystery shopping: SMETA, ISO 27001 e ISCC', 'Tareas de octubre: 3 en curso y 2 pendientes'],
+      summaryEn: ['8 deliverables completed', '2 deliverables of the month in progress', 'Mystery shopping: SMETA, ISO 27001 and ISCC', 'October tasks: 3 in progress and 2 pending'],
       kpiGroups: [
         {
           name: 'Operativos',
@@ -348,11 +355,11 @@ export const PLANS_DB = {
         { status: 'done', name: 'Carga de la base en Paid Media', nameEn: 'Database upload to Paid Media', desc: '28/9: carga de la base de datos en las plataformas de Paid Media.', descEn: '9/28: database uploaded to the Paid Media platforms.' },
         { status: 'progress', name: 'Newsletter recurrente', nameEn: 'Recurring newsletter', desc: 'Newsletter recurrente en preparación.', descEn: 'Recurring newsletter in preparation.' },
         { status: 'progress', name: 'Contenidos y campaña GHG', nameEn: 'GHG content and campaign', desc: 'Desde el 28/9: contenidos y campaña de GHG.', descEn: 'Since 9/28: GHG content and campaign.' },
-        { status: 'progress', name: 'Evento del 25/11 en el CPIA de General Roca', nameEn: 'November 25 event at CPIA General Roca', desc: 'Octubre: organización del evento.', descEn: 'October: event planning.' },
-        { status: 'progress', name: 'Estrategia AEO', nameEn: 'AEO strategy', desc: 'Octubre (desde el 5/10): posicionamiento en motores de búsqueda de IA. Se armaron 4 prompts de PrimusGFS y USDA para ver si mencionan a Control Union.', descEn: 'October (since 10/5): positioning in AI search engines. 4 PrimusGFS and USDA prompts were built to check whether Control Union is mentioned.' },
-        { status: 'progress', name: 'Apoyo en el evento de noviembre', nameEn: 'Support for the November event', desc: 'Octubre: apoyo en la organización del evento.', descEn: 'October: support with event planning.' },
-        { status: 'pending', name: 'Mystery shopping de ISO 9001, 14001 y 45001', nameEn: 'ISO 9001, 14001 and 45001 mystery shopping', desc: 'Octubre: cotización y plazo de emisión del certificado de la competencia en estas normas.', descEn: 'October: competitors’ quotes and certificate issuance times for these standards.' },
-        { status: 'pending', name: 'Mystery shopping de GLOBALG.A.P.', nameEn: 'GLOBALG.A.P. mystery shopping', desc: 'Octubre: cotización, plazo de emisión del certificado y add-ons de la competencia.', descEn: 'October: competitors’ quotes, certificate issuance times and add-ons.' },
+        { nextMonth: true, status: 'progress', name: 'Evento del 25/11 en el CPIA de General Roca', nameEn: 'November 25 event at CPIA General Roca', desc: 'Octubre: organización del evento.', descEn: 'October: event planning.' },
+        { nextMonth: true, status: 'progress', name: 'Estrategia AEO', nameEn: 'AEO strategy', desc: 'Octubre (desde el 5/10): posicionamiento en motores de búsqueda de IA. Se armaron 4 prompts de PrimusGFS y USDA para ver si mencionan a Control Union.', descEn: 'October (since 10/5): positioning in AI search engines. 4 PrimusGFS and USDA prompts were built to check whether Control Union is mentioned.' },
+        { nextMonth: true, status: 'progress', name: 'Apoyo en el evento de noviembre', nameEn: 'Support for the November event', desc: 'Octubre: apoyo en la organización del evento.', descEn: 'October: support with event planning.' },
+        { nextMonth: true, status: 'pending', name: 'Mystery shopping de ISO 9001, 14001 y 45001', nameEn: 'ISO 9001, 14001 and 45001 mystery shopping', desc: 'Octubre: cotización y plazo de emisión del certificado de la competencia en estas normas.', descEn: 'October: competitors’ quotes and certificate issuance times for these standards.' },
+        { nextMonth: true, status: 'pending', name: 'Mystery shopping de GLOBALG.A.P.', nameEn: 'GLOBALG.A.P. mystery shopping', desc: 'Octubre: cotización, plazo de emisión del certificado y add-ons de la competencia.', descEn: 'October: competitors’ quotes, certificate issuance times and add-ons.' },
       ],
       initiativeGroups: [],
     },

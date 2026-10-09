@@ -63,9 +63,17 @@ describe('plansService', () => {
     expect(hasDataFor('cuus', 'ago-2026')).toBe(false);
     const ago = getPlan('psar', 'ago-2026');
     const sep = getPlan('psar', 'sep-2026');
-    const count = (plan, st) => plan.deliverables.filter((d) => d.status === st).length;
+    const count = (plan, st) => plan.deliverables.filter((d) => !d.nextMonth && d.status === st).length;
     expect([count(ago, 'done'), count(ago, 'progress'), count(ago, 'pending')]).toEqual([5, 0, 0]);
-    expect([count(sep, 'done'), count(sep, 'progress'), count(sep, 'pending')]).toEqual([5, 3, 1]);
+    expect([count(sep, 'done'), count(sep, 'progress'), count(sep, 'pending')]).toEqual([5, 0, 0]);
+    // Tareas de octubre: grupo propio con el estado del Excel (no suman a septiembre).
+    expect(sep.deliverables.filter((d) => d.nextMonth).map((d) => [d.name, d.status])).toEqual([
+      ['Campañas de Paid Media · octubre', 'progress'],
+      ['Base de datos por puestos de trabajo', 'done'],
+      ['Presentación comercial para Carrefour', 'done'],
+      ['Base de datos genérica para newsletter comercial', 'pending'],
+    ]);
+    expect(ago.deliverables.some((d) => d.nextMonth)).toBe(false);
     // La comunicación del webinar va el 20/8 (pedido del equipo, 9/10).
     expect(ago.deliverables.find((d) => d.name === 'Comunicación del webinar EmpCo').desc).toMatch(/^20\/8:/);
     expect(sep.deliverables.some((d) => d.name === 'Comunicación del webinar EmpCo')).toBe(false);
@@ -102,8 +110,9 @@ describe('plansService', () => {
     expect(listAccounts()).toContainEqual({ id: 'cuar', name: 'Control Union Argentina' });
     expect(hasDataFor('cuar', 'ago-2026')).toBe(false);
     const plan = getPlan('cuar', 'sep-2026');
-    const count = (st) => plan.deliverables.filter((d) => d.status === st).length;
-    expect([count('done'), count('progress'), count('pending')]).toEqual([8, 5, 2]);
+    const count = (st, next = false) => plan.deliverables.filter((d) => Boolean(d.nextMonth) === next && d.status === st).length;
+    expect([count('done'), count('progress'), count('pending')]).toEqual([8, 2, 0]);
+    expect([count('done', true), count('progress', true), count('pending', true)]).toEqual([0, 3, 2]);
     expect(brandOf('cuar', 'Control Union Argentina')).toBe('cu');
     for (const d of plan.deliverables) expect(d.nameEn && d.descEn, d.name).toBeTruthy();
     for (const d of plan.deliverables) for (const l of d.links ?? []) expect(/^https:\/\//.test(l.url), d.name).toBe(true);

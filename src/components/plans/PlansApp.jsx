@@ -74,9 +74,13 @@ export function PlansApp({ account, period }) {
 
   if (!plan) return <NoDataScreen lang={lang} detail={t.noData} />;
 
-  const done = plan.deliverables.filter((d) => d.status === 'done');
-  const progress = plan.deliverables.filter((d) => d.status === 'progress');
-  const pending = plan.deliverables.filter((d) => d.status === 'pending');
+  // Tareas del mes del informe por estado; las del mes siguiente (`nextMonth`)
+  // van en su propio grupo con el estado del Excel, sin sumar a las del mes.
+  const current = plan.deliverables.filter((d) => !d.nextMonth);
+  const next = plan.deliverables.filter((d) => d.nextMonth);
+  const done = current.filter((d) => d.status === 'done');
+  const progress = current.filter((d) => d.status === 'progress');
+  const pending = current.filter((d) => d.status === 'pending');
   // Columnas de la fila de KPIs: una por card, mínimo 4 (cards del mismo ancho
   // que en un informe completo), máximo 8.
   const kpiTotal = plan.kpiGroups.reduce((n, g) => n + g.items.length, 0);
@@ -241,6 +245,15 @@ export function PlansApp({ account, period }) {
             {t.groupPending(pending.length)}
           </div>
           {deliverablesTable(pending)}
+        </>
+      )}
+      {next.length > 0 && (
+        <>
+          <div className="print-keep mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+            <span className="h-2 w-2 rounded-full border-[1.5px] border-dashed border-cu-cyan" />
+            {tx(plan, 'nextLabel') ?? t.groupNextDefault} · {next.length}
+          </div>
+          {deliverablesTable(next)}
         </>
       )}
 

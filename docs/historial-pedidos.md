@@ -1527,3 +1527,8 @@
 
 > Quitá los objetivos para CU Argentina y PS Argentina.
 
+
+**#115**
+
+> [Captura del Excel de seguimiento, hoja «PS Argentina»: fila 39 «Base de datos | Job titles | PS» (13-10-2026) Completado; fila 40 «Presentación comercial para Carrefour» (05-10-2026) Completado; fila 41 «BBDD genérica para armar un newsletter comercial» (07-10-2026) Pendiente.]
+

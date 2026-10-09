@@ -330,9 +330,11 @@ Quedó como práctica fija, y conviene sostenerla:
     se muestran ventas (WON)**. Septiembre: PS Argentina 70 deals y 1 MQL;
     CU Argentina 340 deals y 2 MQLs (datos del equipo).
 - **Lo que manda es el Excel, mes por mes**: cada tarea va en el informe del
-  mes de su fila. Las tareas del mes siguiente aparecen en el informe como
-  trabajo en marcha, con el estado del Excel («En curso» o «Pendiente»); sus
-  resultados entran en el informe de ese mes cuando cierre.
+  mes de su fila. Las tareas del mes siguiente aparecen en el informe en un
+  **grupo propio** («Tareas de octubre», campo `nextMonth` en el seed) con el
+  **estado del Excel**, incluso «Completado» (9/10/2026): no suman a los
+  entregables ni a los KPIs del mes del informe, y entran como tareas del
+  mes en el informe de ese mes cuando cierre.
 - **Plan de Control Union Argentina** (8/10/2026): hoja «CU Argentina». No
   tiene tareas en agosto (aunque el plan arranca en agosto), así que el
   primer informe es el de septiembre. La hoja no trae objetivos ni
