@@ -471,9 +471,14 @@ equipo.
   «Peterson Solutions South America», que es el sitio
   americas.peterson-solutions.com = cuenta **Peterson Solutions Americas**
   (`psam`); confirmado por el equipo el 9/10/2026.
-- **CU Estados Unidos y CU Canadá**: el reporte de Q3 solo trae **CU North
-  America** (el sitio compartido). Esas dos cuentas quedan sin Q3 («Sin
-  información suficiente»): no se reparte el dato regional entre países.
+- **CU Estados Unidos y CU Canadá**: salen de un reporte aparte, el sitio
+  northamerica.controlunion.com **segmentado por país**
+  (`reporte_cu_AAAA-QN_northamerica_por_pais.md`), y cada uno tiene su vista.
+  CU North America sigue mostrando el total del sitio. Estados Unidos +
+  Canadá no suman el total (el resto es tráfico de otros países) y nunca se
+  calcula un país restando del total.
+- **Keywords sin clics** no entran al top (ej. en Canadá, un número de
+  teléfono con 0 clics): el top queda con las que tienen clics.
 - Lo que el reporte no trae (insights, diagnóstico, próximos pasos,
   glosario) lo generan las reglas de siempre; la card «Deals generados —
   HubSpot» sale del CRM para los meses del trimestre.

@@ -18,6 +18,8 @@ ACCOUNT_IDS = {
     'Control Union Argentina': 'cua', 'Control Union Brasil': 'cubr', 'Control Union Chile': 'cucl',
     'Control Union España': 'cues', 'Control Union México': 'cumx', 'Control Union North America': 'cunam',
     'Control Union Perú': 'cupe', 'Control Union Portugal': 'cupt',
+    # northamerica.controlunion.com separado por país (reporte «…_northamerica_por_pais.md»).
+    'Control Union North America — Estados Unidos': 'cuus', 'Control Union North America — Canadá': 'cuca',
     # El sitio americas.peterson-solutions.com es la cuenta «Peterson Solutions Americas».
     'Peterson Solutions South America': 'psam', 'Peterson Solutions Iberia': 'psib',
 }
@@ -44,7 +46,8 @@ def parse(text):
         assert round(site['totalTraffic'] / site['impressions'] * 100, 2) == num(e[1]), (name, 'embudo vista→sesión')
         assert round(site['conversions'] / site['totalTraffic'] * 100, 2) == num(e[2]), (name, 'embudo sesión→conversión')
         kws, pages = body.split('### Website')[0], body.split('### Website')[1]
-        seo['topKeywords'] = [(q.strip(), int(num(c))) for q, c in re.findall(r'^\d+\. (.+?) — ([\d.]+)$', kws, re.M)]
+        # Keywords sin clics no van al top (no aportan y suelen ser ruido, ej. un teléfono).
+        seo['topKeywords'] = [(q.strip(), int(num(c))) for q, c in re.findall(r'^\d+\. (.+?) — ([\d.]+)$', kws, re.M) if int(num(c)) > 0]
         site['topLandingPages'] = [(u.strip(), int(num(v))) for u, v in re.findall(r'^\d+\. (https?://\S+) — ([\d.]+)$', pages, re.M)]
         assert seo['topKeywords'] and site['topLandingPages'], name
         out[acc] = {'site': site, 'seo': seo, 'source': name}

@@ -5,7 +5,8 @@
 //  · Q3 2026: de los reportes trimestrales en .md (GA4 + Search Console,
 //    extraídos el 9/10/2026; archivados en metricas/website/_procesados/2026-Q3/),
 //    convertidos con scripts/website/md_to_seed.py. CU Estados Unidos y CU
-//    Canadá no vienen por separado en Q3: solo CU North America.
+//    Canadá salen del reporte de North America separado por país (el
+//    total del sitio sigue en CU North America).
 //  · Peterson Americas / Iberia: sin datos SEO en Q1 y Q2; desde Q3 sí.
 //  Datos reales tomados de los reportes. Seed en código (sin base de datos).
 // ════════════════════════════════════════════════════════════════
@@ -486,7 +487,9 @@ for (const [id, data] of Object.entries(WEBSITE_Q1_2026)) {
 // Generado con scripts/website/md_to_seed.py, que valida CTR, embudo y la
 // suma de conversiones (click_email + form_submit) contra el archivo.
 // «Peterson Solutions South America» del reporte = sitio americas.peterson-solutions.com
-// = cuenta «Peterson Solutions Americas» (psam).
+// = cuenta «Peterson Solutions Americas» (psam). Estados Unidos y Canadá: el
+// sitio northamerica.controlunion.com segmentado por país (no suman el total
+// del sitio: el resto del tráfico viene de otros países).
 const WEBSITE_Q3_2026 = {
   // Control Union Argentina
   cua: {
@@ -630,6 +633,42 @@ const WEBSITE_Q3_2026 = {
     seo: {
       averagePosition: 14.4, impressions: 46940, totalClicks: 692,
       topKeywords: [kw("control union", 144), kw("control union portugal", 58), kw("controlunion", 28), kw("grs", 28), kw("gots", 8)],
+    },
+  },
+  // Control Union North America — Estados Unidos
+  cuus: {
+    site: {
+      singleTraffic: 1192, totalTraffic: 1480, impressions: 2684, conversions: 96,
+      conversionsBreakdown: { clickEmail: 67, formSubmit: 29 },
+      topLandingPages: [
+        lp("https://northamerica.controlunion.com/", 706),
+        lp("https://northamerica.controlunion.com/certification-programs/", 343),
+        lp("https://northamerica.controlunion.com/vacancies/", 183),
+        lp("https://northamerica.controlunion.com/service/certification/", 146),
+        lp("https://northamerica.controlunion.com/contact/", 135),
+      ],
+    },
+    seo: {
+      averagePosition: 15.95, impressions: 12043, totalClicks: 93,
+      topKeywords: [kw("control union usa", 16), kw("control union", 5), kw("control union canada", 1), kw("control union organic certification", 1), kw("controlunion", 1)],
+    },
+  },
+  // Control Union North America — Canadá
+  cuca: {
+    site: {
+      singleTraffic: 224, totalTraffic: 258, impressions: 502, conversions: 4,
+      conversionsBreakdown: { clickEmail: 4, formSubmit: 0 },
+      topLandingPages: [
+        lp("https://northamerica.controlunion.com/certification-programs/", 62),
+        lp("https://northamerica.controlunion.com/industry/forestry/", 56),
+        lp("https://northamerica.controlunion.com/", 48),
+        lp("https://northamerica.controlunion.com/vacancies/", 47),
+        lp("https://northamerica.controlunion.com/certification-program/canadagap/", 40),
+      ],
+    },
+    seo: {
+      averagePosition: 7.86, impressions: 1503, totalClicks: 68,
+      topKeywords: [kw("control union canada", 27), kw("control union", 11), kw("fishers finest", 1)],
     },
   },
   // Peterson Solutions South America

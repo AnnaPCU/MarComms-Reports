@@ -1566,3 +1566,8 @@
 
 (Mensaje de voz, llegó cortado. Las métricas de Estados Unidos y Canadá no vinieron adjuntas.)
 
+
+**#120**
+
+> [reporte_cu_2026-Q3_northamerica_por_pais.md] Ahí te paso North America separado por país. Lo que necesito puntualmente, como nos venimos manejando, es que puedas extraer la data para el caso de Estados Unidos y Canadá, y que cada uno tenga su vista de reporte.
+
