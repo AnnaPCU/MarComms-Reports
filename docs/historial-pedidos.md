@@ -1537,3 +1537,9 @@
 
 > En CU USA, ¿no hay contactos generados en el CRM en el Excel? Tomalo de ahí. Lo que me refería con que te lo pasaré manualmente son los KPIs de performance de CU USA.
 
+
+**#117**
+
+> 1. No, «Contactos generados en el CRM» pasará a ser «Contactos generados por BBDD» también en CU USA.
+> 2. No, respetá como veníamos manejando el informe de CU USA. Para octubre te pasaré nuevamente el Excel.
+

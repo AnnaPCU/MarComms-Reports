@@ -63,7 +63,7 @@ export const PLANS_DB = {
             // Del Excel de seguimiento (hoja «CU USA Organic», «Creación de BBDD
             // Commercial Tool», 31/8): 568 de Florida y Arizona → 800 con los top 5
             // estados USDA. Los KPIs de performance los pasa el equipo a mano.
-            { value: '800', label: 'Contactos generados en el CRM', labelEn: 'Contacts generated in the CRM', note: 'Top 5 estados USDA', noteEn: 'Top 5 USDA states' },
+            { value: '800', label: 'Contactos generados por BBDD', labelEn: 'Contacts generated from databases', note: 'Top 5 estados USDA', noteEn: 'Top 5 USDA states' },
           ],
         },
         {

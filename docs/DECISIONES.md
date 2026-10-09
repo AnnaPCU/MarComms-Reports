@@ -324,9 +324,11 @@ Quedó como práctica fija, y conviene sostenerla:
   los planes.
   - **CU USA**: deals, MQLs y ventas en USD; **los KPIs de performance los
     pasa el equipo a mano**. «Contactos en la base comercial» pasa a
-    **«Contactos generados en el CRM»**, que sale del Excel de seguimiento
-    (hoja «CU USA Organic», «Creación de BBDD Commercial Tool», 31/8): 800,
-    los top 5 estados USDA (9/10/2026).
+    **«Contactos generados por BBDD»**, igual que en Argentina; sale del
+    Excel de seguimiento (hoja «CU USA Organic», «Creación de BBDD Commercial
+    Tool», 31/8): 800, los top 5 estados USDA (9/10/2026). El informe de CU
+    USA se sigue armando como hasta ahora (no se reparte por mes); el de
+    octubre sale del Excel que pase el equipo.
   - **PS Argentina y CU Argentina**: «Contactos generados por BBDD» (del
     Excel de seguimiento); deals y MQLs **en cantidad**, sin importes; **no
     se muestran ventas (WON)**. Septiembre: PS Argentina 70 deals y 1 MQL;

@@ -392,8 +392,9 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
-- **CU USA: «Contactos generados en el CRM» = 800** (9/10/2026), del Excel
-  de seguimiento (base de la Commercial Tool, top 5 estados USDA). Los KPIs
+- **CU USA: «Contactos generados por BBDD» = 800** (9/10/2026), del Excel
+  de seguimiento (base de la Commercial Tool, top 5 estados USDA). El informe
+  de CU USA se mantiene como venía; octubre, con el Excel nuevo. Los KPIs
   de performance de CU USA los pasa el equipo a mano.
 
 - **Planes, ajustes del 9/10/2026**: CU Argentina suma 786 contactos por
