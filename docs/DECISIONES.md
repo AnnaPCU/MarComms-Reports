@@ -336,9 +336,12 @@ Quedó como práctica fija, y conviene sostenerla:
 - **Plan de Control Union Argentina** (8/10/2026): hoja «CU Argentina». No
   tiene tareas en agosto (aunque el plan arranca en agosto), así que el
   primer informe es el de septiembre. La hoja no trae objetivos ni
-  decisiones del mes: no se completan (el objetivo lo pasa el equipo). Los
+  decisiones del mes: no se completan. Los
   contactos por BBDD de septiembre (786, base de la campaña GHG) los pasó el
   equipo el 9/10.
+- **Los planes de Argentina (PS y CU) no muestran objetivo del plan**
+  (9/10/2026): la introducción solo cuenta lo hecho en el mes. CU USA
+  conserva su párrafo de objetivo.
 - **Comunicación del webinar EmpCo de PS Argentina el 20/8** (9/10/2026):
   el equipo pidió que la comunicación (emails, posteos y artículo) y todo lo
   relacionado vaya en agosto, el 20/8, aunque el Excel la ponga en

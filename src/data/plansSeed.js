@@ -146,6 +146,7 @@ export const PLANS_DB = {
   // pedido del equipo (9/10), aunque el Excel la ponga en septiembre.
   // Reuniones internas de septiembre:
   // 16/9, 17/9 y 30/9.
+  // Sin objetivo del plan en la introducción (pedido del equipo, 9/10).
   psar: {
     'ago-2026': {
       title: 'Informe mensual MarComms — Peterson Solutions Argentina',
@@ -157,9 +158,9 @@ export const PLANS_DB = {
       market: 'Argentina · plan septiembre 2026 → febrero 2027',
       marketEn: 'Argentina · plan September 2026 → February 2027',
       intro:
-        'Objetivo del plan: generar pipeline, MQLs y revenue para Peterson Solutions Argentina, con una estrategia puntual para los tres servicios prioritarios que defina el equipo comercial. En agosto presentamos el plan, pedimos la información comercial y financiera para dimensionar el pipeline y arrancamos la gestión del webinar de EmpCo: landing de registro, base de difusión y comunicación por email y LinkedIn. Las metas de pipeline, MQL y revenue todavía no están definidas en el plan.',
+        'En agosto presentamos el plan, pedimos la información comercial y financiera para dimensionar el pipeline y arrancamos la gestión del webinar de EmpCo: landing de registro, base de difusión y comunicación por email y LinkedIn.',
       introEn:
-        'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In August we presented the plan, requested the commercial and financial data to size the pipeline, and started managing the EmpCo webinar: registration landing page, promotion database and email and LinkedIn communication. The pipeline, MQL and revenue targets have not been set in the plan yet.',
+        'In August we presented the plan, requested the commercial and financial data to size the pipeline, and started managing the EmpCo webinar: registration landing page, promotion database and email and LinkedIn communication.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
       summary: ['5 entregables completados', 'Presentación del plan MarComms (12/8)', 'Pedido de información comercial y financiera (19/8)', 'Base de difusión del webinar EmpCo: 2.001 contactos propios'],
@@ -215,9 +216,9 @@ export const PLANS_DB = {
       market: 'Argentina · plan septiembre 2026 → febrero 2027',
       marketEn: 'Argentina · plan September 2026 → February 2027',
       intro:
-        'Objetivo del plan: generar pipeline, MQLs y revenue para Peterson Solutions Argentina, con una estrategia puntual para los tres servicios prioritarios que defina el equipo comercial. En septiembre acompañamos la gestión integral del webinar de EmpCo, pusimos en marcha las campañas de Paid Media y armamos la base de Ígaris. Foco del mes: analizar resultados y empezar a armar la estrategia 2027. Las metas de pipeline, MQL y revenue todavía no están definidas en el plan.',
+        'En septiembre acompañamos la gestión integral del webinar de EmpCo, pusimos en marcha las campañas de Paid Media y armamos la base de Ígaris. Foco del mes: analizar resultados y empezar a armar la estrategia 2027.',
       introEn:
-        'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In September we supported the end-to-end management of the EmpCo webinar, launched the Paid Media campaigns and built the Ígaris database. Focus of the month: analyze results and start building the 2027 strategy. The pipeline, MQL and revenue targets have not been set in the plan yet.',
+        'In September we supported the end-to-end management of the EmpCo webinar, launched the Paid Media campaigns and built the Ígaris database. Focus of the month: analyze results and start building the 2027 strategy.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
       summary: ['5 entregables completados', '4 tareas de octubre en marcha', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
@@ -279,9 +280,10 @@ export const PLANS_DB = {
   // 8/10/2026). Plan de 6 meses, agosto 2026 → enero 2027. La hoja no tiene
   // tareas en agosto: el primer informe es el de septiembre. Las tareas de
   // octubre aparecen como trabajo en marcha, con su estado del Excel. La hoja
-  // no trae objetivos ni decisiones del mes: no se inventan.
+  // no trae decisiones del mes: no se inventan. Sin objetivo del plan (pedido
+  // del equipo, 9/10: los planes de Argentina no muestran objetivos).
   // KPIs: deals (340), MQLs (2) y contactos por BBDD (786, base de la
-  // campaña GHG) de septiembre, del equipo. Objetivo del plan: pendiente.
+  // campaña GHG) de septiembre, del equipo.
   cuar: {
     'sep-2026': {
       title: 'Informe mensual MarComms — Control Union Argentina',

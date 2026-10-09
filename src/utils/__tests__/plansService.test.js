@@ -109,6 +109,14 @@ describe('plansService', () => {
     for (const d of plan.deliverables) for (const l of d.links ?? []) expect(/^https:\/\//.test(l.url), d.name).toBe(true);
   });
 
+  it('los planes de Argentina no muestran el objetivo del plan (pedido del 9/10)', () => {
+    for (const [acc, per] of [['psar', 'ago-2026'], ['psar', 'sep-2026'], ['cuar', 'sep-2026']]) {
+      const plan = getPlan(acc, per);
+      expect(plan.intro, `${acc} ${per}`).not.toMatch(/\b(objetivo|metas?)\b/i);
+      expect(plan.introEn, `${acc} ${per}`).not.toMatch(/\b(objectives?|targets?)\b/i);
+    }
+  });
+
   it('el tagline sigue la marca del reporte: Peterson no lleva el de Control Union', () => {
     expect(TAGLINES.peterson).toBe('For the world, for ourselves, for our families');
     expect(TAGLINES.cu).toBe('The Proof to Your Promise');

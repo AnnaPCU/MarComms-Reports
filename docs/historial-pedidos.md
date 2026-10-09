@@ -1522,3 +1522,8 @@
 
 (Respuestas a la lista de faltantes del 8/10: 1 = contactos del CRM de CU USA los pasa el equipo; 3 = deals y MQLs de agosto de PS Argentina; 4 = objetivos y decisiones de CU Argentina.)
 
+
+**#114**
+
+> Quitá los objetivos para CU Argentina y PS Argentina.
+
