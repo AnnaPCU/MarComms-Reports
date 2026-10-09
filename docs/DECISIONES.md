@@ -322,9 +322,11 @@ Quedó como práctica fija, y conviene sostenerla:
 - **KPIs por plan (8/10/2026)**, reemplaza al criterio «mismos KPIs que CU
   USA»: «Pipeline generado» pasa a llamarse **«Deals generados»** en todos
   los planes.
-  - **CU USA**: deals, MQLs y ventas en USD (como los informa el equipo);
-    «Contactos en la base comercial» pasa a **«Contactos generados en el
-    CRM»**, dato que el equipo pasa a mano (hasta entonces, «—»).
+  - **CU USA**: deals, MQLs y ventas en USD; **los KPIs de performance los
+    pasa el equipo a mano**. «Contactos en la base comercial» pasa a
+    **«Contactos generados en el CRM»**, que sale del Excel de seguimiento
+    (hoja «CU USA Organic», «Creación de BBDD Commercial Tool», 31/8): 800,
+    los top 5 estados USDA (9/10/2026).
   - **PS Argentina y CU Argentina**: «Contactos generados por BBDD» (del
     Excel de seguimiento); deals y MQLs **en cantidad**, sin importes; **no
     se muestran ventas (WON)**. Septiembre: PS Argentina 70 deals y 1 MQL;

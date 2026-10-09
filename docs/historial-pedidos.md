@@ -1532,3 +1532,8 @@
 
 > [Captura del Excel de seguimiento, hoja «PS Argentina»: fila 39 «Base de datos | Job titles | PS» (13-10-2026) Completado; fila 40 «Presentación comercial para Carrefour» (05-10-2026) Completado; fila 41 «BBDD genérica para armar un newsletter comercial» (07-10-2026) Pendiente.]
 
+
+**#116**
+
+> En CU USA, ¿no hay contactos generados en el CRM en el Excel? Tomalo de ahí. Lo que me refería con que te lo pasaré manualmente son los KPIs de performance de CU USA.
+

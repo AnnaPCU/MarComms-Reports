@@ -24,9 +24,9 @@ describe('plansService', () => {
     for (const g of plan.kpiGroups) for (const k of g.items) expect(k.labelEn, k.label).toBeTruthy();
   });
 
-  it('CU USA: deals, MQLs y ventas en USD; contactos del CRM pendientes del equipo', () => {
+  it('CU USA: deals, MQLs y ventas en USD; contactos del CRM del Excel de seguimiento', () => {
     const plan = getPlan('cuus', 'sep-2026');
-    expect(plan.kpiGroups[0].items[2]).toMatchObject({ label: 'Contactos generados en el CRM', value: null });
+    expect(plan.kpiGroups[0].items[2]).toMatchObject({ label: 'Contactos generados en el CRM', value: '800' });
     const perf = plan.kpiGroups[1].items;
     expect(perf.map((k) => k.label)).toEqual(['Deals generados', 'MQLs generados', 'Ventas generadas']);
     expect(perf[0].value).toBe('848.160');

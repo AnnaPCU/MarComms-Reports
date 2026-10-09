@@ -392,10 +392,14 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **CU USA: «Contactos generados en el CRM» = 800** (9/10/2026), del Excel
+  de seguimiento (base de la Commercial Tool, top 5 estados USDA). Los KPIs
+  de performance de CU USA los pasa el equipo a mano.
+
 - **Planes, ajustes del 9/10/2026**: CU Argentina suma 786 contactos por
   BBDD (base GHG); la comunicación del webinar EmpCo de PS Argentina pasa al
-  20/8. Pendientes del equipo: contactos generados en el CRM de CU USA,
-  deals/MQLs de agosto de PS Argentina. Los planes de Argentina dejan de
+  20/8. Pendientes del equipo: KPIs de performance de CU USA y deals/MQLs de
+  agosto de PS Argentina. Los planes de Argentina dejan de
   mostrar el objetivo del plan.
 
 - **Planes: KPIs por plan y plan de CU Argentina** (8/10/2026): «Pipeline
