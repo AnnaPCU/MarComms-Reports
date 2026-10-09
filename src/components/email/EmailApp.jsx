@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { initialLang } from '@/utils/reportLang';
-import { listAccounts } from '@/services/emailService';
+import { listAccounts, listCampaigns } from '@/services/emailService';
 import { useEmailCampaign } from '@/hooks/useEmailCampaign';
 import { MONTHS_2026 } from '@/constants/periods';
 import { genEmailInsights, genEmailConclusions, genEmailNextSteps } from '@/utils/emailInsights';
@@ -13,7 +13,8 @@ import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { Funnel } from '@/components/shared/Funnel';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/PerformancePanels';
-import { isExternalReport } from '@/utils/reportAudience';
+import { isExternalReport, isEmbedReport } from '@/utils/reportAudience';
+import { viewState } from '@/utils/viewState';
 import { EmailCharts } from '@/components/email/EmailCharts';
 import { HotLeadsTable } from '@/components/email/HotLeadsTable';
 import { Glossary } from '@/components/shared/Glossary';
@@ -23,6 +24,9 @@ import { lgCols } from '@/utils/gridCols';
 
 // Pilar Email Marketing (Mailchimp / Apollo). Reporte de secuencia/campaña.
 // Idioma base español; toggle EN disponible (también en el descargable).
+// Si en el mes salió más de una campaña para la cuenta, una botonera
+// permite elegir cuál ver (como los países en Social). Arranca en la más
+// reciente; el HTML descargado queda fijo en la campaña elegida.
 export function EmailApp({ account, period }) {
   const accName = useMemo(
     () => listAccounts().find((a) => a.id === account)?.name ?? '',
@@ -38,7 +42,21 @@ export function EmailApp({ account, period }) {
       ? MONTHS_EN[period] ?? period
       : MONTHS_2026.find((p) => p.id === period)?.label ?? period;
 
-  const { campaign, loading } = useEmailCampaign(account, period);
+  const campaignOpts = useMemo(() => listCampaigns(account, period), [account, period]);
+  const [campaignId, setCampaignId] = useState(null);
+  useEffect(() => {
+    setCampaignId(null);
+  }, [account, period]);
+  const multiCampaign = campaignOpts.length > 1;
+  const selectedId = multiCampaign ? (campaignId ?? campaignOpts[campaignOpts.length - 1].id) : null;
+  useEffect(() => {
+    viewState.emailCampaign = selectedId;
+    return () => {
+      viewState.emailCampaign = null;
+    };
+  }, [selectedId]);
+
+  const { campaign, loading } = useEmailCampaign(account, period, selectedId);
   const crm = usePillarCrm('email', account, period);
 
   if (loading) {
@@ -101,8 +119,19 @@ export function EmailApp({ account, period }) {
 
   return (
     <div className="animate-fade-in">
-      {/* Toggle de idioma del reporte */}
-      <div className="mb-4 flex justify-end">
+      {/* Botonera de campaña (si el mes tiene más de una) + toggle de idioma */}
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        {multiCampaign && !isEmbedReport() ? (
+          <SegmentedControl
+            label={t9.campaignLabel}
+            value={selectedId}
+            onChange={setCampaignId}
+            size="sm"
+            options={campaignOpts.map((c) => ({ id: c.id, label: lang === 'en' ? emailLabelEn(c.label) : c.label }))}
+          />
+        ) : (
+          <span />
+        )}
         <SegmentedControl
           value={lang}
           onChange={setLang}

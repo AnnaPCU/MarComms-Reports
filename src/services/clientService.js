@@ -176,8 +176,11 @@ export function getPillarLatest(pilar, ref) {
   if (pilar === 'email') {
     const p = latestPeriod('email', ref);
     if (!p) return null;
+    // Si el mes tiene varias campañas, la General muestra la más reciente
+    // y lo aclara con su nombre (campaignLabel).
     const c = email.getCampaign(ref.account, p.id);
     if (!c) return null;
+    const multi = email.listCampaigns(ref.account, p.id).length > 1;
     // Sin la tabla de hot leads (pesada): la vista General solo usa el conteo.
     const { hotLeads, ...rest } = c;
     return {
@@ -185,6 +188,7 @@ export function getPillarLatest(pilar, ref) {
       kind: 'email',
       period: p.id,
       periodLabel: monthLabel(p.id),
+      campaignLabel: multi ? (c.label ?? c.campaignName) : null,
       campaign: { ...rest, hotLeadsCount: c.hotLeadsCount ?? hotLeads?.length ?? 0 },
     };
   }

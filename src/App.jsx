@@ -15,6 +15,8 @@ import { buildSnapshot } from '@/utils/snapshot';
 import { reportFilename, expandAccountName, localizeLabel, localizePilarLabel } from '@/utils/reportFilename';
 import { brandOf } from '@/constants/brand';
 import { getSegConfig } from '@/services/socialService';
+import { listCampaigns } from '@/services/emailService';
+import { emailLabelEn } from '@/utils/emailI18n';
 import { viewState } from '@/utils/viewState';
 import { SET_LANG_EVENT } from '@/components/plans/PlansApp';
 
@@ -93,6 +95,18 @@ export default function App() {
         countryName = cInfo.name;
       }
     }
+    // Email con varias campañas en el mes: la descarga es la campaña elegida
+    // (queda fija en el archivo, sin botonera). Solo aplica a ese período.
+    let emailCampaign = null;
+    let campaignLabel = '';
+    if (pilar === 'email' && viewState.emailCampaign && ids.includes(period)) {
+      const c = listCampaigns(account, period).find((x) => x.id === viewState.emailCampaign);
+      if (c) {
+        emailCampaign = c.id;
+        campaignLabel = lang === 'en' ? emailLabelEn(c.label) : c.label;
+      }
+    }
+    const snapOpts = { emailCampaign };
     // Etiqueta del período en el idioma elegido (labelEn del seed si existe; si no, traducción de la ES).
     const labelOf = (pid) => {
       const p = periods.find((x) => x.id === pid);
@@ -105,7 +119,7 @@ export default function App() {
     const multi = ids.length > 1;
     const multiPeriods = multi
       ? await Promise.all(
-          ids.map(async (pid) => ({ id: pid, label: labelOf(pid), snapshot: await buildSnapshot(pilar, account, pid) })),
+          ids.map(async (pid) => ({ id: pid, label: labelOf(pid), snapshot: await buildSnapshot(pilar, account, pid, snapOpts) })),
         )
       : null;
     const periodsLabel = multi
@@ -116,13 +130,13 @@ export default function App() {
     // La vista por cliente se descarga como «Reporte Cliente» (solo la General).
     const pilarLabel = pilar === 'clients' ? 'Cliente' : pilar === 'plans' ? 'Plan' : navLabel(pilar);
     // Título y nombre de archivo en el idioma elegido, sea cual sea el pilar.
-    const title = [localizePilarLabel(pilarLabel, lang), expandAccountName(accountName), withCountry ? countryName : null, periodsLabel]
+    const title = [localizePilarLabel(pilarLabel, lang), expandAccountName(accountName), withCountry ? countryName : null, campaignLabel || null, periodsLabel]
       .filter(Boolean)
       .join(' — ');
     const filename = reportFilename({
       pilarLabel,
       // 'multi' evita que el nombre salga como el 1er período: cae al label.
-      accountName: withCountry ? `${accountName} ${countryName}` : accountName,
+      accountName: [accountName, withCountry ? countryName : null, campaignLabel || null].filter(Boolean).join(' '),
       period: multi ? 'multi' : ids[0],
       periodLabel: multi ? (lang === 'en' ? `Multi-Period (${ids.length})` : `Multi-Periodo (${ids.length})`) : periodsLabel,
       audience,
@@ -136,7 +150,7 @@ export default function App() {
       brand: brandOf(account, accountName),
       title,
       filename,
-      snapshot: multi ? multiPeriods[0].snapshot : await buildSnapshot(pilar, account, ids[0]),
+      snapshot: multi ? multiPeriods[0].snapshot : await buildSnapshot(pilar, account, ids[0], snapOpts),
       socialCountry: withCountry ? socialCountry : null,
       periods: multiPeriods,
       lang,

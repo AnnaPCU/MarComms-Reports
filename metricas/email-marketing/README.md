@@ -28,6 +28,23 @@ email-marketing/
 Si los archivos se suben sueltos (sin carpeta de mes), Claude los procesa igual
 y los archiva en `_procesados/AAAA-MM/`.
 
+## One shot por defecto
+
+**Si el equipo no aclara otra cosa, cada campaña es one shot**: un envío
+único (o los envíos que vengan en el drop) que se procesa y publica en el
+momento, con el export tal como llegó. No se espera a que lleguen más emails
+ni a que cierre el mes, y no se suma a otra campaña de la misma cuenta. Si la
+campaña es parte de una secuencia que sigue, el equipo lo avisa al subirla.
+
+## Varias campañas en el mismo mes
+
+Si la cuenta ya tiene otra campaña ese mes, la nueva se agrega como una
+campaña más del período (`campaigns: [...]` en `src/data/emailSeed.js`, en
+orden de envío, cada una con `id`, `label` corto y `sentDate`). El reporte
+muestra una **botonera de campaña** (como los países en Social Media) que
+arranca en la más reciente; el HTML descargado queda fijo en la campaña
+elegida.
+
 ## Qué hace Claude al procesar
 
 1. Arma un `config.json` con la cuenta, el mes y el orden/nombre de los envíos.

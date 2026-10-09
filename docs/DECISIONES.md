@@ -438,3 +438,23 @@ equipo.
   (card, o parte de la pill «MQLs · WON»). La tira es siempre una sola fila:
   mejor 6 cards en una fila que 5 + 1 abajo (`utils/gridCols.js`).
 
+## 15. Email: campañas one shot y varias campañas en un mes
+
+- **One shot por defecto** (9/10/2026): salvo aclaración del equipo, cada
+  campaña de email que llega se toma como one shot. Se procesa y publica en el
+  momento con el export recibido (aunque sea del mismo día del envío), como
+  campaña propia: no se espera a otros envíos ni a que cierre el mes, y no se
+  suma a otra campaña. Si después llega un export más nuevo de la misma
+  campaña, reemplaza los números.
+- **Varias campañas en el mismo mes = botonera, no suma.** Cuando una cuenta
+  tiene más de una campaña en un mes, el período guarda la lista
+  (`campaigns: [...]`, en orden de envío) y la vista muestra una botonera de
+  campaña, igual que los países en Social Media. No hay opción «todas»: las
+  campañas tienen audiencias y objetivos distintos y sumar sus tasas
+  mezclaría resultados que no se comparan.
+- **Arranca en la más reciente.** La botonera abre en la última campaña
+  enviada; la vista General del cliente muestra esa misma campaña y la nombra
+  en el subtítulo de la card.
+- **La descarga queda fija en la campaña elegida** (sin botonera adentro), y
+  su nombre va en el título y en el nombre del archivo, como el país en
+  Social.

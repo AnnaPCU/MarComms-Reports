@@ -5,4 +5,6 @@
 export const viewState = {
   // 'all' = cuenta completa; id de país cuando hay segmentación activa.
   socialCountry: 'all',
+  // Email: id de la campaña elegida cuando el mes tiene más de una (null si no).
+  emailCampaign: null,
 };

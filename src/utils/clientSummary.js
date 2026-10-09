@@ -14,6 +14,7 @@ import { genMonthlyInsights, genCountryInsights, genSocialConclusions, genSocial
 import { genPaidInsights, genPaidConclusions, genPaidNextSteps, genGeoNextSteps, activeCampaigns } from '@/utils/paidInsights';
 import { genSiteInsights, genSiteConclusions, genSiteNextSteps, genSeoInsights } from '@/utils/websiteInsights';
 import { genEmailInsights, genEmailConclusions, genEmailNextSteps } from '@/utils/emailInsights';
+import { emailLabelEn } from '@/utils/emailI18n';
 
 const locale = (lang) => (lang === 'en' ? 'en-US' : 'es-AR');
 const num = (v, lang) => Number(v || 0).toLocaleString(locale(lang));
@@ -167,6 +168,8 @@ export function summarizePillar(p, lang = 'es') {
       const tt = c.totals;
       return {
         ...base,
+        // Mes con varias campañas: se nombra la que se muestra (la más reciente).
+        subtitle: p.campaignLabel ? `${p.accName} · ${en ? emailLabelEn(p.campaignLabel) : p.campaignLabel}` : null,
         hero: { label: t.kSent, value: n(tt.totalSent), pill: `${t.kOpen} ${dec(tt.openRate, lang)} %` },
         lines: [
           { value: `${dec(tt.clickRate, lang)} %`, text: t.kClick },

@@ -11,7 +11,8 @@ import * as webinars from '@/services/webinarsService';
 import * as clients from '@/services/clientService';
 import * as plans from '@/services/plansService';
 
-export function buildSnapshot(pilar, account, period) {
+// `opts.emailCampaign`: campaña elegida en Email cuando el mes tiene varias.
+export function buildSnapshot(pilar, account, period, opts = {}) {
   if (pilar === 'social') {
     if (period === 'cmp') return { kind: 'social-cmp' }; // ComparativeView usa datos del bundle
     if (period === 'year-2026') {
@@ -35,7 +36,7 @@ export function buildSnapshot(pilar, account, period) {
     return { quarter: website.getQuarter(account, period), handle: website.getHandle(account) };
   }
   if (pilar === 'email') {
-    return { campaign: email.getCampaign(account, period), handle: email.getHandle(account) };
+    return { campaign: email.getCampaign(account, period, opts.emailCampaign ?? null), handle: email.getHandle(account) };
   }
   if (pilar === 'webinars') {
     return { event: webinars.getEvent(account, period) };

@@ -55,6 +55,13 @@ commit → deploy. No hay import por UI ni base de datos.
 el tooling del pilar, verificar, deployar y mover la carpeta a `_procesados/` en
 el mismo commit. Reglas completas en `metricas/README.md`.
 
+**Email: one shot por defecto.** Salvo que el equipo aclare otra cosa, cada
+campaña de email que llega es **one shot**: se procesa y publica en el
+momento con el export recibido, como campaña propia (no se espera a otros
+envíos ni a que cierre el mes, y no se suma a otra campaña). Si la cuenta ya
+tiene otra campaña ese mes, se suma como una opción más de la botonera de
+campaña (`docs/DECISIONES.md` §15).
+
 ---
 
 ## Reglas que no se negocian

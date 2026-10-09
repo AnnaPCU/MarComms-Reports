@@ -1543,3 +1543,9 @@
 > 1. No, «Contactos generados en el CRM» pasará a ser «Contactos generados por BBDD» también en CU USA.
 > 2. No, respetá como veníamos manejando el informe de CU USA. Para octubre te pasaré nuevamente el Excel.
 
+
+**#118**
+
+> procesá las métricas nuevas de email marketing.
+
+(Respuestas a la consulta: «Harás una botonera tal y como funciona hoy en día con "Social Media" con los distintos países dentro de una misma cuenta pero, en el caso de email marketing, distintas campañas con un mismo cliente y mes.» · «Es de un one shot esta campaña. Si no te lo aclaro tomalo siempre como un one shot. Guardalo en tu instructivo-one shot».)
