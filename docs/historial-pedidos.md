@@ -1507,3 +1507,18 @@
 > * PS Argentina para septiembre: Deals generados es 70 y MQLs es 1.
 > * CU Argentina para septiembre: Deals generados es 340 y MQLs es 2.
 
+
+## 9 de octubre de 2026
+
+
+**#113**
+
+> 1. Sí.
+> 2. 786 para contactos de BBDD en CU Argentina septiembre, provenientes de GHG.
+> 3. Agosto quedará pendiente.
+> 4. Pendiente pasarte.
+> 6. Comunicación del webinar EmpCo y todo lo relacionado quedará para el 20-08-2026.
+> 7. El objetivo del plan de CU Argentina me queda pendiente pasártelo.
+
+(Respuestas a la lista de faltantes del 8/10: 1 = contactos del CRM de CU USA los pasa el equipo; 3 = deals y MQLs de agosto de PS Argentina; 4 = objetivos y decisiones de CU Argentina.)
+

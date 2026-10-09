@@ -335,8 +335,14 @@ Quedó como práctica fija, y conviene sostenerla:
   resultados entran en el informe de ese mes cuando cierre.
 - **Plan de Control Union Argentina** (8/10/2026): hoja «CU Argentina». No
   tiene tareas en agosto (aunque el plan arranca en agosto), así que el
-  primer informe es el de septiembre. La hoja no trae objetivos, decisiones
-  del mes ni la cantidad de contactos de la base GHG: no se completan.
+  primer informe es el de septiembre. La hoja no trae objetivos ni
+  decisiones del mes: no se completan (el objetivo lo pasa el equipo). Los
+  contactos por BBDD de septiembre (786, base de la campaña GHG) los pasó el
+  equipo el 9/10.
+- **Comunicación del webinar EmpCo de PS Argentina el 20/8** (9/10/2026):
+  el equipo pidió que la comunicación (emails, posteos y artículo) y todo lo
+  relacionado vaya en agosto, el 20/8, aunque el Excel la ponga en
+  septiembre. Agosto queda con 5 entregables y septiembre con 5.
 
 ## 13. Nombres de cuenta
 

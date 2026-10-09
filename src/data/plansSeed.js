@@ -142,7 +142,9 @@ export const PLANS_DB = {
   // septiembre 76 (Ígaris), del Excel.
   // La base de difusión del webinar es de agosto (dato actualizado por el
   // equipo el 8/10: base total 5.403, hecha por MarComms 2.001). La
-  // comunicación del webinar es del 4/9. Reuniones internas de septiembre:
+  // comunicación del webinar (emails, posteos y artículo) queda el 20/8, a
+  // pedido del equipo (9/10), aunque el Excel la ponga en septiembre.
+  // Reuniones internas de septiembre:
   // 16/9, 17/9 y 30/9.
   psar: {
     'ago-2026': {
@@ -155,19 +157,19 @@ export const PLANS_DB = {
       market: 'Argentina · plan septiembre 2026 → febrero 2027',
       marketEn: 'Argentina · plan September 2026 → February 2027',
       intro:
-        'Objetivo del plan: generar pipeline, MQLs y revenue para Peterson Solutions Argentina, con una estrategia puntual para los tres servicios prioritarios que defina el equipo comercial. En agosto presentamos el plan, pedimos la información comercial y financiera para dimensionar el pipeline y arrancamos la gestión del webinar de EmpCo, con su landing de registro y su base de difusión. Las metas de pipeline, MQL y revenue todavía no están definidas en el plan.',
+        'Objetivo del plan: generar pipeline, MQLs y revenue para Peterson Solutions Argentina, con una estrategia puntual para los tres servicios prioritarios que defina el equipo comercial. En agosto presentamos el plan, pedimos la información comercial y financiera para dimensionar el pipeline y arrancamos la gestión del webinar de EmpCo: landing de registro, base de difusión y comunicación por email y LinkedIn. Las metas de pipeline, MQL y revenue todavía no están definidas en el plan.',
       introEn:
-        'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In August we presented the plan, requested the commercial and financial data to size the pipeline, and started managing the EmpCo webinar, with its registration landing page and promotion database. The pipeline, MQL and revenue targets have not been set in the plan yet.',
+        'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In August we presented the plan, requested the commercial and financial data to size the pipeline, and started managing the EmpCo webinar: registration landing page, promotion database and email and LinkedIn communication. The pipeline, MQL and revenue targets have not been set in the plan yet.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
-      summary: ['4 entregables completados', 'Presentación del plan MarComms (12/8)', 'Pedido de información comercial y financiera (19/8)', 'Base de difusión del webinar EmpCo: 2.001 contactos propios'],
-      summaryEn: ['4 deliverables completed', 'MarComms plan presentation (8/12)', 'Commercial and financial data request (8/19)', 'EmpCo webinar promotion database: 2,001 own contacts'],
+      summary: ['5 entregables completados', 'Presentación del plan MarComms (12/8)', 'Pedido de información comercial y financiera (19/8)', 'Base de difusión del webinar EmpCo: 2.001 contactos propios'],
+      summaryEn: ['5 deliverables completed', 'MarComms plan presentation (8/12)', 'Commercial and financial data request (8/19)', 'EmpCo webinar promotion database: 2,001 own contacts'],
       kpiGroups: [
         {
           name: 'Operativos',
           nameEn: 'Operational',
           items: [
-            { value: '4', label: 'Entregables completados', labelEn: 'Deliverables completed' },
+            { value: '5', label: 'Entregables completados', labelEn: 'Deliverables completed' },
             { value: '2', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '12/8 y 19/8', noteEn: '8/12 and 8/19' },
             { value: '2.001', valueEn: '2,001', label: 'Contactos generados por BBDD', labelEn: 'Contacts generated from databases', note: 'Hecha por MarComms · base total 5.403', noteEn: 'Built by MarComms · total database 5,403' },
           ],
@@ -189,6 +191,7 @@ export const PLANS_DB = {
         { status: 'done', name: 'Presentación del plan MarComms', nameEn: 'MarComms plan presentation', desc: 'Reunión del 12/8: arranque del plan, con prioridad en el webinar de EmpCo. Se pidió al equipo comercial el Top 3 de servicios prioritarios, con sus drivers de mercado y ventajas competitivas, como insumo para contenidos, campañas, LinkedIn y web.', descEn: 'Meeting on 8/12: plan kickoff, prioritizing the EmpCo webinar. The sales team was asked for the Top 3 priority services, with their market drivers and competitive advantages, as input for content, campaigns, LinkedIn and web.' },
         { status: 'done', name: 'Follow-up de información comercial y financiera', nameEn: 'Commercial and financial data follow-up', desc: 'Reunión del 19/8: pedido de información de los servicios del budget (objetivos y revenue actual, mix renovaciones / clientes nuevos, ticket promedio, conversión y competencia) para armar un pipeline tentativo por Revenue Growth Stream.', descEn: 'Meeting on 8/19: request for data on the budgeted services (targets and current revenue, renewal / new-client mix, average ticket, conversion and competition) to build a tentative pipeline by Revenue Growth Stream.' },
         { status: 'done', name: 'Base de datos para la difusión del webinar', nameEn: 'Database for webinar promotion', desc: 'Base para la difusión del webinar de EmpCo: empresas de Iberoamérica que comunican atributos ambientales (bodegas, agroindustria, alimentos, energía, consultoras). Base total: 5.403 contactos únicos; base hecha por MarComms: 2.001. Hubo registrados de 18 países; entre los externos con país informado, Argentina concentra 66 de 95.', descEn: 'Database for promoting the EmpCo webinar: Ibero-American companies that communicate environmental attributes (wineries, agribusiness, food, energy, consultancies). Total database: 5,403 unique contacts; database built by MarComms: 2,001. Registrants came from 18 countries; among external registrants with a stated country, Argentina accounts for 66 of 95.' },
+        { status: 'done', name: 'Comunicación del webinar EmpCo', nameEn: 'EmpCo webinar communication', desc: '20/8: email marketing con 7 envíos (Emails 1 a 4 a la base completa y post-webinar en tres versiones: base, asistentes y registrados), 2 posteos en Peterson Solutions Iberia & Americas y artículo para web y LinkedIn.', descEn: '8/20: email marketing with 7 sends (Emails 1 to 4 to the full database and a post-webinar email in three versions: database, attendees and registrants), 2 posts on Peterson Solutions Iberia & Americas and an article for the website and LinkedIn.' },
       ],
       initiativeGroups: [
         {
@@ -197,7 +200,7 @@ export const PLANS_DB = {
           items: [
             { name: 'Top 3 de servicios', nameEn: 'Top 3 services', desc: 'El equipo comercial define los tres servicios prioritarios, con drivers de mercado y ventajas competitivas, como insumo para contenidos, campañas, LinkedIn y web.', descEn: 'The sales team defines the three priority services, with market drivers and competitive advantages, as input for content, campaigns, LinkedIn and web.' },
             { name: 'Pipeline tentativo', nameEn: 'Tentative pipeline', desc: 'Con la información comercial y financiera de los servicios del budget, armar un pipeline tentativo por Revenue Growth Stream.', descEn: 'With the commercial and financial data on the budgeted services, build a tentative pipeline by Revenue Growth Stream.' },
-            { name: 'Webinar EmpCo', nameEn: 'EmpCo webinar', desc: 'Gestión integral del webinar del 10/9: comunicación por email y LinkedIn, y reporte.', descEn: 'End-to-end management of the 9/10 webinar: email and LinkedIn communication, and report.' },
+            { name: 'Webinar EmpCo', nameEn: 'EmpCo webinar', desc: 'Realización del webinar del 10/9 y su reporte.', descEn: 'Delivery of the 9/10 webinar and its report.' },
           ],
         },
       ],
@@ -217,14 +220,14 @@ export const PLANS_DB = {
         'Plan objective: generate pipeline, MQLs and revenue for Peterson Solutions Argentina, with a focused strategy for the three priority services the sales team defines. In September we supported the end-to-end management of the EmpCo webinar, launched the Paid Media campaigns and built the Ígaris database. Focus of the month: analyze results and start building the 2027 strategy. The pipeline, MQL and revenue targets have not been set in the plan yet.',
       summaryTitle: 'Resumen del mes',
       summaryTitleEn: 'Month at a glance',
-      summary: ['6 entregables completados', '4 tareas de octubre en marcha', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
-      summaryEn: ['6 deliverables completed', '4 October tasks under way', 'EmpCo webinar: 202 registrations, 120 attendees and 94 deals in HubSpot', 'Next follow-up meeting: 10/13/2026'],
+      summary: ['5 entregables completados', '4 tareas de octubre en marcha', 'Webinar EmpCo: 202 registros, 120 asistentes y 94 deals en HubSpot', 'Próxima reunión de seguimiento: 13/10/2026'],
+      summaryEn: ['5 deliverables completed', '4 October tasks under way', 'EmpCo webinar: 202 registrations, 120 attendees and 94 deals in HubSpot', 'Next follow-up meeting: 10/13/2026'],
       kpiGroups: [
         {
           name: 'Operativos',
           nameEn: 'Operational',
           items: [
-            { value: '6', label: 'Entregables completados', labelEn: 'Deliverables completed' },
+            { value: '5', label: 'Entregables completados', labelEn: 'Deliverables completed' },
             { value: '3', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '16/9, 17/9 y 30/9', noteEn: '9/16, 9/17 and 9/30' },
             { value: '76', label: 'Contactos generados por BBDD', labelEn: 'Contacts generated from databases', note: 'Base Ígaris · 24 empresas', noteEn: 'Ígaris database · 24 companies' },
           ],
@@ -239,7 +242,6 @@ export const PLANS_DB = {
         },
       ],
       deliverables: [
-        { status: 'done', name: 'Comunicación del webinar EmpCo', nameEn: 'EmpCo webinar communication', desc: 'Comunicación hecha el 4/9: email marketing con 7 envíos (Emails 1 a 4 a la base completa y post-webinar en tres versiones: base, asistentes y registrados), 2 posteos en Peterson Solutions Iberia & Americas y artículo para web y LinkedIn.', descEn: 'Communication done on 9/4: email marketing with 7 sends (Emails 1 to 4 to the full database and a post-webinar email in three versions: database, attendees and registrants), 2 posts on Peterson Solutions Iberia & Americas and an article for the website and LinkedIn.' },
         {
           status: 'done', name: 'Webinar EmpCo', nameEn: 'EmpCo webinar', desc: 'Webinar del 10/9 sobre la regulación que entra en vigencia en septiembre, con gestión completa (landing de registro, email, LinkedIn y reporte): 202 registros, 120 asistentes, 94 deals en HubSpot y 5 hot deals.', descEn: 'Webinar on 9/10 about the regulation taking effect in September, managed end to end (registration landing page, email, LinkedIn and report): 202 registrations, 120 attendees, 94 deals in HubSpot and 5 hot deals.',
           links: [{ label: 'Reporte del webinar', labelEn: 'Webinar report', url: 'https://pcugroup-my.sharepoint.com/:u:/p/fcapoulat/IQARL94UHt1UQZKNeGxdvJbFAQIZPI08qPFC3k4SNnatBzg?e=OKYlZW' }],
@@ -278,8 +280,8 @@ export const PLANS_DB = {
   // tareas en agosto: el primer informe es el de septiembre. Las tareas de
   // octubre aparecen como trabajo en marcha, con su estado del Excel. La hoja
   // no trae objetivos ni decisiones del mes: no se inventan.
-  // KPIs: deals (340) y MQLs (2) de septiembre, del equipo; los contactos de
-  // la base de la campaña GHG no figuran en la hoja → «—».
+  // KPIs: deals (340), MQLs (2) y contactos por BBDD (786, base de la
+  // campaña GHG) de septiembre, del equipo. Objetivo del plan: pendiente.
   cuar: {
     'sep-2026': {
       title: 'Informe mensual MarComms — Control Union Argentina',
@@ -305,7 +307,7 @@ export const PLANS_DB = {
           items: [
             { value: '8', label: 'Entregables completados', labelEn: 'Deliverables completed' },
             { value: '2', label: 'Reuniones internas', labelEn: 'Internal meetings', note: '28/9', noteEn: '9/28' },
-            { value: null, label: 'Contactos generados por BBDD', labelEn: 'Contacts generated from databases' },
+            { value: '786', label: 'Contactos generados por BBDD', labelEn: 'Contacts generated from databases', note: 'Base de la campaña GHG', noteEn: 'GHG campaign database' },
           ],
         },
         {
@@ -332,7 +334,7 @@ export const PLANS_DB = {
           links: [{ label: 'Investigación ISCC', labelEn: 'ISCC research', url: 'https://pcugroup.sharepoint.com/:f:/r/sites/CommunicationsLATAM/Gedeelde%20documenten/General/000.Planes%20MarComms/CU%20-%20Certificaciones%20Argentina/Market%20Research/ISCC%20%E2%80%93%202026?d=wc5571a514a174ddaaa90996f7918bcf6&csf=1&web=1&e=f53BtB' }],
         },
         {
-          status: 'done', name: 'Base de datos de la campaña GHG', nameEn: 'GHG campaign database', desc: '17/9: base de datos creada para la campaña de ads de GHG del Q4.', descEn: '9/17: database built for the Q4 GHG ads campaign.',
+          status: 'done', name: 'Base de datos de la campaña GHG', nameEn: 'GHG campaign database', desc: '17/9: base de datos de 786 contactos creada para la campaña de ads de GHG del Q4.', descEn: '9/17: 786-contact database built for the Q4 GHG ads campaign.',
           links: [
             { label: 'Base GHG (1)', labelEn: 'GHG database (1)', url: 'https://share.gemini.google/wJ2cextk1cRb' },
             { label: 'Base GHG (2)', labelEn: 'GHG database (2)', url: 'https://share.gemini.google/sVCbi6127LHI' },

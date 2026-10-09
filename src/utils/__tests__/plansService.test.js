@@ -64,8 +64,11 @@ describe('plansService', () => {
     const ago = getPlan('psar', 'ago-2026');
     const sep = getPlan('psar', 'sep-2026');
     const count = (plan, st) => plan.deliverables.filter((d) => d.status === st).length;
-    expect([count(ago, 'done'), count(ago, 'progress'), count(ago, 'pending')]).toEqual([4, 0, 0]);
-    expect([count(sep, 'done'), count(sep, 'progress'), count(sep, 'pending')]).toEqual([6, 3, 1]);
+    expect([count(ago, 'done'), count(ago, 'progress'), count(ago, 'pending')]).toEqual([5, 0, 0]);
+    expect([count(sep, 'done'), count(sep, 'progress'), count(sep, 'pending')]).toEqual([5, 3, 1]);
+    // La comunicación del webinar va el 20/8 (pedido del equipo, 9/10).
+    expect(ago.deliverables.find((d) => d.name === 'Comunicación del webinar EmpCo').desc).toMatch(/^20\/8:/);
+    expect(sep.deliverables.some((d) => d.name === 'Comunicación del webinar EmpCo')).toBe(false);
     // La base de difusión del webinar es de agosto (Excel del 8/10).
     expect(ago.deliverables.some((d) => d.name === 'Base de datos para la difusión del webinar')).toBe(true);
     expect(sep.deliverables.some((d) => d.name === 'Base de datos para la difusión del webinar')).toBe(false);
@@ -78,15 +81,15 @@ describe('plansService', () => {
   it('planes de Argentina: deals y MQLs en cantidad, sin ventas', () => {
     const kpis = (a, p) => getPlan(a, p).kpiGroups.flatMap((g) => g.items).map((k) => [k.label, k.value]);
     expect(kpis('psar', 'ago-2026')).toEqual([
-      ['Entregables completados', '4'], ['Reuniones internas', '2'], ['Contactos generados por BBDD', '2.001'],
+      ['Entregables completados', '5'], ['Reuniones internas', '2'], ['Contactos generados por BBDD', '2.001'],
       ['Deals generados', null], ['MQLs generados', null],
     ]);
     expect(kpis('psar', 'sep-2026')).toEqual([
-      ['Entregables completados', '6'], ['Reuniones internas', '3'], ['Contactos generados por BBDD', '76'],
+      ['Entregables completados', '5'], ['Reuniones internas', '3'], ['Contactos generados por BBDD', '76'],
       ['Deals generados', '70'], ['MQLs generados', '1'],
     ]);
     expect(kpis('cuar', 'sep-2026')).toEqual([
-      ['Entregables completados', '8'], ['Reuniones internas', '2'], ['Contactos generados por BBDD', null],
+      ['Entregables completados', '8'], ['Reuniones internas', '2'], ['Contactos generados por BBDD', '786'],
       ['Deals generados', '340'], ['MQLs generados', '2'],
     ]);
     // Sin unidad: son cantidades, no importes.
