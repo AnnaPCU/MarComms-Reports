@@ -27,6 +27,7 @@ import { WEB_STR } from '@/utils/websiteI18n';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { KpiCard } from '@/components/shared/KpiCard';
+import { HeroCard } from '@/components/shared/HeroCard';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { Glossary } from '@/components/shared/Glossary';
@@ -147,10 +148,10 @@ function SiteView({ data, account, period, accName, periodLabel, lang = 'es' }) 
     );
   }
   const kpiChart = [
-    { name: 'Single Traffic', value: data.singleTraffic, fill: PAL[3] },
-    { name: 'Total Traffic', value: data.totalTraffic, fill: PAL[0] },
-    { name: 'Impressions', value: data.impressions, fill: PAL[1] },
-    { name: 'Conversions', value: data.conversions, fill: PAL[5] },
+    { name: t.mSingle, value: data.singleTraffic, fill: PAL[3] },
+    { name: t.mTotal, value: data.totalTraffic, fill: PAL[0] },
+    { name: t.mViews, value: data.impressions, fill: PAL[1] },
+    { name: t.mConv, value: data.conversions, fill: PAL[5] },
   ];
   const retSes = data.impressions ? (data.totalTraffic / data.impressions) * 100 : 0;
   const retConv = data.totalTraffic ? (data.conversions / data.totalTraffic) * 100 : 0;
@@ -161,15 +162,11 @@ function SiteView({ data, account, period, accName, periodLabel, lang = 'es' }) 
 
       <SectionHeader title={`Website — ${periodLabel}`} note={accName} />
       <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols(4 + (crm ? 1 : 0))}`}>
-        <KpiCard label="Single Traffic" value={num(data.singleTraffic)} />
-        <KpiCard label="Total Traffic" value={num(data.totalTraffic)} />
-        <KpiCard label="Impressions" value={num(data.impressions)} />
-        <KpiCard
-          label="Conversions"
-          value={num(data.conversions)}
-          accent="green"
-          footnote={data.conversionsBreakdown ? t.convSplit(data.conversionsBreakdown.clickEmail && num(data.conversionsBreakdown.clickEmail), data.conversionsBreakdown.formSubmit && num(data.conversionsBreakdown.formSubmit)) : undefined}
-        />
+        <KpiCard label={t.mSingle} value={num(data.singleTraffic)} />
+        <KpiCard label={t.mTotal} value={num(data.totalTraffic)} />
+        <KpiCard label={t.mViews} value={num(data.impressions)} />
+        {/* Conversiones es el indicador destacado del pilar (pedido del 9/10/2026). */}
+        <HeroCard label={t.mConv} value={num(data.conversions)} />
         {crm && <CrmDealsCard d={crm} lang={lang} />}
       </div>
 
@@ -278,9 +275,9 @@ function SeoView({ data, accName, periodLabel, lang = 'es' }) {
     );
   }
   const kpiChart = [
-    { name: 'Avg. Position', value: data.averagePosition, fill: PAL[3] },
-    { name: 'Impressions', value: data.impressions, fill: PAL[0] },
-    { name: 'Total Clicks', value: data.totalClicks, fill: PAL[1] },
+    { name: t.mPos, value: data.averagePosition, fill: PAL[3] },
+    { name: t.mSeoImp, value: data.impressions, fill: PAL[0] },
+    { name: t.mClicks, value: data.totalClicks, fill: PAL[1] },
   ];
   const ctr = data.impressions ? (data.totalClicks / data.impressions) * 100 : 0;
 
@@ -290,9 +287,9 @@ function SeoView({ data, accName, periodLabel, lang = 'es' }) {
 
       <SectionHeader title={`SEO — ${periodLabel}`} note={accName} />
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <KpiCard label="Average Position" value={posL(data.averagePosition)} />
-        <KpiCard label="Impressions" value={num(data.impressions)} />
-        <KpiCard label="Total Clicks" value={num(data.totalClicks)} />
+        <KpiCard label={t.mPos} value={posL(data.averagePosition)} />
+        <KpiCard label={t.mSeoImp} value={num(data.impressions)} />
+        <KpiCard label={t.mClicks} value={num(data.totalClicks)} />
       </div>
 
       <SectionHeader title={t.seoFunnelSection} note="Search Console" />

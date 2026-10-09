@@ -181,10 +181,10 @@ export const GLOSSARIES = {
   website: {
     title: 'Glosario — Website',
     entries: [
-      { term: 'Single Traffic', def: 'Cantidad total de visitantes únicos que accedieron al sitio durante el período seleccionado. Cada persona se cuenta una sola vez.' },
-      { term: 'Total Traffic', def: 'Cantidad total de visitas al sitio, incluyendo múltiples sesiones de un mismo usuario. Muestra la actividad general del sitio.' },
-      { term: 'Impressions', def: 'Cantidad total de vistas de página generadas en el sitio; indica cuántas veces se mostraron las páginas.' },
-      { term: 'Conversions', def: 'Cantidad de usuarios que realizaron una acción de interés directo, como completar un formulario, solicitar una consulta o contactar por otro canal.' },
+      { term: 'Visitantes únicos', def: 'Cantidad total de visitantes únicos que accedieron al sitio durante el período seleccionado. Cada persona se cuenta una sola vez.' },
+      { term: 'Sesiones', def: 'Cantidad total de visitas al sitio, incluyendo múltiples sesiones de un mismo usuario. Muestra la actividad general del sitio.' },
+      { term: 'Vistas de página', def: 'Cantidad total de vistas de página generadas en el sitio; indica cuántas veces se mostraron las páginas.' },
+      { term: 'Conversiones', def: 'Cantidad de usuarios que realizaron una acción de interés directo, como completar un formulario, solicitar una consulta o contactar por otro canal.' },
     ],
   },
 
@@ -192,10 +192,10 @@ export const GLOSSARIES = {
     title: 'Glosario — Website SEO',
     entries: [
       { term: 'SEO (Search Engine Optimization)', def: 'Proceso de optimización del sitio para mejorar su visibilidad en los resultados de búsqueda. Ayuda a atraer tráfico orgánico haciendo el contenido más relevante y accesible.' },
-      { term: 'Impressions', def: 'Cantidad total de veces que las páginas del sitio aparecieron en los resultados de búsqueda. Refleja la visibilidad y el alcance potencial en orgánico.' },
-      { term: 'Average Position', def: 'Ranking promedio de las páginas del sitio en los resultados de búsqueda para las keywords seleccionadas. Indica qué tan visible es el contenido frente a competidores.' },
-      { term: 'Top 3 keywords con más clics', def: 'Las búsquedas que generaron la mayor cantidad de clics al sitio. Reflejan los temas que impulsan el tráfico más relevante.' },
-      { term: 'Total clicks', def: 'Cantidad total de veces que los usuarios hicieron clic en el sitio desde los resultados de búsqueda. Indica el nivel de interés y tráfico orgánico generado.' },
+      { term: 'Impresiones', def: 'Cantidad total de veces que las páginas del sitio aparecieron en los resultados de búsqueda. Refleja la visibilidad y el alcance potencial en orgánico.' },
+      { term: 'Posición promedio', def: 'Ranking promedio de las páginas del sitio en los resultados de búsqueda para las keywords seleccionadas. Indica qué tan visible es el contenido frente a competidores.' },
+      { term: 'Top keywords con más clics', def: 'Las búsquedas que generaron la mayor cantidad de clics al sitio. Reflejan los temas que impulsan el tráfico más relevante.' },
+      { term: 'Clics totales', def: 'Cantidad total de veces que los usuarios hicieron clic en el sitio desde los resultados de búsqueda. Indica el nivel de interés y tráfico orgánico generado.' },
     ],
   },
 
@@ -216,7 +216,7 @@ export const GLOSSARIES = {
       { term: 'SEO (Search Engine Optimization)', def: 'Process of optimizing the site to improve its visibility in search results. It helps attract organic traffic by making content more relevant and accessible.' },
       { term: 'Impressions', def: 'Total number of times the site\'s pages appeared in search results. It reflects visibility and potential organic reach.' },
       { term: 'Average Position', def: 'Average ranking of the site\'s pages in search results for the selected keywords. It indicates how visible the content is against competitors.' },
-      { term: 'Top 3 keywords by clicks', def: 'The searches that generated the most clicks to the site. They reflect the topics driving the most relevant traffic.' },
+      { term: 'Top keywords by clicks', def: 'The searches that generated the most clicks to the site. They reflect the topics driving the most relevant traffic.' },
       { term: 'Total clicks', def: 'Total number of times users clicked through to the site from search results. It indicates the level of interest and organic traffic generated.' },
     ],
   },

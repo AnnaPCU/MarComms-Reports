@@ -62,7 +62,8 @@ export const CRM_STR = {
     cardLabel: 'Deals generados · HubSpot',
     // Solo las partes mayores a cero; si las dos dan cero, sin pill.
     cardPill: (mql, won) => [mql > 0 ? `${mql} MQL${mql === 1 ? '' : 's'}` : null, won > 0 ? `${won} WON` : null].filter(Boolean).join(' · ') || null,
-    cardFootShort: (src, date) => `Origen «${src}» · al ${date}`,
+    cardFootShort: (src, when) => `Origen «${src}» · ${when}`,
+    asOfLabel: (date) => `datos al ${date}`,
     stripGenerated: 'HubSpot — Deals generados',
     stripMql: 'HubSpot — MQLs',
     stripWon: 'HubSpot — Ventas (WON)',
@@ -98,7 +99,8 @@ export const CRM_STR = {
     cardLabel: 'Deals generated · HubSpot',
     // Solo las partes mayores a cero; si las dos dan cero, sin pill.
     cardPill: (mql, won) => [mql > 0 ? `${mql} MQL${mql === 1 ? '' : 's'}` : null, won > 0 ? `${won} WON` : null].filter(Boolean).join(' · ') || null,
-    cardFootShort: (src, date) => `Source “${src}” · as of ${date}`,
+    cardFootShort: (src, when) => `Source “${src}” · ${when}`,
+    asOfLabel: (date) => `data as of ${date}`,
     stripGenerated: 'HubSpot — Deals generated',
     stripMql: 'HubSpot — MQLs',
     stripWon: 'HubSpot — Sales (WON)',
@@ -124,3 +126,28 @@ export function fmtAsOf(iso, lang = 'es') {
   const [y, m, d] = iso.split('-');
   return lang === 'en' ? `${m}/${d}/${y}` : `${d}/${m}/${y}`;
 }
+
+const MONTHS_SHORT = {
+  es: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+};
+
+// Rango de meses del período («jul–sep 2026», «sep 2026»).
+export function monthsRangeLabel(months, lang = 'es', year = 2026) {
+  if (!months?.length) return '';
+  const name = (m) => MONTHS_SHORT[lang][Number(m.slice(1)) - 1];
+  const first = name(months[0]);
+  const last = name(months[months.length - 1]);
+  return first === last ? `${first} ${year}` : `${first}–${last} ${year}`;
+}
+
+// ¿El período terminó antes de la fecha de corte de los datos? (último día
+// del último mes del período < asOf). Si terminó, la card habla del período;
+// si no, aclara «datos al <asOf>».
+export function periodClosed(months, asOf, year = 2026) {
+  if (!months?.length) return false;
+  const m = Number(months[months.length - 1].slice(1));
+  const end = new Date(Date.UTC(year, m, 0)); // último día del mes m
+  return end.toISOString().slice(0, 10) < asOf;
+}
+

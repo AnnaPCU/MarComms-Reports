@@ -5,9 +5,14 @@
 
 export const WEB_STR = {
   es: {
-    // Desglose de conversiones de GA4 (desde Q3 2026). Solo las partes con
-    // eventos: si click_email no registró nada (Peterson), queda el formulario.
-    convSplit: (email, form) => [email ? `Email ${email}` : null, form ? `Formulario ${form}` : null].filter(Boolean).join(' · ') || undefined,
+    // Nombres de las métricas (en ES en castellano; en EN, los del reporte).
+    mSingle: 'Visitantes únicos',
+    mTotal: 'Sesiones',
+    mViews: 'Vistas de página',
+    mConv: 'Conversiones',
+    mPos: 'Posición promedio',
+    mSeoImp: 'Impresiones',
+    mClicks: 'Clics totales',
     siteInsightsTitle: 'Plan de Acción — Insights Website',
     seoInsightsTitle: 'Plan de Acción — Insights SEO',
     insightLabel: 'Insight',
@@ -23,7 +28,7 @@ export const WEB_STR = {
     fConvDesc: (p) => `${p} de las sesiones`,
     fConvDropNote: 'sesión → conversión',
     topPagesTitle: (n) => `Top ${n} landing pages — vistas`,
-    kpisChartTitle: 'Generals KPIs',
+    kpisChartTitle: 'KPIs generales',
     siteKpisChartSub: 'Comparativa de indicadores del trimestre',
     seoKpisChartSub: 'Indicadores SEO del trimestre',
     seoFunnelSection: 'Embudo de Búsqueda — Impresión → Clic',
@@ -80,7 +85,13 @@ export const WEB_STR = {
   },
 
   en: {
-    convSplit: (email, form) => [email ? `Email ${email}` : null, form ? `Form ${form}` : null].filter(Boolean).join(' · ') || undefined,
+    mSingle: 'Single Traffic',
+    mTotal: 'Total Traffic',
+    mViews: 'Impressions',
+    mConv: 'Conversions',
+    mPos: 'Average Position',
+    mSeoImp: 'Impressions',
+    mClicks: 'Total Clicks',
     siteInsightsTitle: 'Action Plan — Website Insights',
     seoInsightsTitle: 'Action Plan — SEO Insights',
     insightLabel: 'Insight',

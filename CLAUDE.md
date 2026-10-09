@@ -142,7 +142,8 @@ Orden común en todos los pilares: **Insights (Plan de Acción)** → **KPIs** �
   («Deal Source»); STEAL, Database, Commercial Tool, eventos presenciales y
   BDR MarComms van aparte. Importes por moneda, sin convertir. Las cards de
   HubSpot van en la misma tira que los indicadores clave (una sola fila) y
-  las que dan cero no se muestran. Al sumar una cuenta o
+  las que dan cero no se muestran. **Hoy están ocultas** (`CRM_UI_ENABLED`
+  en `constants/crm.js`): el indicador destacado es Conversiones. Al sumar una cuenta o
   un cliente, mapear sus entidades de HubSpot (`constants/crm.js`,
   `crmEntities` en `clients.js`). Criterios en `docs/DECISIONES.md` §14.
 - Reutilizar los componentes de `src/components/shared/` (KpiCard, ChartCard,

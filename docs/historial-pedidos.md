@@ -1571,3 +1571,12 @@
 
 > [reporte_cu_2026-Q3_northamerica_por_pais.md] Ahí te paso North America separado por país. Lo que necesito puntualmente, como nos venimos manejando, es que puedas extraer la data para el caso de Estados Unidos y Canadá, y que cada uno tenga su vista de reporte.
 
+
+**#121**
+
+> Dos cosas. Primero, ajustá la nomenclatura de ciertos reportes, como Website y SEO: el nombre de la métrica (ej. Single Traffic) está en inglés cuando el reporte está en castellano. Ponelo en castellano cuando la vista esté en castellano, y viceversa en inglés: «conversiones», no «conversions».
+>
+> Después, la card de deals generados de HubSpot: dice «Origen Website · al 06/10/2026». Si estoy viendo un período, por ejemplo el Q3 de un país, tenés que mostrar los deals de ese Q puntualmente (el Q3 terminó el último día de septiembre). Ahora, aunque me ajustes esto, por el momento todo lo que es deals generados escondémelo en todos los pilares (no lo borres, lo voy a necesitar en el futuro; probablemente se reemplace por conversiones). Hoy lo que quiero que predomine es conversiones: la que se va a destacar con otro color, como venía haciendo deals generados en los KPIs, va a ser conversiones. Y no aclares que vienen de email y de formulario.
+
+(Mensaje de voz; transcripción ajustada.)
+

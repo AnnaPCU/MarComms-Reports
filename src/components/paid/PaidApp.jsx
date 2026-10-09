@@ -11,6 +11,7 @@ import { PAID_STR, MONTHS_EN } from '@/utils/paidI18n';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
+import { HeroCard } from '@/components/shared/HeroCard';
 import { Select } from '@/components/shared/Select';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
@@ -41,6 +42,8 @@ const CMP = 'cmp';
 
 // Fila de KPIs (sirve para totales de cuenta o para una campaña).
 function KpiRow({ d, currency, partial, t, extra = null }) {
+  // Conversiones es el indicador destacado (card azul marino, a la derecha),
+  // como pidió el equipo el 9/10/2026.
   return (
     <div className={`mb-5 grid grid-cols-2 gap-3 ${lgCols(4 + (extra ? 1 : 0))}`}>
       <KpiCard
@@ -50,18 +53,12 @@ function KpiRow({ d, currency, partial, t, extra = null }) {
       />
       <KpiCard label={t.kClk} value={numEs(d.clicks)} delta={{ dir: 'flat', label: `CPC ${money(d.cpc, currency)}` }} />
       <KpiCard
-        label={t.kConv}
-        value={numEs(d.conversions)}
-        accent="green"
-        delta={(d.conversions || 0) > 0 ? { dir: 'up', label: `▲ ${numEs(d.conversions)} ${t.leads}` } : { dir: 'down', label: `0 ${t.leads}` }}
-        footnote={t.convRateFoot(pct(d.convRate))}
-      />
-      <KpiCard
         label={`${t.kCost}${partial ? t.partial : ''}`}
         value={money(d.cost, currency)}
         accent="amber"
         delta={(d.conversions || 0) > 0 ? { dir: 'flat', label: `${money(d.costPerConv, currency)}${t.perLead}` } : { dir: 'flat', label: t.noConv }}
       />
+      <HeroCard label={t.kConv} value={numEs(d.conversions)} footnote={t.convRateFoot(pct(d.convRate))} />
       {extra}
     </div>
   );

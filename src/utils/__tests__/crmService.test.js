@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { CRM_GENERATED, CRM_ENTITIES, CRM_MQL, CRM_WON } from '@/data/crmSeed';
 import { CLIENTS } from '@/constants/clients';
 import { getClientCrm, getPillarCrm, summarize, monthsOfPeriod, MAIN_SOURCES, OTHER_SOURCES } from '@/services/crmService';
-import { fmtMoney } from '@/utils/crmI18n';
+import { fmtMoney, monthsRangeLabel, periodClosed } from '@/utils/crmI18n';
+import { CRM_UI_ENABLED } from '@/constants/crm';
 import { crmStripCards } from '@/components/clients/ClientCrm';
 
 const ALL_ENTS = Object.keys(CRM_ENTITIES);
@@ -72,6 +73,19 @@ describe('crmService', () => {
     expect(getClientCrm('cu-es', 'year-2026').main.total.won.deals).toBe(0);
     expect(keys('cu-es')).toEqual(['crm-gen', 'crm-mql']);
     expect(crmStripCards(null)).toEqual([]);
+  });
+
+  it('UI de HubSpot oculta por ahora (9/10/2026): los datos siguen, la vista no', () => {
+    expect(CRM_UI_ENABLED).toBe(false);
+    expect(getPillarCrm('website', 'cuus', 'q3-2026').generated).toBe(34); // el dato sigue disponible
+  });
+
+  it('pie de la card: un período cerrado se nombra por su rango, uno abierto lleva la fecha de corte', () => {
+    expect(periodClosed(monthsOfPeriod('q3-2026'), '2026-10-06')).toBe(true);
+    expect(periodClosed(monthsOfPeriod('q4-2026'), '2026-10-06')).toBe(false);
+    expect(periodClosed(monthsOfPeriod('year-2026'), '2026-10-06')).toBe(false);
+    expect(monthsRangeLabel(monthsOfPeriod('q3-2026'), 'es')).toBe('jul–sep 2026');
+    expect(monthsRangeLabel(['m09'], 'en')).toBe('Sep 2026');
   });
 
   it('meses de un período: mes, trimestre y año; los especiales no aplican', () => {

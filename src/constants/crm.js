@@ -16,6 +16,12 @@
 // «Control Union Canadá (Solutions)» (583s) no se asigna: sus deals son
 // servicios de Peterson Solutions bajo la entidad de CU Canadá, y las marcas
 // no se mezclan (pendiente de validar con el equipo).
+// Interruptor de la UI de HubSpot (9/10/2026): las cards y el bloque de CRM
+// quedan OCULTOS en todos los pilares y en Clientes hasta que el equipo pida
+// reactivarlos. Los datos (crmSeed), el service y los tests siguen intactos:
+// para volver a mostrarlos, poner `true`.
+export const CRM_UI_ENABLED = false;
+
 export const CU_US = ['537', '537i'];
 export const CU_LATAM = ['538', '584', '848', '598', '536'];
 export const CU_NA = [...CU_US, '583'];

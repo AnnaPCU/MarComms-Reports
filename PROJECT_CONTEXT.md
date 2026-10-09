@@ -274,7 +274,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Marca MarComms | ✅ Logo principal en header y pie + favicon propio |
 | Login compartido | ✅ Funciona (localStorage) |
 | Vista por cliente | ✅ 13 clientes con más de un pilar (mapa en `constants/clients.js`), vista General + entrada a cada pilar, descarga de la General |
-| CRM (HubSpot) | ✅ Datos al 6/10/2026. Vista por cliente: «Deals generados», «MQLs» y «Ventas (WON)» del acumulado 2026 en la **misma tira** que los indicadores clave de cada pilar; más abajo, el desglose por pilar y por otros orígenes (STEAL, Database, Commercial Tool, eventos presenciales, BDR MarComms) con selector de período. Pilares Social, Paid, Website y Email: card «Deals generados» dentro de la fila de KPIs. Lo que da cero no se muestra. Criterios en `docs/DECISIONES.md` §14; tooling `scripts/crm/` |
+| CRM (HubSpot) | ⏸️ **Oculto en la UI** desde el 9/10/2026 (`CRM_UI_ENABLED = false` en `constants/crm.js`): datos al 6/10/2026, service, tooling y tests intactos para reactivarlo. Criterios en `docs/DECISIONES.md` §14; tooling `scripts/crm/` |
 
 ## 10. Decisiones tomadas
 
@@ -391,6 +391,11 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **HubSpot oculto y Conversiones destacada** (9/10/2026): las cards de
+  deals de HubSpot se ocultan en pilares y Clientes (interruptor, sin borrar
+  nada). Website y Paid destacan Conversiones (sin desglose). Website y SEO
+  muestran los nombres de métricas en castellano en ES (también el glosario).
 
 - **Website Q3: CU Estados Unidos y CU Canadá** (9/10/2026), cada uno con su
   vista, desde el reporte de northamerica.controlunion.com segmentado por

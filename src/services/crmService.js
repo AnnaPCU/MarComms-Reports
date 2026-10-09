@@ -127,5 +127,5 @@ export function getPillarCrm(pilar, account, period, country = null) {
   const entities = src ? accountEntities(pilar, account, country) : null;
   const months = monthsOfPeriod(period);
   if (!entities?.length || !months) return null;
-  return { source: src, hs: sourceHsName(src), entities, ...summarize(entities, [src], months) };
+  return { source: src, hs: sourceHsName(src), entities, months, ...summarize(entities, [src], months) };
 }

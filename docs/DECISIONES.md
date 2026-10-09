@@ -459,6 +459,18 @@ equipo.
   su nombre va en el título y en el nombre del archivo, como el país en
   Social.
 
+- **UI de HubSpot oculta (9/10/2026)**: por pedido del equipo, las cards
+  «Deals generados» de los pilares, las de la tira de Clientes y el detalle
+  «Resultados comerciales» quedan **ocultos** con el interruptor
+  `CRM_UI_ENABLED = false` (`constants/crm.js`). No se borra nada: seed,
+  service, tooling y tests siguen. Cuando se reactive, la card de un período
+  cerrado nombra el período («jul–sep 2026») en vez de «al 06/10/2026»; un
+  período abierto aclara «datos al …». Los deals del propio webinar (reporte
+  de Webinars) no son esta card y siguen visibles.
+- **Conversiones, indicador destacado**: en Website y en Paid Media la card
+  de conversiones es la destacada (azul marino, a la derecha de la fila), en
+  lugar de los deals de HubSpot. Sin desglose email / formulario.
+
 ## 15. Website trimestral desde los reportes .md (Q3 2026)
 
 - **Fuente**: dos reportes por trimestre (`reporte_cu_AAAA-QN.md`,
@@ -482,10 +494,14 @@ equipo.
 - Lo que el reporte no trae (insights, diagnóstico, próximos pasos,
   glosario) lo generan las reglas de siempre; la card «Deals generados —
   HubSpot» sale del CRM para los meses del trimestre.
-- Las conversiones muestran el desglose email / formulario como nota de la
-  card, solo con las partes que tienen eventos. En Peterson, click_email no
-  registró eventos en Q3: la conversión es el form_submit (pedido del
-  equipo, 9/10/2026).
+- Las conversiones se muestran sin desglose (9/10/2026); el desglose email /
+  formulario queda en el seed (`conversionsBreakdown`). En Peterson,
+  click_email no registró eventos en Q3: la conversión es el form_submit.
+- **Nombres de métricas en el idioma del reporte**: en ES, Visitantes únicos,
+  Sesiones, Vistas de página, Conversiones, Posición promedio, Impresiones y
+  Clics totales (también en el glosario); en EN, los nombres del reporte
+  (Single Traffic, Total Traffic, Impressions, Conversions, Average
+  Position, Total Clicks).
 - **SEM (Google Ads)** no viene en estos reportes: va en Paid Media, que se
   reporta **por mes** (no por trimestre). Septiembre de Paid está pendiente
   de que el equipo pase los exports.

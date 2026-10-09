@@ -8,6 +8,7 @@ import { ConclusionsPanel, NextStepsPanel } from '@/components/shared/Performanc
 import { Glossary } from '@/components/shared/Glossary';
 import { ClientCrm, crmStripCards } from '@/components/clients/ClientCrm';
 import { getClientCrm } from '@/services/crmService';
+import { CRM_UI_ENABLED } from '@/constants/crm';
 import { lgCols } from '@/utils/gridCols';
 import { isExternalReport, isEmbedReport } from '@/utils/reportAudience';
 
@@ -28,7 +29,7 @@ export function ClientOverview({ overview, lang = 'es', onOpen }) {
   const t = CLIENT_STR[lang];
   const summary = useMemo(() => buildClientSummary(overview, lang), [overview, lang]);
   // HubSpot, acumulado del año: va en la misma tira que los indicadores de cada pilar.
-  const crmYear = useMemo(() => (overview ? getClientCrm(overview.client.id, 'year-2026') : null), [overview]);
+  const crmYear = useMemo(() => (overview && CRM_UI_ENABLED ? getClientCrm(overview.client.id, 'year-2026') : null), [overview]);
   if (!overview || !summary) return null;
   const { client } = overview;
   const { pillars, insights, conclusions, nextSteps, glossaryKeys } = summary;
@@ -139,7 +140,7 @@ export function ClientOverview({ overview, lang = 'es', onOpen }) {
       </div>
 
       {/* ── Detalle de HubSpot: por pilar y otros orígenes, con período ── */}
-      <ClientCrm clientId={client.id} lang={lang} />
+      {CRM_UI_ENABLED && <ClientCrm clientId={client.id} lang={lang} />}
 
       {/* ── Lectura de performance ── */}
       <SectionHeader title={t.perfSection} />
