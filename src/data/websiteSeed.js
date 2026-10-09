@@ -485,7 +485,8 @@ for (const [id, data] of Object.entries(WEBSITE_Q1_2026)) {
 
 // ── Q3 2026 (reportes trimestrales en .md: GA4 + Search Console) ────
 // Generado con scripts/website/md_to_seed.py, que valida CTR, embudo y la
-// suma de conversiones (click_email + form_submit) contra el archivo.
+// suma de conversiones contra el archivo. Conversiones (reportes del 9/10/2026)
+// = formularios por página de gracias + emails (click_email filtrado).
 // «Peterson Solutions South America» del reporte = sitio americas.peterson-solutions.com
 // = cuenta «Peterson Solutions Americas» (psam). Estados Unidos y Canadá: el
 // sitio northamerica.controlunion.com segmentado por país (no suman el total
@@ -494,8 +495,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union Argentina
   cua: {
     site: {
-      singleTraffic: 2920, totalTraffic: 4098, impressions: 8566, conversions: 218,
-      conversionsBreakdown: { clickEmail: 153, formSubmit: 65 },
+      singleTraffic: 2920, totalTraffic: 4098, impressions: 8566, conversions: 32,
+      conversionsBreakdown: { forms: 19, emails: 13 },
       topLandingPages: [
         lp("https://argentina.controlunion.com/", 1545),
         lp("https://argentina.controlunion.com/nosotros/", 552),
@@ -512,8 +513,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union Brasil
   cubr: {
     site: {
-      singleTraffic: 3040, totalTraffic: 3793, impressions: 7258, conversions: 297,
-      conversionsBreakdown: { clickEmail: 234, formSubmit: 63 },
+      singleTraffic: 3040, totalTraffic: 3793, impressions: 7258, conversions: 185,
+      conversionsBreakdown: { forms: 53, emails: 132 },
       topLandingPages: [
         lp("https://brasil.controlunion.com/", 2288),
         lp("https://brasil.controlunion.com/contato/", 576),
@@ -530,8 +531,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union Chile
   cucl: {
     site: {
-      singleTraffic: 957, totalTraffic: 1197, impressions: 2628, conversions: 104,
-      conversionsBreakdown: { clickEmail: 71, formSubmit: 33 },
+      singleTraffic: 957, totalTraffic: 1197, impressions: 2628, conversions: 48,
+      conversionsBreakdown: { forms: 15, emails: 33 },
       topLandingPages: [
         lp("https://chile.controlunion.com/", 490),
         lp("https://chile.controlunion.com/programas-de-certificacion/", 209),
@@ -548,8 +549,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union España
   cues: {
     site: {
-      singleTraffic: 2370, totalTraffic: 2798, impressions: 5961, conversions: 69,
-      conversionsBreakdown: { clickEmail: 28, formSubmit: 41 },
+      singleTraffic: 2370, totalTraffic: 2798, impressions: 5961, conversions: 37,
+      conversionsBreakdown: { forms: 19, emails: 18 },
       topLandingPages: [
         lp("https://espana.controlunion.com/", 518),
         lp("https://espana.controlunion.com/programa-de-certificacion/certification-program-iso-27001-certification/", 393),
@@ -566,8 +567,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union México
   cumx: {
     site: {
-      singleTraffic: 2092, totalTraffic: 2493, impressions: 4445, conversions: 121,
-      conversionsBreakdown: { clickEmail: 95, formSubmit: 26 },
+      singleTraffic: 2092, totalTraffic: 2493, impressions: 4445, conversions: 86,
+      conversionsBreakdown: { forms: 39, emails: 47 },
       topLandingPages: [
         lp("https://mexico.controlunion.com/", 1379),
         lp("https://mexico.controlunion.com/contacto-mexico/", 284),
@@ -584,8 +585,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union North America
   cunam: {
     site: {
-      singleTraffic: 2475, totalTraffic: 3200, impressions: 6388, conversions: 180,
-      conversionsBreakdown: { clickEmail: 78, formSubmit: 102 },
+      singleTraffic: 2475, totalTraffic: 3200, impressions: 6388, conversions: 62,
+      conversionsBreakdown: { forms: 35, emails: 27 },
       topLandingPages: [
         lp("https://northamerica.controlunion.com/", 1474),
         lp("https://northamerica.controlunion.com/certification-programs/", 600),
@@ -602,8 +603,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union Perú
   cupe: {
     site: {
-      singleTraffic: 4080, totalTraffic: 6009, impressions: 11431, conversions: 265,
-      conversionsBreakdown: { clickEmail: 155, formSubmit: 110 },
+      singleTraffic: 4080, totalTraffic: 6009, impressions: 11431, conversions: 107,
+      conversionsBreakdown: { forms: 21, emails: 86 },
       topLandingPages: [
         lp("https://peru.controlunion.com/", 2585),
         lp("https://peru.controlunion.com/programas-de-certificacion/", 572),
@@ -620,8 +621,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union Portugal
   cupt: {
     site: {
-      singleTraffic: 1525, totalTraffic: 1686, impressions: 3456, conversions: 91,
-      conversionsBreakdown: { clickEmail: 54, formSubmit: 37 },
+      singleTraffic: 1525, totalTraffic: 1686, impressions: 3456, conversions: 43,
+      conversionsBreakdown: { forms: 7, emails: 36 },
       topLandingPages: [
         lp("https://portugal.controlunion.com/", 663),
         lp("https://portugal.controlunion.com/esquemas-de-certificacao/", 156),
@@ -638,8 +639,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union North America — Estados Unidos
   cuus: {
     site: {
-      singleTraffic: 1192, totalTraffic: 1480, impressions: 2684, conversions: 96,
-      conversionsBreakdown: { clickEmail: 67, formSubmit: 29 },
+      singleTraffic: 1192, totalTraffic: 1480, impressions: 2684, conversions: 47,
+      conversionsBreakdown: { forms: 25, emails: 22 },
       topLandingPages: [
         lp("https://northamerica.controlunion.com/", 706),
         lp("https://northamerica.controlunion.com/certification-programs/", 343),
@@ -656,8 +657,8 @@ const WEBSITE_Q3_2026 = {
   // Control Union North America — Canadá
   cuca: {
     site: {
-      singleTraffic: 224, totalTraffic: 258, impressions: 502, conversions: 4,
-      conversionsBreakdown: { clickEmail: 4, formSubmit: 0 },
+      singleTraffic: 224, totalTraffic: 258, impressions: 502, conversions: 6,
+      conversionsBreakdown: { forms: 3, emails: 3 },
       topLandingPages: [
         lp("https://northamerica.controlunion.com/certification-programs/", 62),
         lp("https://northamerica.controlunion.com/industry/forestry/", 56),
@@ -674,8 +675,8 @@ const WEBSITE_Q3_2026 = {
   // Peterson Solutions South America
   psam: {
     site: {
-      singleTraffic: 1421, totalTraffic: 1861, impressions: 3414, conversions: 27,
-      conversionsBreakdown: { clickEmail: 0, formSubmit: 27 },
+      singleTraffic: 1421, totalTraffic: 1861, impressions: 3414, conversions: 6,
+      conversionsBreakdown: { forms: 6, emails: 0 },
       topLandingPages: [
         lp("https://americas.peterson-solutions.com/", 368),
         lp("https://americas.peterson-solutions.com/service/sostenibilidad-en-la-cadena-de-suministro/agricultura-regenerativa/", 301),
@@ -692,8 +693,8 @@ const WEBSITE_Q3_2026 = {
   // Peterson Solutions Iberia
   psib: {
     site: {
-      singleTraffic: 476, totalTraffic: 702, impressions: 1452, conversions: 24,
-      conversionsBreakdown: { clickEmail: 0, formSubmit: 24 },
+      singleTraffic: 476, totalTraffic: 702, impressions: 1452, conversions: 3,
+      conversionsBreakdown: { forms: 3, emails: 0 },
       topLandingPages: [
         lp("https://iberia.peterson-solutions.com/", 219),
         lp("https://iberia.peterson-solutions.com/service/estrategia-y-gestion-de-sostenibilidad/eu-green-consumer-directive-ecgt-compliance/", 57),

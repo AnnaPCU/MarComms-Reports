@@ -494,8 +494,13 @@ equipo.
 - Lo que el reporte no trae (insights, diagnóstico, próximos pasos,
   glosario) lo generan las reglas de siempre; la card «Deals generados —
   HubSpot» sale del CRM para los meses del trimestre.
-- Las conversiones se muestran sin desglose (9/10/2026); el desglose email /
-  formulario queda en el seed (`conversionsBreakdown`). En Peterson,
+- **Conversiones (desde los reportes del 9/10/2026)** = formularios por
+  página de gracias (Gravity Forms y HubSpot redirigen a una thank-you page;
+  se cuentan las vistas que llegan desde otra página del mismo sitio) +
+  emails (click_email, sin empleo, academy ni reclamos). Ya no se usa
+  form_submit (inflaba la cifra). La cifra viene calculada en el reporte; no
+  se aclara en la vista. Se muestran sin desglose; el desglose formularios /
+  emails queda en el seed (`conversionsBreakdown`). En Peterson,
   click_email no registró eventos en Q3: la conversión es el form_submit.
 - **Nombres de métricas en el idioma del reporte**: en ES, Visitantes únicos,
   Sesiones, Vistas de página, Conversiones, Posición promedio, Impresiones y

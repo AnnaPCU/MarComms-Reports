@@ -7,6 +7,31 @@ Dónde va cada dato en el reporte (una cuenta / región por reporte):
 - Hoja **Website**: «Website — 2026-Q3» = Single Traffic, Total Traffic, Impressions, Conversions · «Embudo de tráfico — Vista → Sesión → Conversión» = vistas → sesiones → conversiones con sus % · «Top landing pages — vistas» = lista de páginas · «Generals KPIs» = gráfico de barras con Single Traffic, Total Traffic, Impressions y Conversions.
 - No incluido (lo completa el creador del reporte): insights y plan de acción, diagnóstico, próximos pasos, glosario y el casillero «Deals generados — HubSpot».
 
+### Qué cuenta como «Conversions»
+
+Conversions = **formularios + emails**: alguien completó un formulario o hizo clic en un email (mailto).
+
+- **Formularios**: todo formulario del sitio, de Gravity Forms o de HubSpot, redirige al enviarse a una página de gracias (gracias / thank-you / obrigado / agradecemos). Se cuentan las vistas a esas páginas **cuando se llegó desde otra página del mismo sitio**, que es como se ve un envío. Las entradas directas sin página de origen (revisiones del equipo y robots, ~60 % de las vistas a esas páginas en el 3T 2026) quedan afuera, igual que las que vienen del administrador del sitio, de empleo, academy o reclamos.
+- **Emails**: evento click_email, salvo los que salen de páginas de empleo (vacantes, vagas, carreiras, careers), de la academia de cursos (academy) y de reclamos.
+
+No se usa el evento form_submit: además de formularios registraba el buscador del sitio y el acceso de administración (/exp-admin), y no ve los formularios de HubSpot (van dentro de un iframe).
+
+Límites: la página de gracias cuenta vistas, no envíos únicos (si alguien la recarga, suma dos), y si el navegador no informa la página de origen el envío no se cuenta. La columna «todas las vistas» muestra el techo sin filtrar. La pestaña «Sitios · GA4» del tablero todavía cuenta los formularios con form_submit «gform_» y no suma las páginas de gracias.
+
+Hasta el 9 oct 2026 este reporte sumaba click_email + form_submit en crudo, lo que inflaba la cifra. Comparación por sitio:
+
+| Cuenta | form_submit (crudo) | click_email (crudo) | Antes | Páginas de gracias (todas las vistas) | Formularios (página de gracias, filtrado) | Emails reales | Ahora |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Control Union Argentina | 65 | 153 | 218 | 95 | 19 | 13 | 32 |
+| Control Union Brasil | 63 | 234 | 297 | 76 | 53 | 132 | 185 |
+| Control Union Chile | 33 | 71 | 104 | 40 | 15 | 33 | 48 |
+| Control Union España | 41 | 28 | 69 | 70 | 19 | 18 | 37 |
+| Control Union México | 26 | 95 | 121 | 58 | 39 | 47 | 86 |
+| Control Union North America | 102 | 78 | 180 | 57 | 35 | 27 | 62 |
+| Control Union Perú | 110 | 155 | 265 | 49 | 21 | 86 | 107 |
+| Control Union Portugal | 37 | 54 | 91 | 30 | 7 | 36 | 43 |
+| **Total** | **477** | **868** | **1.345** | **475** | **208** | **392** | **600** |
+
 ## Control Union Argentina
 
 ### SEO — Search Console
@@ -27,10 +52,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 2.920 | 4.098 | 8.566 | 218 |
+| 2.920 | 4.098 | 8.566 | 32 |
 
-Conversions = click_email (153) + form_submit (65).
-Embudo: vistas 8.566 → sesiones 4.098 (47,84 %) → conversiones 218 (5,32 % de las sesiones).
+Conversions = formularios por página de gracias (19) + emails (13). Con la definición anterior (click_email + form_submit en crudo) daba 218.
+Embudo: vistas 8.566 → sesiones 4.098 (47,84 %) → conversiones 32 (0,78 % de las sesiones).
 
 Top páginas por vistas:
 
@@ -60,10 +85,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 3.040 | 3.793 | 7.258 | 297 |
+| 3.040 | 3.793 | 7.258 | 185 |
 
-Conversions = click_email (234) + form_submit (63).
-Embudo: vistas 7.258 → sesiones 3.793 (52,26 %) → conversiones 297 (7,83 % de las sesiones).
+Conversions = formularios por página de gracias (53) + emails (132). Con la definición anterior (click_email + form_submit en crudo) daba 297.
+Embudo: vistas 7.258 → sesiones 3.793 (52,26 %) → conversiones 185 (4,88 % de las sesiones).
 
 Top páginas por vistas:
 
@@ -93,10 +118,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 957 | 1.197 | 2.628 | 104 |
+| 957 | 1.197 | 2.628 | 48 |
 
-Conversions = click_email (71) + form_submit (33).
-Embudo: vistas 2.628 → sesiones 1.197 (45,55 %) → conversiones 104 (8,69 % de las sesiones).
+Conversions = formularios por página de gracias (15) + emails (33). Con la definición anterior (click_email + form_submit en crudo) daba 104.
+Embudo: vistas 2.628 → sesiones 1.197 (45,55 %) → conversiones 48 (4,01 % de las sesiones).
 
 Top páginas por vistas:
 
@@ -126,10 +151,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 2.370 | 2.798 | 5.961 | 69 |
+| 2.370 | 2.798 | 5.961 | 37 |
 
-Conversions = click_email (28) + form_submit (41).
-Embudo: vistas 5.961 → sesiones 2.798 (46,94 %) → conversiones 69 (2,47 % de las sesiones).
+Conversions = formularios por página de gracias (19) + emails (18). Con la definición anterior (click_email + form_submit en crudo) daba 69.
+Embudo: vistas 5.961 → sesiones 2.798 (46,94 %) → conversiones 37 (1,32 % de las sesiones).
 
 Top páginas por vistas:
 
@@ -159,10 +184,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 2.092 | 2.493 | 4.445 | 121 |
+| 2.092 | 2.493 | 4.445 | 86 |
 
-Conversions = click_email (95) + form_submit (26).
-Embudo: vistas 4.445 → sesiones 2.493 (56,09 %) → conversiones 121 (4,85 % de las sesiones).
+Conversions = formularios por página de gracias (39) + emails (47). Con la definición anterior (click_email + form_submit en crudo) daba 121.
+Embudo: vistas 4.445 → sesiones 2.493 (56,09 %) → conversiones 86 (3,45 % de las sesiones).
 
 Top páginas por vistas:
 
@@ -192,10 +217,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 2.475 | 3.200 | 6.388 | 180 |
+| 2.475 | 3.200 | 6.388 | 62 |
 
-Conversions = click_email (78) + form_submit (102).
-Embudo: vistas 6.388 → sesiones 3.200 (50,09 %) → conversiones 180 (5,62 % de las sesiones).
+Conversions = formularios por página de gracias (35) + emails (27). Con la definición anterior (click_email + form_submit en crudo) daba 180.
+Embudo: vistas 6.388 → sesiones 3.200 (50,09 %) → conversiones 62 (1,94 % de las sesiones).
 
 Top páginas por vistas:
 
@@ -225,10 +250,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 4.080 | 6.009 | 11.431 | 265 |
+| 4.080 | 6.009 | 11.431 | 107 |
 
-Conversions = click_email (155) + form_submit (110).
-Embudo: vistas 11.431 → sesiones 6.009 (52,57 %) → conversiones 265 (4,41 % de las sesiones).
+Conversions = formularios por página de gracias (21) + emails (86). Con la definición anterior (click_email + form_submit en crudo) daba 265.
+Embudo: vistas 11.431 → sesiones 6.009 (52,57 %) → conversiones 107 (1,78 % de las sesiones).
 
 Top páginas por vistas:
 
@@ -258,10 +283,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 1.525 | 1.686 | 3.456 | 91 |
+| 1.525 | 1.686 | 3.456 | 43 |
 
-Conversions = click_email (54) + form_submit (37).
-Embudo: vistas 3.456 → sesiones 1.686 (48,78 %) → conversiones 91 (5,40 % de las sesiones).
+Conversions = formularios por página de gracias (7) + emails (36). Con la definición anterior (click_email + form_submit en crudo) daba 91.
+Embudo: vistas 3.456 → sesiones 1.686 (48,78 %) → conversiones 43 (2,55 % de las sesiones).
 
 Top páginas por vistas:
 

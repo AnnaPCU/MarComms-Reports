@@ -39,9 +39,17 @@ def parse(text):
         site = {'singleTraffic': int(num(single)), 'totalTraffic': int(num(total)), 'impressions': int(num(views)), 'conversions': int(num(conv))}
         # Validaciones contra lo que trae el archivo.
         assert round(seo['totalClicks'] / seo['impressions'] * 100, 2) == num(ctr), (name, 'CTR')
-        m = re.search(r'Conversions = click_email \((\d+)\) \+ form_submit \((\d+)\)', body)
-        assert m and int(m[1]) + int(m[2]) == site['conversions'], (name, 'conversiones')
-        site['conversionsBreakdown'] = {'clickEmail': int(m[1]), 'formSubmit': int(m[2])}
+        # Conversiones (desde el 9/10/2026) = formularios por página de gracias +
+        # emails (click_email filtrado). Formato anterior: click_email + form_submit.
+        m = re.search(r'Conversions = formularios por página de gracias \((\d+)\) \+ emails \((\d+)\)', body)
+        if m:
+            forms, emails = int(m[1]), int(m[2])
+        else:
+            m = re.search(r'Conversions = click_email \((\d+)\) \+ form_submit \((\d+)\)', body)
+            assert m, (name, 'no encuentro el desglose de conversiones')
+            emails, forms = int(m[1]), int(m[2])
+        assert forms + emails == site['conversions'], (name, 'conversiones')
+        site['conversionsBreakdown'] = {'forms': forms, 'emails': emails}
         e = re.search(r'sesiones [\d.]+ \(([\d,]+) %\) → conversiones \d+ \(([\d,]+) %', body)
         assert round(site['totalTraffic'] / site['impressions'] * 100, 2) == num(e[1]), (name, 'embudo vista→sesión')
         assert round(site['conversions'] / site['totalTraffic'] * 100, 2) == num(e[2]), (name, 'embudo sesión→conversión')
@@ -62,7 +70,7 @@ def js(data):
         lines.append("    site: {")
         lines.append(f"      singleTraffic: {s['singleTraffic']}, totalTraffic: {s['totalTraffic']}, impressions: {s['impressions']}, conversions: {s['conversions']},")
         b = s['conversionsBreakdown']
-        lines.append(f"      conversionsBreakdown: {{ clickEmail: {b['clickEmail']}, formSubmit: {b['formSubmit']} }},")
+        lines.append(f"      conversionsBreakdown: {{ forms: {b['forms']}, emails: {b['emails']} }},")
         lines.append("      topLandingPages: [")
         lines += [f"        lp({json.dumps(u)}, {v})," for u, v in s['topLandingPages']]
         lines.append("      ],")

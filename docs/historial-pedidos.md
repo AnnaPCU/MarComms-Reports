@@ -1580,3 +1580,13 @@
 
 (Mensaje de voz; transcripción ajustada.)
 
+
+**#122**
+
+> Necesito que me pases por acá una carpeta con todos los reportes de Website y Social Media, separados por subcarpetas por país. (La consulta del webinar es entendible, pero mantenelo como está.) Vista externa, listo para enviar al cliente. USA y Canadá en inglés, el resto en español.
+
+
+**#123**
+
+> [reporte_cu_2026-Q3.md, reporte_ps_2026-Q3.md, reporte_cu_2026-Q3_northamerica_por_pais.md, actualizados] Te adjunto archivos actualizados de las conversiones, que estaban mal hechas. No hace falta que lo aclares en ningún lado. Las conversiones las vamos a medir como las personas que llegan a una thank-you page (Gravity Forms y HubSpot Forms siempre redirigen a una), sumado a los click emails. No tenés que hacer ninguna suma: está todo en los archivos. Con esas actualizaciones, enviame lo que te pedí: las carpetas con sus subcarpetas, con el idioma y siempre en vista externa.
+

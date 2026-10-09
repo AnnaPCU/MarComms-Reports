@@ -392,6 +392,11 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **Website Q3: conversiones con la definición nueva** (9/10/2026):
+  formularios por página de gracias + emails, de los reportes actualizados
+  (reemplazan a los anteriores en `metricas/website/_procesados/2026-Q3/`).
+  Fix: el «Resumen del Año» de Social respeta el idioma elegido al descargar.
+
 - **HubSpot oculto y Conversiones destacada** (9/10/2026): las cards de
   deals de HubSpot se ocultan en pilares y Clientes (interruptor, sin borrar
   nada). Website y Paid destacan Conversiones (sin desglose). Website y SEO

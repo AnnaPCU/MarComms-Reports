@@ -7,6 +7,25 @@ Dónde va cada dato en el reporte (una cuenta / región por reporte):
 - Hoja **Website**: «Website — 2026-Q3» = Single Traffic, Total Traffic, Impressions, Conversions · «Embudo de tráfico — Vista → Sesión → Conversión» = vistas → sesiones → conversiones con sus % · «Top landing pages — vistas» = lista de páginas · «Generals KPIs» = gráfico de barras con Single Traffic, Total Traffic, Impressions y Conversions.
 - No incluido (lo completa el creador del reporte): insights y plan de acción, diagnóstico, próximos pasos, glosario y el casillero «Deals generados — HubSpot».
 
+### Qué cuenta como «Conversions»
+
+Conversions = **formularios + emails**: alguien completó un formulario o hizo clic en un email (mailto).
+
+- **Formularios**: todo formulario del sitio, de Gravity Forms o de HubSpot, redirige al enviarse a una página de gracias (gracias / thank-you / obrigado / agradecemos). Se cuentan las vistas a esas páginas **cuando se llegó desde otra página del mismo sitio**, que es como se ve un envío. Las entradas directas sin página de origen (revisiones del equipo y robots, ~60 % de las vistas a esas páginas en el 3T 2026) quedan afuera, igual que las que vienen del administrador del sitio, de empleo, academy o reclamos.
+- **Emails**: evento click_email, salvo los que salen de páginas de empleo (vacantes, vagas, carreiras, careers), de la academia de cursos (academy) y de reclamos.
+
+No se usa el evento form_submit: además de formularios registraba el buscador del sitio y el acceso de administración (/exp-admin), y no ve los formularios de HubSpot (van dentro de un iframe).
+
+Límites: la página de gracias cuenta vistas, no envíos únicos (si alguien la recarga, suma dos), y si el navegador no informa la página de origen el envío no se cuenta. La columna «todas las vistas» muestra el techo sin filtrar. La pestaña «Sitios · GA4» del tablero todavía cuenta los formularios con form_submit «gform_» y no suma las páginas de gracias.
+
+Hasta el 9 oct 2026 este reporte sumaba click_email + form_submit en crudo, lo que inflaba la cifra. Comparación por sitio:
+
+| Cuenta | form_submit (crudo) | click_email (crudo) | Antes | Páginas de gracias (todas las vistas) | Formularios (página de gracias, filtrado) | Emails reales | Ahora |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Peterson Solutions South America | 27 | 0 | 27 | 14 | 6 | 0 | 6 |
+| Peterson Solutions Iberia | 24 | 0 | 24 | 17 | 3 | 0 | 3 |
+| **Total** | **51** | **0** | **51** | **31** | **9** | **0** | **9** |
+
 ## Peterson Solutions South America
 
 ### SEO — Search Console
@@ -27,10 +46,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 1.421 | 1.861 | 3.414 | 27 |
+| 1.421 | 1.861 | 3.414 | 6 |
 
-Conversions = click_email (0) + form_submit (27). Nota: click_email no registró ningún evento en el trimestre.
-Embudo: vistas 3.414 → sesiones 1.861 (54,51 %) → conversiones 27 (1,45 % de las sesiones).
+Conversions = formularios por página de gracias (6) + emails (0). Con la definición anterior (click_email + form_submit en crudo) daba 27.
+Embudo: vistas 3.414 → sesiones 1.861 (54,51 %) → conversiones 6 (0,32 % de las sesiones).
 
 Top páginas por vistas:
 
@@ -60,10 +79,10 @@ Top keywords por clics:
 
 | Single Traffic | Total Traffic | Impressions | Conversions |
 |---:|---:|---:|---:|
-| 476 | 702 | 1.452 | 24 |
+| 476 | 702 | 1.452 | 3 |
 
-Conversions = click_email (0) + form_submit (24). Nota: click_email no registró ningún evento en el trimestre.
-Embudo: vistas 1.452 → sesiones 702 (48,35 %) → conversiones 24 (3,42 % de las sesiones).
+Conversions = formularios por página de gracias (3) + emails (0). Con la definición anterior (click_email + form_submit en crudo) daba 24.
+Embudo: vistas 1.452 → sesiones 702 (48,35 %) → conversiones 3 (0,43 % de las sesiones).
 
 Top páginas por vistas:
 

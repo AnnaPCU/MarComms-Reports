@@ -18,8 +18,10 @@ import { ExecutiveReview } from '@/components/social/ExecutiveReview';
 export function AnnualReview({ account }) {
   const { accName, series } = useSocialYear(account);
   const [lang, setLang] = useState(() => initialLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
+  // Al cambiar de cuenta vuelve al idioma por defecto de la marca; en un HTML
+  // descargado manda el idioma elegido en la descarga (initialLang).
   useEffect(() => {
-    setLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es');
+    setLang(initialLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
   }, [account, accName]);
 
   const en = lang === 'en';
