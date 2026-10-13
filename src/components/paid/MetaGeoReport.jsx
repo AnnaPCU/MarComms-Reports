@@ -6,6 +6,7 @@ import { listAccounts, getGeo } from '@/services/paidService';
 import { aggAccount } from '@/data/paidMetaGeo';
 import { GEO_STR } from '@/utils/paidI18n';
 import { genGeoNextSteps } from '@/utils/paidInsights';
+import { dayLabel, rangeLabel, deliveryWindow } from '@/utils/metaDates';
 import { Funnel } from '@/components/shared/Funnel';
 import { PAL, CU, CHART_TOOLTIP } from '@/constants/brand';
 import { SectionHeader } from '@/components/shared/SectionHeader';
@@ -19,26 +20,30 @@ import { Glossary } from '@/components/shared/Glossary';
 import { isExternalReport } from '@/utils/reportAudience';
 
 // ════════════════════════════════════════════════════════════════
-//  Reporte Meta Ads GEO — campaña corta atada a un evento físico
-//  (Congreso Aapresid 2026, radio ~1 km). Estructura: ficha del
-//  experimento → insights → resultados generales → Typeform vs
-//  WhatsApp → evolución diaria → alcance del reporte → glosario.
-//  Regla de honestidad: solo datos del export diario de Meta; lo que
-//  falta (funnel Typeform/WhatsApp, breakdowns) se declara, no se estima.
+//  Reporte de una campaña de Meta Ads (GEO de evento, como Aapresid, u
+//  otra campaña corta de una o pocas semanas). Estructura: ficha →
+//  resultados generales → Typeform vs WhatsApp / funnels (si se cargaron)
+//  → evolución diaria → alcance único → creativos → desgloses → próximos
+//  pasos → glosario. Lo propio de cada campaña (objetivo, segmentación,
+//  notas) viene del seed; período y entrega efectiva salen de los días.
+//  Regla de honestidad: solo datos de los exports de Meta; lo que falta
+//  se declara, no se estima.
 // ════════════════════════════════════════════════════════════════
 
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
-const pct = (v) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
+// Formato numérico por idioma: es-AR en español, en-US en inglés.
+const fmtNum = (loc) => (v) => Number(v || 0).toLocaleString(loc);
+const fmtPct = (loc) => (v) =>
+  Number(v || 0).toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
 
-function moneyFor(currency) {
+function moneyFor(currency, loc = 'es-AR') {
+  const two = (v) => Number(v || 0).toLocaleString(loc, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   return (v) =>
     currency === 'ARS'
-      ? `${Math.round(Number(v || 0)).toLocaleString('es-AR')} ARS`
-      : `US$ ${Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      ? `${Math.round(Number(v || 0)).toLocaleString(loc)} ARS`
+      : currency === 'USD'
+        ? `US$ ${two(v)}`
+        : `${two(v)} ${currency}`;
 }
-
-const dayLabel = (d, en) => (en ? d.replace(/(\d+) Ago/, 'Aug $1') : d);
 
 // Tabla genérica de desglose (creativos / plataforma / género).
 function DataTable({ title, note, headers, rows, foot }) {
@@ -98,10 +103,15 @@ export function MetaGeoReport({ account, period }) {
   // Vista por campaña (CU tiene 2): en la app se navega de a una para no
   // saturar; el HTML descargado trae SIEMPRE las dos vistas completas.
   const [view, setView] = useState('tf');
-  const t = GEO_STR[lang];
   const en = lang === 'en';
+  const loc = en ? 'en-US' : 'es-AR';
+  const numEs = fmtNum(loc);
+  const pct = fmtPct(loc);
+  const dec = (v, n) => Number(v).toLocaleString(loc, { minimumFractionDigits: n, maximumFractionDigits: n });
   const accName = listAccounts().find((a) => a.id === account)?.name ?? '';
   const geo = getGeo(account, period);
+  // Textos base + los propios de la campaña (seed `texts`).
+  const t = { ...GEO_STR[lang], ...(geo?.texts?.[lang] ?? {}) };
 
   if (!geo) {
     return (
@@ -109,18 +119,13 @@ export function MetaGeoReport({ account, period }) {
         <NoDataScreen
           lang={lang}
           detail={
-            en ? (
-              <>
-                No Meta Ads GEO campaigns loaded for <strong>{accName}</strong> for this event. The accounts with
-                data are <strong>Control Union Argentina</strong> and <strong>Peterson Solutions Argentina</strong>.
-              </>
-            ) : (
-              <>
-                No hay campañas Meta Ads GEO cargadas de <strong>{accName}</strong> para este
-                evento. Las cuentas con datos son <strong>Control Union Argentina</strong> y{' '}
-                <strong>Peterson Solutions Argentina</strong>.
-              </>
-            )
+            <>
+              {t.noData(accName)}
+              {(() => {
+                const withData = listAccounts().filter((a) => getGeo(a.id, period)).map((a) => a.name);
+                return withData.length ? t.noDataWith(withData.join(en ? ' and ' : ' y ')) : null;
+              })()}
+            </>
           }
         />
         <Glossary keys={en ? 'paidMetaEn' : 'paidMeta'} />
@@ -128,12 +133,25 @@ export function MetaGeoReport({ account, period }) {
     );
   }
 
-  const money = moneyFor(geo.currency);
+  const money = moneyFor(geo.currency, loc);
   const acc = aggAccount(geo);
   const per = acc.per; // [{c, t}] por campaña
   const tf = per.find((x) => x.c.kind === 'typeform');
   const wa = per.find((x) => x.c.kind === 'whatsapp');
-  const kindOf = (c) => t.kindLabel[c.kind] ?? c.kind;
+  const kindOf = (c) => c.label?.[lang] ?? t.kindLabel[c.kind] ?? c.kind;
+  // Campaña con resultado propio de Meta (conversaciones o leads del
+  // formulario instantáneo), para la ficha y el KPI de resultados.
+  const resC = per.find((x) => x.t.results != null);
+  // Período: fechas del seed + entrega efectiva (días con impresiones).
+  const pr = geo.period ?? {};
+  const win = deliveryWindow(geo.campaigns);
+  // Entrega efectiva solo si difiere del período (ej. días sin impresiones).
+  const sameWin = win && win.start === pr.start && win.end === pr.end;
+  const periodVal = t.fPeriodVal(
+    rangeLabel(pr.start, pr.end, lang),
+    win && !sameWin ? rangeLabel(win.start, win.end, lang, false) : null,
+  );
+  const effLabel = win ? rangeLabel(win.start, win.end, lang, false) : '';
 
   // Vista activa: con 2 campañas se muestra UNA por vez, también en el
   // HTML descargado (interno o externo): el archivo trae las dos vistas y
@@ -141,9 +159,11 @@ export function MetaGeoReport({ account, period }) {
   // comparativa y el glosario son comunes a ambas vistas.
   const multi = per.length > 1;
   const showAll = !multi;
-  const visible = showAll ? per : per.filter((x) => x.c.id === view);
-  const showTfBlocks = Boolean(geo.typeform && tf) && (showAll || view === 'tf');
-  const showWaFunnel = Boolean(wa) && (showAll || view === 'wa');
+  // Si la vista guardada no es una campaña de este período, arranca en la primera.
+  const active = per.some((x) => x.c.id === view) ? view : per[0]?.c.id;
+  const visible = showAll ? per : per.filter((x) => x.c.id === active);
+  const showTfBlocks = Boolean(geo.typeform && tf) && (showAll || active === tf.c.id);
+  const showWaFunnel = Boolean(wa) && (showAll || active === wa.c.id);
 
   // Agregados de las campañas visibles (Resultados Generales).
   const sums = visible.reduce(
@@ -194,7 +214,7 @@ export function MetaGeoReport({ account, period }) {
         {multi && !showAll ? (
           <SegmentedControl
             label={t.viewLabel}
-            value={view}
+            value={active}
             onChange={setView}
             options={per.map(({ c }) => ({ id: c.id, label: t.kindShort[c.kind] ?? kindOf(c) }))}
           />
@@ -213,11 +233,21 @@ export function MetaGeoReport({ account, period }) {
       </div>
 
       {/* ── Ficha del experimento ── */}
-      <SectionHeader title={t.fichaSection} note={`${accName} · ${t.channel} · ${geo.event}`} />
+      <SectionHeader title={t.fichaSection} note={[accName, t.channel, geo.event].filter(Boolean).join(' · ')} />
       <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <FichaCell label={t.fGeo} value={t.fGeoVal(geo.event)} foot={t.fGeoFoot} highlight />
-        <FichaCell label={t.fObjective} value={t.fObjectiveVal} />
-        <FichaCell label={t.fPeriod} value={t.fPeriodVal} />
+        {geo.targeting && (
+          <FichaCell
+            label={String(period).startsWith('geo-') ? t.fGeo : t.fTargeting}
+            value={geo.targeting[lang]}
+            foot={en ? geo.targeting.footEn : geo.targeting.footEs}
+            highlight
+          />
+        )}
+        <FichaCell
+          label={t.fObjective}
+          value={geo.objective?.[lang] ?? t.fObjectiveFallback([...new Set(per.map(({ c }) => kindOf(c)))].join(' · '))}
+        />
+        <FichaCell label={t.fPeriod} value={periodVal} />
         <FichaCell
           label={t.fCampaigns}
           value={
@@ -246,13 +276,13 @@ export function MetaGeoReport({ account, period }) {
           foot={per.map(({ c }) => c.attribution)[0] ? `${t.fAttribution}: ${per[0].c.attribution}` : null}
         />
         <FichaCell
-          label={wa?.t.results ? t.fMainResult : t.fInvest}
+          label={resC?.t.results ? t.fMainResult : t.fInvest}
           value={
-            wa?.t.results
-              ? `${t.resultsVal(wa.t.results)} · ${money(acc.spend)}`
+            resC?.t.results
+              ? `${t.resultsVal(resC.t.results, resC.c.kind)} · ${money(acc.spend)}`
               : money(acc.spend)
           }
-          foot={wa?.c.results?.note[lang]}
+          foot={resC?.c.results?.note?.[lang]}
         />
       </div>
       {!geo.hsForm && (
@@ -271,15 +301,21 @@ export function MetaGeoReport({ account, period }) {
         <KpiCard label={t.kImp} value={numEs(visAgg.imp)} delta={{ dir: 'flat', label: `${t.kCpm} ${money(visAgg.cpm)}` }} />
         <KpiCard label={t.kLc} value={numEs(visAgg.lc)} delta={{ dir: 'flat', label: `${t.ctrShort} ${pct(visAgg.ctr)}` }} footnote={`${t.cpcShort}: ${money(visAgg.cpc)}`} />
         <KpiCard label={t.kOut} value={numEs(visAgg.out)} delta={{ dir: 'flat', label: `${t.outCtrShort} ${pct(visAgg.outCtr)}` }} footnote={t.kOutFoot} />
-        {showWaFunnel && wa && (
-          <KpiCard
-            label={t.kConv}
-            value={wa.t.results ?? 0}
-            accent="green"
-            delta={{ dir: 'up', label: `▲ ${t.resultsVal(wa.t.results ?? 0)}` }}
-            footnote={wa.t.costPerResult ? t.kConvFoot(money(wa.t.costPerResult)) : null}
-          />
-        )}
+        {visible
+          .filter(({ c, t: x }) => x.results != null && (c.kind !== 'whatsapp' || showWaFunnel))
+          .map(({ c, t: x }) => {
+            const isLead = c.kind === 'leads';
+            return (
+              <KpiCard
+                key={`res-${c.id}`}
+                label={isLead ? t.kLeadsMeta : t.kConv}
+                value={x.results ?? 0}
+                accent="green"
+                delta={{ dir: 'up', label: `▲ ${t.resultsVal(x.results ?? 0, c.kind)}` }}
+                footnote={x.costPerResult ? (isLead ? t.kLeadsMetaFoot : t.kConvFoot)(money(x.costPerResult)) : null}
+              />
+            );
+          })}
         {showTfBlocks && (() => {
           const starts = geo.typeform.forms.reduce((a, f) => a + f.starts, 0);
           const completed = geo.typeform.forms.reduce((a, f) => a + f.completed, 0);
@@ -587,14 +623,16 @@ export function MetaGeoReport({ account, period }) {
             </table>
           </div>
 
-          <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
-            {t.hsNote}
-          </div>
+          {t.hsNote && (
+            <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
+              {t.hsNote}
+            </div>
+          )}
         </>
       )}
 
       {/* ── Evolución diaria ── */}
-      <SectionHeader title={t.dailySection} note={t.dailyNote} />
+      <SectionHeader title={t.dailySection} note={effLabel ? t.dailyNote(effLabel) : null} />
       <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
         <ChartCard title={t.chOutTitle} subtitle={t.chOutSub}>
           <ResponsiveContainer width="100%" height="100%">
@@ -649,8 +687,8 @@ export function MetaGeoReport({ account, period }) {
                     <td className="px-3 py-2 text-[11px] font-medium text-cu-dblue">{dayLabel(d, en)}</td>
                     <td className="px-3 py-2 text-[11px] text-cu-dgrey">{kindOf(c)}</td>
                     <td className="px-3 py-2 text-[11.5px] font-medium text-cu-dblue">{money(x.spend)}</td>
-                    <td className="px-3 py-2 text-[11.5px] text-cu-dgrey">{numEs(x.reach)}</td>
-                    <td className="px-3 py-2 text-[11.5px] text-cu-dgrey">{x.freq.toFixed(2)}</td>
+                    <td className="px-3 py-2 text-[11.5px] text-cu-dgrey">{x.reach != null ? numEs(x.reach) : '—'}</td>
+                    <td className="px-3 py-2 text-[11.5px] text-cu-dgrey">{x.freq != null ? dec(x.freq, 2) : '—'}</td>
                     <td className="px-3 py-2 text-[11.5px] text-cu-dgrey">{numEs(x.imp)}</td>
                     <td className="px-3 py-2 text-[11.5px] font-medium text-cu-dblue">{numEs(x.lc)}</td>
                     <td className="px-3 py-2 text-[11.5px] font-medium text-cu-dblue">{numEs(x.out)}</td>
@@ -675,10 +713,10 @@ export function MetaGeoReport({ account, period }) {
                 value={numEs(c.periodReach.reach)}
                 delta={
                   c.periodReach.freq >= 3
-                    ? { dir: 'down', label: `${en ? 'Freq.' : 'Frec.'} ${c.periodReach.freq.toFixed(1)}` }
-                    : { dir: 'flat', label: `${en ? 'Freq.' : 'Frec.'} ${c.periodReach.freq.toFixed(1)}` }
+                    ? { dir: 'down', label: `${en ? 'Freq.' : 'Frec.'} ${dec(c.periodReach.freq, 1)}` }
+                    : { dir: 'flat', label: `${en ? 'Freq.' : 'Frec.'} ${dec(c.periodReach.freq, 1)}` }
                 }
-                footnote={t.reachFootFreq(c.periodReach.freq.toFixed(1))}
+                footnote={t.reachFootFreq(dec(c.periodReach.freq, 1))}
               />
             ))}
           </div>
@@ -746,7 +784,7 @@ export function MetaGeoReport({ account, period }) {
                 headers={[t.thPlat, t.thReach, t.thImp, t.thSpend, t.thLc, t.thCtr, t.thLeads]}
                 rows={c.platforms.map((r) => [
                   r.p,
-                  numEs(r.reach),
+                  r.reach != null ? numEs(r.reach) : '—',
                   numEs(r.imp),
                   money(r.spend),
                   numEs(r.lc),
@@ -816,7 +854,7 @@ export function MetaGeoReport({ account, period }) {
                 headers={[t.thAge, t.thReach, t.thImp, t.thSpend, t.thLc, t.thCtr, ...(hasResults ? [t.thConvs] : [])]}
                 rows={c.age.map((r) => [
                   r.a,
-                  numEs(r.reach),
+                  r.reach != null ? numEs(r.reach) : '—',
                   numEs(r.imp),
                   money(r.spend),
                   numEs(r.lc),
@@ -838,7 +876,7 @@ export function MetaGeoReport({ account, period }) {
       {!isExternalReport() && (
         <>
           <SectionHeader title={t.nextSection} />
-          <NextStepsPanel steps={genGeoNextSteps(geo, lang)} subtitle={`${accName} · ${geo.event}`} />
+          <NextStepsPanel steps={genGeoNextSteps(geo, lang)} subtitle={[accName, geo.event].filter(Boolean).join(' · ')} />
         </>
       )}
 

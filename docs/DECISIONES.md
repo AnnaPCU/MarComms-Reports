@@ -534,3 +534,39 @@ Social igual que en Website.
 - **Social sigue siendo mensual**: el período por defecto es el último mes;
   los trimestres son opciones más del selector y de la descarga.
 
+## 17. Paid Media por carpeta: Google Ads por mes, Meta Ads por campaña
+
+Pedido del equipo el 13/10/2026: el mismo flujo que Social, Email y Webinars
+(subir a `metricas/`, pedir el procesamiento) para Paid.
+
+- **Dos granularidades, a propósito.** Google Ads se reporta **por mes**,
+  con todas las campañas de todas las cuentas (las campañas de Search corren
+  todo el año). Meta Ads se usa para **campañas chicas con inicio y fin** de
+  una o pocas semanas: cada una es su propio reporte (un período más en
+  «Período/Campaña»), no se suma al mes ni se mezcla con Google Ads.
+- **Carpetas**: `google-ads/AAAA-MM/` y `meta-ads/AAAA-MM-<campaña>/` (mes
+  de inicio + nombre). Se archivan en el `_procesados/` de cada plataforma.
+- **Validación que corta**: Google Ads, semanal = informe de campañas
+  (exacto, por cuenta y campaña). Meta, diario = total (impresiones, importe,
+  clics). Los desgloses de Meta que no suman exacto (pasa: Meta deja alguna
+  impresión afuera) se avisan y se cargan igual.
+- **Alcance de Meta**: es por personas únicas, no se suma entre días, filas
+  ni conjuntos de anuncios. El alcance del período sale solo del export sin
+  desglose a nivel campaña; si no está o viene partido, queda «—».
+- **Resultado de Meta**: solo se muestra como resultado en campañas de
+  conversaciones (WhatsApp) y de formulario instantáneo (leads). En tráfico
+  o alcance, el «resultado» de Meta son los mismos clics o el alcance y no
+  se duplica.
+- **Lo que no viene en el export** (objetivo, segmentación, evento,
+  presupuesto si no figura) va en un `campaña.json` opcional. Sin él, el
+  reporte se arma igual: el objetivo se describe por el tipo de campaña.
+- **Reporte genérico**: período y entrega efectiva se calculan de los días
+  con impresiones; los textos propios de una campaña (notas del funnel de
+  Typeform/HubSpot, próximos pasos específicos) viven en su seed (`texts`,
+  `nextSteps`), no en el diccionario. Así Aapresid se ve igual que antes y
+  una campaña nueva no hereda fechas ni cifras de otra.
+- **Nombres de columna**: no había exports reales guardados de ninguna de
+  las dos plataformas. Los lectores usan los nombres estándar (español e
+  inglés) y se probaron recreando agosto 2026 (Google Ads) y Aapresid (Meta)
+  desde el seed, sin diferencias. Con el primer drop real se confirman.
+

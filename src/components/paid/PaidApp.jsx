@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { initialLang } from '@/utils/reportLang';
 import { CalendarClock } from 'lucide-react';
-import { listAccounts } from '@/services/paidService';
+import { listAccounts, isMetaPeriod } from '@/services/paidService';
 import { usePaidMonthly } from '@/hooks/usePaidMonthly';
 import { MONTHS_2026 } from '@/constants/periods';
 import { hasData } from '@/utils/hasData';
@@ -120,8 +120,9 @@ export function PaidApp({ account, period }) {
       ? MONTHS_EN[period] ?? period
       : MONTHS_2026.find((p) => p.id === period)?.label ?? period;
 
-  // Períodos-evento GEO (Meta Ads): reporte propio, fuera del flujo mensual.
-  if (String(period).startsWith('geo-')) {
+  // Campañas de Meta Ads (GEO de evento y otras cortas): reporte propio,
+  // fuera del flujo mensual.
+  if (isMetaPeriod(period)) {
     return <MetaGeoReport account={account} period={period} />;
   }
 

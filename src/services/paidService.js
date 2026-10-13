@@ -2,7 +2,7 @@
 // Fuente de datos: seed en código (src/data/paidSeed.js). Sin base de datos.
 import { PAID_CLIENTS, PAID_DB } from '@/data/paidSeed';
 import { PAID_DETAIL } from '@/data/paidDetail';
-import { META_GEO, META_GEO_PERIOD } from '@/data/paidMetaGeo';
+import { META_GEO, META_PERIODS } from '@/data/paidMetaGeo';
 import { MONTHS_2026 } from '@/constants/periods';
 
 export function listAccounts() {
@@ -13,16 +13,23 @@ export function listPeriods() {
   return MONTHS_2026;
 }
 
-// Períodos especiales: campañas GEO de Meta Ads atadas a un evento.
+// Períodos especiales: campañas cortas de Meta Ads (GEO de evento u otras
+// de una o pocas semanas), más reciente primero. Cada una es su propio
+// reporte, fuera del flujo mensual de Google Ads.
 export function listGeoPeriods() {
-  return [META_GEO_PERIOD];
+  return META_PERIODS;
+}
+
+// ¿El período es una campaña de Meta (`geo-…` o `meta-…`)?
+export function isMetaPeriod(periodId) {
+  return /^(geo|meta)-/.test(String(periodId ?? ''));
 }
 
 export function getMonthly(accountId, periodId) {
   return PAID_DB[accountId]?.periods?.[periodId] ?? null;
 }
 
-// Reporte GEO (Meta Ads) de una cuenta para un período-evento.
+// Reporte de una campaña de Meta Ads de una cuenta.
 export function getGeo(accountId, periodId) {
   return META_GEO[accountId]?.[periodId] ?? null;
 }
@@ -30,7 +37,7 @@ export function getGeo(accountId, periodId) {
 export function hasDataFor(account, period) {
   if (period === 'cmp') return true; // comparativa global (todas las cuentas)
   if (period === 'year-2026') return MONTHS_2026.some((p) => PAID_DB[account]?.periods?.[p.id]);
-  if (String(period).startsWith('geo-')) return Boolean(getGeo(account, period));
+  if (isMetaPeriod(period)) return Boolean(getGeo(account, period));
   return Boolean(getMonthly(account, period));
 }
 

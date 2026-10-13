@@ -276,8 +276,10 @@ export function genPaidNextSteps(mo, lang = 'es') {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  Próximos pasos del reporte Meta Ads GEO (evento) — computado de los
-//  datos reales del seed; la sección de insights fue retirada a pedido.
+//  Próximos pasos del reporte de una campaña de Meta Ads — computado de
+//  los datos reales del seed. Los pasos propios de una campaña (ej. la
+//  fórmula ganadora de Aapresid) vienen en `nextSteps` del seed; si no
+//  hay, se calculan del mejor creativo y del resultado de la campaña.
 // ════════════════════════════════════════════════════════════════
 export function genGeoNextSteps(geo, lang = 'es') {
   const en = lang === 'en';
@@ -291,19 +293,48 @@ export function genGeoNextSteps(geo, lang = 'es') {
     );
   }
   if (geo.hsForm && geo.hsForm.submissions === 0) {
+    const v = geo.hsForm.views;
     steps.push(
       en
-        ? '<strong>Rework the HubSpot form</strong>: 37 visits and 0 submissions says the drop is in the form — fewer fields, clearer value promise, and test again.'
-        : '<strong>Rearmar el formulario de HubSpot</strong>: 37 visitas y 0 envíos indican que el drop está en el form — menos campos, promesa de valor más clara, y volver a probar.',
+        ? `<strong>Rework the HubSpot form</strong>: ${v} visits and 0 submissions says the drop is in the form — fewer fields, clearer value promise, and test again.`
+        : `<strong>Rearmar el formulario de HubSpot</strong>: ${v} visitas y 0 envíos indican que el drop está en el form — menos campos, promesa de valor más clara, y volver a probar.`,
     );
   }
+  const own = geo.nextSteps?.[lang];
+  if (own?.length) {
+    steps.push(...own);
+  } else {
+    // Mejor creativo por CTR (entre anuncios con al menos 5 clics).
+    const ads = geo.campaigns.flatMap((c) => c.ads ?? []).filter((a) => a.lc >= 5 && a.imp > 0);
+    const best = ads.sort((a, b) => b.lc / b.imp - a.lc / a.imp)[0];
+    if (best && ads.length > 1) {
+      const ctr = ((best.lc / best.imp) * 100).toLocaleString(en ? 'en-US' : 'es-AR', { maximumFractionDigits: 2 });
+      steps.push(
+        en
+          ? `<strong>Take the best creative to the next campaign</strong>: “${best.name}” had the highest CTR (${ctr}%).`
+          : `<strong>Llevar el mejor creativo a la próxima campaña</strong>: «${best.name}» tuvo el mejor CTR (${ctr}%).`,
+      );
+    }
+    // Campañas de resultado (conversaciones / leads) que no convirtieron.
+    for (const c of geo.campaigns) {
+      if (c.results?.value === 0 && (c.kind === 'whatsapp' || c.kind === 'leads')) {
+        steps.push(
+          en
+            ? `<strong>Review the destination of “${c.name}”</strong>: it drew clicks but no ${c.kind === 'leads' ? 'leads' : 'conversations'} — check the form/first message and the offer.`
+            : `<strong>Revisar el destino de «${c.name}»</strong>: generó clics pero ningún ${c.kind === 'leads' ? 'lead' : 'chat'} — revisar el formulario o el primer mensaje y la oferta.`,
+        );
+      }
+    }
+  }
+  const isGeo = String(geo.period?.id ?? '').startsWith('geo-');
   steps.push(
-    en
-      ? '<strong>Reuse the winning formula on the next event GEO</strong>: Carbon Footprint message, 10–19 h window and the best creatives — every Meta cut is now integrated in this report.'
-      : '<strong>Reutilizar la fórmula ganadora en el próximo GEO de evento</strong>: mensaje de Huella de Carbono, franja 10–19 h y los creativos top — todos los cortes de Meta ya están integrados en este reporte.',
-    en
-      ? '<strong>Document the setup</strong>: exact radius/address, audience restrictions, placements, creatives and CTAs from Ads Manager, so the experiment is reproducible at the next event.'
-      : '<strong>Documentar el setup</strong>: radio/dirección exactos, restricciones de audiencia, placements, creativos y CTA desde el Administrador de Anuncios, para que el experimento sea reproducible en el próximo evento.',
+    isGeo
+      ? en
+        ? '<strong>Document the setup</strong>: exact radius/address, audience restrictions, placements, creatives and CTAs from Ads Manager, so the experiment is reproducible at the next event.'
+        : '<strong>Documentar el setup</strong>: radio/dirección exactos, restricciones de audiencia, placements, creativos y CTA desde el Administrador de Anuncios, para que el experimento sea reproducible en el próximo evento.'
+      : en
+        ? '<strong>Document the setup</strong>: audience, placements, creatives and CTAs from Ads Manager, so the next campaign can be compared against this one.'
+        : '<strong>Documentar el setup</strong>: audiencia, placements, creativos y CTA desde el Administrador de Anuncios, para poder comparar la próxima campaña contra esta.',
   );
   return steps;
 }

@@ -55,7 +55,7 @@ export function periodsFor(pilar, ref) {
 // Último período "de reporte" con datos (mes, trimestre o evento; nunca el
 // resumen anual ni el GEO, que son vistas especiales).
 export function latestPeriod(pilar, ref) {
-  return periodsFor(pilar, ref).find((p) => p.id !== 'year-2026' && !String(p.id).startsWith('geo-')) ?? null;
+  return periodsFor(pilar, ref).find((p) => p.id !== 'year-2026' && !paid.isMetaPeriod(p.id)) ?? null;
 }
 
 // Pilares del cliente que tienen al menos un período con datos.

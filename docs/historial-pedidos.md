@@ -1597,3 +1597,8 @@
 
 (Mensaje de voz; transcripción ajustada.)
 
+
+**#125** (13/10/2026)
+
+> Armame el flujo, tal y como nos venimos manejando con Social Media, Email Marketing y Webinar, para subir métricas de Google Ads de un mes puntual de todas las campañas, o poder subir métricas de una campaña concreta de Meta Ads (que en esta plataforma hacemos campañas más chicas, con inicio y fin de una o unas semanas) para la creación de reportes.
+

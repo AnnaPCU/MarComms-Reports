@@ -40,7 +40,7 @@ export const REGISTRY = {
     // Fallback estático (el header usa periodsFor, dependiente de la cuenta).
     periods: [...paid.listPeriods()].reverse().concat(paid.listGeoPeriods(), QUARTERS_2026),
     // El filtro muestra SOLO los períodos/campañas con datos de la cuenta:
-    // eventos GEO de Meta (Ago, lo más reciente) + meses descendentes.
+    // campañas de Meta Ads (más reciente primero) + meses descendentes.
     // Sin opciones vacías.
     periodsFor: (account) => {
       const list = paid

@@ -99,7 +99,8 @@ src/
     socialSeed.js             estructura + audiencia Social (9 cuentas); los meses vienen de socialMonthly.js
     socialMonthly.js          KPIs y top posts por cuenta y mes (Ene–Sep 2026), generado por scripts/linkedin/
     socialLatam.js / socialNorthAm.js  segmentación por país de CU Latinoamérica y CU North America
-    paidSeed.js               datos reales Paid (pt, es, cuc, psar; ver §6)
+    paidSeed.js               datos reales Paid (pt, es, cuc, psar, cuus; ver §6)
+    paidMetaGeo.js            registro de las campañas de Meta Ads (una por archivo en paidMeta/, generadas por scripts/paid/build_meta.py)
     websiteSeed.js            datos reales Website (CU Argentina, Q1 2026)
     crmSeed.js                deals de MarComms en HubSpot (generados/MQL/WON por origen, entidad y mes), generado por scripts/crm/
   services/                   socialService, paidService, websiteService… (seed-only)
@@ -262,7 +263,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Módulo | Estado |
 |--------|--------|
 | Social Media | ✅ Completo (Ene–Sep 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
-| Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas) + drill-down + detalle por grupo + Resumen del Año + comparativa (tooling: `scripts/paid/`) |
+| Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas de Google Ads) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) |
 | Website (GA + SEO) | ✅ Q1+Q2 2026 (12 cuentas) y **Q3 2026** (10 cuentas, de los reportes trimestrales .md de GA4 + Search Console del 9/10; ahora también con SEO de Peterson). CU Estados Unidos y CU Canadá en Q3 salen del reporte de North America segmentado por país (12 cuentas en total). + Resumen del Año + comparativa. Tooling: `scripts/website/md_to_seed.py` |
 | Email Marketing | ✅ Cinco campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — dos campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange) y «SMETA · Campaign 3» (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
@@ -365,14 +366,20 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
     sobre ellos los textos del evento y cargarlo en `webinarsSeed.js` en la
     cuenta que corresponda (`cu` LATAM/español · `cug` Global/inglés). Si el
     drop no trae LinkedIn, `social.posts` va vacío y el reporte lo dice.
-- Para sumar datos nuevos de Paid: parsear el CSV de Google Ads, separar por
-  prefijo de mercado, agregar al seed (respetando el shape existente), y actualizar
-  este archivo (§6). Verificar con `npm run build` + captura (Playwright headless,
-  ver historial) antes de pushear.
-- **Paid mensual**: además del seed, correr
-  `python3 scripts/paid/build_detail.py mXX <semanal.csv> <terminos.csv>` para el
-  detalle por grupo. El script **fusiona** el mes nuevo y conserva los anteriores.
-  Validar siempre el seed contra el semanal antes de deployar.
+- **Paid Media por carpeta** (`metricas/paid-media/`, ver su README):
+  - **Google Ads** (mes completo, todas las campañas): `python3 -B
+    scripts/paid/build_month.py "metricas/paid-media/google-ads/AAAA-MM"` →
+    valida semanal = informe de campañas (si no, corta), escribe
+    `paidDetail.js` (fusiona) e imprime el bloque `mXX` de cada cuenta para
+    `paidSeed.js`. Pegarlo, redactar `analysis` con esos números, sumar
+    `startedOn` a las campañas que arrancaron a mitad de mes y mover
+    `defaultPeriod` de Paid en el registry.
+  - **Meta Ads** (una campaña puntual de una o pocas semanas): `python3 -B
+    scripts/paid/build_meta.py "metricas/paid-media/meta-ads/AAAA-MM-<campaña>"`
+    → valida diario = total, escribe `src/data/paidMeta/<id>.js` y lo
+    registra en `paidMetaGeo.js`; aparece como período propio de la cuenta.
+  - Los dos aceptan `--dry-run`. Archivar la carpeta en `_procesados/` en el
+    mismo commit. Si llegan como adjunto, alojarlos primero en la carpeta.
 - **Todo texto nuevo visible va en ES y EN.** Si se agrega una sección a un pilar,
   sumar las claves al `*I18n.js` correspondiente y pasar `lang` a los generadores.
 - **Nunca convertir monedas** ni sumar importes de monedas distintas (ver §7).
@@ -391,6 +398,16 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Flujo de Paid Media por carpeta** (13/10/2026): `metricas/paid-media/`
+  con dos entradas: `google-ads/AAAA-MM/` (los 3 CSV de un mes, todas las
+  campañas → `scripts/paid/build_month.py`) y `meta-ads/AAAA-MM-<campaña>/`
+  (exports de Meta de una campaña puntual → `scripts/paid/build_meta.py`).
+  El reporte de Meta pasó a ser genérico: cada campaña es un período propio
+  (`paidMeta/<id>.js`), con período y entrega efectiva calculados de los
+  días; lo propio de Aapresid quedó en su seed (el reporte sale igual).
+  Fix: los números del reporte de Meta en EN usan formato en-US y la
+  frecuencia en ES usa coma decimal.
 
 - **Social Septiembre 2026 + trimestres** (9/10/2026): septiembre de LinkedIn
   ingresado por `metricas/social-media/` (9 cuentas + países de CU

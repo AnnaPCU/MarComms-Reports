@@ -9,9 +9,10 @@ responsable:
 | `social-media/` | Social Media | LinkedIn Analytics | Persona de Social |
 | `email-marketing/` | Email Marketing | Mailchimp, Apollo | Persona de Email/Webinars |
 | `webinars/` | Webinars | Teams (Excel de lead scoring) + capturas de LinkedIn | Persona de Email/Webinars |
+| `paid-media/` | Paid Media | Google Ads (mes completo, todas las campañas) · Meta Ads (una campaña puntual) | Persona de Paid |
 
-> Paid Media y Website **no usan esta carpeta** para subir: los archivos
-> llegan como adjunto en la conversación de Claude. En Website, el reporte
+> Website **no usa esta carpeta** para subir: los archivos llegan como
+> adjunto en la conversación de Claude. En Website, el reporte
 > trimestral ya procesado (`reporte_cu_AAAA-QN.md` / `reporte_ps_AAAA-QN.md`:
 > GA4 + Search Console por cuenta) se archiva igual en
 > `website/_procesados/AAAA-QN/` como fuente, y se convierte con
@@ -21,7 +22,9 @@ responsable:
 
 1. **Una carpeta por mes** dentro del pilar, con formato `AAAA-MM`
    (ej. `2026-08` para agosto 2026). El mes debe estar **completo**
-   (del 1 al último día) antes de pedir el procesamiento.
+   (del 1 al último día) antes de pedir el procesamiento. Excepciones:
+   los webinars y las campañas de Meta Ads van **una carpeta por evento o
+   campaña** (`AAAA-MM-<nombre>`), cuando terminan.
 2. **Archivos crudos, tal como los exporta la plataforma.** No editar,
    consolidar ni traducir nada — el tooling se encarga. Solo respetar la
    estructura/prefijos que indica el README de cada pilar.
