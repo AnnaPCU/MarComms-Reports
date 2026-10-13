@@ -1,0 +1,45 @@
+Rendimiento de la campaña
+"September 1, 2026 - September 30, 2026"
+Campaign,Campaign state,Campaign type,Clicks,Impr.,CTR,Currency code,Avg. CPC,Cost,Impr. (Abs. Top) %,Impr. (Top) %,Conversions,View-through conv.,Cost / conv.,Conv. rate
+PCU - España - ISO 27001 - Search,Enabled,Search,360,"5,480",6.57%,ARS,975.03,351010.31,27.54%,68.40%,1.00,0,351010.31,0.28%
+PCU - Argentina - ISO 27001 - Search,Enabled,Search,150,"2,597",5.78%,ARS,1954.95,293242.54,30.73%,72.19%,1.00,0,293242.54,0.67%
+PS Argentina - SuSo - Agricultura regenerativa- Search,Enabled,Search,134,"7,676",1.75%,ARS,515.91,69132.09,11.22%,27.01%,0.00,0,0,0.00%
+CU Argentina - Agroexportación - Search,Enabled,Search,68,"1,055",6.45%,ARS,1401.57,95306.47,34.68%,44.01%,1.00,0,95306.47,1.47%
+PS Argentina - SuSe - Huella de carbono / GEI - Search,Enabled,Search,65,"3,838",1.69%,ARS,1050.71,68295.87,14.38%,47.29%,0.00,0,0,0.00%
+CU España - CAEs - Search,Enabled,Search,57,"2,041",2.79%,ARS,1211.47,69054.04,10.15%,53.26%,1.00,0,69054.04,1.75%
+CU España - Textile - Search,Enabled,Search,49,667,7.35%,ARS,1397.53,68478.89,29.45%,45.64%,0.00,0,0,0.00%
+PS Argentina - SuSe - ESG / Reportes - Search,Enabled,Search,45,"1,888",2.38%,ARS,1500.42,67518.70,37.79%,52.51%,0.00,0,0,0.00%
+PS Argentina - Bioenergia / Biocombustibles - Search,Enabled,Search,45,"2,670",1.69%,ARS,1544.92,69521.35,28.70%,34.09%,0.00,0,0,0.00%
+CU Portugal - Textile - Search,Enabled,Search,40,822,4.87%,ARS,1799.62,71984.76,28.43%,39.15%,0.00,0,0,0.00%
+CU España - Forestal - Search,Enabled,Search,39,976,4.00%,ARS,1747.57,68155.26,23.29%,37.09%,0.00,0,0,0.00%
+CU España - Smeta - Search,Enabled,Search,36,754,4.77%,ARS,2022.38,72805.81,13.24%,54.19%,1.00,0,72805.81,2.78%
+CU España - IFS - SEARCH,Enabled,Search,34,"1,449",2.35%,ARS,2025.25,68858.37,12.17%,53.04%,0.00,0,0,0.00%
+CU Canada - Forestry - Search,Enabled,Search,34,"1,270",2.68%,ARS,4160.81,141467.62,31.12%,62.49%,0.00,0,0,0.00%
+CU United States - Organic - USDA NOP - Search,Enabled,Search,32,449,7.13%,ARS,7529.51,240944.29,53.67%,63.26%,0.00,0,0,0.00%
+CU Canada - Canada Gap - Search,Enabled,Search,30,486,6.17%,ARS,2297.60,68927.91,34.72%,56.94%,0.00,0,0,0.00%
+CU España - Bioenergia - Search,Enabled,Search,30,421,7.13%,ARS,2083.97,62519.03,28.49%,47.38%,2.00,0,31259.51,6.67%
+CU Portugal - Plasticos - Search,Enabled,Search,28,400,7.00%,ARS,2310.90,64705.26,38.41%,56.83%,0.00,0,0,0.00%
+CU Portugal - Forestal - Search,Enabled,Search,27,571,4.73%,ARS,2060.73,55639.75,31.75%,38.10%,0.00,0,0,0.00%
+CU Portugal - Smeta - Search,Enabled,Search,25,433,5.77%,ARS,2800.55,70013.64,28.31%,56.93%,0.00,0,0,0.00%
+PS Argentina - SuSe - Huella de agua - Search,Enabled,Search,24,494,4.86%,ARS,2602.52,62460.37,45.45%,75.07%,0.00,0,0,0.00%
+CU Portugal - Bioenergia - Search,Enabled,Search,24,380,6.32%,ARS,2620.09,62882.06,36.64%,48.97%,0.00,0,0,0.00%
+CU Argentina - GHG - Search,Enabled,Search,24,513,4.68%,ARS,1834.12,44018.89,34.73%,79.34%,0.00,0,0,0.00%
+CU España - Plasticos - Search,Enabled,Search,23,310,7.42%,ARS,2280.50,52451.45,22.00%,67.60%,2.00,0,26225.73,8.70%
+CU Canada - Smeta - Search,Enabled,Search,18,413,4.36%,ARS,2835.98,51047.62,23.93%,68.20%,0.00,0,0,0.00%
+CU Canada - GLOBALG.A.P. - Search,Enabled,Search,13,338,3.85%,ARS,3693.54,48016.08,31.15%,71.15%,1.00,0,48016.08,7.69%
+PCU - España - Competidores ISO 27001 - Search,Enabled,Search,13,191,6.81%,ARS,3588.10,46645.27,58.91%,82.17%,0.00,0,0,0.00%
+CU Canada- Aqua / Fisheries - Search,Enabled,Search,11,84,13.10%,ARS,4050.82,44558.97,56.45%,58.06%,0.00,0,0,0.00%
+CU Argentina - Biocombustible - Search,Enabled,Search,11,210,5.24%,ARS,1364.13,15005.41,43.48%,49.07%,0.00,0,0,0.00%
+PCU - Argentina - Competidores ISO 27001 - Search,Enabled,Search,9,298,3.02%,ARS,1860.97,16748.75,24.49%,71.43%,0.00,0,0,0.00%
+CU Argentina - Industria - Search,Enabled,Search,8,215,3.72%,ARS,1220.79,9766.30,68.21%,73.51%,0.00,0,0,0.00%
+CU Portugal - Biomasa - Search,Enabled,Search,7,51,13.73%,ARS,2553.71,17875.98,55.56%,58.33%,0.00,0,0,0.00%
+PS Argentina - SuSo - Trazabilidad / EUDR - Search,Enabled,Search,5,119,4.20%,ARS,1608.24,8041.20,44.83%,74.71%,0.00,0,0,0.00%
+PS Argentina - CeSu - Preparacion para certificaciones - Search,Enabled,Search,4,194,2.06%,ARS,2533.92,10135.68,44.16%,88.31%,0.00,0,0,0.00%
+CU España - Biomasa - Search,Enabled,Search,3,12,25.00%,ARS,2486.36,7459.07,87.50%,87.50%,0.00,0,0,0.00%
+CU España - GMP+ - Search,Enabled,Search,2,78,2.56%,ARS,3868.92,7737.84,50.82%,63.93%,0.00,0,0,0.00%
+PS Argentina - SuSo - Abastecimiento sostenible - Search,Enabled,Search,2,183,1.09%,ARS,1558.68,3117.36,33.12%,40.26%,0.00,0,0,0.00%
+CU Argentina - Agro sostentible - Search,Enabled,Search,1,20,5.00%,ARS,94.59,94.59,10.00%,40.00%,0.00,0,0,0.00%
+CU Portugal - GMP+ - SEARCH,Enabled,Search,0,4,0.00%,ARS,0,0.00,50.00%,50.00%,0.00,0,0,0
+CU United States - Organic - PrimusGFS - Search,Enabled,Search,0,3,0.00%,ARS,0,0.00,0.00%,66.67%,0.00,0,0,0
+CU Argentina - Cadena de Custodia - Search,Enabled,Search,0,18,0.00%,ARS,0,0.00,5.56%,5.56%,0.00,0,0,0
+CU United States - IFPA event - Search,Enabled,Search,0,0,0,ARS,0,0.00,0,0,0.00,0,0,0
