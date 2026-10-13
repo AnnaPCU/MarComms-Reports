@@ -38,9 +38,9 @@ paid-media/google-ads/
 ```
 
 Los nombres de archivo no importan: el tooling reconoce cada informe por sus
-columnas. Las cuentas se reconocen por el prefijo del nombre de la campaña
+columnas, y el export puede venir en español o en inglés. Las cuentas se reconocen por el prefijo del nombre de la campaña
 (`CU España`, `CU Portugal`, `CU Canada`, `PS Argentina`, `CU United
-States`); si aparece un prefijo nuevo, el proceso corta y avisa en vez de
+States`, `CU Argentina`, `PCU - España`, `PCU - Argentina`); si aparece un prefijo nuevo, el proceso corta y avisa en vez de
 asignarlo mal.
 
 **Si una campaña arrancó a mitad de mes**, avisarlo al subir (con la fecha

@@ -570,3 +570,22 @@ Pedido del equipo el 13/10/2026: el mismo flujo que Social, Email y Webinars
   inglés) y se probaron recreando agosto 2026 (Google Ads) y Aapresid (Meta)
   desde el seed, sin diferencias. Con el primer drop real se confirman.
 
+## 18. Google Ads: export en inglés y cuentas nuevas (septiembre 2026)
+
+- **El primer drop real vino en inglés** (13/10/2026): columnas en inglés
+  (`Campaign`, `Clicks`, `Cost`…) y números en formato en-US (`5,480` =
+  5480; `975.03`). El tooling lo normaliza a la forma del export en español
+  (columnas, números y tipos de concordancia: «Phrase match (close variant)»
+  → «Concordancia de frase (ligera variación)»), así el seed y el detalle
+  quedan iguales que los meses anteriores. Los dos idiomas se aceptan.
+- **Campañas con marca de grupo (PCU) = cuentas propias por país.** Las
+  campañas «PCU - España - …» y «PCU - Argentina - …» (ISO 27001 y
+  Competidores ISO 27001) no son de Control Union ni de Peterson Solutions:
+  van en las cuentas «PCU España» (`pcues`) y «PCU Argentina» (`pcuar`),
+  nunca mezcladas con CU o PS (decisión del equipo). Sin logo de cliente
+  (no hay logo PCU; no corresponde el de CU ni el de PS), como TLR y
+  Biomass. No están mapeadas a ningún cliente de la vista Clientes.
+- **Las campañas «CU Argentina - …» van a «Control Union Argentina»**
+  (`cuar`), la misma cuenta de la campaña GEO de Meta (decisión del equipo).
+  Septiembre 2026 es su primer mes de Google Ads; con meses cargados, la
+  vista General del cliente usa el mes y ya no el GEO.

@@ -25,7 +25,7 @@ from datetime import date
 from collections import OrderedDict, defaultdict
 
 sys.path.insert(0, os.path.dirname(__file__))
-from build_detail import ACC, acc_and_camp, num  # noqa: E402  (mismo mapa de cuentas y parser)
+from build_detail import ACC, acc_and_camp, num, normalize  # noqa: E402  (mismo mapa de cuentas y parser)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -34,13 +34,15 @@ def read_csv(path):
     raw = open(path, encoding='utf-8-sig').read()
     lines = raw.splitlines()
     # Google antepone el título del informe y el rango de fechas: el
-    # encabezado es la primera línea que trae la columna «Campaña».
+    # encabezado es la primera línea que trae la columna «Campaña» (o
+    # «Campaign», si el export viene en inglés: se normaliza al español).
     for i, l in enumerate(lines):
-        cells = next(csv.reader([l]))
-        if 'Campaña' in [c.strip() for c in cells]:
+        cells = [c.strip() for c in next(csv.reader([l]))] if l.strip() else []
+        if 'Campaña' in cells or 'Campaign' in cells:
             rows = list(csv.DictReader(io.StringIO('\n'.join(lines[i:]))))
-            return [c.strip() for c in cells], rows, lines[:i]
-    raise SystemExit(f'{os.path.basename(path)}: no encuentro la columna «Campaña».')
+            header, rows = normalize(cells, rows)
+            return header, rows, lines[:i]
+    raise SystemExit(f'{os.path.basename(path)}: no encuentro la columna «Campaña» / «Campaign».')
 
 
 def classify(header):

@@ -77,6 +77,14 @@ python3 -B scripts/paid/build_meta.py "metricas/paid-media/meta-ads/2026-10-smet
 > real guardado en el repo, con el primer drop se confirman los nombres de
 > columna (los alias están en `COLS` de `build_meta.py`).
 
+## Export en inglés
+
+Si Google Ads tiene la interfaz en inglés, el export trae columnas en
+inglés (`Campaign`, `Clicks`, `Cost`, `Search term`…) y números en formato
+en-US (`5,480`, `975.03`). `build_detail.normalize()` lo pasa a la forma del
+export en español (columnas, números y tipos de concordancia) antes de
+procesar: los dos idiomas dan el mismo seed. Probado con septiembre 2026.
+
 ## Validaciones de Google Ads
 
 - El semanal debe **cuadrar exacto** contra los totales del mes por cuenta
@@ -90,7 +98,8 @@ python3 -B scripts/paid/build_meta.py "metricas/paid-media/meta-ads/2026-10-smet
 
 Prefijos de campaña: `CU España` (es) · `CU Portugal` (pt) · `CU Canada`
 (cuc) · `PS Argentina` (psar) · `CU United States` (cuus, "CU Estados
-Unidos" en la app). Nombres de campaña normalizados igual que en paidSeed
+Unidos" en la app) · `CU Argentina` (cuar) · `PCU - España` (pcues, «PCU
+España») · `PCU - Argentina` (pcuar, «PCU Argentina»). Nombres de campaña normalizados igual que en paidSeed
 (Plásticos, Bioenergía, etc.). Si aparece un prefijo nuevo, el script corta
 con error en vez de asignar mal: hay que sumarlo al mapa `ACC`.
 

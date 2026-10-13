@@ -99,7 +99,7 @@ src/
     socialSeed.js             estructura + audiencia Social (9 cuentas); los meses vienen de socialMonthly.js
     socialMonthly.js          KPIs y top posts por cuenta y mes (Ene–Sep 2026), generado por scripts/linkedin/
     socialLatam.js / socialNorthAm.js  segmentación por país de CU Latinoamérica y CU North America
-    paidSeed.js               datos reales Paid (pt, es, cuc, psar, cuus; ver §6)
+    paidSeed.js               datos reales Paid (pt, es, cuc, psar, cuus, cuar, pcues, pcuar; ver §6)
     paidMetaGeo.js            registro de las campañas de Meta Ads (una por archivo en paidMeta/, generadas por scripts/paid/build_meta.py)
     websiteSeed.js            datos reales Website (CU Argentina, Q1 2026)
     crmSeed.js                deals de MarComms en HubSpot (generados/MQL/WON por origen, entidad y mes), generado por scripts/crm/
@@ -263,7 +263,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Módulo | Estado |
 |--------|--------|
 | Social Media | ✅ Completo (Ene–Sep 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
-| Paid Media | ✅ Completo (Feb–Ago 2026, 5 cuentas de Google Ads) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) |
+| Paid Media | ✅ Completo (Feb–Sep 2026; 8 cuentas de Google Ads desde septiembre: suman Control Union Argentina, PCU España y PCU Argentina) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) |
 | Website (GA + SEO) | ✅ Q1+Q2 2026 (12 cuentas) y **Q3 2026** (10 cuentas, de los reportes trimestrales .md de GA4 + Search Console del 9/10; ahora también con SEO de Peterson). CU Estados Unidos y CU Canadá en Q3 salen del reporte de North America segmentado por país (12 cuentas en total). + Resumen del Año + comparativa. Tooling: `scripts/website/md_to_seed.py` |
 | Email Marketing | ✅ Cinco campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — dos campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange) y «SMETA · Campaign 3» (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
@@ -398,6 +398,20 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Paid Media · Google Ads septiembre 2026** (13/10/2026): primer mes
+  ingresado por `metricas/paid-media/` (la carpeta se subió como
+  `paid-media-google-ads/2026-09`; se archivó en
+  `google-ads/_procesados/2026-09/`). 42 campañas, 40.071 impresiones,
+  1.530 clics, 2.645.644,85 ARS y 10 conversiones; semanal = informe de
+  campañas exacto y seed = detalle semanal campaña por campaña (0
+  diferencias). El export vino **en inglés**: `build_detail.py` lo normaliza
+  al español (columnas, números en-US y concordancias). Cuentas nuevas:
+  «PCU España» (`pcues`) y «PCU Argentina» (`pcuar`) para las campañas de
+  ISO 27001 con marca de grupo, sin logo de cliente; y Google Ads en
+  «Control Union Argentina» (`cuar`), que antes solo tenía el GEO de Meta.
+  Período por defecto de Paid: septiembre. Criterios en
+  `docs/DECISIONES.md` §18.
 
 - **Flujo de Paid Media por carpeta** (13/10/2026): `metricas/paid-media/`
   con dos entradas: `google-ads/AAAA-MM/` (los 3 CSV de un mes, todas las

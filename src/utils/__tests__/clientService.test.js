@@ -55,13 +55,15 @@ describe('periodsFor / latestPeriod', () => {
   it('lista más reciente primero, sin comparativa y con el resumen anual al final', () => {
     const list = periodsFor('paid', { account: 'pt' });
     expect(list.map((p) => p.id)).not.toContain('cmp');
-    expect(list[0].id).toBe('m08');
+    expect(list[0].id).toBe('m09');
     expect(list[list.length - 1].id).toBe('year-2026');
   });
 
   it('el último período nunca es el anual ni un GEO', () => {
-    expect(latestPeriod('paid', { account: 'pt' }).id).toBe('m08');
-    expect(latestPeriod('paid', { account: 'cuar' })).toBeNull(); // solo GEO
+    expect(latestPeriod('paid', { account: 'pt' }).id).toBe('m09');
+    // CU Argentina tiene una campaña GEO de Meta y, desde septiembre, Google Ads:
+    // el último período es el mes, nunca el GEO.
+    expect(latestPeriod('paid', { account: 'cuar' }).id).toBe('m09');
     expect(latestPeriod('website', { account: 'cua' }).id).toBe('q3-2026');
   });
 
@@ -79,11 +81,12 @@ describe('getOverview', () => {
     for (const p of ov.pillars) expect(p.periodLabel).toBeTruthy();
   });
 
-  it('segmenta Social por país y usa el GEO cuando Paid no tiene meses', () => {
+  it('segmenta Social por país y, con meses de Google Ads, Paid usa el mes y no el GEO', () => {
     const ov = getOverview('cu-ar');
     const kinds = Object.fromEntries(ov.pillars.map((p) => [p.pilar, p.kind]));
     expect(kinds.social).toBe('social-country');
-    expect(kinds.paid).toBe('paid-geo');
+    expect(kinds.paid).toBe('paid');
+    expect(ov.pillars.find((p) => p.pilar === 'paid').period).toBe('m09');
     expect(ov.pillars.find((p) => p.pilar === 'social').countryName).toBe('Argentina');
   });
 

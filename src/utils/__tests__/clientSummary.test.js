@@ -72,11 +72,10 @@ describe('buildClientSummary (sobre datos reales del seed)', () => {
     }
   });
 
-  it('CU Argentina: Social por país, Paid GEO y Website', () => {
+  it('CU Argentina: Social por país, Paid (Google Ads) y Website', () => {
     const s = buildClientSummary(getOverview('cu-ar'), 'es');
-    expect(s.pillars.map((p) => p.kind)).toEqual(['social-country', 'paid-geo', 'website']);
+    expect(s.pillars.map((p) => p.kind)).toEqual(['social-country', 'paid', 'website']);
     expect(s.pillars[0].hero.label).toContain('Argentina');
-    expect(s.glossaryKeys).toContain('paidMeta');
   });
 
   it('overview nulo → null', () => {

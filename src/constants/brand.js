@@ -62,6 +62,7 @@ const BRAND_BY_ID = {
   tlr: null, bel: null, // TLR y Biomass no son CU ni Peterson → sin logo
   // Paid
   pt: 'cu', es: 'cu', cuc: 'cu', psar: 'peterson', cuar: 'cu',
+  pcues: null, pcuar: null, // marca de grupo (PCU): ni CU ni Peterson → sin logo
   // Website
   cua: 'cu', cubr: 'cu', cucl: 'cu', cumx: 'cu', cunam: 'cu', cuca: 'cu', cuus: 'cu', cupe: 'cu', cupt: 'cu', cues: 'cu',
   psam: 'peterson', psib: 'peterson',

@@ -1602,3 +1602,9 @@
 
 > Armame el flujo, tal y como nos venimos manejando con Social Media, Email Marketing y Webinar, para subir métricas de Google Ads de un mes puntual de todas las campañas, o poder subir métricas de una campaña concreta de Meta Ads (que en esta plataforma hacemos campañas más chicas, con inicio y fin de una o unas semanas) para la creación de reportes.
 
+
+**#126** (13/10/2026)
+
+> Procesá las métricas nuevas de Paid Media
+
+(Respuestas a la consulta: las 4 campañas «PCU - España/Argentina - (Competidores) ISO 27001» van en cuentas PCU por país, «PCU España» y «PCU Argentina»; las 6 campañas «CU Argentina - …» van a la cuenta «Control Union Argentina».)

@@ -80,7 +80,7 @@ export const CLIENTS = [
     region: 'Latinoamérica',
     pillars: {
       social: { account: 'cul', country: 'ar' },
-      paid: { account: 'cuar', note: 'Solo campañas GEO de Meta Ads', noteEn: 'Meta Ads GEO campaigns only' },
+      paid: { account: 'cuar' },
       website: { account: 'cua' },
     },
   },

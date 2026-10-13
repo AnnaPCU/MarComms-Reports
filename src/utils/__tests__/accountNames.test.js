@@ -32,6 +32,10 @@ describe('nombres de cuenta en los filtros', () => {
     expect(brand('email', 'psi')).toBe('peterson');
     expect(brand('email', 'cuus')).toBe('cu');
     expect(brand('paid', 'psar')).toBe('peterson');
+    // Campañas de ISO 27001 con marca de grupo (PCU): ni CU ni Peterson → sin logo.
+    expect(brand('paid', 'pcues')).toBeNull();
+    expect(brand('paid', 'pcuar')).toBeNull();
+    expect(brand('paid', 'cuar')).toBe('cu');
     expect(brand('webinars', 'cu')).toBe('cu');
     expect(brand('plans', 'cuus')).toBe('cu');
   });

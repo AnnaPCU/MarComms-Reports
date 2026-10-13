@@ -12,7 +12,59 @@
 import csv, io, sys, os, re
 
 ACC = {'CU España': 'es', 'CU Portugal': 'pt', 'CU Canada': 'cuc', 'PS Argentina': 'psar',
-       'CU United States': 'cuus'}
+       'CU United States': 'cuus', 'CU Argentina': 'cuar',
+       # Campañas con marca de grupo (PCU), una cuenta por país (sep 2026).
+       'PCU - España': 'pcues', 'PCU - Argentina': 'pcuar'}
+
+# ── Export en inglés ──
+# Desde septiembre 2026 Google Ads exporta con la interfaz en inglés:
+# columnas en inglés y números en formato en-US ('5,480' = 5480; '975.03').
+# Se normaliza todo a la forma del export en español (columnas, tipos de
+# concordancia y números con ',' decimal) para que el resto no cambie.
+EN_COLS = {
+    'Campaign': 'Campaña', 'Ad group': 'Grupo de anuncios', 'Week': 'Semana',
+    'Impr.': 'Impr.', 'Clicks': 'Clics', 'Cost': 'Coste', 'Conversions': 'Conversiones',
+    'Currency code': 'Código de moneda', 'Search impr. share': 'Cuota de impr. de búsqueda',
+    'Search lost IS (rank)': 'Cuota impr. perd. de búsq. (ranking)',
+    'Search keyword': 'Palabra clave de búsqueda', 'Search term': 'Término de búsqueda',
+    'Search terms match type': 'Tipo de concordancia con los términos de búsqueda',
+}
+EN_TEXT_COLS = {'Campaign', 'Ad group', 'Week', 'Currency code', 'Search keyword', 'Search term',
+                'Search terms match type', 'Campaign state', 'Campaign type'}
+EN_MATCH = {'Exact match': 'Concordancia exacta', 'Phrase match': 'Concordancia de frase',
+            'Broad match': 'Concordancia amplia'}
+
+
+def en_num(v):
+    # '5,480' → '5480' ; '975.03' → '975,03' (lo que espera num()).
+    s = str(v).strip()
+    return s.replace(',', '').replace('.', ',')
+
+
+def en_match(v):
+    s = str(v).strip()
+    close = s.endswith('(close variant)')
+    base = EN_MATCH.get(s.replace('(close variant)', '').strip(), s.replace('(close variant)', '').strip())
+    return base + (' (ligera variación)' if close else '')
+
+
+def normalize(header, rows):
+    # Devuelve (header, rows) con nombres de columna y valores del export en
+    # español. Si el export ya viene en español, no toca nada.
+    if 'Campaña' in header or 'Campaign' not in header:
+        return header, rows
+    out = []
+    for r in rows:
+        n = {}
+        for k, v in r.items():
+            k = (k or '').strip()
+            if k == 'Search terms match type':
+                v = en_match(v)
+            elif k not in EN_TEXT_COLS and v is not None:
+                v = en_num(v)
+            n[EN_COLS.get(k, k)] = v
+        out.append(n)
+    return [EN_COLS.get(h, h) for h in header], out
 
 def num(v):
     # Formato español de Google Ads: '.' siempre es separador de miles
@@ -36,6 +88,7 @@ def acc_and_camp(camp_full):
             # viejo, el nombre tiene que quedar unificado igual.
             FIX = {'Car': 'CAEs',
                    'Plasticos': 'Plásticos', 'Bioenergia': 'Bioenergía',
+                   'Agro sostentible': 'Agro sostenible',
                    'Preparacion para certificaciones': 'Preparación para certificaciones',
                    'Bioenergia / Biocombustibles': 'Bioenergía / Biocombustibles'}
             return a, FIX.get(short, short)
@@ -43,7 +96,9 @@ def acc_and_camp(camp_full):
 
 def read_rows(path):
     raw = open(path, encoding='utf-8-sig').read()
-    return list(csv.DictReader(io.StringIO('\n'.join(raw.splitlines()[2:]))))
+    reader = csv.DictReader(io.StringIO('\n'.join(raw.splitlines()[2:])))
+    rows = list(reader)
+    return normalize([h.strip() for h in reader.fieldnames or []], rows)[1]
 
 def esc(s):
     return str(s).replace('\\', '\\\\').replace("'", "\\'")
@@ -99,7 +154,7 @@ def main():
     L.append('')
     L.append('export const PAID_DETAIL = {')
     # Orden fijo conocido primero; cualquier cuenta nueva del export va después.
-    known = ['pt', 'es', 'cuc', 'psar', 'cuus']
+    known = ['pt', 'es', 'cuc', 'psar', 'cuus', 'cuar', 'pcues', 'pcuar']
     for a in known + [x for x in detail if x not in known]:
         if a not in detail:
             continue
