@@ -10,7 +10,8 @@ Por **cada envío** de la campaña, el export de **destinatarios** de Mailchimp
 (*Campaign report → Export → members*): un CSV con una fila por destinatario y
 las columnas `email, first_name, last_name, opens, clicks, …, company, country`.
 Mailchimp lo nombra `members_<nombre de la campaña>_sent_<fecha>.csv`: **no
-renombrarlo**. Las filas del CSV son los enviados; `opens`/`clicks` son por
+renombrarlo**. Ojo: esa fecha es la del **export**, no la del envío (todos los
+envíos exportados el mismo día llevan la misma fecha). Las filas del CSV son los enviados; `opens`/`clicks` son por
 destinatario (el tooling calcula aperturas y clics únicos y las tasas).
 
 Un reenvío (Mailchimp los llama *copy*) es un envío más: subirlo también.
@@ -40,9 +41,9 @@ campaña es parte de una secuencia que sigue, el equipo lo avisa al subirla.
 
 Si la cuenta ya tiene otra campaña ese mes, la nueva se agrega como una
 campaña más del período (`campaigns: [...]` en `src/data/emailSeed.js`, en
-orden de envío, cada una con `id`, `label` corto y `sentDate`). El reporte
+orden de carga, cada una con `id`, `label` corto y `exportDate`). El reporte
 muestra una **botonera de campaña** (como los países en Social Media) que
-arranca en la más reciente; el HTML descargado queda fijo en la campaña
+arranca en la última cargada; el HTML descargado queda fijo en la campaña
 elegida.
 
 ## Qué hace Claude al procesar

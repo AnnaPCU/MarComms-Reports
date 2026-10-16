@@ -15,7 +15,7 @@
 //      hotLeadsCount,
 //    }
 //  Si en el mes salió más de una campaña, el período es
-//  { campaigns: [{ id, label, sentDate, …campaña }] } en orden de envío y la
+//  { campaigns: [{ id, label, exportDate, …campaña }] } en orden de carga y la
 //  vista muestra una botonera de campaña (docs/DECISIONES.md §15).
 //
 //  Mientras no haya datos reales importados, EMAIL_DB queda vacío y la
@@ -6218,13 +6218,14 @@ EMAIL_DB['psi'] = {
 EMAIL_DB['cuus'] = {
   name: 'Control Union Estados Unidos',
   periods: {
-    // Varias campañas en el mismo mes: botonera de campaña en la vista (orden de envío)
+    // Varias campañas en el mismo mes: botonera de campaña en la vista (orden de carga).
+    // exportDate = fecha del export de Mailchimp (sufijo «sent_…» del archivo), no la del envío.
     'm10': {
       campaigns: [
         {
           id: 'fairly-made',
           label: 'PCU x Fairly Made',
-          sentDate: '2026-10-06',
+          exportDate: '2026-10-06',
           campaignName: 'PCU x Fairly Made · Networking Event (Textile Exchange) · Octubre 2026',
           emails: [
             {
@@ -6704,7 +6705,7 @@ EMAIL_DB['cuus'] = {
         {
           id: 'smeta-3',
           label: 'SMETA · Campaign 3',
-          sentDate: '2026-10-09',
+          exportDate: '2026-10-09',
           campaignName: 'SMETA · Campaign 3 · Octubre 2026',
           emails: [
             {
@@ -6856,6 +6857,2892 @@ EMAIL_DB['cuus'] = {
           ],
           hotLeadsCount: 9,
           allLeadsCount: 253
+        },
+        {
+          id: 'ifpa',
+          label: 'IFPA',
+          exportDate: '2026-10-16',
+          campaignName: 'IFPA · Octubre 2026',
+          emails: [
+            {
+              name: 'Email 1',
+              subject: '',
+              metrics: {
+                sent: 5968,
+                uniqueOpens: 1208,
+                uniqueClicks: 133,
+                totalOpens: 1998,
+                totalClicks: 907,
+                openRate: 20.24,
+                clickRate: 2.23,
+                ctor: 11.01
+              }
+            },
+            {
+              name: 'Email 2',
+              subject: '',
+              metrics: {
+                sent: 5840,
+                uniqueOpens: 1163,
+                uniqueClicks: 128,
+                totalOpens: 1725,
+                totalClicks: 941,
+                openRate: 19.91,
+                clickRate: 2.19,
+                ctor: 11.01
+              }
+            },
+            {
+              name: 'Email 3',
+              subject: '',
+              metrics: {
+                sent: 5800,
+                uniqueOpens: 1274,
+                uniqueClicks: 161,
+                totalOpens: 1882,
+                totalClicks: 931,
+                openRate: 21.97,
+                clickRate: 2.78,
+                ctor: 12.64
+              }
+            }
+          ],
+          totals: {
+            emailCount: 3,
+            totalSent: 17608,
+            totalDelivered: 17608,
+            totalOpens: 3645,
+            totalClicks: 422,
+            totalBounces: null,
+            totalUnsubs: null,
+            openRate: 20.7,
+            clickRate: 2.4,
+            ctor: 11.58,
+            bounceRate: null,
+            unsubRate: null
+          },
+          comparison: [
+            {
+              name: 'Email 1',
+              aperturas: 20.2,
+              clics: 2.2,
+              ctor: 11
+            },
+            {
+              name: 'Email 2',
+              aperturas: 19.9,
+              clics: 2.2,
+              ctor: 11
+            },
+            {
+              name: 'Email 3',
+              aperturas: 22,
+              clics: 2.8,
+              ctor: 12.6
+            }
+          ],
+          hotLeads: [
+            {
+              email: 'cstarns@reveam.com',
+              clicks: 28,
+              opens: 14,
+              company: 'Reveam, Inc.',
+              firstName: 'Chip',
+              lastName: 'Starns',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'dean.difazio@toplinefarms.com',
+              clicks: 28,
+              opens: 13,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Dean',
+              lastName: 'DiFazio',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'luis.garcia@toplinefarms.com',
+              clicks: 28,
+              opens: 9,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'LUIS',
+              lastName: 'GARCIA',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'lortega@mango.org',
+              clicks: 28,
+              opens: 5,
+              company: 'National Mango Board',
+              firstName: 'Leonardo',
+              lastName: 'Ortega',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rojeda@mango.org',
+              clicks: 28,
+              opens: 5,
+              company: 'National Mango Board',
+              firstName: 'Ramon',
+              lastName: 'Ojeda',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'dlentz@mango.org',
+              clicks: 28,
+              opens: 4,
+              company: 'National Mango Board',
+              firstName: 'Debra',
+              lastName: 'Lentz',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'paul.newstead@honeybearmarketing.com',
+              clicks: 28,
+              opens: 4,
+              company: 'Honeybear Brands',
+              firstName: 'Paul',
+              lastName: 'Newstead',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rfeighery@procaccibrothers.com',
+              clicks: 28,
+              opens: 4,
+              company: 'Procacci Brothers Sales Corp.',
+              firstName: 'Richard',
+              lastName: 'Feighery',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'fred@wescottorchard.com',
+              clicks: 28,
+              opens: 3,
+              company: 'Honeybear Brands',
+              firstName: 'Fred',
+              lastName: 'Wescott',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'gillian.digman@redhatco-op.com',
+              clicks: 28,
+              opens: 3,
+              company: 'Red Hat Co-Op',
+              firstName: 'Gillian',
+              lastName: 'Digman',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'j.harris@fsfreshfoods.com',
+              clicks: 28,
+              opens: 3,
+              company: 'F&S Fresh Foods',
+              firstName: 'Jessica',
+              lastName: 'Harris',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'justine.taylor@toplinefarms.com',
+              clicks: 28,
+              opens: 3,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Justine',
+              lastName: 'Taylor',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'shelly.hoffman@luckie.com',
+              clicks: 28,
+              opens: 3,
+              company: 'Luckie',
+              firstName: 'Shelly',
+              lastName: 'Hoffman',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'lazo@agraya.com',
+              clicks: 26,
+              opens: 4,
+              company: 'AGRAYA GmbH',
+              firstName: 'Angelo',
+              lastName: 'Lazo',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'shige.ohara@vanguardteam.com',
+              clicks: 25,
+              opens: 8,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Shige',
+              lastName: 'Ohara',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'hector.velderrain@toplinefarms.com',
+              clicks: 25,
+              opens: 4,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'HectorVelderrain',
+              lastName: 'Magallanes',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'dlacroix@familytreefarms.com',
+              clicks: 25,
+              opens: 3,
+              company: 'Family Tree Farms',
+              firstName: 'Doug',
+              lastName: 'LaCroix',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'ccastanos@reveam.com',
+              clicks: 24,
+              opens: 17,
+              company: 'Reveam, Inc.',
+              firstName: 'Carlos',
+              lastName: 'Castanos',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'johnp@pandol.com',
+              clicks: 24,
+              opens: 14,
+              company: 'Pandol Brothers, Inc.',
+              firstName: 'John',
+              lastName: 'Pandol',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'amoore@fsfreshfoods.com',
+              clicks: 24,
+              opens: 8,
+              company: 'F&S Fresh Foods',
+              firstName: 'Alyssa',
+              lastName: 'Moore',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'chuck.sinks@honeybearmarketing.com',
+              clicks: 24,
+              opens: 8,
+              company: 'Honeybear Brands',
+              firstName: 'Chuck',
+              lastName: 'Sinks',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'goldschj@anagramintl.com',
+              clicks: 24,
+              opens: 8,
+              company: 'Anagram International, Inc.',
+              firstName: 'Josh',
+              lastName: 'Goldschmidt',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jmorris@freshinnovationsllc.com',
+              clicks: 24,
+              opens: 8,
+              company: 'Fresh Innovations, LLC',
+              firstName: 'Jeff',
+              lastName: 'Morris',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'josh.borkman@giumarra.com',
+              clicks: 24,
+              opens: 8,
+              company: 'The Giumarra Companies',
+              firstName: 'Josh',
+              lastName: 'Borkman',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'ntello@mango.org',
+              clicks: 24,
+              opens: 8,
+              company: 'National Mango Board',
+              firstName: 'Nathalia',
+              lastName: 'Tello',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rodney.tuthill@honeybearmarketing.com',
+              clicks: 24,
+              opens: 8,
+              company: 'Honeybear Brands',
+              firstName: 'Rodney',
+              lastName: 'Tuthill',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'adam@clarksmarket.com',
+              clicks: 24,
+              opens: 7,
+              company: 'Clark\'s Market',
+              firstName: 'Adam',
+              lastName: 'Laliberte',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'gbetancourt@reveam.com',
+              clicks: 24,
+              opens: 7,
+              company: 'Reveam, Inc.',
+              firstName: 'Gabriela',
+              lastName: 'Betancourt',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'gene.coughlin@vanguardfresh.com',
+              clicks: 24,
+              opens: 7,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Gene',
+              lastName: 'Coughlin',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jmata@mango.org',
+              clicks: 24,
+              opens: 7,
+              company: 'National Mango Board',
+              firstName: 'Juan',
+              lastName: 'Mata',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jmazer@fsfreshfoods.com',
+              clicks: 24,
+              opens: 7,
+              company: 'F&S Fresh Foods',
+              firstName: 'Jill',
+              lastName: 'Mazer',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'lsetia@mango.org',
+              clicks: 24,
+              opens: 7,
+              company: 'National Mango Board',
+              firstName: 'Lavanya',
+              lastName: 'Setia',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'mevero@mango.org',
+              clicks: 24,
+              opens: 7,
+              company: 'National Mango Board',
+              firstName: 'Muno',
+              lastName: 'Evero',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'noah.croft@honeybearmarketing.com',
+              clicks: 24,
+              opens: 7,
+              company: 'Honeybear Brands',
+              firstName: 'Noah',
+              lastName: 'Croft',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rudy@directsourcemktg.com',
+              clicks: 24,
+              opens: 7,
+              company: 'IG Fruit Dba Direct Source Marketing',
+              firstName: 'Rudy',
+              lastName: 'Heras',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'emilio.moreno@toplinefarms.com',
+              clicks: 24,
+              opens: 6,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Emilio',
+              lastName: 'Moreno',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'krystinar@toplinefarms.com',
+              clicks: 24,
+              opens: 6,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Krystina',
+              lastName: 'RappÃ©',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'matt.wright@toplinefarms.com',
+              clicks: 24,
+              opens: 6,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Matt',
+              lastName: 'Wright',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'mitch@pandol.com',
+              clicks: 24,
+              opens: 6,
+              company: 'Pandol Brothers, Inc.',
+              firstName: 'Mitchell',
+              lastName: 'Millwee',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'nick.dicarlo@toplinefarms.com',
+              clicks: 24,
+              opens: 6,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Nick',
+              lastName: 'DiCarlo',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'phil.rindone@pandol.com',
+              clicks: 24,
+              opens: 6,
+              company: 'Pandol Brothers, Inc.',
+              firstName: 'Phil',
+              lastName: 'Rindone',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rginac@panoplyfoods.com',
+              clicks: 24,
+              opens: 6,
+              company: 'Panoply Foods Corp',
+              firstName: 'Robin',
+              lastName: 'Ginac',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'thomas.wescott@honeybearmarketing.com',
+              clicks: 24,
+              opens: 6,
+              company: 'Honeybear Brands',
+              firstName: 'Thomas',
+              lastName: 'Wescott',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'amanda@savewaysupplies.com',
+              clicks: 24,
+              opens: 5,
+              company: 'Saveway Supplies, Inc.',
+              firstName: 'Amanda',
+              lastName: 'Woods',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'bbiederman@scotlynn.com',
+              clicks: 24,
+              opens: 5,
+              company: 'Scotlynn Investments, Inc.',
+              firstName: 'Bryan',
+              lastName: 'Biederman',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'chuck@directsourcemktg.com',
+              clicks: 24,
+              opens: 5,
+              company: 'IG Fruit Dba Direct Source Marketing',
+              firstName: 'Chuck',
+              lastName: 'LeDone',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'david.pereira@toplinefarms.com',
+              clicks: 24,
+              opens: 5,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'David',
+              lastName: 'Pereira',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'erin.riney@luckie.com',
+              clicks: 24,
+              opens: 5,
+              company: 'Luckie',
+              firstName: 'Erin',
+              lastName: 'Riney',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jdpoole@scotlynn.com',
+              clicks: 24,
+              opens: 5,
+              company: 'Scotlynn Sweet Pac Growers',
+              firstName: 'JD',
+              lastName: 'Poole',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jpelletier@reveam.com',
+              clicks: 24,
+              opens: 5,
+              company: 'Reveam, Inc.',
+              firstName: 'Jeff',
+              lastName: 'Pelletier',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'ryan.callahan@honeybearmarketing.com',
+              clicks: 24,
+              opens: 5,
+              company: 'Honeybear Brands',
+              firstName: 'Ryan',
+              lastName: 'Callahan',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'sherry@savewaysupplies.com',
+              clicks: 24,
+              opens: 5,
+              company: 'Saveway Supplies, Inc.',
+              firstName: 'Sherry',
+              lastName: 'Chen',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'sarah.esker@honeybearmarketing.com',
+              clicks: 24,
+              opens: 4,
+              company: 'Honeybear Brands',
+              firstName: 'Sarah',
+              lastName: 'Esker',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'stefaniep@pandol.com',
+              clicks: 24,
+              opens: 4,
+              company: 'Pandol Brothers, Inc.',
+              firstName: 'Stefanie',
+              lastName: 'Pandol',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'tony.harmon@vanguardfresh.com',
+              clicks: 24,
+              opens: 4,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Tony',
+              lastName: 'Harmon',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'abarrero@mango.org',
+              clicks: 24,
+              opens: 3,
+              company: 'National Mango Board',
+              firstName: 'Adrienne',
+              lastName: 'Barrero',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'alexa@directsourcemktg.com',
+              clicks: 24,
+              opens: 3,
+              company: 'IG Fruit Dba Direct Source Marketing',
+              firstName: 'Alexa',
+              lastName: 'Zhdan',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'alissaa@familytreefarms.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Family Tree Farms',
+              firstName: 'Alissa',
+              lastName: 'Amaral',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'andres.duque@vanguardfresh.com',
+              clicks: 24,
+              opens: 3,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Andres',
+              lastName: 'Duque',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'bcarter@scotlynn.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Scotlynn Sweet Pac Growers',
+              firstName: 'Brad',
+              lastName: 'Carter',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'brad.hansman@honeybearmarketing.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Honeybear Brands',
+              firstName: 'Bradley',
+              lastName: 'Hansman',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'brian.dicarlo@toplinefarms.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Brian',
+              lastName: 'DiCarlo',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'carlos.marquez@giumarra.com',
+              clicks: 24,
+              opens: 3,
+              company: 'The Giumarra Companies',
+              firstName: 'Carlos',
+              lastName: 'Marquez',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'cfavero@mango.org',
+              clicks: 24,
+              opens: 3,
+              company: 'National Mango Board',
+              firstName: 'Cesar',
+              lastName: 'Favero',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'cforbes@freshinnovationsllc.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Fresh Innovations, LLC',
+              firstName: 'Clyde',
+              lastName: 'Forbes',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'cindy@savewaysupplies.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Saveway Supplies, Inc.',
+              firstName: 'Cindy',
+              lastName: 'Chen',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'clara.cuevas@honeybearmarketing.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Honeybear Brands',
+              firstName: 'Clara',
+              lastName: 'Cuevas',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'claraarfmann@brstores.com',
+              clicks: 24,
+              opens: 3,
+              company: 'B & R Stores Inc.',
+              firstName: 'Clara',
+              lastName: 'Arfmann',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'craig.arneson@honeybearmarketing.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Honeybear Brands',
+              firstName: 'Craig',
+              lastName: 'Arneson',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'crystal@freshinnovationsllc.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Fresh Innovations, LLC',
+              firstName: 'Crystal',
+              lastName: 'Berry',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'don.roper@honeybearmarketing.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Honeybear Brands',
+              firstName: 'Don',
+              lastName: 'Roper',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'ignacio.ugarte@vanguardteam.com',
+              clicks: 24,
+              opens: 3,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Ignacio',
+              lastName: 'Ugarte',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jalley@freshinnovationsllc.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Fresh Innovations, LLC',
+              firstName: 'Jay',
+              lastName: 'Alley',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jordan.root@vanguardfresh.com',
+              clicks: 24,
+              opens: 3,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Jordan',
+              lastName: 'Root',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'kristi.harris@honeybearmarketing.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Honeybear Brands',
+              firstName: 'Kristi',
+              lastName: 'Harris',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'laurentv@westmorelandsales.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Laurent',
+              lastName: 'Verbist',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'magaly.martini@honeybearmarketing.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Honeybear Brands',
+              firstName: 'Magaly',
+              lastName: 'Martini',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'matias.mora@vanguardfresh.com',
+              clicks: 24,
+              opens: 3,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Matias',
+              lastName: 'Mora',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'max.mastronardi@toplinefarms.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Max',
+              lastName: 'Mastronardi',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'michael.bader@honeybearmarketing.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Honeybear Brands',
+              firstName: 'Michael',
+              lastName: 'Bader',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'patrick.matthias@pandol.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Pandol Brothers, Inc.',
+              firstName: 'Patrick',
+              lastName: 'Matthias',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'scott.gelber@luckie.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Luckie',
+              firstName: 'Scott',
+              lastName: 'Gelber',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'sethc@familytreefarms.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Family Tree Farms',
+              firstName: 'Seth',
+              lastName: 'Costi',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'shelby.gaddis@honeybearmarketing.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Honeybear Brands',
+              firstName: 'Shelby',
+              lastName: 'Gaddis',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'tammy.collum@vanguardfresh.com',
+              clicks: 24,
+              opens: 3,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Tammy',
+              lastName: 'Collum',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'taylor.rhodes@luckie.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Luckie',
+              firstName: 'Taylor',
+              lastName: 'Rhodes',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'tfreytag@fsfreshfoods.com',
+              clicks: 24,
+              opens: 3,
+              company: 'F&S Fresh Foods',
+              firstName: 'Tony',
+              lastName: 'Freytag',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'vanessag@familytreefarms.com',
+              clicks: 24,
+              opens: 3,
+              company: 'Family Tree Farms',
+              firstName: 'Vanessa',
+              lastName: 'Gutierrez',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'myoung@reveam.com',
+              clicks: 22,
+              opens: 11,
+              company: 'Reveam, Inc.',
+              firstName: 'Michael',
+              lastName: 'Young',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'chair@freshinnovationsllc.com',
+              clicks: 20,
+              opens: 3,
+              company: 'Fresh Innovations, LLC',
+              firstName: 'Codie',
+              lastName: 'Hair',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'daniel.wu@redhatco-op.com',
+              clicks: 20,
+              opens: 3,
+              company: 'Red Hat Co-Op',
+              firstName: 'Daniel',
+              lastName: 'Wu',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jimmy.coppola@toplinefarms.com',
+              clicks: 20,
+              opens: 3,
+              company: 'Topline Farms - Westmoreland',
+              firstName: 'Jimmy',
+              lastName: 'Coppola',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'munn@arcadeagroup.com',
+              clicks: 20,
+              opens: 3,
+              company: 'Arcadea Group',
+              firstName: 'Emmy',
+              lastName: 'Munn',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'dona.tang@eppkg.com',
+              clicks: 19,
+              opens: 5,
+              company: 'Eco Promax Packaging Co., Ltd.',
+              firstName: 'Dona',
+              lastName: 'Tang',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'eric.yang@lesuipackaging.com',
+              clicks: 19,
+              opens: 4,
+              company: 'Eco Promax Packaging Co., Ltd.',
+              firstName: 'Eric',
+              lastName: 'Yang',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'estelle.zhao@eppkg.com',
+              clicks: 18,
+              opens: 3,
+              company: 'Eco Promax Packaging Co., Ltd.',
+              firstName: 'Estelle',
+              lastName: 'Zhao',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'donnyc@familytreefarms.com',
+              clicks: 16,
+              opens: 4,
+              company: 'Family Tree Farms',
+              firstName: 'Donny',
+              lastName: 'Caggianelli',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'dwashburn@familytreefarms.com',
+              clicks: 16,
+              opens: 4,
+              company: 'Family Tree Farms',
+              firstName: 'Drew',
+              lastName: 'Washburn',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jerryg@familytreefarms.com',
+              clicks: 16,
+              opens: 4,
+              company: 'Family Tree Farms',
+              firstName: 'Jerry',
+              lastName: 'Guerrero',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'mrodriguez@gem-packberries.com',
+              clicks: 16,
+              opens: 3,
+              company: 'Gem-Pack Berries, LLC',
+              firstName: 'Maria',
+              lastName: 'Rodriguez',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'brentonh@familytreefarms.com',
+              clicks: 16,
+              opens: 2,
+              company: 'Family Tree Farms',
+              firstName: 'Brenton',
+              lastName: 'Helm',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'christians@familytreefarms.com',
+              clicks: 16,
+              opens: 2,
+              company: 'Family Tree Farms',
+              firstName: 'Christian',
+              lastName: 'Shehadey',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'cmurray@familytreefarms.com',
+              clicks: 16,
+              opens: 2,
+              company: 'Family Tree Farms',
+              firstName: 'Cody',
+              lastName: 'Murray',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'colemanh@familytreefarms.com',
+              clicks: 16,
+              opens: 2,
+              company: 'Family Tree Farms',
+              firstName: 'Coleman',
+              lastName: 'Hammond',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'ethan.williams@vanguardfresh.com',
+              clicks: 16,
+              opens: 2,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Ethan',
+              lastName: 'Williams',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'sean.riley@giumarra.com',
+              clicks: 16,
+              opens: 2,
+              company: 'The Giumarra Companies',
+              firstName: 'Sean',
+              lastName: 'Riley',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'steveng@familytreefarms.com',
+              clicks: 16,
+              opens: 2,
+              company: 'Family Tree Farms',
+              firstName: 'Steven',
+              lastName: 'Gallegos',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'chris.henry@giumarra.com',
+              clicks: 13,
+              opens: 4,
+              company: 'The Giumarra Companies',
+              firstName: 'Chris',
+              lastName: 'Henry',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'luisd@familytreefarms.com',
+              clicks: 13,
+              opens: 2,
+              company: 'Family Tree Farms',
+              firstName: 'Luis',
+              lastName: 'De La Torre',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'cmoore@kingpost.us',
+              clicks: 12,
+              opens: 9,
+              company: 'Furlong Logistics LLC dba Kingpost',
+              firstName: 'Clay',
+              lastName: 'Moore',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jeniffer.chen@lesuipackaging.com',
+              clicks: 12,
+              opens: 5,
+              company: 'Eco Promax Packaging Co., Ltd.',
+              firstName: 'Jeniffer',
+              lastName: 'Chen',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'bkessinger@kingpost.us',
+              clicks: 12,
+              opens: 3,
+              company: 'Furlong Logistics LLC dba Kingpost',
+              firstName: 'Ben',
+              lastName: 'Kessinger',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'pgoudis@kingpost.us',
+              clicks: 12,
+              opens: 3,
+              company: 'Furlong Logistics LLC dba Kingpost',
+              firstName: 'Peter',
+              lastName: 'Goudis',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'wholton@kingpost.us',
+              clicks: 12,
+              opens: 3,
+              company: 'Furlong Logistics LLC dba Kingpost',
+              firstName: 'Will',
+              lastName: 'Holton',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'bryceh@familytreefarms.com',
+              clicks: 8,
+              opens: 3,
+              company: 'Family Tree Farms',
+              firstName: 'Bryce',
+              lastName: 'Hammond',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'diane.soard@cc-racks.com',
+              clicks: 8,
+              opens: 3,
+              company: 'Container Centralen Inc.',
+              firstName: 'Diane',
+              lastName: 'Soard',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'amuxlow@familytreefarms.com',
+              clicks: 8,
+              opens: 2,
+              company: 'Family Tree Farms',
+              firstName: 'Andy',
+              lastName: 'Muxlow',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'anthony.stallings@giumarra.com',
+              clicks: 8,
+              opens: 1,
+              company: 'The Giumarra Companies',
+              firstName: 'Anthony',
+              lastName: 'Stallings',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'davidj@familytreefarms.com',
+              clicks: 8,
+              opens: 1,
+              company: 'Family Tree Farms',
+              firstName: 'David',
+              lastName: 'Jackson',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jweber@pure-flavor.com',
+              clicks: 8,
+              opens: 1,
+              company: 'Pure Flavor Farms LP',
+              firstName: 'Julia',
+              lastName: 'Weber',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'madalyn.mccracken@vanguardteam.com',
+              clicks: 8,
+              opens: 1,
+              company: 'The Vanguard International Group LP',
+              firstName: 'Madalyn',
+              lastName: 'McCracken',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'marcol@familytreefarms.com',
+              clicks: 8,
+              opens: 1,
+              company: 'Family Tree Farms',
+              firstName: 'Marco',
+              lastName: 'Luna',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'phosda.pak@giumarra.com',
+              clicks: 8,
+              opens: 1,
+              company: 'The Giumarra Companies',
+              firstName: 'Phosda',
+              lastName: 'Pak',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rhoward@familytreefarms.com',
+              clicks: 8,
+              opens: 1,
+              company: 'Family Tree Farms',
+              firstName: 'Ryan',
+              lastName: 'Howard',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'tracej@familytreefarms.com',
+              clicks: 8,
+              opens: 1,
+              company: 'Family Tree Farms',
+              firstName: 'Trace',
+              lastName: 'Jackson',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'comercializacion@alimentosjopa.com',
+              clicks: 6,
+              opens: 3,
+              company: 'Alimentos Jopa C.A',
+              firstName: 'Johan Luciano',
+              lastName: 'Chavez Gruber',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'd.bermudez@frtropicales.com',
+              clicks: 6,
+              opens: 3,
+              company: 'Costa Rica - Essential Costa Rica',
+              firstName: 'Deivin',
+              lastName: 'Bermudez Mendez',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'micailan@familytreefarms.com',
+              clicks: 5,
+              opens: 1,
+              company: 'Family Tree Farms',
+              firstName: 'Micaila',
+              lastName: 'Nunez',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jose.diaz@eammosca.com',
+              clicks: 4,
+              opens: 2,
+              company: 'EAM-Mosca Corporation',
+              firstName: 'Jose',
+              lastName: 'Diaz',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'chigashi@spokaneproduce.com',
+              clicks: 4,
+              opens: 1,
+              company: 'Spokane Produce, Inc.',
+              firstName: 'Craig',
+              lastName: 'Higashi',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'auna.lundberg@stemilt.com',
+              clicks: 3,
+              opens: 4,
+              company: 'Stemilt Growers LLC',
+              firstName: 'Auna',
+              lastName: 'Lundberg',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jsokolova@ensembleiq.com',
+              clicks: 2,
+              opens: 35,
+              company: 'Ensemble IQ',
+              firstName: 'Julia',
+              lastName: 'Sokolova',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'brian.evans@stemilt.com',
+              clicks: 2,
+              opens: 4,
+              company: 'Stemilt Growers LLC',
+              firstName: 'Brian',
+              lastName: 'Evans',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'dwarkesh.kapadiya@omori-na.com',
+              clicks: 2,
+              opens: 4,
+              company: 'Omori North America Inc.',
+              firstName: 'Dwarkesh',
+              lastName: 'Kapadiya',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jlee@kowalskis.com',
+              clicks: 2,
+              opens: 3,
+              company: 'Kowalski\'s Markets',
+              firstName: 'Jeremy',
+              lastName: 'Lee',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'morgan@thefreshwave.com',
+              clicks: 2,
+              opens: 3,
+              company: 'Fresh Wave Fruit & Produce',
+              firstName: 'Morgan',
+              lastName: 'DiMartino',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'aakdogan@swtfresh.com',
+              clicks: 1,
+              opens: 10,
+              company: 'Sweet Fresh Produce',
+              firstName: 'Ali',
+              lastName: 'Akdogan',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'amweddle@calpoly.edu',
+              clicks: 1,
+              opens: 8,
+              company: 'Cal Poly State University',
+              firstName: 'Avery',
+              lastName: 'Weddle',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'lgarwick@calpoly.edu',
+              clicks: 1,
+              opens: 7,
+              company: 'Cal Poly State University',
+              firstName: 'Logan',
+              lastName: 'Garwick',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'bart.bakker@ludvigsvensson.com',
+              clicks: 1,
+              opens: 5,
+              company: 'Ludvig Svensson, Inc',
+              firstName: 'Bart',
+              lastName: 'Bakker',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'dennis.burns@affinitysales.com',
+              clicks: 1,
+              opens: 5,
+              company: 'Affinity Sales',
+              firstName: 'Dennis',
+              lastName: 'Burns',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jmpiment@calpoly.edu',
+              clicks: 1,
+              opens: 5,
+              company: 'Cal Poly State University',
+              firstName: 'Jack',
+              lastName: 'Pinmentel',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'kespinosa@eateryessentials.com',
+              clicks: 1,
+              opens: 5,
+              company: 'Eatery Essentials',
+              firstName: 'Kimberley',
+              lastName: 'Espinosa',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'sarah.burns@stemilt.com',
+              clicks: 1,
+              opens: 5,
+              company: 'Stemilt Growers LLC',
+              firstName: 'Sarah',
+              lastName: 'Burns',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'ssimon@sunsweet.com',
+              clicks: 1,
+              opens: 5,
+              company: 'Sunsweet Growers, Inc.',
+              firstName: 'Sandy',
+              lastName: 'Simon',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'zrodri03@calpoly.edu',
+              clicks: 1,
+              opens: 5,
+              company: 'Cal Poly State University',
+              firstName: 'Zenaida',
+              lastName: 'Rodriguez',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'cameron.newell@xerces.org',
+              clicks: 1,
+              opens: 4,
+              company: 'Bee Better Certified',
+              firstName: 'Cameron',
+              lastName: 'Newell',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'fmaggio@camposol.com',
+              clicks: 1,
+              opens: 4,
+              company: 'Camposol',
+              firstName: 'Federico',
+              lastName: 'Maggio',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'herb@gps-miami.com',
+              clicks: 1,
+              opens: 4,
+              company: 'Global Perishable Services',
+              firstName: 'Herb',
+              lastName: 'Gardner',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jorge.macias@stemilt.com',
+              clicks: 1,
+              opens: 4,
+              company: 'Stemilt Growers LLC',
+              firstName: 'Jorge',
+              lastName: 'Macias',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'katie.harmon@stemilt.com',
+              clicks: 1,
+              opens: 4,
+              company: 'Stemilt Growers LLC',
+              firstName: 'Katie',
+              lastName: 'Harmon',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'lauren.mathison@stemilt.com',
+              clicks: 1,
+              opens: 4,
+              company: 'Stemilt Growers LLC',
+              firstName: 'Lauren',
+              lastName: 'Mathison',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'matthew.jarmin@stemilt.com',
+              clicks: 1,
+              opens: 4,
+              company: 'Stemilt Growers LLC',
+              firstName: 'Matthew',
+              lastName: 'Jarmin',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'mrk@darksideequipment.com',
+              clicks: 1,
+              opens: 4,
+              company: 'Dark Side Equipment',
+              firstName: 'Maxwell',
+              lastName: 'Krieger',
+              campaigns: 2,
+              emailAppearances: [
+                1,
+                2
+              ]
+            },
+            {
+              email: 'neryem.flores@stemilt.com',
+              clicks: 1,
+              opens: 4,
+              company: 'Stemilt Growers LLC',
+              firstName: 'Neryem',
+              lastName: 'Flores',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rgalindo@sunshinebouquet.com',
+              clicks: 1,
+              opens: 4,
+              company: 'Sunshine Bouquet Company',
+              firstName: 'Roga',
+              lastName: 'Galindo',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'brendac@cmiorchards.com',
+              clicks: 1,
+              opens: 3,
+              company: 'CMI Orchards',
+              firstName: 'Brenda',
+              lastName: 'Calvillo',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'bsando13@calpoly.edu',
+              clicks: 1,
+              opens: 3,
+              company: 'Cal Poly State University',
+              firstName: 'Bryan',
+              lastName: 'Sandovl',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'ceranos_v@msn.com',
+              clicks: 1,
+              opens: 3,
+              company: 'GRUPO CA & LU ORGANIC FRUITS',
+              firstName: 'Vicente Cerano',
+              lastName: 'Sanchez',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'cwells12@calpoly.edu',
+              clicks: 1,
+              opens: 3,
+              company: 'Cal Poly State University',
+              firstName: 'Caleb',
+              lastName: 'Wells',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'david@farmacopiafarms.com',
+              clicks: 1,
+              opens: 3,
+              company: 'Farmacopia Farms LLC',
+              firstName: 'David',
+              lastName: 'Waters',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'everth@riverdalefarms.com',
+              clicks: 1,
+              opens: 3,
+              company: 'Riverdale Farms',
+              firstName: 'Everth',
+              lastName: 'Chacon',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'gminetti@calpoly.edu',
+              clicks: 1,
+              opens: 3,
+              company: 'Cal Poly State University',
+              firstName: 'Grace',
+              lastName: 'Minetti',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'grejo.torres@hotmail.com',
+              clicks: 1,
+              opens: 3,
+              company: 'LEVEL-BERRIES SA DE CV',
+              firstName: 'Grettel Josefina',
+              lastName: 'Torres Mendoza',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'harold.ramos@seaboardmarine.com',
+              clicks: 1,
+              opens: 3,
+              company: 'Seaboard Marine Ltd.',
+              firstName: 'Harold',
+              lastName: 'Ramos',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'hcremers@calpoly.edu',
+              clicks: 1,
+              opens: 3,
+              company: 'Cal Poly State University',
+              firstName: 'Henry',
+              lastName: 'Cremers',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jandrews@sev-rend.com',
+              clicks: 1,
+              opens: 3,
+              company: 'Sev-Rend',
+              firstName: 'Jeremy',
+              lastName: 'Andrews',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jstoltz@hy-vee.com',
+              clicks: 1,
+              opens: 3,
+              company: 'Hy-Vee, Inc.',
+              firstName: 'Joe',
+              lastName: 'Stoltz',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rkwan@hormel.com',
+              clicks: 1,
+              opens: 3,
+              company: 'Fresherized Foods',
+              firstName: 'Ray',
+              lastName: 'Kwan',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'sdavie02@calpoly.edu',
+              clicks: 1,
+              opens: 3,
+              company: 'Cal Poly State University',
+              firstName: 'Sequoia',
+              lastName: 'Davies',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'tnorthro@calpoly.edu',
+              clicks: 1,
+              opens: 3,
+              company: 'Cal Poly State University',
+              firstName: 'Tim',
+              lastName: 'Northrop',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'travish@cmiorchards.com',
+              clicks: 1,
+              opens: 3,
+              company: 'CMI Orchards',
+              firstName: 'Travis',
+              lastName: 'Hallman',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'wcrook@calpoly.edu',
+              clicks: 1,
+              opens: 3,
+              company: 'Cal Poly State University',
+              firstName: 'William',
+              lastName: 'Crook',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'dganske@johansontrans.com',
+              clicks: 1,
+              opens: 2,
+              company: 'Johanson Transportation Services',
+              firstName: 'Drew',
+              lastName: 'Ganske',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'maggie@bezartmarketing.com',
+              clicks: 1,
+              opens: 2,
+              company: 'Mags International, LLC',
+              firstName: 'Maggie',
+              lastName: 'Bezart-Hall',
+              campaigns: 2,
+              emailAppearances: [
+                1,
+                2
+              ]
+            },
+            {
+              email: 'andres.alcala@fedex.com',
+              clicks: 1,
+              opens: 1,
+              company: 'FedEx Express',
+              firstName: 'Andres',
+              lastName: 'Alcala',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'breanne.steadman@volmcompanies.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Volm Companies, Inc.',
+              firstName: 'Breanne',
+              lastName: 'Steadman',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'carlosvargas@cunzac.edu.gt',
+              clicks: 1,
+              opens: 1,
+              company: 'Centro Universitario de Zacapa',
+              firstName: 'Carlos Augusto',
+              lastName: 'Vargas Galvez',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'cheyenne.esguerra@freshorigins.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Fresh Origins / San Diego Farms',
+              firstName: 'Cheyenne',
+              lastName: 'Esguerra',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'christopher.steckler@apexglobe.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Apex Logistics International Inc.',
+              firstName: 'Christopher',
+              lastName: 'Steckler',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'clambrou@awtlabelpack.com',
+              clicks: 1,
+              opens: 1,
+              company: 'AWT Labels & Packaging',
+              firstName: 'Chris',
+              lastName: 'Lambrou',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'diego.chinchilla@seainternationalcr.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Costa Rica - Essential Costa Rica',
+              firstName: 'Diego',
+              lastName: 'Chinchilla',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'evanis@1800flowers.com',
+              clicks: 1,
+              opens: 1,
+              company: '1800Flowers.com',
+              firstName: 'Eva',
+              lastName: 'Vanis',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'ipg@entre-valles.cl',
+              clicks: 1,
+              opens: 1,
+              company: 'Exportadora Entre Valles Ltda',
+              firstName: 'Ignacio',
+              lastName: 'Pizarro Guerra',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jason.storch@volmcompanies.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Volm Companies, Inc.',
+              firstName: 'Jason',
+              lastName: 'Storch',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jhunsaker@slproduce.mx',
+              clicks: 1,
+              opens: 1,
+              company: 'SL Produce LLC',
+              firstName: 'Jeremiah',
+              lastName: 'Hunsaker',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'joely@kingorange.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Kings River Packing, LP',
+              firstName: 'Joel',
+              lastName: 'Yeary',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jpatrick@ecofarmsusa.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Eco Farms',
+              firstName: 'John',
+              lastName: 'Patrick',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'kabbondanza@trustwell.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Trustwell',
+              firstName: 'Kristen',
+              lastName: 'Leto',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'kschiebel@citikold.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Citikold',
+              firstName: 'Klauss',
+              lastName: 'Schiebel',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'kylec@measuretoimprovellc.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Measure To Improve LLC',
+              firstName: 'Kyle',
+              lastName: 'Cosgrove',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'lindsay@sujalife.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Suja Life',
+              firstName: 'Lindsay',
+              lastName: 'Brooks',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'paula.chuman@asicagroup.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Asica Farms',
+              firstName: 'Paula',
+              lastName: 'Chuman',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rbolivar@mymarketstores.com',
+              clicks: 1,
+              opens: 1,
+              company: 'My Market Stores',
+              firstName: 'Roberto',
+              lastName: 'Bolivar',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'rmiller@militaryproduce.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Military Produce Group LLC',
+              firstName: 'Robin',
+              lastName: 'Miller',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'syoung@watercress.com',
+              clicks: 1,
+              opens: 1,
+              company: 'B&W Quality Growers',
+              firstName: 'Scott',
+              lastName: 'Young',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'trd-m-sato@tokyo-seika.co.jp',
+              clicks: 1,
+              opens: 1,
+              company: 'Tokyo Seika Trading Co., Ltd.',
+              firstName: 'MASAFUMI',
+              lastName: 'SATO',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'tsmelcer@pwadc.com',
+              clicks: 1,
+              opens: 1,
+              company: 'Piggly Wiggly Alabama Distributing Co., Inc.',
+              firstName: 'Tracy',
+              lastName: 'Smelcer',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'yolanda.roundtree@fdacs.gov',
+              clicks: 1,
+              opens: 1,
+              company: 'Florida Department of Agriculture & Consumer Services',
+              firstName: 'Yolanda',
+              lastName: 'Roundtree',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            },
+            {
+              email: 'jyeon47@gmail.com',
+              clicks: 1,
+              opens: 0,
+              company: 'Daemyungfarms',
+              firstName: 'Juyeon',
+              lastName: 'Kim',
+              campaigns: 3,
+              emailAppearances: [
+                1,
+                2,
+                3
+              ]
+            }
+          ],
+          hotLeadsCount: 200,
+          allLeadsCount: 5968
         },
       ],
     },

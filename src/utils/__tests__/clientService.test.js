@@ -103,11 +103,11 @@ describe('getOverview', () => {
 });
 
 describe('Email con varias campañas en el mes', () => {
-  it('la vista General de CU Estados Unidos muestra la más reciente y la nombra', () => {
+  it('la vista General de CU Estados Unidos muestra la última cargada y la nombra', () => {
     const em = getOverview('cu-us').pillars.find((p) => p.pilar === 'email');
     expect(em.period).toBe('m10');
-    expect(em.campaignLabel).toBe('SMETA · Campaign 3');
-    expect(em.campaign.totals.totalSent).toBe(253);
+    expect(em.campaignLabel).toBe('IFPA');
+    expect(em.campaign.totals.totalSent).toBe(17608);
   });
 
   it('un mes con una sola campaña no lleva nombre de campaña', () => {

@@ -448,13 +448,16 @@ equipo.
   campaña, reemplaza los números.
 - **Varias campañas en el mismo mes = botonera, no suma.** Cuando una cuenta
   tiene más de una campaña en un mes, el período guarda la lista
-  (`campaigns: [...]`, en orden de envío) y la vista muestra una botonera de
+  (`campaigns: [...]`, en orden de carga) y la vista muestra una botonera de
   campaña, igual que los países en Social Media. No hay opción «todas»: las
   campañas tienen audiencias y objetivos distintos y sumar sus tasas
   mezclaría resultados que no se comparan.
-- **Arranca en la más reciente.** La botonera abre en la última campaña
-  enviada; la vista General del cliente muestra esa misma campaña y la nombra
-  en el subtítulo de la card.
+- **Arranca en la última cargada.** La botonera abre en la última campaña
+  procesada; la vista General del cliente muestra esa misma campaña y la
+  nombra en el subtítulo de la card. Es el orden de carga y no el de envío
+  porque el export de destinatarios de Mailchimp no trae la fecha de envío:
+  el «sent_<fecha>» del nombre del archivo es la fecha del export (los tres
+  envíos de IFPA dicen «Oct 16»). Se guarda como `exportDate`.
 - **La descarga queda fija en la campaña elegida** (sin botonera adentro), y
   su nombre va en el título y en el nombre del archivo, como el país en
   Social.

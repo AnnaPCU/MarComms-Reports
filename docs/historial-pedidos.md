@@ -1608,3 +1608,11 @@
 > Procesá las métricas nuevas de Paid Media
 
 (Respuestas a la consulta: las 4 campañas «PCU - España/Argentina - (Competidores) ISO 27001» van en cuentas PCU por país, «PCU España» y «PCU Argentina»; las 6 campañas «CU Argentina - …» van a la cuenta «Control Union Argentina».)
+
+
+## 16 de octubre de 2026
+
+
+**#127**
+
+> Procesá las métricas nuevas de Email Marketing que son de CU · IFPA · USA

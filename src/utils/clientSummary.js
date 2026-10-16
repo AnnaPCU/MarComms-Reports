@@ -168,7 +168,7 @@ export function summarizePillar(p, lang = 'es') {
       const tt = c.totals;
       return {
         ...base,
-        // Mes con varias campañas: se nombra la que se muestra (la más reciente).
+        // Mes con varias campañas: se nombra la que se muestra (la última cargada).
         subtitle: p.campaignLabel ? `${p.accName} · ${en ? emailLabelEn(p.campaignLabel) : p.campaignLabel}` : null,
         hero: { label: t.kSent, value: n(tt.totalSent), pill: `${t.kOpen} ${dec(tt.openRate, lang)} %` },
         lines: [

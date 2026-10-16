@@ -25,8 +25,8 @@ import { lgCols } from '@/utils/gridCols';
 // Pilar Email Marketing (Mailchimp / Apollo). Reporte de secuencia/campaña.
 // Idioma base español; toggle EN disponible (también en el descargable).
 // Si en el mes salió más de una campaña para la cuenta, una botonera
-// permite elegir cuál ver (como los países en Social). Arranca en la más
-// reciente; el HTML descargado queda fijo en la campaña elegida.
+// permite elegir cuál ver (como los países en Social). Arranca en la
+// última cargada; el HTML descargado queda fijo en la campaña elegida.
 export function EmailApp({ account, period }) {
   const accName = useMemo(
     () => listAccounts().find((a) => a.id === account)?.name ?? '',

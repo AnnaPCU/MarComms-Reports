@@ -4,21 +4,22 @@ import { EMAIL_DB } from '@/data/emailSeed';
 import { buildSnapshot } from '@/utils/snapshot';
 
 describe('varias campañas en un mismo mes', () => {
-  it('lista las campañas de CU Estados Unidos en octubre, en orden de envío', () => {
+  it('lista las campañas de CU Estados Unidos en octubre, en orden de carga', () => {
     const list = listCampaigns('cuus', 'm10');
-    expect(list.map((c) => c.id)).toEqual(['fairly-made', 'smeta-3']);
+    expect(list.map((c) => c.id)).toEqual(['fairly-made', 'smeta-3', 'ifpa']);
     for (const c of list) {
       expect(c.label).toBeTruthy();
       expect(c.totals).toBeTruthy();
     }
   });
 
-  it('sin id elegido devuelve la más reciente; con id, esa campaña', () => {
-    expect(getCampaign('cuus', 'm10').id).toBe('smeta-3');
+  it('sin id elegido devuelve la última cargada; con id, esa campaña', () => {
+    expect(getCampaign('cuus', 'm10').id).toBe('ifpa');
     expect(getCampaign('cuus', 'm10', 'fairly-made').totals.totalSent).toBe(1350);
     expect(getCampaign('cuus', 'm10', 'smeta-3').totals.totalSent).toBe(253);
-    // Un id que no es del período cae en la más reciente.
-    expect(getCampaign('cuus', 'm10', 'otra').id).toBe('smeta-3');
+    expect(getCampaign('cuus', 'm10', 'ifpa').totals.totalSent).toBe(17608);
+    // Un id que no es del período cae en la última cargada.
+    expect(getCampaign('cuus', 'm10', 'otra').id).toBe('ifpa');
   });
 
   it('un mes con una sola campaña sigue funcionando igual', () => {
@@ -37,6 +38,6 @@ describe('varias campañas en un mismo mes', () => {
 
   it('la descarga embebe solo la campaña elegida', () => {
     expect(buildSnapshot('email', 'cuus', 'm10', { emailCampaign: 'fairly-made' }).campaign.id).toBe('fairly-made');
-    expect(buildSnapshot('email', 'cuus', 'm10').campaign.id).toBe('smeta-3');
+    expect(buildSnapshot('email', 'cuus', 'm10').campaign.id).toBe('ifpa');
   });
 });

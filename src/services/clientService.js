@@ -176,7 +176,7 @@ export function getPillarLatest(pilar, ref) {
   if (pilar === 'email') {
     const p = latestPeriod('email', ref);
     if (!p) return null;
-    // Si el mes tiene varias campañas, la General muestra la más reciente
+    // Si el mes tiene varias campañas, la General muestra la última cargada
     // y lo aclara con su nombre (campaignLabel).
     const c = email.getCampaign(ref.account, p.id);
     if (!c) return null;

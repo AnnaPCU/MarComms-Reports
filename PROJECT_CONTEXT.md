@@ -265,7 +265,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Social Media | ✅ Completo (Ene–Sep 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
 | Paid Media | ✅ Completo (Feb–Sep 2026; 8 cuentas de Google Ads desde septiembre: suman Control Union Argentina, PCU España y PCU Argentina) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) |
 | Website (GA + SEO) | ✅ Q1+Q2 2026 (12 cuentas) y **Q3 2026** (10 cuentas, de los reportes trimestrales .md de GA4 + Search Console del 9/10; ahora también con SEO de Peterson). CU Estados Unidos y CU Canadá en Q3 salen del reporte de North America segmentado por país (12 cuentas en total). + Resumen del Año + comparativa. Tooling: `scripts/website/md_to_seed.py` |
-| Email Marketing | ✅ Cinco campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — dos campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange) y «SMETA · Campaign 3» (tooling: `scripts/mailchimp-to-seed.mjs`) |
+| Email Marketing | ✅ Seis campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — tres campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange), «SMETA · Campaign 3» e «IFPA» (3 envíos) (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
 | Planes (vista) | ✅ Informe mensual de septiembre 2026 del plan regional de Control Union USA · mercado orgánico («Control Union North America · Organic»): objetivo, resumen del mes, KPIs operativos (3) y de performance (2) en una fila, 8 entregables completados + 4 en curso, 5 iniciativas de generación de demanda. Descarga en HTML interactivo o **PDF** (impresión del navegador, sin encabezados ni pies del navegador). Columna «Link» en entregables completados: landings USDA Organic y PrimusGFS, benchmarking (Excel), decisión de marca CUC (imagen), pipeline en HubSpot (en «Base de datos de la herramienta comercial»), perfil de LinkedIn de Karl, benchmarking digital (PowerPoint) e informe de mercado USDA (PDF). Seed: `src/data/plansSeed.js` |
 | Planes · Peterson Solutions Argentina | ✅ Hoja «PS Argentina» del Excel de seguimiento (versión 8/10), **un informe por mes**: agosto 2026 (5 entregables, con la comunicación del webinar EmpCo el 20/8; 2.001 contactos por BBDD; deals y MQLs **pendientes del equipo**) y septiembre 2026 (5 completados + grupo «Tareas de octubre» con el estado del Excel: 2 completadas, 1 en curso, 1 pendiente; 3 reuniones; 76 contactos por BBDD; 70 deals y 1 MQL) |
@@ -398,6 +398,16 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Email Control Union Estados Unidos · IFPA** (16/10/2026): campaña one
+  shot «CU | IFPA» con 3 envíos sobre la misma base (5.968 → 5.840 → 5.800):
+  17.608 enviados, 20,7 % de apertura, 2,4 % de clics, 11,6 % de CTOR y 200
+  hot leads. Tercera campaña de octubre de `cuus` en la botonera, que ahora
+  abre en la última cargada (orden de carga: el export no trae la fecha de
+  envío; el `sent_<fecha>` del archivo es la del export y se guarda como
+  `exportDate`). Drop archivado en
+  `metricas/email-marketing/_procesados/2026-10-ifpa/` (se subió como
+  `AAAA-MM-2026-10-IFPA-CAMPAIGN`).
 
 - **Paid Media · Google Ads septiembre 2026** (13/10/2026): primer mes
   ingresado por `metricas/paid-media/` (la carpeta se subió como
