@@ -1,8 +1,9 @@
 // ════════════════════════════════════════════════════════════════
 //  SEED — Pilar Paid Media · Google Ads Search
 //  · CU Portugal: mes a mes Feb→Jun 2026 (de los CSV de Google Ads).
-//    Junio es PARCIAL (1–12 jun). Se muestran las 7 campañas, incluso las
-//    que estuvieron habilitadas sin actividad (se aclara y explica).
+//    Junio es PARCIAL (1–12 jun). Las campañas en cero sin actividad previa
+//    quedan en el seed pero la app no las muestra hasta que arrancan
+//    (paidService.getMonthly, pedido del 20/10/2026).
 //  · España: Abril 2026 (del reporte original IFS / GMP+).
 //  · CU España: la campaña «Car» pasó a llamarse «CAEs» en agosto 2026. Es la
 //    misma campaña (mismos grupos: Certificados y Sistema CAE / Verificación y
@@ -57,7 +58,7 @@ export const PAID_DB = {
           'GMP+': { name: 'GMP+', impressions: 9260, clicks: 72, ctr: 0.78, cpc: 0.54, cost: 39.12, conversions: 0, convRate: 0, costPerConv: 0 },
         }),
         analysis:
-          'En febrero solo GMP+ tuvo actividad (9.260 impresiones, 72 clics, 39,12 EUR), sin conversiones. Las otras 6 campañas estaban habilitadas pero sin impresiones en el período.',
+          'En febrero solo GMP+ tuvo actividad (9.260 impresiones, 72 clics, 39,12 EUR), sin conversiones.',
       },
       m03: {
         channel: 'Google Ads Search',
@@ -67,7 +68,7 @@ export const PAID_DB = {
           'GMP+': { name: 'GMP+', impressions: 9238, clicks: 145, ctr: 1.57, cpc: 1.06, cost: 153.03, conversions: 2, convRate: 1.38, costPerConv: 76.51 },
         }),
         analysis:
-          'Marzo fue el mejor mes de GMP+: 2 conversiones a 76,51 EUR cada una, con CTR de 1,57% sobre 9.238 impresiones. El resto de las campañas siguió sin actividad.',
+          'Marzo fue el mejor mes de GMP+: 2 conversiones a 76,51 EUR cada una, con CTR de 1,57% sobre 9.238 impresiones.',
       },
       m04: {
         channel: 'Google Ads Search',
@@ -77,7 +78,7 @@ export const PAID_DB = {
           'GMP+': { name: 'GMP+', impressions: 1522, clicks: 56, ctr: 3.68, cpc: 2.42, cost: 135.41, conversions: 1, convRate: 1.79, costPerConv: 135.41 },
         }),
         analysis:
-          'En abril GMP+ mejoró el CTR a 3,68%, pero con menos volumen (1.522 impresiones) y 1 conversión a 135,41 EUR — coste por conversión más alto que en marzo. Resto sin actividad.',
+          'En abril GMP+ mejoró el CTR a 3,68%, pero con menos volumen (1.522 impresiones) y 1 conversión a 135,41 EUR — coste por conversión más alto que en marzo.',
       },
       m05: {
         channel: 'Google Ads Search',
@@ -192,7 +193,7 @@ export const PAID_DB = {
           { name: 'CAEs', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
         ],
         analysis:
-          'En junio, IFS volvió a ser la única campaña con conversión (1 conversión a 63,10 EUR) sobre 55 clics y un CTR del 15,03% — la mejor señal del mes. GMP+ concentró el mayor coste (90,72 EUR) con 31 clics pero sin conversiones. Forestal, Textile, Plásticos, Bioenergía, Smeta y Biomasa tuvieron actividad moderada sin conversiones, y CAEs (que hasta julio se llamaba "Car") quedó sin impresiones. Total: 2.692 impresiones, 196 clics y 301,65 EUR invertidos.',
+          'En junio, IFS volvió a ser la única campaña con conversión (1 conversión a 63,10 EUR) sobre 55 clics y un CTR del 15,03% — la mejor señal del mes. GMP+ concentró el mayor coste (90,72 EUR) con 31 clics pero sin conversiones. Forestal, Textile, Plásticos, Bioenergía, Smeta y Biomasa tuvieron actividad moderada sin conversiones. Total: 2.692 impresiones, 196 clics y 301,65 EUR invertidos.',
       },
       m07: {
         channel: 'Google Ads Search',
@@ -267,7 +268,7 @@ export const PAID_DB = {
           { name: 'Cannabis', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
         ],
         analysis:
-          'Primer período cargado de CU Canadá. Canada Gap concentró la actividad (12 clics, 168 impresiones, CTR 7,14%) y Smeta aportó 2 clics. Forestry, GLOBALG.A.P. y Aqua / Fisheries tuvieron impresiones sin clics, y Cannabis quedó sin actividad. Sin conversiones en el mes. Total: 276 impresiones, 14 clics y 22,68 EUR invertidos.',
+          'Primer período cargado de CU Canadá. Canada Gap concentró la actividad (12 clics, 168 impresiones, CTR 7,14%) y Smeta aportó 2 clics. Forestry, GLOBALG.A.P. y Aqua / Fisheries tuvieron impresiones sin clics. Sin conversiones en el mes. Total: 276 impresiones, 14 clics y 22,68 EUR invertidos.',
       },
       m07: {
         channel: 'Google Ads Search',
@@ -282,7 +283,7 @@ export const PAID_DB = {
           { name: 'Cannabis', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
         ],
         analysis:
-          'Julio completo. Canada Gap lideró en clics (23, CTR 10,13%) y Smeta en coste (50,88 EUR) sin convertir. Forestry aportó el mayor alcance (535 impresiones) con CTR bajo (2,99%). Cannabis sin impresiones y Aqua/Fisheries casi sin actividad. Sin conversiones en el mes. Total: 1.128 impresiones, 65 clics y 142,90 EUR.',
+          'Julio completo. Canada Gap lideró en clics (23, CTR 10,13%) y Smeta en coste (50,88 EUR) sin convertir. Forestry aportó el mayor alcance (535 impresiones) con CTR bajo (2,99%). Aqua/Fisheries casi sin actividad. Sin conversiones en el mes. Total: 1.128 impresiones, 65 clics y 142,90 EUR.',
       },
       m08: {
         channel: 'Google Ads Search',
@@ -296,7 +297,7 @@ export const PAID_DB = {
           { name: 'GLOBALG.A.P.', impressions: 41, clicks: 2, ctr: 4.88, cpc: 6342.58, cost: 12685.17, conversions: 0, convRate: 0, costPerConv: 0 },
         ],
         analysis:
-          'Agosto completo, primer mes reportado en pesos tras el cambio de cuenta. Forestry concentró la mitad de la cuenta: 461 impresiones, 34 clics y 152.355,05 ARS (57% del coste del mes), y aportó la única conversión, con un coste por lead de 152.355,05 ARS. Canada Gap fue la más eficiente en atracción (CTR 9,03% sobre 155 impresiones) y Smeta la de peor CTR (2,94%). Cannabis no figura en el export de agosto. Total: 911 impresiones, 62 clics y 269.062,08 ARS.',
+          'Agosto completo, primer mes reportado en pesos tras el cambio de cuenta. Forestry concentró la mitad de la cuenta: 461 impresiones, 34 clics y 152.355,05 ARS (57% del coste del mes), y aportó la única conversión, con un coste por lead de 152.355,05 ARS. Canada Gap fue la más eficiente en atracción (CTR 9,03% sobre 155 impresiones) y Smeta la de peor CTR (2,94%). Total: 911 impresiones, 62 clics y 269.062,08 ARS.',
       },
       m09: {
         channel: 'Google Ads Search',
@@ -415,7 +416,7 @@ export const PAID_DB = {
           { name: 'IFPA event', impressions: 0, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
         ],
         analysis:
-          'Primer mes completo de la cuenta. Toda la actividad la hizo Organic - USDA NOP: 449 impresiones, 32 clics (CTR 7,13%) y 240.944,29 ARS, con un CPC de 7.529,51 ARS, el más alto de todas las cuentas. Organic - PrimusGFS registró apenas 3 impresiones sin clics y la campaña IFPA event no tuvo impresiones. Sin conversiones todavía. Total: 452 impresiones, 32 clics y 240.944,29 ARS.',
+          'Primer mes completo de la cuenta. Toda la actividad la hizo Organic - USDA NOP: 449 impresiones, 32 clics (CTR 7,13%) y 240.944,29 ARS, con un CPC de 7.529,51 ARS, el más alto de todas las cuentas. Organic - PrimusGFS registró apenas 3 impresiones sin clics. Sin conversiones todavía. Total: 452 impresiones, 32 clics y 240.944,29 ARS.',
       },
     },
   },

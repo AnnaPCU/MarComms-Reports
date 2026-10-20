@@ -87,6 +87,11 @@ procesar: los dos idiomas dan el mismo seed. Probado con septiembre 2026.
 
 ## Validaciones de Google Ads
 
+- **Campañas que todavía no arrancaron**: Google las exporta habilitadas y en
+  cero. Van al seed tal cual, pero la app no las muestra hasta el primer mes
+  con actividad (o su `startedOn`); `build_month.py` las lista al correr.
+  Ver `docs/DECISIONES.md` §18.
+
 - El semanal debe **cuadrar exacto** contra los totales del mes por cuenta
   (impresiones, clics, coste, conversiones).
 - El coste de los términos NO suma el 100% (Google oculta búsquedas de bajo

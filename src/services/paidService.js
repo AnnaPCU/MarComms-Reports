@@ -25,8 +25,39 @@ export function isMetaPeriod(periodId) {
   return /^(geo|meta)-/.test(String(periodId ?? ''));
 }
 
+// ── Campañas que todavía no arrancaron ──
+// Una campaña aparece desde el mes en que arranca, nunca antes (pedido del
+// equipo, 20/10/2026: IFPA figuraba en septiembre de CU Estados Unidos sin
+// haber empezado). Arrancó si tiene actividad (impresiones, clics o coste)
+// en ese mes o en uno anterior, o si su `startedOn` cae en ese mes o antes.
+// Google Ads exporta como «Habilitada» y en cero a las campañas creadas que
+// todavía no salieron: esas no se muestran. Los totales no cambian (suman 0).
+const ORDER = MONTHS_2026.map((p) => p.id);
+const hasActivity = (c) => (c.impressions || 0) > 0 || (c.clicks || 0) > 0 || (c.cost || 0) > 0;
+const monthCache = new Map();
+
+function startedBy(accountId, periodId) {
+  const names = new Set();
+  const periods = PAID_DB[accountId]?.periods ?? {};
+  for (const id of ORDER.slice(0, ORDER.indexOf(periodId) + 1)) {
+    for (const c of periods[id]?.campaigns ?? []) if (hasActivity(c)) names.add(c.name);
+  }
+  return names;
+}
+
 export function getMonthly(accountId, periodId) {
-  return PAID_DB[accountId]?.periods?.[periodId] ?? null;
+  const per = PAID_DB[accountId]?.periods?.[periodId];
+  if (!per) return null;
+  const key = `${accountId}|${periodId}`;
+  if (monthCache.has(key)) return monthCache.get(key);
+  const started = startedBy(accountId, periodId);
+  const monthNum = Number(String(periodId).slice(1));
+  const campaigns = per.campaigns.filter(
+    (c) => started.has(c.name) || (c.startedOn && Number(c.startedOn.slice(5, 7)) <= monthNum),
+  );
+  const out = campaigns.length === per.campaigns.length ? per : { ...per, campaigns };
+  monthCache.set(key, out);
+  return out;
 }
 
 // Reporte de una campaña de Meta Ads de una cuenta.
@@ -116,7 +147,8 @@ export function getYear(accountId) {
   // El importe se acumula por moneda para no sumar euros con pesos.
   const byName = {};
   for (const p of MONTHS_2026) {
-    const per = acc.periods[p.id];
+    // Solo las campañas que ya habían arrancado en cada mes.
+    const per = getMonthly(accountId, p.id);
     if (!per) continue;
     const cur = per.totals?.currency || 'EUR';
     for (const c of per.campaigns) {

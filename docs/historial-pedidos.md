@@ -1616,3 +1616,9 @@
 **#127**
 
 > Procesá las métricas nuevas de Email Marketing que son de CU · IFPA · USA
+
+
+**#126** (20/10/2026)
+
+> Recién descargué el reporte del mes de CU Estados Unidos de Paid Media y me aparece la campaña de IFPA, cuando IFPA ni arrancó en septiembre. No busco eso. Siempre que una campaña arranque en X mes deberá aparecer a partir de ese mes para adelante, no antes.
+

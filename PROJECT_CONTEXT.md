@@ -399,6 +399,12 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **Paid: campañas desde el mes en que arrancan** (20/10/2026): las
+  campañas en cero que todavía no tuvieron actividad (ej. IFPA en septiembre
+  de CU Estados Unidos) no se muestran; desde su primer mes con actividad (o
+  su `startedOn`) aparecen siempre. Regla en `paidService.getMonthly`
+  (`docs/DECISIONES.md` §18).
+
 - **Email Control Union Estados Unidos · IFPA** (16/10/2026): campaña one
   shot «CU | IFPA» con 3 envíos sobre la misma base (5.968 → 5.840 → 5.800):
   17.608 enviados, 20,7 % de apertura, 2,4 % de clics, 11,6 % de CTOR y 200

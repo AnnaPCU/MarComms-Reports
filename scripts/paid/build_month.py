@@ -174,6 +174,14 @@ def main():
     for n in notes:
         print('  ⚠ ' + n, file=sys.stderr)
 
+    # Campañas en cero (habilitadas que todavía no salieron, ej. IFPA en sep
+    # 2026): van al seed igual, pero la app no las muestra hasta el mes en que
+    # tienen actividad o su startedOn (paidService.getMonthly).
+    for acc, cs in camps.items():
+        for short, c in cs.items():
+            if not (c['impressions'] or c['clicks'] or c['cost']):
+                print(f'  · {acc} · {short}: sin actividad en el mes → no se muestra si todavía no arrancó', file=sys.stderr)
+
     # ── Bloque para paidSeed.js ──
     out = []
     for acc in [a for a in ACC.values() if a in camps] + [a for a in camps if a not in ACC.values()]:

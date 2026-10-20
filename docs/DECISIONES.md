@@ -592,3 +592,23 @@ Pedido del equipo el 13/10/2026: el mismo flujo que Social, Email y Webinars
   (`cuar`), la misma cuenta de la campaña GEO de Meta (decisión del equipo).
   Septiembre 2026 es su primer mes de Google Ads; con meses cargados, la
   vista General del cliente usa el mes y ya no el GEO.
+
+## 18. Paid: una campaña aparece desde el mes en que arranca
+
+Pedido del equipo el 20/10/2026: en septiembre de CU Estados Unidos figuraba
+la campaña «IFPA event», que todavía no había empezado.
+
+- Google Ads exporta como «Habilitada» y con todo en cero a las campañas
+  creadas que todavía no salieron. Eso no alcanza para mostrarlas.
+- **Regla**: una campaña se muestra en un mes si ya arrancó, es decir si
+  tuvo actividad (impresiones, clics o coste) en ese mes o en uno anterior,
+  o si su `startedOn` cae en ese mes o antes. Desde que arranca se sigue
+  mostrando todos los meses, aunque dé cero (eso sí es información).
+- Se aplica en `paidService.getMonthly`, así vale para el reporte, el
+  descargable, los insights y el resumen anual. El seed guarda la fila tal
+  como vino del export; los totales no cambian porque esas filas suman cero.
+- Reemplaza el criterio anterior de Portugal (mostrar las 7 campañas desde
+  febrero aunque no tuvieran actividad): febrero–abril ahora muestran solo
+  GMP+. También dejan de verse CAEs en junio (España) y Cannabis (Canadá),
+  que nunca tuvo actividad.
+
