@@ -135,10 +135,12 @@ del formulario o una captura del panel, y avisarlo.
   Claude lo carga, redacta el análisis con esos números, mueve el período
   por defecto al mes nuevo y valida el seed campaña por campaña.
 - **Tipo de cambio del mes** (para descargar en ARS, USD o EUR): Claude busca
-  el cierre del último día hábil del mes en el Banco de la Nación Argentina
-  (billete vendedor, USD y EUR), lo valida en al menos 2 fuentes (si el BNA
-  aparece en una sola, lo cruza con dólar BNA × euro/dólar oficial del BCE)
-  y lo carga en `src/data/fxRates.js` con las fuentes anotadas.
+  el cierre del último día hábil del mes del reporte (si se sube septiembre
+  en octubre, el del 30/09): el dólar oficial del Banco de la Nación
+  Argentina (billete vendedor, validado en al menos 2 fuentes) y el
+  euro/dólar oficial del BCE de ese día (resolución del Banco de España en
+  el BOE). El euro en pesos se calcula como dólar BNA × euro/dólar BCE. Se
+  carga en `src/data/fxRates.js` con las fuentes anotadas.
   `build_month.py` avisa si falta y el test `fxService.test.js` falla si un
   mes en ARS no lo tiene.
 - **Meta Ads**: `python3 -B scripts/paid/build_meta.py

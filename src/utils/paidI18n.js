@@ -15,7 +15,12 @@ export const PAID_STR = {
     objectives: {},
     // Nota del descargable convertido a otra moneda (texto aprobado 21/10/2026).
     fxLead: (to) => `Importes aproximados de referencia en ${to}`,
-    fxRest: (from) => `, convertidos desde la moneda ${from} al tipo de cambio del Banco de la Nación Argentina al cierre del mes respectivo: `,
+    fxRest: (from, src) =>
+      src === 'bce'
+        ? `, convertidos desde la moneda ${from} al tipo de cambio oficial del Banco Central Europeo al cierre del mes respectivo: `
+        : src === 'bna-bce'
+          ? `, convertidos desde la moneda ${from} al tipo de cambio del Banco de la Nación Argentina al cierre del mes respectivo (euro calculado con el dólar BNA y el euro/dólar oficial del Banco Central Europeo): `
+          : `, convertidos desde la moneda ${from} al tipo de cambio del Banco de la Nación Argentina al cierre del mes respectivo: `,
     // Selector de vista
     viewLabel: 'Vista / Campaña',
     allCampaigns: 'Todas las campañas — Vista global',
@@ -156,7 +161,12 @@ export const PAID_STR = {
   en: {
     objectives: { 'Generación de leads': 'Lead generation' },
     fxLead: (to) => `Approximate reference amounts in ${to}`,
-    fxRest: (from) => `, converted from ${from} at the Banco de la Nación Argentina exchange rate at the close of the respective month: `,
+    fxRest: (from, src) =>
+      src === 'bce'
+        ? `, converted from ${from} at the European Central Bank official exchange rate at the close of the respective month: `
+        : src === 'bna-bce'
+          ? `, converted from ${from} at the Banco de la Nación Argentina exchange rate at the close of the respective month (euro derived from the BNA dollar and the European Central Bank official euro/dollar rate): `
+          : `, converted from ${from} at the Banco de la Nación Argentina exchange rate at the close of the respective month: `,
     viewLabel: 'View / Campaign',
     allCampaigns: 'All campaigns — Overview',
     cmpCampaigns: 'Campaign comparison',

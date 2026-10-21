@@ -6,8 +6,13 @@ import { FX_RATES } from '@/data/fxRates';
 
 export const CURRENCIES = ['ARS', 'USD', 'EUR'];
 
+// Tipo de cambio del mes con el euro calculado (ARS por EUR = dólar BNA ×
+// euro/dólar oficial del BCE).
 export function getFx(periodId) {
-  return FX_RATES[periodId] ?? null;
+  const fx = FX_RATES[periodId];
+  if (!fx) return null;
+  const EUR = fx.USD && fx.usdPerEur ? Math.round(fx.USD * fx.usdPerEur * 100) / 100 : null;
+  return { ...fx, EUR };
 }
 
 // ARS por 1 unidad de `cur` en el mes (ARS = 1). null si falta el dato.
@@ -32,13 +37,17 @@ export function fxFactor(from, to, periodId) {
   return a != null && b != null ? a / b : null;
 }
 
-// Texto del tipo de cambio para la nota del reporte: «1 USD = 1.540 ARS».
+// Texto del tipo de cambio para la nota del reporte («1 USD = 1.540 ARS») y
+// de dónde sale: 'bna' (dólar BNA), 'bna-bce' (euro con dólar BNA × BCE) o
+// 'bce' (entre EUR y USD: el euro/dólar oficial del BCE).
 export function fxPair(from, to, periodId) {
   const fx = getFx(periodId);
-  if (from === 'ARS') return { unit: to, value: arsPer(to, fx), quote: 'ARS', decimals: 0 };
-  if (to === 'ARS') return { unit: from, value: arsPer(from, fx), quote: 'ARS', decimals: 0 };
-  // Entre USD y EUR: cruce a través del peso (los dos del BNA, mismo día).
-  return { unit: to, value: arsPer(to, fx) / arsPer(from, fx), quote: from, decimals: 4 };
+  const pair = [from, to];
+  if (pair.includes('EUR') && pair.includes('USD')) {
+    return { unit: 'EUR', value: fx.usdPerEur, quote: 'USD', decimals: 4, source: 'bce' };
+  }
+  const other = from === 'ARS' ? to : from;
+  return { unit: other, value: arsPer(other, fx), quote: 'ARS', decimals: other === 'EUR' ? 2 : 0, source: other === 'EUR' ? 'bna-bce' : 'bna' };
 }
 
 const r2 = (v) => Math.round(v * 100) / 100;

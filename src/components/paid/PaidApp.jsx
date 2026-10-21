@@ -191,7 +191,7 @@ export function PaidApp({ account, period }) {
       {mo.fx && (
         <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3 text-[11.5px] leading-relaxed text-cu-dgrey shadow-cu">
           <strong className="text-cu-dblue">{t.fxLead(mo.fx.to)}</strong>
-          {t.fxRest(mo.fx.from)}
+          {t.fxRest(mo.fx.from, mo.fx.source)}
           <strong className="text-cu-dblue">
             1 {mo.fx.unit} ={' '}
             {Number(mo.fx.value).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR', { maximumFractionDigits: mo.fx.decimals })}{' '}

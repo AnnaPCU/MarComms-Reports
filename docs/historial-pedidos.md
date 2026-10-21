@@ -1632,3 +1632,10 @@
 
 > Me parece correcto que todos los reportes de Paid Media se muestren en ARG, pero sí estaría bueno poder exportar los mismos en USD o euros al tipo de cambio más actual. ¿Podrías armar un flujo para que, cada vez que se suban nuevas métricas de Paid Media, revise los tipos de cambio actuales, y una vez le dé a «descargar» me deje elegir en ARG, USD o EUR?
 
+
+**#129** (21/10/2026)
+
+> Me corrijo en algo: la idea es que los tipos de cambio dependan del mes. Si subo un reporte de septiembre y estoy en octubre, habría que buscar el tipo de cambio del cierre de septiembre, y así con cada caso.
+>
+> Quiero que todos los reportes tengan las tres monedas posibles — de Paid Media, de todos los meses.
+

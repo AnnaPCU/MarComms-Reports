@@ -626,9 +626,14 @@ USD como archivo puntual.
   aplica tipo de cambio a una cuenta en ARS (cobra en pesos), por eso la
   referencia la elegimos nosotros. Se carga al procesar el mes, validado en
   2+ fuentes (`src/data/fxRates.js`, con las fuentes en comentarios).
-- **Euro**: cuando el BNA aparece en una sola fuente, se cruza con dólar
-  BNA × euro/dólar oficial del BCE; la diferencia esperable es el margen del
-  billete (~1–2 %).
+- **Euro** (corregido el 21/10/2026, al cargar febrero–julio): el euro
+  billete del BNA no aparece de forma consistente en fuentes verificables
+  (en la mayoría de los meses no se encontró en dos fuentes). Para todos los
+  meses se usa el mismo método: ARS por EUR = dólar BNA vendedor ×
+  euro/dólar oficial del BCE de ese día (BOE). Queda ~1–1,5 % por debajo del
+  euro billete del BNA donde se pudo ver (jun 1.735, ago 1.800, sep 1.765).
+  La nota del reporte lo aclara cuando hay euros de por medio; entre EUR y
+  USD se usa directamente el euro/dólar del BCE.
 - **Conversión**: se convierte el mes entero con su propio tipo de cambio; en
   un descargable de varios meses, cada uno usa el suyo. Nunca se suman
   importes de monedas distintas. USD ↔ EUR cruza por el peso del mismo día.
@@ -636,7 +641,7 @@ USD como archivo puntual.
   aproximados de referencia en USD, convertidos desde la moneda ARS al tipo
   de cambio del Banco de la Nación Argentina al cierre del mes respectivo:
   1 USD = 1.540 ARS.» (y su versión en inglés).
-- **Fuera de alcance por ahora**: resumen anual, comparativa y campañas de
-  Meta (van en su moneda original); los meses en EUR (febrero–julio) solo
-  se pueden pasar a ARS/USD si se cargan sus tipos de cambio.
+- **Alcance**: todos los reportes mensuales de Google Ads (febrero–septiembre
+  cargados). El resumen anual, la comparativa y las campañas de Meta van en
+  su moneda original.
 

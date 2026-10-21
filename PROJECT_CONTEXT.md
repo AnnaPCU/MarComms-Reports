@@ -401,6 +401,11 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **Paid: tres monedas en todos los meses** (21/10/2026): tipos de cambio de
+  cierre de febrero a septiembre en `src/data/fxRates.js` (dólar BNA
+  vendedor + euro/dólar oficial del BCE; el euro en pesos se calcula). Todos
+  los reportes mensuales de Paid se descargan en ARS, USD o EUR.
+
 - **Paid: descarga en ARS, USD o EUR** (21/10/2026): el diálogo de descarga
   de Paid deja elegir la moneda; se convierte con el tipo de cambio BNA
   vendedor al cierre de cada mes (`src/data/fxRates.js`: agosto y

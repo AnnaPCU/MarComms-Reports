@@ -20,21 +20,28 @@ describe('Paid · descarga en otra moneda', () => {
     expect(mo.totals.impressions).toBe(orig.totals.impressions);
     expect(mo.totals.clicks).toBe(orig.totals.clicks);
     expect(mo.totals.conversions).toBe(orig.totals.conversions);
-    expect(detail.groups[0].weeks[0].cost).toBeCloseTo(det.groups[0].weeks[0].cost / 1765, 2);
+    expect(detail.groups[0].weeks[0].cost).toBeCloseTo(det.groups[0].weeks[0].cost / 1748.67, 2);
   });
   it('USD ↔ EUR cruza por el peso del mismo día', () => {
-    expect(fxFactor('USD', 'EUR', 'm09')).toBeCloseTo(1540 / 1765, 6);
+    expect(fxFactor('USD', 'EUR', 'm09')).toBeCloseTo(1540 / 1748.67, 6);
+    expect(fxFactor('EUR', 'USD', 'm07')).toBeCloseTo(1.1485, 3);
   });
-  it('sin tipo de cambio del mes no convierte (meses en EUR de febrero a julio)', () => {
-    expect(canConvert('EUR', 'ARS', 'm07')).toBe(false);
-    expect(convertPaidMonth(getMonthly('pt', 'm07'), null, 'm07', 'ARS')).toBeNull();
-    expect(canConvert('EUR', 'EUR', 'm07')).toBe(true);
+  it('los meses en EUR (feb–jul) se pueden pasar a ARS y USD', () => {
+    const { mo } = convertPaidMonth(getMonthly('pt', 'm07'), null, 'm07', 'USD');
+    expect(mo.totals.currency).toBe('USD');
+    expect(mo.totals.cost).toBeCloseTo(getMonthly('pt', 'm07').totals.cost * 1.1485, 1);
+    expect(mo.fx).toMatchObject({ unit: 'EUR', value: 1.1485, quote: 'USD', source: 'bce' });
+    expect(canConvert('EUR', 'ARS', 'm07')).toBe(true);
   });
-  it('cada mes de Paid en ARS tiene su tipo de cambio cargado (USD y EUR)', () => {
+  it('sin tipo de cambio del mes no convierte', () => {
+    expect(canConvert('ARS', 'USD', 'm12')).toBe(false);
+    expect(canConvert('EUR', 'EUR', 'm12')).toBe(true);
+  });
+  it('cada mes de Paid con datos tiene su tipo de cambio cargado (dólar BNA y euro/dólar BCE)', () => {
     const missing = [];
     for (const { id } of listPeriods()) {
-      const inArs = Object.values(PAID_DB).some((a) => a.periods[id]?.totals?.currency === 'ARS');
-      if (inArs && !(FX_RATES[id]?.USD && FX_RATES[id]?.EUR)) missing.push(id);
+      const has = Object.values(PAID_DB).some((a) => a.periods[id]);
+      if (has && !(FX_RATES[id]?.USD && FX_RATES[id]?.usdPerEur)) missing.push(id);
     }
     expect(missing, 'Falta el tipo de cambio en src/data/fxRates.js (ver metricas/paid-media/README.md)').toEqual([]);
   });
