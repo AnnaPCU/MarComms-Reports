@@ -74,7 +74,11 @@ suficiente". Nunca inventar, estimar ni rellenar números.**
 - La verificación se centraliza en `src/utils/hasData.js`.
 - Si una métrica no existe en el export, se dice que no está — no se deduce.
 - Una proyección se muestra como proyección, nunca como resultado.
-- Nunca convertir monedas ni sumar importes de monedas distintas.
+- Nunca convertir monedas ni sumar importes de monedas distintas. Única
+  excepción: el descargable de Paid Media se puede bajar en ARS, USD o EUR,
+  como importe aproximado de referencia al tipo de cambio BNA de cierre de
+  cada mes (`src/data/fxRates.js`, `docs/DECISIONES.md` §19). La app
+  siempre muestra la moneda original.
 
 ### 2. Idioma
 

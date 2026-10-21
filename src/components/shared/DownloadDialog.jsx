@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { X, Building2, Share2, Download, CalendarRange, Languages, FileCode2, FileText } from 'lucide-react';
+import { X, Building2, Share2, Download, CalendarRange, Languages, FileCode2, FileText, Coins } from 'lucide-react';
 
 // Modal de descarga: elegís QUÉ período/s bajar (por defecto el que estás
 // viendo) y si el reporte es para uso interno o externo. Cada período
 // seleccionado se descarga como su propio archivo HTML.
 // mode: 'audience' (uso interno / externo, HTML) | 'format' (HTML interactivo /
 // PDF, para las vistas que no tienen sección generada de próximos pasos).
-export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod = null, mode = 'audience' }) {
+// currencyInfo (solo Paid): (ids) => { native, months, options: [{ id, ok }] }
+// para elegir la moneda del descargable (ARS / USD / EUR).
+export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod = null, mode = 'audience', currencyInfo = null }) {
   const [selected, setSelected] = useState(() => new Set(currentPeriod != null ? [currentPeriod] : []));
   const [lang, setLang] = useState('es'); // idioma principal del descargable
   const many = periods.length > 1;
@@ -22,6 +24,13 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
 
   const chosen = periods.filter((p) => selected.has(p.id)).map((p) => p.id);
   const none = chosen.length === 0;
+
+  // Moneda (Paid): por defecto la original; si la elegida deja de estar
+  // disponible para los períodos tildados, vuelve a la original.
+  const [currencyPick, setCurrencyPick] = useState(null);
+  const cur = currencyInfo ? currencyInfo(chosen) : null;
+  const currency =
+    cur && currencyPick && cur.options.find((o) => o.id === currencyPick)?.ok ? currencyPick : cur?.native ?? null;
 
   return (
     <div className="fixed inset-0 z-[200] flex items-start justify-center overflow-y-auto bg-cu-dblue/40 p-6" onClick={onClose}>
@@ -93,6 +102,39 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
             igual.
           </p>
 
+          {cur && cur.months > 0 && (
+            <>
+              <div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.5px] text-cu-dblue">
+                <Coins className="h-3.5 w-3.5 text-cu-cyan" />
+                Moneda de los importes
+              </div>
+              <div className="mb-1.5 grid grid-cols-3 gap-2">
+                {cur.options.map((o) => (
+                  <button
+                    key={o.id}
+                    onClick={() => o.ok && setCurrencyPick(o.id)}
+                    disabled={!o.ok}
+                    title={o.ok ? '' : 'Falta el tipo de cambio de alguno de los meses elegidos'}
+                    className={`rounded-cu border px-3 py-2 text-[12px] font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
+                      currency === o.id
+                        ? 'border-cu-dblue bg-cu-dblue text-white'
+                        : 'border-cu-border bg-white text-cu-dgrey hover:border-cu-cyan'
+                    }`}
+                  >
+                    {o.id}
+                    {o.id === cur.native && <span className="ml-1 text-[9.5px] font-medium opacity-80">(original)</span>}
+                  </button>
+                ))}
+              </div>
+              <p className="mb-4 text-[10.5px] leading-snug text-cu-grey">
+                {!currency && 'Los meses elegidos tienen monedas distintas: si no elegís una, cada uno sale en su moneda original. '}
+                La conversión usa el tipo de cambio vendedor del Banco Nación al cierre de cada mes y el reporte
+                lo aclara como importe aproximado de referencia. El resumen anual, la comparativa y las campañas
+                de Meta se descargan en su moneda original.
+              </p>
+            </>
+          )}
+
           {mode === 'format' ? (
             <>
               <p className="mb-4 text-[13px] text-cu-dgrey">
@@ -132,7 +174,7 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
 
           <div className="grid grid-cols-2 gap-3">
             <button
-              onClick={() => !none && onChoose('internal', chosen, lang)}
+              onClick={() => !none && onChoose('internal', chosen, lang, currency)}
               disabled={none}
               className="group flex flex-col items-center gap-2 rounded-cu border border-cu-border bg-white px-4 py-5 text-center transition-colors hover:border-cu-cyan hover:bg-cu-cyan/[0.04] disabled:cursor-not-allowed disabled:opacity-40"
             >
@@ -142,7 +184,7 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
             </button>
 
             <button
-              onClick={() => !none && onChoose('external', chosen, lang)}
+              onClick={() => !none && onChoose('external', chosen, lang, currency)}
               disabled={none}
               className="group flex flex-col items-center gap-2 rounded-cu border border-cu-border bg-white px-4 py-5 text-center transition-colors hover:border-cu-cyan hover:bg-cu-cyan/[0.04] disabled:cursor-not-allowed disabled:opacity-40"
             >

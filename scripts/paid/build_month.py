@@ -212,6 +212,19 @@ def main():
               f'{r2(T["conversions"])} conv. · {len(cs)} campañas', file=sys.stderr)
     print('\n'.join(out))
 
+    # ── Tipo de cambio del mes (descarga en ARS / USD / EUR) ──
+    # Se carga a mano en src/data/fxRates.js al procesar el mes: BNA billete
+    # vendedor al cierre del último día hábil, validado en 2+ fuentes. El test
+    # fxService.test.js falla si un mes en ARS no lo tiene.
+    fx_path = os.path.normpath(os.path.join(HERE, '..', '..', 'src', 'data', 'fxRates.js'))
+    fx_txt = open(fx_path, encoding='utf-8').read() if os.path.exists(fx_path) else ''
+    blk = re.search(r'\n  ' + mid + r': \{(.*?)\n  \}', fx_txt, re.S)
+    if not blk or 'USD:' not in blk.group(1) or 'EUR:' not in blk.group(1):
+        print(f'  ⚠ Falta el tipo de cambio de {mid} en src/data/fxRates.js (USD y EUR, BNA vendedor al cierre '
+              f'del mes, 2+ fuentes). Sin él, la descarga en USD/EUR de este mes queda deshabilitada.', file=sys.stderr)
+    else:
+        print(f'  ✓ tipo de cambio de {mid} cargado en src/data/fxRates.js', file=sys.stderr)
+
     # ── 3) Detalle por grupo (informes 2 y 3) ──
     if dry:
         print('  (dry-run: no se corrió build_detail.py)', file=sys.stderr)

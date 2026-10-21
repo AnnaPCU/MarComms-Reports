@@ -188,6 +188,19 @@ export function PaidApp({ account, period }) {
         />
       </div>
 
+      {mo.fx && (
+        <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3 text-[11.5px] leading-relaxed text-cu-dgrey shadow-cu">
+          <strong className="text-cu-dblue">{t.fxLead(mo.fx.to)}</strong>
+          {t.fxRest(mo.fx.from)}
+          <strong className="text-cu-dblue">
+            1 {mo.fx.unit} ={' '}
+            {Number(mo.fx.value).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR', { maximumFractionDigits: mo.fx.decimals })}{' '}
+            {mo.fx.quote}
+          </strong>
+          .
+        </div>
+      )}
+
       {partial && (
         <div className="mb-4 flex items-start gap-2 rounded-cu border border-amber-300 bg-amber-50 px-4 py-3 text-[12px] text-amber-800">
           <CalendarClock className="mt-0.5 h-4 w-4 shrink-0" />

@@ -16,6 +16,8 @@ import { reportFilename, expandAccountName, localizeLabel, localizePilarLabel } 
 import { brandOf } from '@/constants/brand';
 import { getSegConfig } from '@/services/socialService';
 import { listCampaigns } from '@/services/emailService';
+import { getMonthly as getPaidMonthly } from '@/services/paidService';
+import { CURRENCIES, canConvert } from '@/services/fxService';
 import { emailLabelEn } from '@/utils/emailI18n';
 import { viewState } from '@/utils/viewState';
 import { SET_LANG_EVENT } from '@/components/plans/PlansApp';
@@ -66,7 +68,23 @@ export default function App() {
 
   // audience: 'internal' (reporte completo) | 'external' (sin "Próximos Pasos").
   // periodIds: períodos elegidos en el diálogo (cada uno baja su propio HTML).
-  async function doDownload(audience, periodIds, lang = 'es') {
+  // Paid: moneda original de los meses elegidos y a qué monedas se pueden
+  // convertir (hace falta el tipo de cambio de cada mes en fxRates.js). El
+  // resumen anual, la comparativa y las campañas de Meta van en su moneda.
+  function paidCurrencyInfo(ids) {
+    const months = ids
+      .filter((pid) => /^m\d\d$/.test(pid))
+      .map((pid) => ({ pid, cur: getPaidMonthly(account, pid)?.totals?.currency }))
+      .filter((m) => m.cur);
+    const natives = [...new Set(months.map((m) => m.cur))];
+    return {
+      native: natives.length === 1 ? natives[0] : null,
+      months: months.length,
+      options: CURRENCIES.map((c) => ({ id: c, ok: months.length > 0 && months.every((m) => canConvert(m.cur, c, m.pid)) })),
+    };
+  }
+
+  async function doDownload(audience, periodIds, lang = 'es', currency = null) {
     setShowDownload(false);
     // Planes: el diálogo ofrece HTML interactivo o PDF. El PDF sale de la
     // impresión del navegador (sin backend): se fija el idioma en la vista,
@@ -106,7 +124,15 @@ export default function App() {
         campaignLabel = lang === 'en' ? emailLabelEn(c.label) : c.label;
       }
     }
-    const snapOpts = { emailCampaign };
+    // Moneda del descargable de Paid: solo si cambia algún mes elegido.
+    const fxTo =
+      pilar === 'paid' && currency && ids.some((pid) => {
+        const cur = /^m\d\d$/.test(pid) ? getPaidMonthly(account, pid)?.totals?.currency : null;
+        return cur && cur !== currency;
+      })
+        ? currency
+        : null;
+    const snapOpts = { emailCampaign, currency: fxTo };
     // Etiqueta del período en el idioma elegido (labelEn del seed si existe; si no, traducción de la ES).
     const labelOf = (pid) => {
       const p = periods.find((x) => x.id === pid);
@@ -130,10 +156,10 @@ export default function App() {
     // La vista por cliente se descarga como «Reporte Cliente» (solo la General).
     const pilarLabel = pilar === 'clients' ? 'Cliente' : pilar === 'plans' ? 'Plan' : navLabel(pilar);
     // Título y nombre de archivo en el idioma elegido, sea cual sea el pilar.
-    const title = [localizePilarLabel(pilarLabel, lang), expandAccountName(accountName), withCountry ? countryName : null, campaignLabel || null, periodsLabel]
+    const title = [localizePilarLabel(pilarLabel, lang), expandAccountName(accountName), withCountry ? countryName : null, campaignLabel || null, periodsLabel, fxTo]
       .filter(Boolean)
       .join(' — ');
-    const filename = reportFilename({
+    const baseFilename = reportFilename({
       pilarLabel,
       // 'multi' evita que el nombre salga como el 1er período: cae al label.
       accountName: [accountName, withCountry ? countryName : null, campaignLabel || null].filter(Boolean).join(' '),
@@ -142,6 +168,7 @@ export default function App() {
       audience,
       lang,
     });
+    const filename = fxTo ? baseFilename.replace(/\.html$/, `_${fxTo}.html`) : baseFilename;
     await exportViewAsHtml({
       pilar,
       account,
@@ -215,6 +242,7 @@ export default function App() {
           periods={cfg.hasDataFor ? periods.filter((p) => cfg.hasDataFor(account, p.id)) : periods}
           currentPeriod={period}
           mode={pilar === 'plans' ? 'format' : 'audience'}
+          currencyInfo={pilar === 'paid' ? paidCurrencyInfo : null}
         />
       )}
     </div>

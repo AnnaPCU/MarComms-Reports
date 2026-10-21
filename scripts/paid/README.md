@@ -85,6 +85,18 @@ en-US (`5,480`, `975.03`). `build_detail.normalize()` lo pasa a la forma del
 export en español (columnas, números y tipos de concordancia) antes de
 procesar: los dos idiomas dan el mismo seed. Probado con septiembre 2026.
 
+## Descarga en otra moneda (ARS / USD / EUR)
+
+La app muestra siempre la moneda del export (cómo factura Google Ads). Al
+descargar un mes, el diálogo deja elegir ARS, USD o EUR: se convierte el mes
+entero (totales, campañas, consumo semanal, grupos y términos) con el tipo de
+cambio de ESE mes (`src/data/fxRates.js`, BNA billete vendedor al cierre), y
+el reporte lo aclara arriba como «importes aproximados de referencia».
+Impresiones, clics, CTR y conversiones no cambian. Una moneda queda
+deshabilitada si falta el tipo de cambio de alguno de los meses elegidos. El
+resumen anual, la comparativa y las campañas de Meta van en su moneda
+original. Servicio: `src/services/fxService.js`.
+
 ## Validaciones de Google Ads
 
 - **Campañas que todavía no arrancaron**: Google las exporta habilitadas y en

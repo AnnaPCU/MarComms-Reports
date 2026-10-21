@@ -10,8 +10,11 @@ import * as email from '@/services/emailService';
 import * as webinars from '@/services/webinarsService';
 import * as clients from '@/services/clientService';
 import * as plans from '@/services/plansService';
+import { convertPaidMonth } from '@/services/fxService';
 
 // `opts.emailCampaign`: campaña elegida en Email cuando el mes tiene varias.
+// `opts.currency`: moneda del descargable de Paid (ARS/USD/EUR). Solo aplica a
+// los meses de Google Ads; la conversión usa el tipo de cambio de ese mes.
 export function buildSnapshot(pilar, account, period, opts = {}) {
   if (pilar === 'social') {
     if (period === 'cmp') return { kind: 'social-cmp' }; // ComparativeView usa datos del bundle
@@ -28,7 +31,13 @@ export function buildSnapshot(pilar, account, period, opts = {}) {
   if (pilar === 'paid') {
     if (period === 'cmp') return { kind: 'paid-cmp' }; // la comparativa usa datos del bundle
     if (period === 'year-2026') return { kind: 'paid-year', year: paid.getYear(account) };
-    return { mo: paid.getMonthly(account, period), detail: paid.getDetail(account, period) };
+    const mo = paid.getMonthly(account, period);
+    const detail = paid.getDetail(account, period);
+    if (opts.currency && mo) {
+      const conv = convertPaidMonth(mo, detail, period, opts.currency);
+      if (conv) return conv;
+    }
+    return { mo, detail };
   }
   if (pilar === 'website') {
     if (period === 'cmp') return { kind: 'website-cmp' }; // la comparativa usa datos del bundle

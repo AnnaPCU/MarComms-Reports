@@ -13,6 +13,9 @@ export const PAID_STR = {
   es: {
     // Objetivo de la cuenta (paidSeed `objetivo`, que viene en español).
     objectives: {},
+    // Nota del descargable convertido a otra moneda (texto aprobado 21/10/2026).
+    fxLead: (to) => `Importes aproximados de referencia en ${to}`,
+    fxRest: (from) => `, convertidos desde la moneda ${from} al tipo de cambio del Banco de la Nación Argentina al cierre del mes respectivo: `,
     // Selector de vista
     viewLabel: 'Vista / Campaña',
     allCampaigns: 'Todas las campañas — Vista global',
@@ -152,6 +155,8 @@ export const PAID_STR = {
   },
   en: {
     objectives: { 'Generación de leads': 'Lead generation' },
+    fxLead: (to) => `Approximate reference amounts in ${to}`,
+    fxRest: (from) => `, converted from ${from} at the Banco de la Nación Argentina exchange rate at the close of the respective month: `,
     viewLabel: 'View / Campaign',
     allCampaigns: 'All campaigns — Overview',
     cmpCampaigns: 'Campaign comparison',

@@ -134,6 +134,13 @@ del formulario o una captura del panel, y avisarlo.
   grupo (`paidDetail.js`) e imprime el bloque del mes para `paidSeed.js`;
   Claude lo carga, redacta el análisis con esos números, mueve el período
   por defecto al mes nuevo y valida el seed campaña por campaña.
+- **Tipo de cambio del mes** (para descargar en ARS, USD o EUR): Claude busca
+  el cierre del último día hábil del mes en el Banco de la Nación Argentina
+  (billete vendedor, USD y EUR), lo valida en al menos 2 fuentes (si el BNA
+  aparece en una sola, lo cruza con dólar BNA × euro/dólar oficial del BCE)
+  y lo carga en `src/data/fxRates.js` con las fuentes anotadas.
+  `build_month.py` avisa si falta y el test `fxService.test.js` falla si un
+  mes en ARS no lo tiene.
 - **Meta Ads**: `python3 -B scripts/paid/build_meta.py
   "metricas/paid-media/meta-ads/AAAA-MM-<campaña>"` → valida que el diario
   cuadre con el total (si no, corta), escribe

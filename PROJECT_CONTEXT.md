@@ -383,6 +383,8 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 - **Todo texto nuevo visible va en ES y EN.** Si se agrega una sección a un pilar,
   sumar las claves al `*I18n.js` correspondiente y pasar `lang` a los generadores.
 - **Nunca convertir monedas** ni sumar importes de monedas distintas (ver §7).
+  Excepción: descarga de Paid en ARS/USD/EUR (DECISIONES §19). Al procesar un
+  mes de Google Ads, cargar su tipo de cambio en `src/data/fxRates.js`.
 - Respetar honestidad de datos, jerarquía de marca (MarComms principal, cliente en
   segundo plano) y español argentino.
 - Reutilizar los componentes `shared/` (Funnel, KpiCard, InsightsPanel,
@@ -398,6 +400,13 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Paid: descarga en ARS, USD o EUR** (21/10/2026): el diálogo de descarga
+  de Paid deja elegir la moneda; se convierte con el tipo de cambio BNA
+  vendedor al cierre de cada mes (`src/data/fxRates.js`: agosto y
+  septiembre cargados) y el reporte lo aclara. La app sigue en la moneda
+  original. Al procesar cada mes nuevo se carga su tipo de cambio
+  (DECISIONES §19).
 
 - **Social · Perú: hashtag correcto** (21/10/2026): la vista de Perú
   (CU Latinoamérica) decía que se atribuía por «#ControlUnionPerú», pero

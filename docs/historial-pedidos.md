@@ -1627,3 +1627,8 @@
 
 > Vi esta aclaración en CU LinkedIn Latinoamérica, en la vista de Perú: «Cómo se arma este reporte por país: cada publicación se atribuye a Perú por su hashtag (#ControlUnionPerú) o mención de país…». En realidad los hashtags para Perú son #ControlUnionServices y «Peru». Me preocupa que estés midiendo mal Perú o que solo estés aclarando mal esto. Revisá, comentame y accioná.
 
+
+**#128** (21/10/2026)
+
+> Me parece correcto que todos los reportes de Paid Media se muestren en ARG, pero sí estaría bueno poder exportar los mismos en USD o euros al tipo de cambio más actual. ¿Podrías armar un flujo para que, cada vez que se suban nuevas métricas de Paid Media, revise los tipos de cambio actuales, y una vez le dé a «descargar» me deje elegir en ARG, USD o EUR?
+
