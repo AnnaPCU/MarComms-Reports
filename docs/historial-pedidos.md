@@ -1639,3 +1639,10 @@
 >
 > Quiero que todos los reportes tengan las tres monedas posibles — de Paid Media, de todos los meses.
 
+
+**#130** (21/10/2026)
+
+> No hay un correcto funcionamiento a nivel cookies. Salgo de la pantalla o le doy refresh y vuelve al estado previo, antes de hacer cambios o ajustar filtros: los filtros o ubicaciones específicas donde uno estaba no se mantienen y el recorrido «arranca de 0».
+>
+> Implementame un modo oscuro para toda la web, y que también se guarde a nivel cookies.
+

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { initialLang } from '@/utils/reportLang';
 import {
   BarChart,
   Bar,
@@ -23,6 +22,7 @@ import { Coins } from 'lucide-react';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
 import { Glossary } from '@/components/shared/Glossary';
+import { useReportLang } from '@/hooks/useReportLang';
 
 const EMBED = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
 
@@ -50,7 +50,7 @@ function useYear(account) {
 export function PaidAnnualReview({ account }) {
   const year = useYear(account);
   const accName = listAccounts().find((a) => a.id === account)?.name ?? '';
-  const [lang, setLang] = useState(() => initialLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
+  const [lang, setLang] = useReportLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es');
   const t = YEAR_STR[lang];
   const tp = PAID_STR[lang];
 

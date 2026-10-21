@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { initialLang } from '@/utils/reportLang';
 import {
   BarChart,
   Bar,
@@ -40,6 +38,8 @@ import { WebsiteComparative } from '@/components/website/WebsiteComparative';
 import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 import { usePillarCrm } from '@/hooks/usePillarCrm';
 import { lgCols } from '@/utils/gridCols';
+import { useReportLang } from '@/hooks/useReportLang';
+import { usePersistentState } from '@/utils/persist';
 
 const pctL = (v, lang) =>
   Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
@@ -53,8 +53,9 @@ const FunnelCard = ({ children }) => (
 // Pilar Website — trimestral, con dos sub-reportes: Website (GA) y SEO (GSC).
 // Idioma base español; toggle EN disponible (también en el descargable).
 export function WebsiteApp({ account, period }) {
-  const [tab, setTab] = useState('site');
-  const [lang, setLang] = useState(() => initialLang('es'));
+  const [savedTab, setTab] = usePersistentState('website.tab', 'site');
+  const tab = savedTab === 'seo' ? 'seo' : 'site';
+  const [lang, setLang] = useReportLang('es');
   const t9 = WEB_STR[lang];
 
   const langToggle = (

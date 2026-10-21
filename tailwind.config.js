@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
+  // Modo oscuro por clase `dark` en <html> (botón del header, ver useTheme).
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {

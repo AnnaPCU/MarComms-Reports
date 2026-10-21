@@ -26,7 +26,8 @@ export function LoginScreen({ onLogin }) {
           className="w-full max-w-sm animate-fade-in rounded-cu border border-cu-border bg-white p-8 shadow-cu"
         >
           {/* Marca propia del equipo: MarComms es el autor de los reportes. */}
-          <MarCommsLogo variant="stacked" className="mb-5 h-20" />
+          {/* En modo oscuro el logo vertical (sin versión blanca) va sobre un recuadro claro. */}
+          <MarCommsLogo variant="stacked" className="mb-5 h-20 dark:box-content dark:rounded-cu dark:bg-white dark:p-2" />
           <h1 className="mb-1 text-lg font-bold tracking-tight text-cu-dblue">
             Reportes de Marketing Digital
           </h1>

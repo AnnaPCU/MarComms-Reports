@@ -645,3 +645,28 @@ USD como archivo puntual.
   cargados). El resumen anual, la comparativa y las campañas de Meta van en
   su moneda original.
 
+## 20. La app recuerda el recorrido y tiene modo oscuro
+
+Pedido del equipo el 21/10/2026: al refrescar o volver a entrar, la web
+arrancaba de cero (pilar, cuenta, período y filtros por defecto).
+
+- **Qué se recuerda**: pilar, y por cada pilar la última cuenta y período;
+  país de Social (por cuenta); vista/campaña de Paid y campaña de Email (por
+  cuenta y período); pestaña de Website; vista de Webinars; vista y períodos
+  de Clientes (por cliente); idioma ES/EN (global, compartido entre pilares)
+  y tema claro/oscuro.
+- **Dónde**: en el almacenamiento del navegador (localStorage, prefijo
+  `marcomms:`; `src/utils/persist.js`). Funciona como una cookie pero no viaja
+  al servidor ni vence. Es por navegador y dispositivo. Si el valor guardado
+  ya no existe (una cuenta o un mes que no tiene datos), se cae al default.
+- **HTML descargados**: no leen ni escriben nada; abren como se generaron,
+  siempre en modo claro.
+- **Modo oscuro**: botón luna/sol en el header. Clase `dark` en `<html>` y
+  una capa de estilos en `index.css` que redefine los colores de marca por
+  clase (superficies, textos, bordes, paneles destacados, colores fijos de
+  Recharts), sin tocar cada componente. El logo pasa a su versión blanca. Un
+  script en `index.html` aplica el tema antes de pintar para que no
+  parpadee. La impresión a PDF y los descargables salen en claro.
+- Al sumar un color nuevo fijo en un componente (`text-[#…]`, atributo de
+  Recharts), agregar su equivalente oscuro en `index.css`.
+

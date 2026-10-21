@@ -1,5 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
-import { initialLang } from '@/utils/reportLang';
+import { useMemo } from 'react';
 import { brandOf } from '@/constants/brand';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { NoDataScreen } from '@/components/shared/NoDataScreen';
@@ -7,6 +6,7 @@ import { Glossary } from '@/components/shared/Glossary';
 import { useSocialYear } from '@/hooks/useSocialYear';
 import { ML_EN } from '@/utils/annualI18n';
 import { ExecutiveReview } from '@/components/social/ExecutiveReview';
+import { useReportLang } from '@/hooks/useReportLang';
 
 // Vista "Resumen del Año" — formato EJECUTIVO (executive briefing), fiel al
 // brief recibido: resumen ejecutivo, KPIs de negocio con contexto, audiencia,
@@ -17,12 +17,7 @@ import { ExecutiveReview } from '@/components/social/ExecutiveReview';
 // (commit 2c2d10f) y en los HTML de respaldo entregados en la conversación.
 export function AnnualReview({ account }) {
   const { accName, series } = useSocialYear(account);
-  const [lang, setLang] = useState(() => initialLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
-  // Al cambiar de cuenta vuelve al idioma por defecto de la marca; en un HTML
-  // descargado manda el idioma elegido en la descarga (initialLang).
-  useEffect(() => {
-    setLang(initialLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es'));
-  }, [account, accName]);
+  const [lang, setLang] = useReportLang(brandOf(account, accName) === 'peterson' ? 'en' : 'es');
 
   const en = lang === 'en';
   // En EN los nombres cortos de mes se traducen para toda la narrativa.

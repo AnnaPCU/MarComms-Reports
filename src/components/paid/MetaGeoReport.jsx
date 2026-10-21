@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { initialLang } from '@/utils/reportLang';
 import { MapPin } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { listAccounts, getGeo } from '@/services/paidService';
@@ -18,6 +17,7 @@ import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { BrandIcon } from '@/components/shared/BrandIcon';
 import { Glossary } from '@/components/shared/Glossary';
 import { isExternalReport } from '@/utils/reportAudience';
+import { useReportLang } from '@/hooks/useReportLang';
 
 // ════════════════════════════════════════════════════════════════
 //  Reporte de una campaña de Meta Ads (GEO de evento, como Aapresid, u
@@ -99,7 +99,7 @@ function FichaCell({ label, value, foot, highlight = false }) {
 }
 
 export function MetaGeoReport({ account, period }) {
-  const [lang, setLang] = useState(() => initialLang('es'));
+  const [lang, setLang] = useReportLang('es');
   // Vista por campaña (CU tiene 2): en la app se navega de a una para no
   // saturar; el HTML descargado trae SIEMPRE las dos vistas completas.
   const [view, setView] = useState('tf');

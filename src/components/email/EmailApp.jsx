@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
-import { initialLang } from '@/utils/reportLang';
+import { useEffect, useMemo } from 'react';
 import { listAccounts, listCampaigns } from '@/services/emailService';
 import { useEmailCampaign } from '@/hooks/useEmailCampaign';
 import { MONTHS_2026 } from '@/constants/periods';
@@ -21,6 +20,8 @@ import { Glossary } from '@/components/shared/Glossary';
 import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 import { usePillarCrm } from '@/hooks/usePillarCrm';
 import { lgCols } from '@/utils/gridCols';
+import { useReportLang } from '@/hooks/useReportLang';
+import { usePersistentState } from '@/utils/persist';
 
 // Pilar Email Marketing (Mailchimp / Apollo). Reporte de secuencia/campaña.
 // Idioma base español; toggle EN disponible (también en el descargable).
@@ -32,7 +33,7 @@ export function EmailApp({ account, period }) {
     () => listAccounts().find((a) => a.id === account)?.name ?? '',
     [account],
   );
-  const [lang, setLang] = useState(() => initialLang('es'));
+  const [lang, setLang] = useReportLang('es');
   const t9 = EMAIL_STR[lang];
   const numL = (v) => Number(v || 0).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR');
   const pct = (v) =>
@@ -43,12 +44,11 @@ export function EmailApp({ account, period }) {
       : MONTHS_2026.find((p) => p.id === period)?.label ?? period;
 
   const campaignOpts = useMemo(() => listCampaigns(account, period), [account, period]);
-  const [campaignId, setCampaignId] = useState(null);
-  useEffect(() => {
-    setCampaignId(null);
-  }, [account, period]);
+  // Campaña elegida, recordada por cuenta y período (si sigue existiendo).
+  const [campaignId, setCampaignId] = usePersistentState(`email.campaign.${account}.${period}`, null);
   const multiCampaign = campaignOpts.length > 1;
-  const selectedId = multiCampaign ? (campaignId ?? campaignOpts[campaignOpts.length - 1].id) : null;
+  const savedOk = campaignOpts.some((c) => c.id === campaignId);
+  const selectedId = multiCampaign ? (savedOk ? campaignId : campaignOpts[campaignOpts.length - 1].id) : null;
   useEffect(() => {
     viewState.emailCampaign = selectedId;
     return () => {

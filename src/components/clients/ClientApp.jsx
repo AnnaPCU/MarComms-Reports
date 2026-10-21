@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
-import { initialLang } from '@/utils/reportLang';
+import { useMemo } from 'react';
 import { getClient, pillarsWithData, periodsFor, latestPeriod } from '@/services/clientService';
 import { useClientOverview } from '@/hooks/useClientOverview';
 import { CLIENT_STR, PILLAR_NAMES } from '@/utils/clientI18n';
@@ -14,6 +13,8 @@ import { PaidApp } from '@/components/paid/PaidApp';
 import { WebsiteApp } from '@/components/website/WebsiteApp';
 import { EmailApp } from '@/components/email/EmailApp';
 import { WebinarsApp } from '@/components/webinars/WebinarsApp';
+import { useReportLang } from '@/hooks/useReportLang';
+import { usePersistentState } from '@/utils/persist';
 
 const PILLAR_APP = { social: SocialApp, paid: PaidApp, website: WebsiteApp, email: EmailApp, webinars: WebinarsApp };
 
@@ -35,17 +36,15 @@ function periodLabel(p, lang) {
 export function ClientApp({ account }) {
   const client = getClient(account);
   const { overview } = useClientOverview(account);
-  const [view, setView] = useState('general');
-  const [lang, setLang] = useState(() => initialLang('es'));
-  const [periods, setPeriods] = useState({}); // { [pilar]: periodId }
-  useEffect(() => {
-    setView('general');
-    setPeriods({});
-  }, [account]);
+  // Vista (General o un pilar) y período de cada pilar, recordados por cliente.
+  const [savedView, setView] = usePersistentState(`clients.view.${account}`, 'general');
+  const [lang, setLang] = useReportLang('es');
+  const [periods, setPeriods] = usePersistentState(`clients.periods.${account}`, {}); // { [pilar]: periodId }
 
   const t = CLIENT_STR[lang];
   const embed = isEmbedReport();
   const pillars = useMemo(() => (client ? pillarsWithData(client) : []), [client]);
+  const view = savedView === 'general' || pillars.includes(savedView) ? savedView : 'general';
 
   if (!client || pillars.length < 2) {
     return <NoDataScreen detail={t.noClient} />;
@@ -71,7 +70,8 @@ export function ClientApp({ account }) {
   if (view !== 'general') {
     const ref = client.pillars[view];
     const list = periodsFor(view, ref);
-    const pid = periods[view] ?? latestPeriod(view, ref)?.id ?? list[0]?.id ?? null;
+    const savedPid = list.some((p) => p.id === periods?.[view]) ? periods[view] : null;
+    const pid = savedPid ?? latestPeriod(view, ref)?.id ?? list[0]?.id ?? null;
     const Pilar = PILLAR_APP[view];
     const note = lang === 'en' ? (ref.noteEn ?? ref.note) : ref.note;
     pillarView = (

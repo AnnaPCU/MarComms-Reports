@@ -61,7 +61,8 @@ export function EmailCharts({ comparison = [], emails = [], lang = 'es' }) {
             <YAxis tick={{ fontSize: 10, fill: CU.grey }} />
             <Tooltip {...CHART_TOOLTIP} cursor={{ fill: 'rgba(62,178,237,.06)' }} />
             <Legend wrapperStyle={{ fontSize: 10 }} />
-            <Bar dataKey={t.dkOpens} radius={[4, 4, 0, 0]} maxBarSize={30}>
+            {/* fill = color de la leyenda (cada barra usa su color de la paleta) */}
+            <Bar dataKey={t.dkOpens} fill={CU.cyan} radius={[4, 4, 0, 0]} maxBarSize={30}>
               {volData.map((_, i) => (
                 <Cell key={i} fill={PAL[i % PAL.length]} />
               ))}

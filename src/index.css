@@ -111,3 +111,112 @@ body {
     break-after: avoid;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   MODO OSCURO — se activa con la clase `dark` en <html> (botón del header,
+   guardado en el navegador). Se redefinen los colores de marca por clase en
+   vez de tocar cada componente: superficies, textos, bordes, paneles
+   destacados y los colores fijos que Recharts escribe como atributos SVG.
+   Los HTML descargados y la impresión a PDF siempre salen en modo claro.
+   ════════════════════════════════════════════════════════════════ */
+@media screen {
+  html.dark {
+    color-scheme: dark;
+    --dk-page: #0f1226;
+    --dk-surface: #181c36;
+    --dk-surface-2: #1f2443;
+    --dk-border: #2d345a;
+    --dk-border-2: #242a4b;
+    --dk-text-strong: #eef1fa;
+    --dk-text: #c6d1d4;
+    --dk-text-muted: #95a9ac;
+    --dk-navy: #2a3473;
+    --dk-chart-navy: #8f9cf0;
+    --dk-chart-indigo: #6c7ce6;
+    --dk-chart-violet: #a6acec;
+  }
+
+  html.dark body {
+    background: var(--dk-page);
+    color: var(--dk-text);
+  }
+
+  /* Superficies */
+  html.dark .bg-white { background-color: var(--dk-surface); }
+  html.dark .bg-cu-bg { background-color: var(--dk-page); }
+  html.dark .bg-cu-bg\/60 { background-color: rgb(15 18 38 / 0.6); }
+  html.dark .bg-cu-border { background-color: var(--dk-border); }
+  html.dark .bg-cu-border2 { background-color: var(--dk-border-2); }
+  /* Paneles destacados (HeroCard, botones activos, encabezados): un navy más
+     claro que la superficie para que se sigan distinguiendo. */
+  html.dark .bg-cu-dblue { background-color: var(--dk-navy); }
+  html.dark .bg-cu-dblue\/10 { background-color: rgb(42 52 115 / 0.35); }
+  html.dark .bg-cu-dblue\/40 { background-color: rgb(42 52 115 / 0.6); }
+
+  /* Textos */
+  html.dark .text-cu-dblue,
+  html.dark .hover\:text-cu-dblue:hover { color: var(--dk-text-strong); }
+  html.dark .text-cu-dgrey,
+  html.dark .hover\:text-cu-dgrey:hover { color: var(--dk-text); }
+  html.dark .text-cu-grey { color: var(--dk-text-muted); }
+  html.dark .text-cu-grey\/60,
+  html.dark .text-cu-grey\/70 { color: rgb(149 169 172 / 0.75); }
+
+  /* Bordes */
+  html.dark .border-cu-border { border-color: var(--dk-border); }
+  html.dark .border-cu-border2 { border-color: var(--dk-border-2); }
+  html.dark .border-cu-dblue { border-color: #4a56a8; }
+  html.dark .border-cu-dblue\/20 { border-color: rgb(74 86 168 / 0.4); }
+
+  /* Avisos ámbar (período parcial, etc.) */
+  html.dark .bg-amber-50 { background-color: rgb(245 158 11 / 0.12); }
+  html.dark .border-amber-300 { border-color: rgb(252 211 77 / 0.35); }
+  html.dark .text-amber-800,
+  html.dark .text-amber-700 { color: #fcd34d; }
+
+  /* Sombras más profundas sobre fondo oscuro */
+  html.dark .shadow-cu { box-shadow: 0 1px 4px rgb(0 0 0 / 0.35), 0 1px 10px rgb(0 0 0 / 0.25); }
+  html.dark .shadow-cu-h { box-shadow: 0 4px 18px rgb(0 0 0 / 0.45); }
+
+  /* Inputs y selects nativos */
+  html.dark select,
+  html.dark input,
+  html.dark textarea {
+    color-scheme: dark;
+  }
+
+  /* Recharts: colores de marca escritos como atributos SVG */
+  html.dark [stroke='#eaf0f1'],
+  html.dark [stroke='#d8e2e3'] { stroke: var(--dk-border); }
+  html.dark [fill='#1b1e42'] { fill: var(--dk-chart-navy); }
+  html.dark [stroke='#1b1e42'] { stroke: var(--dk-chart-navy); }
+  html.dark [fill='#2d3a8a'] { fill: var(--dk-chart-indigo); }
+  html.dark [stroke='#2d3a8a'] { stroke: var(--dk-chart-indigo); }
+  html.dark [fill='#4a5096'] { fill: var(--dk-chart-violet); }
+  html.dark [stroke='#4a5096'] { stroke: var(--dk-chart-violet); }
+  html.dark [fill='#4f6566'] { fill: var(--dk-text); }
+  html.dark [fill='#799495'] { fill: var(--dk-text-muted); }
+  html.dark .recharts-legend-item-text { color: var(--dk-text) !important; }
+  html.dark .recharts-default-tooltip { box-shadow: 0 4px 18px rgb(0 0 0 / 0.5); }
+
+  /* Negritas dentro de insights y lecturas ([&_strong]:text-cu-dblue) */
+  html.dark .\[\&_strong\]\:text-cu-dblue strong { color: var(--dk-text-strong); }
+
+  /* Colores fijos de estado (deltas, chips de pilar, semáforos) */
+  html.dark .text-\[\#a02020\] { color: #ff9a9a; }
+  html.dark .text-\[\#1372a5\] { color: #74c8f5; }
+  html.dark .text-\[\#8a6d12\],
+  html.dark .text-\[\#8a6a10\],
+  html.dark .text-\[\#b8860b\] { color: #f2d06b; }
+  html.dark .text-\[\#3e5a5b\] { color: #b3c7c9; }
+  html.dark .text-\[\#1d6e3a\] { color: #86e0a8; }
+
+  /* Muestras de color de leyendas (span con fondo inline navy) */
+  html.dark span[style*='background: rgb(27, 30, 66)'] { background: var(--dk-chart-navy) !important; }
+  html.dark span[style*='background: rgb(45, 58, 138)'] { background: var(--dk-chart-indigo) !important; }
+  html.dark span[style*='background: rgb(74, 80, 150)'] { background: var(--dk-chart-violet) !important; }
+
+  /* Scrollbar */
+  html.dark ::-webkit-scrollbar-track { background: var(--dk-page); }
+  html.dark ::-webkit-scrollbar-thumb { background: var(--dk-border); }
+}

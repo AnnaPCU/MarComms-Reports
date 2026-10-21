@@ -1,4 +1,4 @@
-import { LogOut, Download } from 'lucide-react';
+import { LogOut, Download, Moon, Sun } from 'lucide-react';
 import { MarCommsLogo, ClientLogo } from '@/components/brand/Logo';
 import { Select } from '@/components/shared/Select';
 import { StatusBadge } from '@/components/shared/StatusBadge';
@@ -20,6 +20,8 @@ export function Header({
   badge,
   onDownload,
   onLogout,
+  theme = 'light',
+  onToggleTheme = null,
 }) {
   const showFilters = accounts?.length > 0;
   const accountName = accounts?.find((a) => a.id === account)?.label ?? '';
@@ -56,6 +58,16 @@ export function Header({
           <Download className="h-3.5 w-3.5" />
           Descargar
         </button>
+        {onToggleTheme && (
+          <button
+            onClick={onToggleTheme}
+            title={theme === 'dark' ? 'Pasar a modo claro' : 'Pasar a modo oscuro'}
+            aria-label={theme === 'dark' ? 'Pasar a modo claro' : 'Pasar a modo oscuro'}
+            className="flex h-9 items-center gap-1.5 rounded-sm border border-cu-border px-3 text-[11px] text-cu-grey transition-colors hover:border-cu-cyan hover:text-cu-cyan"
+          >
+            {theme === 'dark' ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
+          </button>
+        )}
         <button
           onClick={onLogout}
           title="Cerrar sesión"

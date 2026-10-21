@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import { initialLang } from '@/utils/reportLang';
 import { CalendarClock } from 'lucide-react';
 import { listAccounts, isMetaPeriod } from '@/services/paidService';
 import { usePaidMonthly } from '@/hooks/usePaidMonthly';
@@ -31,6 +29,8 @@ import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 import { usePillarCrm } from '@/hooks/usePillarCrm';
 import { lgCols } from '@/utils/gridCols';
 import { paidFmt } from '@/utils/paidFormat';
+import { useReportLang } from '@/hooks/useReportLang';
+import { usePersistentState } from '@/utils/persist';
 
 
 const ALL = 'all';
@@ -106,9 +106,9 @@ function CampaignDetail({ c, currency, accName, periodLabel, t, lang, detailGrou
 export function PaidApp({ account, period }) {
   const { mo, detail, loading } = usePaidMonthly(account, period);
   const crm = usePillarCrm('paid', account, period);
-  const [view, setView] = useState(ALL);
-  const [lang, setLang] = useState(() => initialLang('es'));
-  useEffect(() => setView(ALL), [account, period]);
+  // Vista elegida (todas / una campaña / comparativa), recordada por cuenta y período.
+  const [savedView, setView] = usePersistentState(`paid.view.${account}.${period}`, ALL);
+  const [lang, setLang] = useReportLang('es');
 
   const t = PAID_STR[lang];
   const accName = listAccounts().find((a) => a.id === account)?.name ?? '';
@@ -161,6 +161,8 @@ export function PaidApp({ account, period }) {
   const tt = mo.totals;
   const c = tt.currency || 'EUR';
   const partial = Boolean(mo.partial);
+  // La vista guardada vale si sigue existiendo en este mes (si no, todas).
+  const view = savedView === ALL || savedView === CMP || mo.campaigns.some((x) => x.name === savedView) ? savedView : ALL;
   const selected = mo.campaigns.find((x) => x.name === view);
 
   const campOptions = [

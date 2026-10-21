@@ -14,6 +14,19 @@ const EMBED = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
 // Logo principal MarComms (isotipo + wordmark).
 export function MarCommsLogo({ className = '', variant = 'full' }) {
   const src = EMBED?.marcommsLogoSrc && variant === 'full' ? EMBED.marcommsLogoSrc : MARCOMMS_LOGO[variant];
+  // En la app, con modo oscuro se muestra la versión blanca del logo.
+  if (!EMBED && variant === 'full') {
+    return (
+      <>
+        <img src={src} alt={MARCOMMS_LOGO.alt} className={`block w-auto shrink-0 dark:hidden ${className || 'h-8'}`} />
+        <img
+          src={MARCOMMS_LOGO.fullWhite}
+          alt={MARCOMMS_LOGO.alt}
+          className={`hidden w-auto shrink-0 dark:block ${className || 'h-8'}`}
+        />
+      </>
+    );
+  }
   return (
     <img
       src={src}

@@ -1,10 +1,8 @@
-import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { ExternalLink } from 'lucide-react';
 import { SegmentedControl } from '@/components/shared/SegmentedControl';
 import { getScoring } from '@/services/webinarsService';
 import { WBN_STR, SCORING_EN, countryEn } from '@/utils/webinarsI18n';
-import { initialLang } from '@/utils/reportLang';
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
@@ -13,6 +11,8 @@ import { Funnel } from '@/components/shared/Funnel';
 import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { Glossary } from '@/components/shared/Glossary';
 import { isExternalReport, isEmbedReport } from '@/utils/reportAudience';
+import { useReportLang } from '@/hooks/useReportLang';
+import { usePersistentState } from '@/utils/persist';
 
 const thCls = 'px-3 py-2 text-left text-[10px] font-bold uppercase tracking-[0.5px] text-cu-grey';
 const tdCls = 'px-3 py-2 text-[12px] text-cu-dgrey';
@@ -40,8 +40,9 @@ function FichaRow({ k, v }) {
 // evento viven en el seed con variante `...En` (fallback al español).
 export function WebinarMixReport({ ev, accName }) {
   const external = isExternalReport();
-  const [view, setView] = useState('general');
-  const [lang, setLang] = useState(() => initialLang('es'));
+  const [savedView, setView] = usePersistentState('webinars.view', 'general');
+  const view = ['general', 'webinar', 'email', 'social'].includes(savedView) ? savedView : 'general';
+  const [lang, setLang] = useReportLang('es');
   const t = WBN_STR[lang];
   const en = lang === 'en';
   // Texto narrativo del seed con variante EN (fallback al español).

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { ExternalLink } from 'lucide-react';
-import { initialLang } from '@/utils/reportLang';
 import { listAccounts, getPlan } from '@/services/plansService';
 import { PLANS_STR } from '@/utils/plansI18n';
 import { SectionHeader } from '@/components/shared/SectionHeader';
@@ -12,6 +11,7 @@ import { BarBottom } from '@/components/brand/BrandBars';
 import { MarCommsLogo } from '@/components/brand/Logo';
 import { Tagline } from '@/components/brand/Tagline';
 import { brandOf } from '@/constants/brand';
+import { useReportLang } from '@/hooks/useReportLang';
 
 const EMBED = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
 
@@ -55,7 +55,7 @@ function StatusPill({ status, t }) {
 export function PlansApp({ account, period }) {
   const compute = () => getPlan(account, period);
   const [plan, setPlan] = useState(compute);
-  const [lang, setLang] = useState(() => initialLang('es'));
+  const [lang, setLang] = useReportLang('es');
   useEffect(() => {
     if (EMBED) return;
     setPlan(getPlan(account, period));
@@ -65,7 +65,7 @@ export function PlansApp({ account, period }) {
     const onSet = (e) => e.detail && setLang(e.detail);
     window.addEventListener(SET_LANG_EVENT, onSet);
     return () => window.removeEventListener(SET_LANG_EVENT, onSet);
-  }, []);
+  }, [setLang]);
 
   const t = PLANS_STR[lang];
   const en = lang === 'en';

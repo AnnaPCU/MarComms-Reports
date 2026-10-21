@@ -401,6 +401,11 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **La app recuerda dónde estabas + modo oscuro** (21/10/2026): pilar,
+  cuenta, período, país, campaña, pestañas e idioma se guardan en el
+  navegador y sobreviven a un refresh (`utils/persist.js`); botón de modo
+  oscuro en el header, también guardado (DECISIONES §20).
+
 - **Paid: tres monedas en todos los meses** (21/10/2026): tipos de cambio de
   cierre de febrero a septiembre en `src/data/fxRates.js` (dólar BNA
   vendedor + euro/dólar oficial del BCE; el euro en pesos se calcula). Todos

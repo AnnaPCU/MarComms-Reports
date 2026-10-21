@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { PILARES, navLabel } from '@/constants/pilares';
 import { getPilarConfig } from '@/pilares/registry';
@@ -20,33 +20,56 @@ import { getMonthly as getPaidMonthly } from '@/services/paidService';
 import { CURRENCIES, canConvert } from '@/services/fxService';
 import { emailLabelEn } from '@/utils/emailI18n';
 import { viewState } from '@/utils/viewState';
+import { loadPref, savePref } from '@/utils/persist';
+import { useTheme } from '@/hooks/useTheme';
 import { SET_LANG_EVENT } from '@/components/plans/PlansApp';
+
+// Períodos visibles: si el pilar define periodsFor (dependiente de la
+// cuenta, ej. Paid), solo se listan los que tienen datos.
+function periodsOf(cfg, accountId) {
+  return cfg.periodsFor ? cfg.periodsFor(accountId) : cfg.periods;
+}
+
+// Cuenta y período de un pilar: los últimos que se usaron (guardados en el
+// navegador) si siguen existiendo; si no, los defaults del pilar.
+function navFor(pilarId) {
+  const cfg = getPilarConfig(pilarId);
+  const saved = loadPref(`nav.${pilarId}`, null);
+  const account = cfg.accounts.some((a) => a.id === saved?.account) ? saved.account : (cfg.accounts[0]?.id ?? '');
+  const list = periodsOf(cfg, account);
+  const period = list.some((p) => p.id === saved?.period)
+    ? saved.period
+    : list.some((p) => p.id === cfg.defaultPeriod)
+      ? cfg.defaultPeriod
+      : (list[0]?.id ?? cfg.defaultPeriod ?? '');
+  return { account, period };
+}
 
 export default function App() {
   const { authed, login, logout } = useAuth();
+  const [theme, setTheme] = useTheme();
 
-  const [pilar, setPilar] = useState('social');
-  const initial = getPilarConfig('social');
-  const [account, setAccount] = useState(initial.accounts[0]?.id ?? '');
-  const [period, setPeriod] = useState(initial.defaultPeriod ?? '');
+  // Se retoma el recorrido: pilar, cuenta y período quedan guardados en el
+  // navegador y sobreviven a un refresh o a volver a entrar.
+  const [pilar, setPilar] = useState(() => {
+    const saved = loadPref('nav.pilar', 'social');
+    return PILARES.some((p) => p.id === saved) ? saved : 'social';
+  });
+  const [account, setAccount] = useState(() => navFor(pilar).account);
+  const [period, setPeriod] = useState(() => navFor(pilar).period);
   const [showDownload, setShowDownload] = useState(false);
 
-  // Períodos visibles: si el pilar define periodsFor (dependiente de la
-  // cuenta, ej. Paid), solo se listan los que tienen datos.
-  function periodsOf(cfg, accountId) {
-    return cfg.periodsFor ? cfg.periodsFor(accountId) : cfg.periods;
-  }
+  useEffect(() => {
+    savePref('nav.pilar', pilar);
+    savePref(`nav.${pilar}`, { account, period });
+  }, [pilar, account, period]);
 
-  // Al cambiar de pilar, reseteamos cuenta/período a los defaults del pilar.
+  // Al cambiar de pilar, vuelve a la cuenta/período donde se dejó ese pilar.
   function changePilar(id) {
+    const nav = navFor(id);
     setPilar(id);
-    const cfg = getPilarConfig(id);
-    const firstAccount = cfg.accounts[0]?.id ?? '';
-    setAccount(firstAccount);
-    const list = periodsOf(cfg, firstAccount);
-    setPeriod(
-      list.some((p) => p.id === cfg.defaultPeriod) ? cfg.defaultPeriod : (list[0]?.id ?? cfg.defaultPeriod ?? ''),
-    );
+    setAccount(nav.account);
+    setPeriod(nav.period);
   }
 
   // Al cambiar de cuenta, si el período actual no existe para esa cuenta,
@@ -216,6 +239,8 @@ export default function App() {
         badge={badge}
         onDownload={() => setShowDownload(true)}
         onLogout={logout}
+        theme={theme}
+        onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       />
       <PilarNav active={pilar} onChange={changePilar} />
 

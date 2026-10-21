@@ -12,6 +12,12 @@
       rel="stylesheet"
     />
     <title>MarComms Reports</title>
+    <!-- Modo oscuro guardado: se aplica antes de pintar para que no parpadee. -->
+    <script>
+      try {
+        if (JSON.parse(localStorage.getItem('marcomms:pref.theme')) === 'dark') document.documentElement.classList.add('dark');
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

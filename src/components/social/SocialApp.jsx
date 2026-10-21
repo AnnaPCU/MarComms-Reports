@@ -1,5 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
-import { initialLang } from '@/utils/reportLang';
+import { useMemo, useEffect } from 'react';
 import { listAccounts, getSegConfig } from '@/services/socialService';
 import { useSocialMonthly } from '@/hooks/useSocialMonthly';
 import { ML, MO } from '@/data/socialSeed';
@@ -27,6 +26,8 @@ import { Glossary } from '@/components/shared/Glossary';
 import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 import { usePillarCrm } from '@/hooks/usePillarCrm';
 import { lgCols } from '@/utils/gridCols';
+import { useReportLang } from '@/hooks/useReportLang';
+import { usePersistentState } from '@/utils/persist';
 
 // Vista del pilar Social Media (LinkedIn).
 // Idioma base español; toggle EN disponible (también en el descargable).
@@ -37,7 +38,7 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
     () => listAccounts().find((a) => a.id === account)?.name ?? '',
     [account],
   );
-  const [lang, setLang] = useState(() => initialLang('es'));
+  const [lang, setLang] = useReportLang('es');
   const t = SOCIAL_STR[lang];
   const periodLabel = lang === 'en' ? ML_EN[period] ?? ML[period] ?? period : ML[period] || period;
 
@@ -55,11 +56,12 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
   // el país elegido viaja en window.__REPORT_EMBED__.socialCountry.
   const embedCountry =
     (typeof window !== 'undefined' && window.__REPORT_EMBED__?.socialCountry) || 'all';
-  const [country, setCountry] = useState(forcedCountry ?? embedCountry);
-  useEffect(() => {
-    setCountry(forcedCountry ?? embedCountry);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, forcedCountry]);
+  // El país elegido se recuerda por cuenta (en el navegador); en un HTML
+  // descargado manda el país del archivo.
+  const [savedCountry, setCountry] = usePersistentState(`social.country.${account}`, embedCountry);
+  const segCountries = getSegConfig(account)?.countries ?? [];
+  const country =
+    forcedCountry ?? (savedCountry === 'all' || segCountries.some((c) => c.id === savedCountry) ? savedCountry : 'all');
   useEffect(() => {
     viewState.socialCountry = country;
     return () => {
