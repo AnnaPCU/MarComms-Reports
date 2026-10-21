@@ -1622,3 +1622,8 @@
 
 > Recién descargué el reporte del mes de CU Estados Unidos de Paid Media y me aparece la campaña de IFPA, cuando IFPA ni arrancó en septiembre. No busco eso. Siempre que una campaña arranque en X mes deberá aparecer a partir de ese mes para adelante, no antes.
 
+
+**#127** (21/10/2026)
+
+> Vi esta aclaración en CU LinkedIn Latinoamérica, en la vista de Perú: «Cómo se arma este reporte por país: cada publicación se atribuye a Perú por su hashtag (#ControlUnionPerú) o mención de país…». En realidad los hashtags para Perú son #ControlUnionServices y «Peru». Me preocupa que estés midiendo mal Perú o que solo estés aclarando mal esto. Revisá, comentame y accioná.
+

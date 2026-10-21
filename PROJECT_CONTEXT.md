@@ -399,6 +399,14 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **Social · Perú: hashtag correcto** (21/10/2026): la vista de Perú
+  (CU Latinoamérica) decía que se atribuía por «#ControlUnionPerú», pero
+  Perú publica con #ControlUnionServices + #Peru/#Perú. La medición ya era
+  correcta (todos sus posts llevan #Peru/#Perú; verificado en los exports de
+  agosto y septiembre, sin cambios en los números). Se corrigió la etiqueta
+  y #ControlUnionServices quedó como hashtag de Perú en
+  `build_country_seg.py`, por si un post lo usa solo.
+
 - **Paid en inglés con formato en-US** (21/10/2026): los reportes mensuales
   de Paid mostraban los números en formato es-AR también en EN (`2.591`,
   `4,09 %`) y el objetivo en español. Ahora usan `utils/paidFormat.js`

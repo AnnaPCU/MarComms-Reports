@@ -147,7 +147,7 @@ export function CountryView({ account, country, period, lang = 'es' }) {
         {en ? (
           <>
             <strong className="text-cu-dblue">How this country report is built:</strong>{' '}
-            each post is attributed to {name} by its hashtag ({cInfo?.tag}) or country
+            each post is attributed to {name} by hashtag ({cInfo?.tag}) or country
             mention; content metrics are those posts' accumulated figures at export time
             {tot?.un ? (
               <> ({tot.un} regional {tot.un === 1 ? 'post' : 'posts'} of the {isQuarterPeriod(period) ? 'quarter' : 'month'} not attributed to any country)</>
@@ -158,7 +158,7 @@ export function CountryView({ account, country, period, lang = 'es' }) {
         ) : (
           <>
             <strong className="text-cu-dblue">Cómo se arma este reporte por país:</strong>{' '}
-            cada publicación se atribuye a {name} por su hashtag ({cInfo?.tag}) o mención de
+            cada publicación se atribuye a {name} por hashtag ({cInfo?.tag}) o mención de
             país; las métricas de contenido son las acumuladas de esos posts al momento del
             export
             {tot?.un ? (

@@ -10,7 +10,7 @@ export const LATAM_COUNTRIES = [
   {id:'ar', name:"Argentina", tag:"#ControlUnionArgentina"},
   {id:'br', name:"Brasil", tag:"#ControlUnionBrasil"},
   {id:'cl', name:"Chile", tag:"#ControlUnionChile"},
-  {id:'pe', name:"Perú", tag:"#ControlUnionPerú"},
+  {id:'pe', name:"Perú", tag:"#ControlUnionServices · #Perú"},
   {id:'mx', name:"México", tag:"#ControlUnionMéxico"},
   {id:'ec', name:"Ecuador", tag:"#ControlUnionEcuador"},
 ];

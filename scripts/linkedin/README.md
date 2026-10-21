@@ -55,7 +55,8 @@ Cada arg de mes acepta la carpeta cruda del mes (resuelve sola la subcarpeta
 de la cuenta) o el `.xlsx` unificado de la cuenta. Metodología:
 
 - **Posts por país**: se atribuyen por hashtag (`#ControlUnionArgentina`,
-  `#ControlUnionUSA`, …) o país nombrado en la primera línea. Posts sin
+  `#ControlUnionUSA`, …; Perú usa `#ControlUnionServices` + `#Peru`/`#Perú`)
+  o país nombrado en la primera línea. Posts sin
   marcador (p. ej. `#ControlUnion` regional) quedan sin atribuir — el conteo
   va en `_tot.un` y se transparenta en la vista.
 - Las métricas por post son **acumuladas al momento del export**, por eso la
