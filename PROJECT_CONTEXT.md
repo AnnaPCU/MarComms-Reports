@@ -399,6 +399,12 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **Paid en inglés con formato en-US** (21/10/2026): los reportes mensuales
+  de Paid mostraban los números en formato es-AR también en EN (`2.591`,
+  `4,09 %`) y el objetivo en español. Ahora usan `utils/paidFormat.js`
+  (es-AR / en-US según el idioma) y el objetivo se traduce
+  (`PAID_STR.en.objectives`).
+
 - **Paid: campañas desde el mes en que arrancan** (20/10/2026): las
   campañas en cero que todavía no tuvieron actividad (ej. IFPA en septiembre
   de CU Estados Unidos) no se muestran; desde su primer mes con actividad (o

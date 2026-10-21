@@ -1,12 +1,8 @@
 import { campaignStatus } from '@/utils/paidInsights';
 import { campaignPartial } from '@/utils/campaignPartial';
 import { PAID_STR } from '@/utils/paidI18n';
+import { paidFmt } from '@/utils/paidFormat';
 
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
-const pct = (v) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
-const money = (v, c) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + (c || 'EUR');
 
 const BADGE = {
   win: 'bg-[#2d8a4e]/10 text-[#1d6e3a] border border-[#2d8a4e]/30',
@@ -35,6 +31,7 @@ function PartialChip({ p, L }) {
 
 // Tabla de detalle por campaña (ordenada por impresiones desc).
 export function CampaignsTable({ campaigns = [], currency = 'EUR', title = 'Google Ads — Search', lang = 'es', period = null }) {
+  const { numEs, pct, money } = paidFmt(lang);
   const L = PAID_STR[lang];
   const rows = campaigns.slice().sort((a, b) => (b.impressions || 0) - (a.impressions || 0));
   const partials = rows.filter((c) => campaignPartial(c, period));

@@ -12,9 +12,8 @@ import {
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { PAID_STR } from '@/utils/paidI18n';
+import { paidFmt } from '@/utils/paidFormat';
 
-const money = (v, c) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + (c || 'EUR');
 
 // "2026-07-06" → "6/7"
 const wkLabel = (w) => {
@@ -32,6 +31,7 @@ const MAX_SERIES = 6;
 // única activa → se muestran todas de nuevo.
 // series: [{ name, weeks: [{ w, cost }] }]
 export function BudgetWeekly({ series = [], currency = 'EUR', lang = 'es' }) {
+  const { money } = paidFmt(lang);
   const L = PAID_STR[lang];
   // null = todas visibles; Set = subconjunto activo.
   const [visible, setVisible] = useState(null);

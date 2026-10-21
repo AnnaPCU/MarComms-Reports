@@ -30,18 +30,15 @@ import { isExternalReport } from '@/utils/reportAudience';
 import { CrmDealsCard } from '@/components/shared/CrmDealsCard';
 import { usePillarCrm } from '@/hooks/usePillarCrm';
 import { lgCols } from '@/utils/gridCols';
+import { paidFmt } from '@/utils/paidFormat';
 
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
-const pct = (v) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
-const money = (v, c) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + (c || 'EUR');
 
 const ALL = 'all';
 const CMP = 'cmp';
 
 // Fila de KPIs (sirve para totales de cuenta o para una campaña).
-function KpiRow({ d, currency, partial, t, extra = null }) {
+function KpiRow({ d, currency, partial, t, lang = 'es', extra = null }) {
+  const { numEs, pct, money } = paidFmt(lang);
   // Conversiones es el indicador destacado (card azul marino, a la derecha),
   // como pidió el equipo el 9/10/2026.
   return (
@@ -224,8 +221,8 @@ export function PaidApp({ account, period }) {
             emptyText={t.emptyInsights}
           />
 
-          <SectionHeader title={t.kpiSection} note={[accName, mo.objetivo].filter(Boolean).join(' · ')} />
-          <KpiRow d={tt} currency={c} partial={partial} t={t} extra={crm && <CrmDealsCard d={crm} lang={lang} />} />
+          <SectionHeader title={t.kpiSection} note={[accName, t.objectives?.[mo.objetivo] ?? mo.objetivo].filter(Boolean).join(' · ')} />
+          <KpiRow d={tt} currency={c} partial={partial} t={t} lang={lang} extra={crm && <CrmDealsCard d={crm} lang={lang} />} />
 
           <SectionHeader title={t.funnelSection} note={t.funnelNote} />
           <PaidFunnel totals={tt} campaigns={mo.campaigns} lang={lang} />

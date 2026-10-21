@@ -20,17 +20,14 @@ import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { scoreCampaigns } from '@/utils/paidInsights';
 import { PAID_STR } from '@/utils/paidI18n';
 import { isExternalReport } from '@/utils/reportAudience';
+import { paidFmt } from '@/utils/paidFormat';
 
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
-const pct = (v) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
-const money = (v, c) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + (c || 'EUR');
 const short = (s, n = 14) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
 
 const RANK_BORDER = ['border-t-cu-cyan', 'border-t-[#6dc8f2]', 'border-t-[#9ab5b6]'];
 
-function RankCard({ c, rank, currency, maxScore, L }) {
+function RankCard({ c, rank, currency, maxScore, L, lang = 'es' }) {
+  const { numEs, pct, money } = paidFmt(lang);
   return (
     <div className={`relative overflow-hidden rounded-cu border border-cu-border ${rank < 3 ? 'border-t-[3px] ' + RANK_BORDER[rank] : ''} bg-white px-4 py-3.5 shadow-cu transition-shadow hover:shadow-cu-h`}>
       <span className={`absolute right-3 top-2.5 rounded-[3px] px-1.5 py-0.5 text-[10px] font-bold ${rank === 0 ? 'bg-cu-cyan/10 text-cu-cyan' : 'bg-cu-bg text-cu-grey'}`}>
@@ -63,7 +60,8 @@ function Metric({ label, value }) {
   );
 }
 
-function BarByCampaign({ title, subtitle, data, unit, currency, color = CU.cyan }) {
+function BarByCampaign({ title, subtitle, data, unit, currency, color = CU.cyan, lang = 'es' }) {
+  const { numEs, pct, money } = paidFmt(lang);
   return (
     <ChartCard title={title} subtitle={subtitle}>
       <ResponsiveContainer width="100%" height="100%">
@@ -134,18 +132,18 @@ export function ComparativeCampaigns({ mo, currency = 'EUR', lang = 'es' }) {
 
       <div className="mb-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
         {ranked.map((c, i) => (
-          <RankCard key={c.name} c={c} rank={i} currency={currency} maxScore={maxScore} L={L} />
+          <RankCard lang={lang} key={c.name} c={c} rank={i} currency={currency} maxScore={maxScore} L={L} />
         ))}
       </div>
 
       <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
-        <BarByCampaign title={L.chCtrTitle} subtitle={L.chCtrSub} data={ctrData} unit="pct" />
-        <BarByCampaign title={L.chCpcTitle} subtitle={L.chCpcSub} data={cpcData} unit="money" currency={currency} color={CU.dblue} />
+        <BarByCampaign lang={lang} title={L.chCtrTitle} subtitle={L.chCtrSub} data={ctrData} unit="pct" />
+        <BarByCampaign lang={lang} title={L.chCpcTitle} subtitle={L.chCpcSub} data={cpcData} unit="money" currency={currency} color={CU.dblue} />
       </div>
       <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
-        <BarByCampaign title={L.chCvrTitle} subtitle={L.chCvrSub} data={cvrData} unit="pct" color="#2d8a4e" />
+        <BarByCampaign lang={lang} title={L.chCvrTitle} subtitle={L.chCvrSub} data={cvrData} unit="pct" color="#2d8a4e" />
         {cplData.length ? (
-          <BarByCampaign title={L.chCplTitle} subtitle={L.chCplSub} data={cplData} unit="money" currency={currency} color="#d4a72c" />
+          <BarByCampaign lang={lang} title={L.chCplTitle} subtitle={L.chCplSub} data={cplData} unit="money" currency={currency} color="#d4a72c" />
         ) : (
           <ChartCard title={L.chCplTitle} subtitle={L.chCplSub}>
             <div className="flex h-full items-center justify-center text-center text-[12px] text-cu-grey">

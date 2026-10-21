@@ -11,6 +11,8 @@ export const MONTHS_EN = {
 
 export const PAID_STR = {
   es: {
+    // Objetivo de la cuenta (paidSeed `objetivo`, que viene en español).
+    objectives: {},
     // Selector de vista
     viewLabel: 'Vista / Campaña',
     allCampaigns: 'Todas las campañas — Vista global',
@@ -149,6 +151,7 @@ export const PAID_STR = {
     mCost: 'Coste',
   },
   en: {
+    objectives: { 'Generación de leads': 'Lead generation' },
     viewLabel: 'View / Campaign',
     allCampaigns: 'All campaigns — Overview',
     cmpCampaigns: 'Campaign comparison',

@@ -15,12 +15,13 @@ import {
 import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { PAID_STR } from '@/utils/paidI18n';
 import { ChartCard } from '@/components/shared/ChartCard';
+import { paidFmt } from '@/utils/paidFormat';
 
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
 const short = (s, n = 16) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
 
 // Gráficos de la vista global de Paid: inversión vs clics + reparto de impresiones.
 export function PaidCharts({ campaigns = [], currency = 'EUR', lang = 'es' }) {
+  const { numEs } = paidFmt(lang);
   const L = PAID_STR[lang];
   const active = campaigns.filter((c) => (c.impressions || 0) > 0);
   if (!active.length) return null;

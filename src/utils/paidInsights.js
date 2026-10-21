@@ -7,15 +7,10 @@
 
 import { PAID_STR } from '@/utils/paidI18n';
 import { campaignPartial } from '@/utils/campaignPartial';
+import { paidFmt } from '@/utils/paidFormat';
 
 // Importe con la moneda REAL del período: las cuentas pasaron de EUR a ARS,
 // así que el símbolo no puede estar fijo.
-const cash = (v, cur) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
-  ' ' + (cur || 'EUR');
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
-const pct = (v) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
 
 // ── Nivel de actividad de una campaña ──
 // win = convierte · opt = clics sin conversión · low = impresiones sin clics · none = sin impresiones
@@ -73,6 +68,7 @@ export function scoreCampaigns(mo) {
 // `period` (opcional) habilita el aviso de campañas que arrancaron a mitad
 // de mes: sus totales no son comparables con los del resto.
 export function genPaidInsights(mo, lang = 'es', period = null) {
+  const { numEs, pct, cash } = paidFmt(lang);
   if (!mo?.totals) return [];
   const en = lang === 'en';
   const L = PAID_STR[lang];
@@ -178,6 +174,7 @@ export function genPaidInsights(mo, lang = 'es', period = null) {
 
 // ── Diagnóstico (Lectura de Performance): 4 ítems {label, text} · ES/EN ──
 export function genPaidConclusions(mo, lang = 'es') {
+  const { numEs, pct, cash } = paidFmt(lang);
   if (!mo?.totals) return [];
   const en = lang === 'en';
   const t = mo.totals;
@@ -226,6 +223,7 @@ export function genPaidConclusions(mo, lang = 'es') {
 
 // ── Próximos pasos (lista numerada, HTML inline permitido) · ES/EN ──
 export function genPaidNextSteps(mo, lang = 'es') {
+  const { pct } = paidFmt(lang);
   if (!mo?.totals) return [];
   const en = lang === 'en';
   const t = mo.totals;

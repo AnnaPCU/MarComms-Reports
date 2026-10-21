@@ -3,12 +3,8 @@
 // El texto de cada etapa se centra y se acota al ancho de la forma, para que
 // NUNCA sobresalga del color del embudo.
 import { PAID_STR } from '@/utils/paidI18n';
+import { paidFmt } from '@/utils/paidFormat';
 
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
-const pct = (v) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' %';
-const money = (v, c) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + (c || 'EUR');
 
 // Trapecio: ancho superior t% → ancho inferior b%.
 const trap = (t, b) => {
@@ -71,6 +67,7 @@ function CostCard({ dot, label, value, unit, sub }) {
 }
 
 export function PaidFunnel({ totals: t, campaigns = [], lang = 'es' }) {
+  const { numEs, pct, money } = paidFmt(lang);
   const L = PAID_STR[lang];
   const imp = t.impressions || 0;
   const clk = t.clicks || 0;

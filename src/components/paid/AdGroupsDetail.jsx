@@ -1,8 +1,6 @@
 import { PAID_STR } from '@/utils/paidI18n';
+import { paidFmt } from '@/utils/paidFormat';
 
-const numEs = (v) => Number(v || 0).toLocaleString('es-AR');
-const money = (v, c) =>
-  Number(v || 0).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + (c || 'EUR');
 const pct0 = (v) => `${Math.round(v)}%`;
 
 // Normaliza el tipo de concordancia para mostrar: sin el prefijo "Concordancia"
@@ -66,6 +64,7 @@ function MiniTable({ title, headers, rows, moreCount, L, emptyText }) {
 // totales del mes, la cuota de búsqueda y las tablas de palabras clave y
 // términos de búsqueda (top por clics) con impresiones y clics.
 export function AdGroupsDetail({ groups = [], currency = 'EUR', lang = 'es' }) {
+  const { numEs, money } = paidFmt(lang);
   const L = PAID_STR[lang];
   if (!groups.length) return null;
 
