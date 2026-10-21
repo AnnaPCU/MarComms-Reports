@@ -405,7 +405,8 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   correcta (todos sus posts llevan #Peru/#Perú; verificado en los exports de
   agosto y septiembre, sin cambios en los números). Se corrigió la etiqueta
   y #ControlUnionServices quedó como hashtag de Perú en
-  `build_country_seg.py`, por si un post lo usa solo.
+  `build_country_seg.py`, por si un post lo usa solo (el equipo confirmó
+  que solo lo usa Perú).
 
 - **Paid en inglés con formato en-US** (21/10/2026): los reportes mensuales
   de Paid mostraban los números en formato es-AR también en EN (`2.591`,

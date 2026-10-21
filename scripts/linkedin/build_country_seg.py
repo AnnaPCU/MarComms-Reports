@@ -60,7 +60,8 @@ ACCOUNTS = {
             'br': C('Brasil', '#ControlUnionBrasil', ['brasil', 'brazil'], ['brasil', 'brazil'], ['brasil', 'brazil']),
             'cl': C('Chile', '#ControlUnionChile', ['chile'], ['chile'], ['chile']),
             # Perú publica con #ControlUnionServices (Control Union Services, la
-            # entidad local) + #Peru/#Perú: los dos atribuyen a Perú (20/10/2026).
+            # entidad local) + #Peru/#Perú: los dos atribuyen a Perú. El equipo
+            # confirmó que #ControlUnionServices lo usa solo Perú (21/10/2026).
             'pe': C('Perú', '#ControlUnionServices · #Perú', ['peru', 'controlunionservices'], ['peru'], ['peru']),
             'mx': C('México', '#ControlUnionMéxico', ['mexico'], ['mexico'], ['mexico']),
             'ec': C('Ecuador', '#ControlUnionEcuador', ['ecuador'], ['ecuador'], ['ecuador']),
