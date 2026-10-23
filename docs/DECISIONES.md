@@ -710,3 +710,32 @@ por campaña ni se interpreta como «clic al CTA»: **se mide por la URL final
   ese formato como diario. Y cada export lleva **un solo desglose** (si se
   combinan día + plataforma o edad + sexo, se pierde el alcance de cada
   corte).
+
+## 22. Paid: campañas en paralelo en Google Ads y Meta Ads
+
+Pedido del equipo el 23/10/2026, con IFPA (CU USA): la misma campaña de
+evento corrió en Google Ads (Search) y en Meta Ads a la vez.
+
+- **Cómo se reconoce**: si en un mismo drop (mismo commit / misma carpeta)
+  llegan exports de Google Ads y de Meta Ads con el **mismo nombre de
+  campaña o evento** (ej. «IFPA»), es **una campaña hecha en paralelo** en
+  las dos plataformas. Una puede haber arrancado unos días antes que la otra;
+  en general son del mismo mes. No hace falta que el equipo lo aclare.
+- **Carpeta**: `metricas/paid-media/<CAMPAÑA>-AAAA-MM/` con dos subcarpetas,
+  `Google Ads/` y `Meta Ads/` (así se subió IFPA). Se archiva entera en
+  `_procesados/` al procesarla.
+- **Cómo se ve**: un solo período en «Período/Campaña» de la cuenta (ej.
+  «IFPA · Oct 2026»). Al entrar se muestra **por defecto lo de Google Ads**,
+  y un selector de plataforma deja pasar a **Meta Ads**. Cada plataforma
+  muestra sus propias métricas; **no se suman entre plataformas** (miden
+  cosas distintas y pueden venir en monedas distintas, §5). En Meta, el
+  objetivo se lee por destino de cada anuncio (§21).
+- **El mes de Google Ads no cambia**: la campaña sigue apareciendo en el
+  reporte mensual de su cuenta junto con las demás (Google se reporta por
+  mes con todas las campañas, §17). La vista de la campaña es un corte
+  adicional, no un reemplazo.
+- **Exports de Google Ads para la campaña**: los mismos 3 informes guardados
+  (campañas, semanal por grupo, términos + palabras clave), con el rango del
+  vuelo de la campaña.
+- **Estado**: criterio fijado; la vista y el tooling se implementan con IFPA,
+  el primer caso, cuando estén completos los exports.

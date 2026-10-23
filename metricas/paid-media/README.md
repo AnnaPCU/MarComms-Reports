@@ -142,6 +142,26 @@ del formulario o una captura del panel, y avisarlo.
 
 ---
 
+## Campañas en paralelo (Google Ads + Meta Ads)
+
+Si una misma campaña de evento corre en las dos plataformas (ej. IFPA), se
+sube junta, en una carpeta con el nombre de la campaña y el mes, con una
+subcarpeta por plataforma:
+
+```
+paid-media/
+└── IFPA-2026-10/
+    ├── Google Ads/      ← los 3 informes, con el rango del vuelo
+    └── Meta Ads/        ← los exports de la tabla de arriba (+ capturas)
+```
+
+Mismo drop + mismo nombre = campaña en paralelo, aunque una haya arrancado
+unos días antes. En la app aparece como un período propio de la cuenta: por
+defecto muestra **Google Ads** y se puede pasar a **Meta Ads** con el
+selector de plataforma. Las métricas de cada plataforma no se suman. La
+campaña sigue apareciendo también en el mes de Google Ads de su cuenta.
+Criterio completo en `docs/DECISIONES.md` §22.
+
 ## Qué hace Claude al procesar
 
 - **Google Ads**: `python3 -B scripts/paid/build_month.py

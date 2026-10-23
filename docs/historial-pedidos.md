@@ -1654,3 +1654,8 @@
 **#131** (23/10/2026)
 
 > Lo que yo necesito es que en el cerebro de MarComms Reports quede que el objective de Meta Ads se mide según las URLs finales que tengan los ads. Si esa información vos no la tenés a priori, yo puedo configurarla para que así la tengas. Avisame qué onda. Porque vos estás interpretando que el call to action es landing, cuando en realidad hay algunos de landing y otros de teléfono.
+
+
+**#132** (23/10/2026)
+
+> Listo, ahí configuré esto que me pediste y subí el commit nuevo. Avisame si falta algo o está listo para ser un reporte. Cada vez que subo en un mismo commit de Paid Media algo que tiene Google Ads y Meta Ads, y obviamente tiene el mismo nombre, tenés que entender que claramente es una campaña que se hizo en paralelo. Una pudo arrancar un poco antes que la otra, pero es del mismo mes en general. Y está bueno que cuando uno entra a la vista aparezca por default lo que se hizo en Google Ads, pero luego uno pueda filtrar por la vista de Meta Ads. Ese es el patrón que quiero que se aplique para todas las próximas, y quiero que quede en tu README o en tu configuración.

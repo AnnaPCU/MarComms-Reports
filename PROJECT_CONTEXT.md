@@ -293,13 +293,21 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 ## 11. Pendientes
 
-- **Meta Ads · IFPA (CU USA, 13–18/10/2026)**: medir el objetivo por el
-  destino final de cada anuncio (landing / formulario / teléfono,
-  `docs/DECISIONES.md` §21). Falta: exports con un solo desglose cada uno
-  (día, plataforma, edad, sexo), Ads con nombre de campaña y URL final, y
-  las capturas de Typeform/HubSpot con el rango del vuelo. Con eso se adapta
+- **IFPA · CU USA, octubre 2026 (Google Ads + Meta Ads en paralelo)**:
+  drop en `metricas/paid-media/IFPA-2026-10/` (23/10). Primer caso de campaña
+  en paralelo (`docs/DECISIONES.md` §22: vista propia, Google por defecto,
+  selector a Meta) y de objetivo por destino del anuncio en Meta (§21).
+  Recibido y verificado: Meta diario (un solo desglose, vuelo 13–18/10),
+  total y Ads con nombre de campaña (cuadran: 11.398 impr., ARS 296.909,96,
+  141 clics); Google términos + palabras clave (131 filas, 1.322 impr., 100
+  clics, ARS 200.934,63, 0 conv.). Falta: Google «Rendimiento de la campaña»
+  (llegó vacío, solo encabezado) y «Semanal por grupo»; en Meta, la columna
+  de URL final/destino de los anuncios (y la de llamadas si hay anuncios de
+  teléfono), y plataforma, edad y sexo por separado (edad × sexo llegó
+  combinado). Las capturas de Typeform (sin títulos, «All time») y HubSpot
+  («Last 30 days») son las mismas de antes. Con eso: adaptar
   `scripts/paid/build_meta.py` (diario sin columna «Día», destino por
-  anuncio) y se procesa.
+  anuncio), armar la vista en paralelo y procesar.
 - Formatos de export reales de GA4 / Search Console (documentar columnas cuando
   lleguen los próximos exports).
 - **Vista por cliente**: revisar con el equipo dos mapeos que son criterio y no
