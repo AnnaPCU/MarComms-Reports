@@ -401,6 +401,11 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **Paid: «Detalle por Grupo de Anuncio» solo interno** (23/10/2026): el
+  descargable de uso externo ya no trae el detalle por grupo (palabras clave
+  y términos de búsqueda); el interno y la web lo siguen mostrando. El
+  diálogo de descarga lo avisa.
+
 - **IFPA también en Control Union México** (23/10/2026): campaña conjunta
   de CU Estados Unidos y CU México (`tambienEn` en `campaña.json`). Nueva
   cuenta de Paid `cumx` «Control Union México», solo con «IFPA · Oct

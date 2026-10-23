@@ -129,7 +129,9 @@ Orden común en todos los pilares: **Insights (Plan de Acción)** → **KPIs** �
 
 - Insights, diagnóstico y próximos pasos se **generan de las métricas reales**
   (reglas fijas contra benchmarks, sin IA). No se hardcodean.
-- **Próximos Pasos no se muestra en los reportes de uso externo.**
+- **Próximos Pasos no se muestra en los reportes de uso externo.** En Paid,
+  tampoco el «Detalle por Grupo de Anuncio» (palabras clave y términos de
+  búsqueda): es solo de uso interno.
 - **Vista por cliente** («Clientes» en la nav): cruza los pilares para un
   cliente (unidad de negocio + país/región) y **solo existe si el cliente tiene
   más de un pilar con datos**. El mapeo cliente → cuenta por pilar es explícito

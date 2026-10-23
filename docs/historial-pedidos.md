@@ -1678,3 +1678,9 @@
 > Tenés que siempre poder pushear en esta conversación
 
 (Indicación para esta conversación: además de `main`, se pushea la rama de trabajo; la regla general de `CLAUDE.md` —push solo de `main`— sigue para las demás sesiones.)
+
+
+**#131** (23/10/2026)
+
+> Los «Detalle por Grupo de Anuncio» quiero que queden en el descargable solo a nivel interno.
+

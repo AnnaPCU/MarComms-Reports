@@ -8,7 +8,8 @@ import { X, Building2, Share2, Download, CalendarRange, Languages, FileCode2, Fi
 // PDF, para las vistas que no tienen sección generada de próximos pasos).
 // currencyInfo (solo Paid): (ids) => { native, months, options: [{ id, ok }] }
 // para elegir la moneda del descargable (ARS / USD / EUR).
-export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod = null, mode = 'audience', currencyInfo = null }) {
+// externalHidden: secciones extra que el pilar oculta en uso externo (se listan en la nota).
+export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod = null, mode = 'audience', currencyInfo = null, externalHidden = [] }) {
   const [selected, setSelected] = useState(() => new Set(currentPeriod != null ? [currentPeriod] : []));
   const [lang, setLang] = useState('es'); // idioma principal del descargable
   const many = periods.length > 1;
@@ -201,8 +202,12 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
           )}
 
           <div className="mt-4 rounded-cu border border-cu-border2 bg-cu-bg px-3.5 py-2.5 text-[11.5px] leading-relaxed text-cu-grey">
-            ℹ️ En el reporte de <strong className="text-cu-dgrey">uso externo</strong>, la sección
-            <strong className="text-cu-dgrey"> «Conclusión — Próximos Pasos»</strong> no estará visible.
+            ℹ️ En el reporte de <strong className="text-cu-dgrey">uso externo</strong>{' '}
+            {externalHidden.length ? 'no estarán visibles las secciones' : 'no estará visible la sección'}{' '}
+            <strong className="text-cu-dgrey">
+              {['«Conclusión — Próximos Pasos»', ...externalHidden.map((x) => `«${x}»`)].join(' y ')}
+            </strong>
+            .
           </div>
           </>
           )}

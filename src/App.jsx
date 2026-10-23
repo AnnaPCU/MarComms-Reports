@@ -268,6 +268,7 @@ export default function App() {
           currentPeriod={period}
           mode={pilar === 'plans' ? 'format' : 'audience'}
           currencyInfo={pilar === 'paid' ? paidCurrencyInfo : null}
+          externalHidden={pilar === 'paid' ? ['Detalle por Grupo de Anuncio'] : []}
         />
       )}
     </div>

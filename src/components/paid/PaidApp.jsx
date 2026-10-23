@@ -92,7 +92,8 @@ function CampaignDetail({ c, currency, accName, periodLabel, t, lang, detailGrou
         </>
       )}
 
-      {detailGroups.length > 0 && (
+      {/* Detalle por grupo de anuncio: solo uso interno (no va en el descargable externo). */}
+      {detailGroups.length > 0 && !isExternalReport() && (
         <>
           <SectionHeader title={t.adgSection} note={t.adgNote(detailGroups.length)} />
           <AdGroupsDetail groups={detailGroups} currency={currency} lang={lang} />
@@ -314,7 +315,7 @@ export function PaidApp({ account, period }) {
 
           {/* Campaña en paralelo (una sola campaña de Google): el detalle por
               grupo va en la vista general, sin tener que entrar a la campaña. */}
-          {par && detail?.groups?.length > 0 && (
+          {par && detail?.groups?.length > 0 && !isExternalReport() && (
             <>
               <SectionHeader title={t.adgSection} note={t.adgNote(detail.groups.length)} />
               <AdGroupsDetail groups={detail.groups} currency={c} lang={lang} />
