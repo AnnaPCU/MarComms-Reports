@@ -301,10 +301,13 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
   total y Ads con nombre de campaña (cuadran: 11.398 impr., ARS 296.909,96,
   141 clics); Google términos + palabras clave (131 filas, 1.322 impr., 100
   clics, ARS 200.934,63, 0 conv.). Falta: Google «Rendimiento de la campaña»
-  (llegó vacío, solo encabezado) y «Semanal por grupo»; en Meta, la columna
-  de URL final/destino de los anuncios (y la de llamadas si hay anuncios de
-  teléfono), y plataforma, edad y sexo por separado (edad × sexo llegó
-  combinado). Las capturas de Typeform (sin títulos, «All time») y HubSpot
+  (llegó vacío, solo encabezado) y «Semanal por grupo». En Meta, opcional:
+  plataforma, edad y sexo por separado (edad × sexo llegó combinado).
+  Destino de los anuncios: resuelto. Meta no exporta la columna «Link (ad
+  settings)» con «Export table data»; se tomó de una grabación de pantalla
+  (`Meta Ads/destinos-anuncios.csv` + 2 capturas): 21 anuncios a Typeform
+  (form.t…) y 19 a la web (north…), sin anuncios de teléfono. Ojo: «Anuncio
+  Web 1 - General» de «BBDD Registrados» va a Typeform pese al nombre. Las capturas de Typeform (sin títulos, «All time») y HubSpot
   («Last 30 days») son las mismas de antes. Con eso: adaptar
   `scripts/paid/build_meta.py` (diario sin columna «Día», destino por
   anuncio), armar la vista en paralelo y procesar.
