@@ -162,6 +162,13 @@ selector de plataforma. Las métricas de cada plataforma no se suman. La
 campaña sigue apareciendo también en el mes de Google Ads de su cuenta.
 Criterio completo en `docs/DECISIONES.md` §22.
 
+Además de los exports, en `Meta Ads/` va **`destinos-anuncios.csv`** con el
+destino final de cada anuncio (Meta no exporta la URL final): columnas
+`Campaign name`, `Ad name`, `Destino` (`typeform`, `web`, `hsform`,
+`telefono` o `whatsapp`). Lo que no viene en ningún export (nombre del
+período, evento, etiqueta de cada campaña de Meta, cifras de Typeform o
+HubSpot con su rango) va en un `campaña.json` en la raíz de la carpeta.
+
 ## Qué hace Claude al procesar
 
 - **Google Ads**: `python3 -B scripts/paid/build_month.py
@@ -183,6 +190,10 @@ Criterio completo en `docs/DECISIONES.md` §22.
   "metricas/paid-media/meta-ads/AAAA-MM-<campaña>"` → valida que el diario
   cuadre con el total (si no, corta), escribe
   `src/data/paidMeta/<id>.js` y lo registra como período nuevo.
+- **Campaña en paralelo**: `python3 -B scripts/paid/build_parallel.py
+  "metricas/paid-media/<CAMPAÑA>-AAAA-MM"` → las dos validaciones de arriba,
+  escribe `src/data/paidParallel/<id>.js` y lo registra como período nuevo
+  de la cuenta (Google por defecto, selector a Meta).
 - En los dos casos: verifica el reporte en el navegador (ES y EN), deploya y
   archiva la carpeta en `_procesados/` en el mismo commit.
 

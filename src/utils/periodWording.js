@@ -9,6 +9,11 @@ export function isQuarterPeriod(periodId) {
   return /^q[1-4]-\d{4}$/.test(periodId ?? '');
 }
 
+// Campaña en paralelo de Paid (`par-…`): es un vuelo, no un mes.
+export function isFlightPeriod(periodId) {
+  return /^par-/.test(periodId ?? '');
+}
+
 const ES = [
   [/mes anterior/g, 'trimestre anterior'],
   [/mes ant\./g, 'trim. ant.'],
@@ -29,16 +34,39 @@ const EN = [
   [/a monthly figure/g, 'a quarterly figure'],
 ];
 
-// Reescribe un texto de «mes» a «trimestre» si el período es un trimestre.
+const ES_FLIGHT = [
+  [/mes anterior/g, 'período anterior'],
+  [/el próximo mes/g, 'el próximo período'],
+  [/\bdel mes\b/g, 'del período'],
+  [/\ben el mes\b/g, 'en el período'],
+];
+const EN_FLIGHT = [
+  [/previous month/g, 'previous period'],
+  [/next month/g, 'next period'],
+  [/this month/g, 'this period'],
+  [/the month's/g, "the period's"],
+  [/of the month/g, 'of the period'],
+  [/in the month/g, 'in the period'],
+];
+
+function table(periodId, lang) {
+  if (isQuarterPeriod(periodId)) return lang === 'en' ? EN : ES;
+  if (isFlightPeriod(periodId)) return lang === 'en' ? EN_FLIGHT : ES_FLIGHT;
+  return null;
+}
+
+// Reescribe un texto de «mes» a «trimestre» (o a «período», en una campaña
+// en paralelo) según el período.
 export function periodText(text, periodId, lang = 'es') {
-  if (typeof text !== 'string' || !isQuarterPeriod(periodId)) return text;
-  return (lang === 'en' ? EN : ES).reduce((s, [re, to]) => s.replace(re, to), text);
+  const tb = table(periodId, lang);
+  if (typeof text !== 'string' || !tb) return text;
+  return tb.reduce((s, [re, to]) => s.replace(re, to), text);
 }
 
 // Aplica periodText a todos los textos de una lista de insights / conclusiones
 // / próximos pasos (objetos con campos de texto o strings sueltos).
 export function periodItems(items, periodId, lang = 'es') {
-  if (!isQuarterPeriod(periodId) || !Array.isArray(items)) return items;
+  if (!table(periodId, lang) || !Array.isArray(items)) return items;
   return items.map((it) =>
     typeof it === 'string'
       ? periodText(it, periodId, lang)

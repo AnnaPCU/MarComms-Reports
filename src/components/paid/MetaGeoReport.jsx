@@ -179,7 +179,11 @@ export function MetaGeoReport({ account, period }) {
   };
 
   // Datos para los charts diarios (una serie por campaña visible).
-  const days = [...new Set(visible.flatMap(({ c }) => c.days.map((d) => d.d)))];
+  // Solo los días de la entrega efectiva: el export diario puede traer el
+  // rango completo del informe con días en cero antes y después del vuelo.
+  const days = [...new Set(visible.flatMap(({ c }) => c.days.map((d) => d.d)))]
+    .filter((d) => !win || (d >= win.start && d <= win.end))
+    .sort();
   const chart = (field) =>
     days.map((d) => {
       const row = { d: dayLabel(d, en) };
@@ -188,6 +192,21 @@ export function MetaGeoReport({ account, period }) {
       });
       return row;
     });
+
+  // Destino de cada anuncio (§21): resultados por destino de las campañas
+  // visibles. Cada destino con su métrica; nunca se suman entre sí.
+  const destOrder = ['web', 'typeform', 'hsform', 'phone', 'whatsapp'];
+  const allDests = [...new Set(per.flatMap(({ c }) => (c.ads ?? []).map((a) => a.dest).filter(Boolean)))];
+  const destRows = destOrder
+    .map((d) => {
+      const ads = visible.flatMap(({ c }) => (c.ads ?? []).filter((a) => a.dest === d));
+      if (!ads.length) return null;
+      const sum = (k) => ads.reduce((a, x) => a + (x[k] ?? 0), 0);
+      const hasLpv = ads.some((x) => x.lpv != null);
+      const value = d === 'web' ? sum('lc') : d === 'typeform' || d === 'hsform' ? sum('out') : null;
+      return { d, n: ads.length, imp: sum('imp'), spend: sum('spend'), value, lpv: hasLpv ? sum('lpv') : null };
+    })
+    .filter(Boolean);
 
   // Comparativa simplificada Typeform vs WhatsApp: los "leads" del Typeform
   // son los formularios COMPLETOS; los de WhatsApp, las conversaciones.
@@ -216,7 +235,7 @@ export function MetaGeoReport({ account, period }) {
             label={t.viewLabel}
             value={active}
             onChange={setView}
-            options={per.map(({ c }) => ({ id: c.id, label: t.kindShort[c.kind] ?? kindOf(c) }))}
+            options={per.map(({ c }) => ({ id: c.id, label: c.label?.[lang] ?? t.kindShort[c.kind] ?? kindOf(c) }))}
           />
         ) : (
           <span />
@@ -245,7 +264,12 @@ export function MetaGeoReport({ account, period }) {
         )}
         <FichaCell
           label={t.fObjective}
-          value={geo.objective?.[lang] ?? t.fObjectiveFallback([...new Set(per.map(({ c }) => kindOf(c)))].join(' · '))}
+          value={
+            geo.objective?.[lang] ??
+            (allDests.length
+              ? t.fObjectiveByDest(destOrder.filter((d) => allDests.includes(d)).map((d) => t.destLabel[d] ?? d).join(' · '))
+              : t.fObjectiveFallback([...new Set(per.map(({ c }) => kindOf(c)))].join(' · ')))
+          }
         />
         <FichaCell label={t.fPeriod} value={periodVal} />
         <FichaCell
@@ -339,6 +363,54 @@ export function MetaGeoReport({ account, period }) {
           />
         )}
       </div>
+
+      {/* ── Resultados por destino del anuncio (§21) ── */}
+      {destRows.length > 0 && (
+        <>
+          <SectionHeader title={t.destSection} note={t.destNote} />
+          <DataTable
+            title={!showAll ? kindOf(visible[0].c) : t.destSection}
+            headers={[t.thDest, t.thAdsN, t.thImp, t.thSpend, t.thMeasure, t.thValue, t.thCostPer]}
+            rows={destRows.map((r) => [
+              t.destLabel[r.d] ?? r.d,
+              numEs(r.n),
+              numEs(r.imp),
+              money(r.spend),
+              <>
+                {t.destMeasure[r.d] ?? '—'}
+                {r.d === 'web' && (
+                  <div className="text-[10px] italic text-cu-grey">{r.lpv != null ? t.destLpv(numEs(r.lpv)) : t.destLpvNone}</div>
+                )}
+              </>,
+              r.value != null ? <b className="text-cu-dblue">{numEs(r.value)}</b> : '—',
+              r.value ? money(r.spend / r.value) : '—',
+            ])}
+            foot={t.destFoot}
+          />
+        </>
+      )}
+
+      {/* ── Formularios fuera de Meta: contexto aparte, con su rango ── */}
+      {geo.forms?.length > 0 && (
+        <>
+          <SectionHeader title={t.formsSection} note={t.formsNote} />
+          <DataTable
+            title={t.formsSection}
+            headers={[t.thForm, t.thTool, t.thRange, t.thViewsF, t.thStartsF, t.thSubsF, t.thCompletion, t.thTime]}
+            rows={geo.forms.map((f) => [
+              f.name,
+              t.toolLabel[f.tool] ?? f.tool,
+              f.range?.[lang] ?? '—',
+              f.views != null ? numEs(f.views) : '—',
+              f.starts != null ? numEs(f.starts) : '—',
+              f.subs != null ? numEs(f.subs) : '—',
+              f.completion != null ? pct(f.completion) : '—',
+              f.time ?? '—',
+            ])}
+            foot={t.formsFoot}
+          />
+        </>
+      )}
 
       {/* ── Typeform vs WhatsApp ── */}
       {cmpRows && (
@@ -732,7 +804,9 @@ export function MetaGeoReport({ account, period }) {
         <>
           <SectionHeader title={t.adsSection} />
           {visible.filter(({ c }) => c.ads?.length).map(({ c }) => {
-            const ads = [...c.ads].sort((a, b) => b.lc / b.imp - a.lc / a.imp);
+            const ctrOf = (a) => (a.imp ? a.lc / a.imp : 0);
+            const ads = [...c.ads].sort((a, b) => ctrOf(b) - ctrOf(a));
+            const withDest = ads.some((a) => a.dest);
             const eligible = ads.filter((a) => a.lc >= 5);
             const bestCtr = eligible[0];
             const bestCpc = eligible.length
@@ -743,14 +817,15 @@ export function MetaGeoReport({ account, period }) {
                 key={c.id}
                 title={kindOf(c)}
                 note={t.adsCount(ads.length)}
-                headers={[t.thAd, t.thSpend, t.thReach, t.thImp, t.thLc, t.thCtr, t.cpcShort]}
+                headers={[t.thAd, ...(withDest ? [t.thDest] : []), t.thSpend, t.thReach, t.thImp, t.thLc, t.thCtr, t.cpcShort]}
                 rows={ads.map((a) => [
                   a.name,
+                  ...(withDest ? [a.dest ? t.destLabel[a.dest] ?? a.dest : '—'] : []),
                   money(a.spend),
                   a.reach != null ? numEs(a.reach) : '—',
                   numEs(a.imp),
                   numEs(a.lc),
-                  pct((a.lc / a.imp) * 100),
+                  pct(ctrOf(a) * 100),
                   a.lc ? money(a.spend / a.lc) : '—',
                 ])}
                 foot={

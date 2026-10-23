@@ -700,10 +700,20 @@ por campaña ni se interpreta como «clic al CTA»: **se mide por la URL final
 - **Reemplaza** el «tipo» único por campaña de §17 (`tipo` en
   `campaña.json` o deducido del indicador de resultado) cuando el export trae
   el destino por anuncio.
-- **Estado**: criterio fijado; la implementación en
-  `scripts/paid/build_meta.py` y en el reporte se hace con el primer export
-  real que traiga la columna de destino (IFPA), para confirmar el nombre de
-  las columnas con datos reales.
+- **Estado** (23/10/2026, con IFPA): implementado. Meta no exporta la URL
+  final con «Export table data»: el destino va en
+  `Meta Ads/destinos-anuncios.csv` (columnas `Campaign name`, `Ad name`,
+  `Destino`: typeform | web | hsform | telefono | whatsapp), que
+  `build_meta.py` cruza por campaña + anuncio (si a un anuncio le falta
+  destino, corta). El reporte suma la sección «Resultados por destino»:
+  web → clics en el enlace (y visitas a la página si Meta las registró;
+  si la celda viene vacía queda «sin dato», no cero); formulario → clics
+  salientes. La ficha describe el objetivo por los destinos.
+- **Formularios fuera de Meta** (Typeform, HubSpot): van en `formularios`
+  de `campaña.json` con su rango tal cual figura en la captura, y se
+  muestran como «Contexto» en una tabla aparte, nunca en el embudo de Meta
+  (el rango no coincide con el vuelo y el formulario recibe visitas de
+  cualquier origen).
 - **Aprendido con el primer export real (IFPA)**: en el desglose «Por tiempo
   → Día», Meta no trae una columna «Día»: marca cada día repitiendo la fecha
   en «Reporting starts» y «Reporting ends». El script tiene que reconocer
@@ -737,5 +747,17 @@ evento corrió en Google Ads (Search) y en Meta Ads a la vez.
 - **Exports de Google Ads para la campaña**: los mismos 3 informes guardados
   (campañas, semanal por grupo, términos + palabras clave), con el rango del
   vuelo de la campaña.
-- **Estado**: criterio fijado; la vista y el tooling se implementan con IFPA,
-  el primer caso, cuando estén completos los exports.
+- **Estado** (23/10/2026): implementado con IFPA. `scripts/paid/build_parallel.py`
+  procesa la carpeta entera (Google: semanal = informe de campañas exacto;
+  Meta: diario = total) y escribe `src/data/paidParallel/<id>.js` (id
+  `par-…`). En la app es un período más de la cuenta, arriba de los meses;
+  el selector de plataforma se recuerda por cuenta y período, y en el HTML
+  descargado sigue funcionando. Google muestra el reporte de siempre (con el
+  detalle por grupo en la vista general, porque es una sola campaña) y los
+  textos dicen «período» en vez de «mes». La descarga queda en la moneda
+  original: la conversión a USD/EUR usa el cierre de un mes (§19) y el
+  vuelo no es un mes.
+- **Exports de Google aceptados**: UTF-8 con comas o UTF-16 con
+  tabuladores (cómo los baja Google según el botón), en español o en
+  inglés. Si el informe de campañas sale «All time», vale igual mientras
+  cuadre exacto con el semanal del vuelo (así vino IFPA).

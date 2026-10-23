@@ -8,6 +8,7 @@ qué exportar):
 | `build_month.py` | `google-ads/AAAA-MM/` (3 CSV de un mes) | bloque del mes para `src/data/paidSeed.js` + `src/data/paidDetail.js` |
 | `build_detail.py` | los CSV 2 y 3 (lo llama `build_month.py`) | `src/data/paidDetail.js` (fusiona, no pisa) |
 | `build_meta.py` | `meta-ads/AAAA-MM-<campaña>/` (exports de Meta) | `src/data/paidMeta/<id>.js` + registro en `src/data/paidMetaGeo.js` |
+| `build_parallel.py` | `<CAMPAÑA>-AAAA-MM/` con `Google Ads/` y `Meta Ads/` | `src/data/paidParallel/<id>.js` + registro en `src/data/paidParallel.js` |
 
 ## Google Ads — mes completo
 
@@ -76,6 +77,24 @@ python3 -B scripts/paid/build_meta.py "metricas/paid-media/meta-ads/2026-10-smet
 > reproduce los 700 valores sin diferencias. Como no hay todavía un export
 > real guardado en el repo, con el primer drop se confirman los nombres de
 > columna (los alias están en `COLS` de `build_meta.py`).
+
+## Campaña en paralelo (Google Ads + Meta Ads)
+
+```bash
+python3 -B scripts/paid/build_parallel.py "metricas/paid-media/IFPA-2026-10"   # --dry-run para ver sin escribir
+```
+
+- Google: los 3 informes con el rango del vuelo; corta si el semanal no
+  cuadra exacto con el informe de campañas. El detalle por grupo se guarda
+  dentro de la campaña (no toca `paidDetail.js` ni el mes).
+- Meta: lo mismo que `build_meta.py` (usa su `build()`), con
+  `destinos-anuncios.csv` para el destino de cada anuncio.
+- Id `par-…` (o `id` en `campaña.json`); cada cuenta tiene que estar en las
+  dos plataformas. Nunca se suman entre sí.
+
+`build_meta.py` reconoce además el diario exportado en inglés (sin columna
+«Day»: fecha repetida en «Reporting starts/ends») e ignora, con aviso, los
+exports que no traen el nombre de la campaña.
 
 ## Export en inglés
 

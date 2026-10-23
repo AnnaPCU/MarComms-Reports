@@ -263,7 +263,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Módulo | Estado |
 |--------|--------|
 | Social Media | ✅ Completo (Ene–Sep 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
-| Paid Media | ✅ Completo (Feb–Sep 2026; 8 cuentas de Google Ads desde septiembre: suman Control Union Argentina, PCU España y PCU Argentina) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) |
+| Paid Media | ✅ Completo (Feb–Sep 2026; 8 cuentas de Google Ads desde septiembre: suman Control Union Argentina, PCU España y PCU Argentina) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) · campaña en paralelo Google + Meta: IFPA · Oct 2026 (CU Estados Unidos, `scripts/paid/build_parallel.py`) |
 | Website (GA + SEO) | ✅ Q1+Q2 2026 (12 cuentas) y **Q3 2026** (10 cuentas, de los reportes trimestrales .md de GA4 + Search Console del 9/10; ahora también con SEO de Peterson). CU Estados Unidos y CU Canadá en Q3 salen del reporte de North America segmentado por país (12 cuentas en total). + Resumen del Año + comparativa. Tooling: `scripts/website/md_to_seed.py` |
 | Email Marketing | ✅ Seis campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `cuus` (Control Union Estados Unidos) m10 — tres campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange), «SMETA · Campaign 3» e «IFPA» (3 envíos) (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, tres cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9) y **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson). Tooling: `scripts/webinars/build_event.py` |
@@ -293,24 +293,6 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 ## 11. Pendientes
 
-- **IFPA · CU USA, octubre 2026 (Google Ads + Meta Ads en paralelo)**:
-  drop en `metricas/paid-media/IFPA-2026-10/` (23/10). Primer caso de campaña
-  en paralelo (`docs/DECISIONES.md` §22: vista propia, Google por defecto,
-  selector a Meta) y de objetivo por destino del anuncio en Meta (§21).
-  Recibido y verificado: Meta diario (un solo desglose, vuelo 13–18/10),
-  total y Ads con nombre de campaña (cuadran: 11.398 impr., ARS 296.909,96,
-  141 clics); Google términos + palabras clave (131 filas, 1.322 impr., 100
-  clics, ARS 200.934,63, 0 conv.). Falta: Google «Rendimiento de la campaña»
-  (llegó vacío, solo encabezado) y «Semanal por grupo». En Meta, opcional:
-  plataforma, edad y sexo por separado (edad × sexo llegó combinado).
-  Destino de los anuncios: resuelto. Meta no exporta la columna «Link (ad
-  settings)» con «Export table data»; se tomó de una grabación de pantalla
-  (`Meta Ads/destinos-anuncios.csv` + 2 capturas): 21 anuncios a Typeform
-  (form.t…) y 19 a la web (north…), sin anuncios de teléfono. Ojo: «Anuncio
-  Web 1 - General» de «BBDD Registrados» va a Typeform pese al nombre. Las capturas de Typeform (sin títulos, «All time») y HubSpot
-  («Last 30 days») son las mismas de antes. Con eso: adaptar
-  `scripts/paid/build_meta.py` (diario sin columna «Día», destino por
-  anuncio), armar la vista en paralelo y procesar.
 - Formatos de export reales de GA4 / Search Console (documentar columnas cuando
   lleguen los próximos exports).
 - **Vista por cliente**: revisar con el equipo dos mapeos que son criterio y no
@@ -418,6 +400,24 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Paid · IFPA (CU Estados Unidos) en paralelo, Google Ads + Meta Ads**
+  (23/10/2026): primera campaña en paralelo (§22), período «IFPA · Oct
+  2026» de `cuus`, arriba de los meses, con selector de plataforma (Google
+  por defecto). Google («IFPA event», semanas del 5 y 12/10): 1.722
+  impresiones, 129 clics, 264.635,17 ARS y 1 conversión; semanal =
+  informe de campañas exacto (el informe de campañas llegó como «All time»
+  y cuadra con el semanal del 1 al 23/10). Meta (2 campañas, entrega del
+  13 al 18/10): 11.398 impresiones, 296.909,96 ARS, 141 clics en el enlace;
+  40 anuncios con destino (21 Typeform, 19 web, de
+  `destinos-anuncios.csv`); visitas a la página sin dato en Meta. Typeform
+  («All time»: 132 vistas, 15 inicios, 2 envíos) y HubSpot (30 días: 66
+  vistas, 0 envíos) como contexto aparte. Tooling nuevo:
+  `scripts/paid/build_parallel.py`; `build_meta.py` lee el diario en inglés
+  y el destino por anuncio; Google acepta UTF-16 con tabuladores. Drop
+  archivado en `metricas/paid-media/_procesados/IFPA-2026-10/`; los dos
+  informes de Google que faltaban llegaron por la conversación y quedaron
+  en la carpeta.
 
 - **La app recuerda dónde estabas + modo oscuro** (21/10/2026): pilar,
   cuenta, período, país, campaña, pestañas e idioma se guardan en el

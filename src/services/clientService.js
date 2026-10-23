@@ -33,7 +33,7 @@ export function periodsFor(pilar, ref) {
     }
     case 'paid': {
       const months = [...paid.listPeriods()].reverse().filter((p) => paid.hasDataFor(ref.account, p.id));
-      const geo = paid.listGeoPeriods().filter((p) => paid.hasDataFor(ref.account, p.id));
+      const geo = paid.listSpecialPeriods().filter((p) => paid.hasDataFor(ref.account, p.id));
       const list = [...geo, ...months];
       if (paid.hasDataFor(ref.account, 'year-2026')) list.push(YEAR);
       return list;
@@ -55,7 +55,7 @@ export function periodsFor(pilar, ref) {
 // Último período "de reporte" con datos (mes, trimestre o evento; nunca el
 // resumen anual ni el GEO, que son vistas especiales).
 export function latestPeriod(pilar, ref) {
-  return periodsFor(pilar, ref).find((p) => p.id !== 'year-2026' && !paid.isMetaPeriod(p.id)) ?? null;
+  return periodsFor(pilar, ref).find((p) => p.id !== 'year-2026' && !paid.isMetaPeriod(p.id) && !paid.isParallelPeriod(p.id)) ?? null;
 }
 
 // Pilares del cliente que tienen al menos un período con datos.

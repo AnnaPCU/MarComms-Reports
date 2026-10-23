@@ -1,0 +1,50 @@
+{
+  "_nota": "Armado por Claude el 23/10/2026 con lo que no viene en los exports: nombre del período, evento, etiquetas de campaña (tomadas del nombre de cada campaña) y las cifras de las capturas de Typeform y HubSpot, transcriptas con su rango tal cual figura en la captura. En la captura de Typeform las cifras no tienen título: se leen en el orden estándar del panel (vistas, inicios, envíos, tasa de finalización, tiempo); 2/15 = 13,3 % lo confirma.",
+  "id": "par-ifpa-202610",
+  "label": "IFPA · Oct 2026",
+  "labelEn": "IFPA · Oct 2026",
+  "evento": "IFPA · Global Produce & Floral Show",
+  "campañas": {
+    "CU USA - IFPA - GEO - BBDD Registrados - Ocubre 2026": {
+      "id": "bbdd",
+      "etiqueta": {
+        "es": "BBDD Registrados",
+        "en": "Registrants database"
+      }
+    },
+    "CU USA - IFPA - GEO - Excluyendo participantes - Ocubre 2026 - Copia": {
+      "id": "excl",
+      "etiqueta": {
+        "es": "Excluyendo participantes",
+        "en": "Excluding attendees"
+      }
+    }
+  },
+  "formularios": [
+    {
+      "tool": "typeform",
+      "name": "Typeform IFPA",
+      "range": {
+        "es": "Todo el historial del formulario («All time»)",
+        "en": "Form's full history (“All time”)"
+      },
+      "views": 132,
+      "starts": 15,
+      "subs": 2,
+      "completion": 13.3,
+      "time": "07:02",
+      "source": "Meta Ads/Captura performance Typeform IPFA.png"
+    },
+    {
+      "tool": "hsform",
+      "name": "CU North America IFPA - EN (formulario de la web)",
+      "range": {
+        "es": "Últimos 30 días (24/9–23/10/2026); formulario creado el 30/9",
+        "en": "Last 30 days (9/24–10/23/2026); form created 9/30"
+      },
+      "views": 66,
+      "subs": 0,
+      "source": "Meta Ads/gofullpage-app-hubspot-submissions-…-performance-2026-10-23-13_30_08.png"
+    }
+  ]
+}

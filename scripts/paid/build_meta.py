@@ -71,7 +71,13 @@ COLS = {
     'budget': ['presupuesto de la campana', 'campaign budget', 'presupuesto del conjunto de anuncios', 'ad set budget'],
     'attribution': ['configuracion de atribucion', 'attribution setting'],
     'objective': ['objetivo', 'objective'],
+    'lpv': ['visitas a la pagina de destino', 'landing page views'],
+    'dest': ['destino'],
 }
+# Destino final de un anuncio (destinos-anuncios.csv, §21 de DECISIONES):
+# se normaliza a typeform | web | hsform | phone | whatsapp.
+DESTS = {'typeform': 'typeform', 'web': 'web', 'landing': 'web', 'sitio': 'web', 'hubspot': 'hsform',
+         'hsform': 'hsform', 'telefono': 'phone', 'phone': 'phone', 'llamada': 'phone', 'whatsapp': 'whatsapp'}
 PREFIX_COLS = {
     'spend': ['importe gastado', 'amount spent'],
     'hour': ['hora del dia', 'time of day'],
@@ -144,10 +150,14 @@ def read_table(path):
             header = [str(x or '').strip() for x in r]
             body = [dict(zip(header, x)) for x in rows[i + 1:] if any(str(c or '').strip() for c in x)]
             return header, body
-    raise SystemExit(f'{os.path.basename(path)}: no encuentro la columna «Nombre de la campaña».')
+    # Sin nombre de campaña (ej. un export de anuncios o de conjuntos bajado
+    # sin esa columna) no se puede atribuir: se ignora y se avisa.
+    return None, None
 
 
-def classify(cols):
+def classify(cols, rows=()):
+    if 'dest' in cols:
+        return 'destinations'
     if 'ad' in cols:
         return 'ads'
     if 'day' in cols:
@@ -162,6 +172,13 @@ def classify(cols):
         return 'age'
     if 'gender' in cols:
         return 'gender'
+    # Desglose «Por tiempo → Día» exportado en inglés: Meta no agrega una
+    # columna «Day»; repite la fecha en «Reporting starts» y «Reporting ends».
+    if 'start' in cols and 'end' in cols and rows:
+        same = all(str(r.get(cols['start'])) == str(r.get(cols['end'])) for r in rows)
+        if same and len({str(r.get(cols['start'])) for r in rows}) > 1:
+            cols['day'] = cols['start']
+            return 'daily'
     return 'totals'
 
 
@@ -227,17 +244,27 @@ def r2(v):
     return None if v is None else round(v + 0.0, 2)
 
 
+def read_cfg(folder):
+    for name in ('campaña.json', 'campana.json', 'config.json'):
+        p = os.path.join(folder, name)
+        if os.path.exists(p):
+            return json.load(open(p, encoding='utf-8'))
+    return {}
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
     dry = '--dry-run' in sys.argv
     if len(args) != 1:
         raise SystemExit('Uso: python3 -B scripts/paid/build_meta.py <carpeta de la campaña> [--dry-run]')
     folder = args[0].rstrip('/')
-    cfg = {}
-    for name in ('campaña.json', 'campana.json', 'config.json'):
-        p = os.path.join(folder, name)
-        if os.path.exists(p):
-            cfg = json.load(open(p, encoding='utf-8'))
+    period, acc_out, info = build(folder, read_cfg(folder))
+    write(folder, period, acc_out, info, dry)
+
+
+def build(folder, cfg):
+    # Calcula período y datos por cuenta desde los exports de una carpeta.
+    # Lo usa también build_parallel.py (campañas en paralelo Google + Meta).
     cfg_camps = cfg.get('campañas') or cfg.get('campanas') or {}
 
     tables = defaultdict(list)   # tipo → [(archivo, cols, rows)]
@@ -246,13 +273,16 @@ def main():
         if not f.lower().endswith(('.csv', '.xlsx', '.xlsm')):
             continue
         header, rows = read_table(os.path.join(folder, f))
+        if header is None:
+            print(f'  ⚠ {f}: sin columna de nombre de campaña: se ignora (no se puede atribuir).', file=sys.stderr)
+            continue
         cols = find_cols(header)
         if 'spend' in cols:
             m = re.search(r'\(([A-Z]{3})\)', cols['spend'])
             if m:
                 for r in rows:
                     currencies[str(r.get(cols['campaign'], '')).strip()].add(m.group(1))
-        kind = classify(cols)
+        kind = classify(cols, rows)
         tables[kind].append((f, cols, rows))
         print(f'  {f}: {kind} ({len(rows)} filas)', file=sys.stderr)
     if not tables['daily']:
@@ -417,17 +447,39 @@ def main():
                            for kk, e in sorted(hr.items())]
         ads = rows_for('ads', name)
         if ads:
+            dmap = {}
+            for cols, r in rows_for('destinations', name):
+                dv = DESTS.get(norm(r.get(cols['dest'])))
+                if dv is None:
+                    problems.append(f'«{name}» · {r.get(cols["ad"])}: destino desconocido «{r.get(cols["dest"])}».')
+                dmap[str(r.get(cols['ad'], '')).strip()] = dv
             by = OrderedDict()
             for cols, r in ads:
                 an = str(r.get(cols['ad'], '')).strip()
-                e = by.setdefault(an, {'n': 0, 'reach': 0, 'imp': 0, 'spend': 0.0, 'lc': 0})
+                e = by.setdefault(an, {'n': 0, 'reach': 0, 'imp': 0, 'spend': 0.0, 'lc': 0, 'out': None, 'lpv': None})
                 e['n'] += 1
                 e['reach'] += int(num(r.get(cols['reach'])) or 0) if 'reach' in cols else 0
                 e['imp'] += int(num(r.get(cols['imp'])) or 0)
                 e['spend'] += num(r.get(cols['spend'])) or 0
                 e['lc'] += int(num(r.get(cols['lc'])) or 0) if 'lc' in cols else 0
+                # Clics salientes y visitas a la página: si Meta deja la celda
+                # vacía, queda sin dato (no es cero).
+                for k in ('out', 'lpv'):
+                    v = num(r.get(cols[k])) if k in cols else None
+                    if v is not None:
+                        e[k] = int((e[k] or 0) + v)
+            if dmap:
+                missing = [an for an in by if an not in dmap]
+                if missing:
+                    problems.append(f'«{name}»: {len(missing)} anuncio(s) sin destino en destinos-anuncios.csv ({", ".join(missing[:3])}…).')
             c['ads'] = [dict(name=an, spend=r2(e['spend']), imp=e['imp'], lc=e['lc'],
+                             **({'out': e['out']} if e['out'] is not None else {}),
+                             **({'lpv': e['lpv']} if e['lpv'] is not None else {}),
+                             **({'dest': dmap[an]} if dmap.get(an) else {}),
                              **({'reach': e['reach']} if e['n'] == 1 and e['reach'] else {})) for an, e in by.items()]
+            s_imp = sum(e['imp'] for e in by.values())
+            if s_imp != tot_d['imp']:
+                warnings.append(f'«{name}» · anuncios: suma {s_imp} impresiones vs {tot_d["imp"]} del diario.')
 
     for w in warnings:
         print('  ⚠ ' + w, file=sys.stderr)
@@ -462,6 +514,10 @@ def main():
             data['event'] = cfg['evento']
         if cfg.get('objetivo'):
             data['objective'] = cfg['objetivo']
+        # Formularios fuera de Meta (Typeform, HubSpot): contexto aparte, con
+        # su rango tal cual vino; no se suman al embudo de Meta (§21).
+        if cfg.get('formularios'):
+            data['forms'] = [OrderedDict((k, v) for k, v in f.items() if k != 'source') for f in cfg['formularios']]
         if cfg.get('segmentacion') or cfg.get('segmentación'):
             seg = cfg.get('segmentacion') or cfg.get('segmentación')
             data['targeting'] = OrderedDict(es=seg.get('es'), en=seg.get('en'))
@@ -496,7 +552,12 @@ def main():
         data['campaigns'] = cl
         acc_out[acc] = data
 
-    files = ', '.join(sorted({f for v in tables.values() for f, _, _ in v}))
+    info = dict(label=label, start=start, end=end, pid=pid, accounts=accounts, camps=camps)
+    return period, acc_out, info
+
+
+def write(folder, period, acc_out, info, dry):
+    label, start, end, pid, accounts, camps = (info[k] for k in ('label', 'start', 'end', 'pid', 'accounts', 'camps'))
     js = []
     js.append('// ════════════════════════════════════════════════════════════════')
     js.append(f'//  SEED — Paid Media · Meta Ads · {label}')

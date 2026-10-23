@@ -1659,3 +1659,10 @@
 **#132** (23/10/2026)
 
 > Listo, ahí configuré esto que me pediste y subí el commit nuevo. Avisame si falta algo o está listo para ser un reporte. Cada vez que subo en un mismo commit de Paid Media algo que tiene Google Ads y Meta Ads, y obviamente tiene el mismo nombre, tenés que entender que claramente es una campaña que se hizo en paralelo. Una pudo arrancar un poco antes que la otra, pero es del mismo mes en general. Y está bueno que cuando uno entra a la vista aparezca por default lo que se hizo en Google Ads, pero luego uno pueda filtrar por la vista de Meta Ads. Ese es el patrón que quiero que se aplique para todas las próximas, y quiero que quede en tu README o en tu configuración.
+
+
+**#133** (23/10/2026)
+
+> Procesá las métricas nuevas de Paid Media
+
+(Con el pedido llegaron por la conversación los dos informes de Google Ads de IFPA que faltaban: «Semanal por grupo de anuncios» y «Rendimiento de la campaña».)

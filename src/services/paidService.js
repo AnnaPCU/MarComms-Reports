@@ -3,6 +3,7 @@
 import { PAID_CLIENTS, PAID_DB } from '@/data/paidSeed';
 import { PAID_DETAIL } from '@/data/paidDetail';
 import { META_GEO, META_PERIODS } from '@/data/paidMetaGeo';
+import { PARALLEL, PARALLEL_PERIODS } from '@/data/paidParallel';
 import { MONTHS_2026 } from '@/constants/periods';
 
 export function listAccounts() {
@@ -23,6 +24,26 @@ export function listGeoPeriods() {
 // ¿El período es una campaña de Meta (`geo-…` o `meta-…`)?
 export function isMetaPeriod(periodId) {
   return /^(geo|meta)-/.test(String(periodId ?? ''));
+}
+
+// Campañas hechas en paralelo en Google Ads y Meta Ads (`par-…`, §22 de
+// DECISIONES): un período propio con selector de plataforma adentro.
+export function listParallelPeriods() {
+  return PARALLEL_PERIODS;
+}
+
+export function isParallelPeriod(periodId) {
+  return /^par-/.test(String(periodId ?? ''));
+}
+
+export function getParallel(accountId, periodId) {
+  return PARALLEL[accountId]?.[periodId] ?? null;
+}
+
+// Períodos fuera del flujo mensual (en paralelo + campañas de Meta), del
+// más reciente al más viejo: van arriba de los meses en «Período/Campaña».
+export function listSpecialPeriods() {
+  return [...PARALLEL_PERIODS, ...META_PERIODS].sort((a, b) => b.start.localeCompare(a.start));
 }
 
 // ── Campañas que todavía no arrancaron ──
@@ -46,6 +67,8 @@ function startedBy(accountId, periodId) {
 }
 
 export function getMonthly(accountId, periodId) {
+  // Campaña en paralelo: lo de Google Ads del vuelo (con la misma forma que un mes).
+  if (isParallelPeriod(periodId)) return getParallel(accountId, periodId)?.google?.mo ?? null;
   const per = PAID_DB[accountId]?.periods?.[periodId];
   if (!per) return null;
   const key = `${accountId}|${periodId}`;
@@ -61,7 +84,9 @@ export function getMonthly(accountId, periodId) {
 }
 
 // Reporte de una campaña de Meta Ads de una cuenta.
+// En una campaña en paralelo, la parte de Meta Ads.
 export function getGeo(accountId, periodId) {
+  if (isParallelPeriod(periodId)) return getParallel(accountId, periodId)?.meta ?? null;
   return META_GEO[accountId]?.[periodId] ?? null;
 }
 
@@ -69,12 +94,14 @@ export function hasDataFor(account, period) {
   if (period === 'cmp') return true; // comparativa global (todas las cuentas)
   if (period === 'year-2026') return MONTHS_2026.some((p) => PAID_DB[account]?.periods?.[p.id]);
   if (isMetaPeriod(period)) return Boolean(getGeo(account, period));
+  if (isParallelPeriod(period)) return Boolean(getParallel(account, period));
   return Boolean(getMonthly(account, period));
 }
 
 // Detalle por grupo de anuncios (consumo semanal + términos/keywords).
 // Solo existe para los meses con los informes de detalle cargados.
 export function getDetail(accountId, periodId) {
+  if (isParallelPeriod(periodId)) return getParallel(accountId, periodId)?.google?.detail ?? null;
   return PAID_DETAIL[accountId]?.[periodId] ?? null;
 }
 

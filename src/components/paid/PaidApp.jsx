@@ -1,5 +1,5 @@
 import { CalendarClock } from 'lucide-react';
-import { listAccounts, isMetaPeriod } from '@/services/paidService';
+import { listAccounts, isMetaPeriod, isParallelPeriod, getParallel } from '@/services/paidService';
 import { usePaidMonthly } from '@/hooks/usePaidMonthly';
 import { MONTHS_2026 } from '@/constants/periods';
 import { hasData } from '@/utils/hasData';
@@ -31,6 +31,7 @@ import { lgCols } from '@/utils/gridCols';
 import { paidFmt } from '@/utils/paidFormat';
 import { useReportLang } from '@/hooks/useReportLang';
 import { usePersistentState } from '@/utils/persist';
+import { periodItems } from '@/utils/periodWording';
 
 
 const ALL = 'all';
@@ -109,11 +110,15 @@ export function PaidApp({ account, period }) {
   // Vista elegida (todas / una campaña / comparativa), recordada por cuenta y período.
   const [savedView, setView] = usePersistentState(`paid.view.${account}.${period}`, ALL);
   const [lang, setLang] = useReportLang('es');
+  // Campaña en paralelo: plataforma elegida (Google Ads por defecto, §22).
+  const [platform, setPlatform] = usePersistentState(`paid.platform.${account}.${period}`, 'google');
 
   const t = PAID_STR[lang];
   const accName = listAccounts().find((a) => a.id === account)?.name ?? '';
-  const periodLabel =
-    lang === 'en'
+  const par = isParallelPeriod(period) ? getParallel(account, period) : null;
+  const periodLabel = par
+    ? (lang === 'en' ? par.period.labelEn : par.period.label) ?? period
+    : lang === 'en'
       ? MONTHS_EN[period] ?? period
       : MONTHS_2026.find((p) => p.id === period)?.label ?? period;
 
@@ -121,6 +126,31 @@ export function PaidApp({ account, period }) {
   // fuera del flujo mensual.
   if (isMetaPeriod(period)) {
     return <MetaGeoReport account={account} period={period} />;
+  }
+
+  // Campaña hecha en paralelo en Google Ads y Meta Ads: un selector de
+  // plataforma arriba; cada una con sus métricas, nunca sumadas.
+  const platformBar = par && (
+    <div className="mb-4 flex flex-wrap items-end gap-3">
+      <SegmentedControl
+        label={t.platformLabel}
+        value={platform === 'meta' ? 'meta' : 'google'}
+        onChange={setPlatform}
+        options={[
+          { id: 'google', label: 'Google Ads' },
+          { id: 'meta', label: 'Meta Ads' },
+        ]}
+      />
+      <span className="max-w-[640px] pb-1 text-[10.5px] italic leading-snug text-cu-grey">{t.parallelNote}</span>
+    </div>
+  );
+  if (par && platform === 'meta') {
+    return (
+      <div className="animate-fade-in">
+        {platformBar}
+        <MetaGeoReport account={account} period={period} />
+      </div>
+    );
   }
 
   // Resumen anual (acumulado Google Ads) y comparativa multi-cuenta.
@@ -174,8 +204,15 @@ export function PaidApp({ account, period }) {
     { id: CMP, label: t.cmpCampaigns },
   ];
 
+  // Semanas del vuelo de Google (campaña en paralelo): dd/mm en ES, mm/dd en EN.
+  const parWeeks = (par?.google?.weeks ?? [])
+    .map((w) => (lang === 'en' ? `${Number(w.slice(5, 7))}/${Number(w.slice(8, 10))}` : `${Number(w.slice(8, 10))}/${Number(w.slice(5, 7))}`))
+    .join(lang === 'en' ? ', ' : ' · ');
+
   return (
     <div className="animate-fade-in">
+      {platformBar}
+      {par && parWeeks && <div className="-mt-2 mb-4 text-[10.5px] text-cu-grey">{t.parGoogleWeeks(parWeeks)}</div>}
       {/* Selector de vista / campaña + idioma */}
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <Select label={t.viewLabel} value={view} onChange={setView} options={campOptions} />
@@ -231,7 +268,7 @@ export function PaidApp({ account, period }) {
             title={t.insightsTitle}
             label={t.insightsLabel}
             subtitle={[accName, periodLabel, mo.channel].filter(Boolean).join(' · ')}
-            items={genPaidInsights(mo, lang, period)}
+            items={periodItems(genPaidInsights(mo, lang, period), period, lang)}
             actionLabel={t.actionLabel}
             emptyText={t.emptyInsights}
           />
@@ -266,16 +303,25 @@ export function PaidApp({ account, period }) {
             </>
           )}
 
+          {/* Campaña en paralelo (una sola campaña de Google): el detalle por
+              grupo va en la vista general, sin tener que entrar a la campaña. */}
+          {par && detail?.groups?.length > 0 && (
+            <>
+              <SectionHeader title={t.adgSection} note={t.adgNote(detail.groups.length)} />
+              <AdGroupsDetail groups={detail.groups} currency={c} lang={lang} />
+            </>
+          )}
+
           <SectionHeader title={t.tableSection} />
           <CampaignsTable campaigns={mo.campaigns} currency={c} title={t.tableTitle(mo.channel || 'Google Ads')} lang={lang} period={period} />
 
           <SectionHeader title={t.perfSection} />
-          <ConclusionsPanel items={genPaidConclusions(mo, lang)} title={t.conclusionsTitle} />
+          <ConclusionsPanel items={periodItems(genPaidConclusions(mo, lang), period, lang)} title={t.conclusionsTitle} />
 
           {!isExternalReport() && (
             <>
               <SectionHeader title={t.nextSection} />
-              <NextStepsPanel steps={genPaidNextSteps(mo, lang)} subtitle={[accName, periodLabel].filter(Boolean).join(' · ')} title={t.nextTitle} />
+              <NextStepsPanel steps={periodItems(genPaidNextSteps(mo, lang), period, lang)} subtitle={[accName, periodLabel].filter(Boolean).join(' · ')} title={t.nextTitle} />
             </>
           )}
         </>

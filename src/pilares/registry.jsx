@@ -38,13 +38,13 @@ export const REGISTRY = {
     Component: PaidApp,
     accounts: paid.listAccounts(),
     // Fallback estático (el header usa periodsFor, dependiente de la cuenta).
-    periods: [...paid.listPeriods()].reverse().concat(paid.listGeoPeriods(), QUARTERS_2026),
+    periods: [...paid.listPeriods()].reverse().concat(paid.listSpecialPeriods(), QUARTERS_2026),
     // El filtro muestra SOLO los períodos/campañas con datos de la cuenta:
-    // campañas de Meta Ads (más reciente primero) + meses descendentes.
-    // Sin opciones vacías.
+    // campañas en paralelo (Google + Meta) y de Meta Ads (más reciente
+    // primero) + meses descendentes. Sin opciones vacías.
     periodsFor: (account) => {
       const list = paid
-        .listGeoPeriods()
+        .listSpecialPeriods()
         .concat([...paid.listPeriods()].reverse())
         .filter((p) => paid.hasDataFor(account, p.id));
       // Resumen anual (si la cuenta tiene meses de Google Ads) + comparativa.

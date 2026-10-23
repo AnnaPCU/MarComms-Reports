@@ -28,9 +28,10 @@ EN_COLS = {
     'Search lost IS (rank)': 'Cuota impr. perd. de búsq. (ranking)',
     'Search keyword': 'Palabra clave de búsqueda', 'Search term': 'Término de búsqueda',
     'Search terms match type': 'Tipo de concordancia con los términos de búsqueda',
+    'Search terms match type (Keywords)': 'Tipo de concordancia con los términos de búsqueda',
 }
 EN_TEXT_COLS = {'Campaign', 'Ad group', 'Week', 'Currency code', 'Search keyword', 'Search term',
-                'Search terms match type', 'Campaign state', 'Campaign type'}
+                'Search terms match type', 'Search terms match type (Keywords)', 'Campaign state', 'Campaign type'}
 EN_MATCH = {'Exact match': 'Concordancia exacta', 'Phrase match': 'Concordancia de frase',
             'Broad match': 'Concordancia amplia'}
 
@@ -58,7 +59,7 @@ def normalize(header, rows):
         n = {}
         for k, v in r.items():
             k = (k or '').strip()
-            if k == 'Search terms match type':
+            if k.startswith('Search terms match type'):
                 v = en_match(v)
             elif k not in EN_TEXT_COLS and v is not None:
                 v = en_num(v)
@@ -94,9 +95,21 @@ def acc_and_camp(camp_full):
             return a, FIX.get(short, short)
     raise SystemExit(f'Campaña sin cuenta reconocida: {camp_full}')
 
+def read_text(path):
+    # Google Ads exporta CSV en UTF-8 (separado por comas) o, según cómo se
+    # descargue, en UTF-16 separado por tabuladores. Devuelve (texto, separador).
+    raw = open(path, 'rb').read()
+    if raw[:2] in (b'\xff\xfe', b'\xfe\xff'):
+        text = raw.decode('utf-16')
+    else:
+        text = raw.decode('utf-8-sig')
+    head = '\n'.join(text.splitlines()[:4])
+    return text, ('\t' if head.count('\t') > head.count(',') else ',')
+
+
 def read_rows(path):
-    raw = open(path, encoding='utf-8-sig').read()
-    reader = csv.DictReader(io.StringIO('\n'.join(raw.splitlines()[2:])))
+    raw, delim = read_text(path)
+    reader = csv.DictReader(io.StringIO('\n'.join(raw.splitlines()[2:])), delimiter=delim)
     rows = list(reader)
     return normalize([h.strip() for h in reader.fieldnames or []], rows)[1]
 
@@ -111,7 +124,12 @@ def jsnum(v, nd=2):
 
 def main():
     mid, weekly_csv, terms_csv = sys.argv[1], sys.argv[2], sys.argv[3]
+    detail = collect(weekly_csv, terms_csv)
+    write_month(mid, detail)
 
+
+def collect(weekly_csv, terms_csv):
+    # Agrega los informes 2 y 3 por cuenta → campaña → grupo de anuncios.
     # ── semanal por grupo ──
     detail = {}  # acc -> camp -> group -> {'weeks': {wk: agg}, 'kws': {...}, 'terms': [...]}
     for r in read_rows(weekly_csv):
@@ -138,8 +156,38 @@ def main():
         g['terms'].append(dict(t=r['Término de búsqueda'].strip(), kw=kw,
                                match=r['Tipo de concordancia con los términos de búsqueda'].strip(),
                                imp=imp, clk=clk, cost=cost, conv=conv))
+    return detail
 
-    TOP_TERMS, TOP_KWS = 8, 8
+
+TOP_TERMS, TOP_KWS = 8, 8
+
+
+def group_lines(camp, gname, g, ind='        '):
+    # Un grupo de anuncios como objeto JS (weeks + top keywords + top términos).
+    weeks = sorted(g['weeks'].items())
+    wk_js = ', '.join(
+        "{w:'%s',imp:%d,clk:%d,cost:%s,conv:%d,is:%s,lr:%s}" % (
+            wk, w['imp'], w['clk'], jsnum(w['cost']), w['conv'], jsnum(w['is_']), jsnum(w['lr']))
+        for wk, w in weeks)
+    kws = sorted(g['kws'].items(), key=lambda kv: (-kv[1]['clk'], -kv[1]['imp']))
+    nkw = len(kws); kws = kws[:TOP_KWS]
+    kw_js = ', '.join(
+        "{k:'%s',imp:%d,clk:%d,cost:%s,conv:%d}" % (
+            esc(k), v['imp'], v['clk'], jsnum(v['cost']), v['conv'])
+        for k, v in kws)
+    terms = sorted(g['terms'], key=lambda t: (-t['clk'], -t['imp']))
+    nterm = len(terms); terms = terms[:TOP_TERMS]
+    t_js = ', '.join(
+        "{t:'%s',match:'%s',imp:%d,clk:%d,cost:%s,conv:%d}" % (
+            esc(t['t']), esc(t['match']), t['imp'], t['clk'], jsnum(t['cost']), t['conv'])
+        for t in terms)
+    return [f"{ind}{{ camp: '{esc(camp)}', name: '{esc(gname)}',",
+            f'{ind}  weeks: [{wk_js}],',
+            f'{ind}  kws: [{kw_js}], nKws: {nkw},',
+            f'{ind}  terms: [{t_js}], nTerms: {nterm} }},']
+
+
+def write_month(mid, detail):
     L = []
     L.append('// ════════════════════════════════════════════════════════════════')
     L.append('//  DETALLE PAID — grupos de anuncios: consumo semanal + términos de')
@@ -163,27 +211,7 @@ def main():
         L.append('      groups: [')
         for camp, groups in detail[a].items():
             for gname, g in groups.items():
-                weeks = sorted(g['weeks'].items())
-                wk_js = ', '.join(
-                    "{w:'%s',imp:%d,clk:%d,cost:%s,conv:%d,is:%s,lr:%s}" % (
-                        wk, w['imp'], w['clk'], jsnum(w['cost']), w['conv'], jsnum(w['is_']), jsnum(w['lr']))
-                    for wk, w in weeks)
-                kws = sorted(g['kws'].items(), key=lambda kv: (-kv[1]['clk'], -kv[1]['imp']))
-                nkw = len(kws); kws = kws[:TOP_KWS]
-                kw_js = ', '.join(
-                    "{k:'%s',imp:%d,clk:%d,cost:%s,conv:%d}" % (
-                        esc(k), v['imp'], v['clk'], jsnum(v['cost']), v['conv'])
-                    for k, v in kws)
-                terms = sorted(g['terms'], key=lambda t: (-t['clk'], -t['imp']))
-                nterm = len(terms); terms = terms[:TOP_TERMS]
-                t_js = ', '.join(
-                    "{t:'%s',match:'%s',imp:%d,clk:%d,cost:%s,conv:%d}" % (
-                        esc(t['t']), esc(t['match']), t['imp'], t['clk'], jsnum(t['cost']), t['conv'])
-                    for t in terms)
-                L.append(f"        {{ camp: '{esc(camp)}', name: '{esc(gname)}',")
-                L.append(f'          weeks: [{wk_js}],')
-                L.append(f'          kws: [{kw_js}], nKws: {nkw},')
-                L.append(f'          terms: [{t_js}], nTerms: {nterm} }},')
+                L.extend(group_lines(camp, gname, g))
         L.append('      ],')
         L.append('    },')
         L.append('  },')

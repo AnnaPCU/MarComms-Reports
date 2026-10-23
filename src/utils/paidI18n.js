@@ -23,6 +23,10 @@ export const PAID_STR = {
           : `, convertidos desde la moneda ${from} al tipo de cambio del Banco de la Nación Argentina al cierre del mes respectivo: `,
     // Selector de vista
     viewLabel: 'Vista / Campaña',
+    // Campaña en paralelo (Google Ads + Meta Ads, §22 de DECISIONES)
+    platformLabel: 'Plataforma',
+    parallelNote: 'Campaña hecha en paralelo en Google Ads y Meta Ads: cada plataforma se lee con sus propias métricas; no se suman entre sí.',
+    parGoogleWeeks: (list) => `Google Ads · semanas con impresiones (lunes de inicio): ${list}.`,
     allCampaigns: 'Todas las campañas — Vista global',
     cmpCampaigns: 'Comparativa de campañas',
     // Aviso período parcial
@@ -168,6 +172,10 @@ export const PAID_STR = {
           ? `, converted from ${from} at the Banco de la Nación Argentina exchange rate at the close of the respective month (euro derived from the BNA dollar and the European Central Bank official euro/dollar rate): `
           : `, converted from ${from} at the Banco de la Nación Argentina exchange rate at the close of the respective month: `,
     viewLabel: 'View / Campaign',
+    // Parallel campaign (Google Ads + Meta Ads)
+    platformLabel: 'Platform',
+    parallelNote: 'Campaign run in parallel on Google Ads and Meta Ads: each platform is read with its own metrics; they are never added together.',
+    parGoogleWeeks: (list) => `Google Ads · weeks with impressions (starting Monday): ${list}.`,
     allCampaigns: 'All campaigns — Overview',
     cmpCampaigns: 'Campaign comparison',
     partialTitle: 'Partial period.',
@@ -319,6 +327,37 @@ export const GEO_STR = {
     fBudgetCbo: 'Presupuesto a nivel campaña (CBO)',
     fAttribution: 'Atribución',
     fMainResult: 'Resultado principal',
+    // Objetivo por destino del anuncio (§21 de DECISIONES)
+    fObjectiveByDest: (list) => `Se mide por el destino de cada anuncio: ${list}`,
+    destLabel: { typeform: 'Typeform', web: 'Sitio web', hsform: 'Formulario de HubSpot', phone: 'Teléfono', whatsapp: 'WhatsApp' },
+    destMeasure: {
+      typeform: 'Clics salientes al formulario',
+      web: 'Clics en el enlace a la web',
+      hsform: 'Clics salientes al formulario',
+      phone: 'Llamadas',
+      whatsapp: 'Conversaciones iniciadas',
+    },
+    destSection: 'Resultados por Destino del Anuncio',
+    destNote: 'cada destino con su propia métrica · no se suman entre sí',
+    thDest: 'Destino',
+    thAdsN: 'Anuncios',
+    thMeasure: 'Qué se mide',
+    thValue: 'Resultado',
+    thCostPer: 'Costo por acción',
+    destLpv: (v) => `Visitas a la página: ${v}`,
+    destLpvNone: 'Visitas a la página: Meta no registró dato',
+    destFoot:
+      'El destino de cada anuncio es la URL final configurada en Meta (no se deduce del nombre). Clics a la web y clics al formulario son acciones distintas: se leen por separado.',
+    formsSection: 'Contexto: Formularios (fuera de Meta)',
+    formsNote: 'cifras del panel de cada herramienta, con su propio rango',
+    toolLabel: { typeform: 'Typeform', hsform: 'HubSpot' },
+    thTool: 'Herramienta',
+    thRange: 'Rango',
+    thViewsF: 'Vistas',
+    thStartsF: 'Inicios',
+    thSubsF: 'Envíos',
+    formsFoot:
+      'No se suman al embudo de Meta: el rango no coincide con el vuelo y el formulario recibe visitas de cualquier origen (Meta, Google Ads, orgánico).',
     fichaMissing:
       'La configuración fina (edades y restricciones de audiencia, placements utilizados, cantidad de creativos y CTA de cada anuncio) no viene en el export de métricas: se completa desde el Administrador de Anuncios.',
     kindLabel: {
@@ -518,6 +557,37 @@ export const GEO_STR = {
     fBudgetCbo: 'Campaign-level budget (CBO)',
     fAttribution: 'Attribution',
     fMainResult: 'Main result',
+    // Objective by ad destination
+    fObjectiveByDest: (list) => `Measured by each ad's destination: ${list}`,
+    destLabel: { typeform: 'Typeform', web: 'Website', hsform: 'HubSpot form', phone: 'Phone', whatsapp: 'WhatsApp' },
+    destMeasure: {
+      typeform: 'Outbound clicks to the form',
+      web: 'Link clicks to the website',
+      hsform: 'Outbound clicks to the form',
+      phone: 'Calls',
+      whatsapp: 'Conversations started',
+    },
+    destSection: 'Results by Ad Destination',
+    destNote: 'each destination with its own metric · never added together',
+    thDest: 'Destination',
+    thAdsN: 'Ads',
+    thMeasure: 'What is measured',
+    thValue: 'Result',
+    thCostPer: 'Cost per action',
+    destLpv: (v) => `Landing page views: ${v}`,
+    destLpvNone: 'Landing page views: not recorded by Meta',
+    destFoot:
+      "Each ad's destination is the final URL set up in Meta (not inferred from the name). Website clicks and form clicks are different actions: they are read separately.",
+    formsSection: 'Context: Forms (outside Meta)',
+    formsNote: "figures from each tool's dashboard, with its own date range",
+    toolLabel: { typeform: 'Typeform', hsform: 'HubSpot' },
+    thTool: 'Tool',
+    thRange: 'Range',
+    thViewsF: 'Views',
+    thStartsF: 'Starts',
+    thSubsF: 'Submissions',
+    formsFoot:
+      "Not added to the Meta funnel: the range doesn't match the flight and the form gets visits from any source (Meta, Google Ads, organic).",
     fichaMissing:
       'Fine-grained setup (age/audience restrictions, placements used, number of creatives and each ad’s CTA) is not part of the metrics export: it is completed from Ads Manager.',
     kindLabel: {
