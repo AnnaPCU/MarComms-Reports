@@ -17,6 +17,9 @@ export default {
       'google',
       'meta',
     ],
+    sharedWith: [
+      'cumx',
+    ],
   },
   accounts: {
     cuus: {

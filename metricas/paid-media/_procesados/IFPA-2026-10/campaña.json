@@ -1,8 +1,11 @@
 {
-  "_nota": "Armado por Claude el 23/10/2026 con lo que no viene en los exports: nombre del período, evento, etiquetas de campaña (tomadas del nombre de cada campaña) y las cifras de las capturas de Typeform y HubSpot, transcriptas con su rango tal cual figura en la captura. En la captura de Typeform las cifras no tienen título: se leen en el orden estándar del panel (vistas, inicios, envíos, tasa de finalización, tiempo); 2/15 = 13,3 % lo confirma.",
+  "_nota": "Armado por Claude el 23/10/2026 con lo que no viene en los exports: nombre del período, evento, etiquetas de campaña (tomadas del nombre de cada campaña) y las cifras de las capturas de Typeform y HubSpot, transcriptas con su rango tal cual figura en la captura. En la captura de Typeform las cifras no tienen título: se leen en el orden estándar del panel (vistas, inicios, envíos, tasa de finalización, tiempo); 2/15 = 13,3 % lo confirma. «tambienEn»: pedido del equipo (23/10/2026) — la campaña es conjunta de Control Union Estados Unidos y Control Union México; los exports no traen desglose por país, así que las dos cuentas muestran la campaña completa.",
   "id": "par-ifpa-202610",
   "label": "IFPA · Oct 2026",
   "labelEn": "IFPA · Oct 2026",
+  "tambienEn": [
+    "cumx"
+  ],
   "evento": "IFPA · Global Produce & Floral Show",
   "campañas": {
     "CU USA - IFPA - GEO - BBDD Registrados - Ocubre 2026": {

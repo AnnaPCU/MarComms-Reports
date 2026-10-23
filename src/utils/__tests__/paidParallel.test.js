@@ -67,3 +67,16 @@ describe('campaña en paralelo (Google Ads + Meta Ads): IFPA · CU Estados Unido
     expect(latestPeriod('paid', { account: 'cuus' }).id).toBe('m09');
   });
 });
+
+describe('IFPA: campaña conjunta de CU Estados Unidos y CU México', () => {
+  it('CU México ve la misma campaña completa, sin repartir cifras', () => {
+    expect(hasDataFor('cumx', PID)).toBe(true);
+    const mx = getParallel('cumx', PID);
+    const us = getParallel('cuus', PID);
+    expect(mx.owners).toEqual(['cuus', 'cumx']);
+    expect(mx.sharedFrom).toBe('cuus');
+    expect(getMonthly('cumx', PID)).toBe(getMonthly('cuus', PID));
+    expect(aggAccount(getGeo('cumx', PID)).imp).toBe(aggAccount(us.meta).imp);
+    expect(REGISTRY.paid.periodsFor('cumx').map((p) => p.id)[0]).toBe(PID);
+  });
+});

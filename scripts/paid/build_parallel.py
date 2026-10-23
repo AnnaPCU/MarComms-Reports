@@ -165,6 +165,11 @@ def main():
         labelEn=cfg.get('labelEn') or f'{base} · {MON[mi]} {yy}',
         start=m_period['start'], end=m_period['end'],
         platforms=['google', 'meta'])
+    # Campaña conjunta de más de una cuenta (ej. IFPA: CU Estados Unidos +
+    # CU México). Los exports no traen desglose por país: las cuentas de
+    # `tambienEn` muestran la campaña completa, sin repartir cifras.
+    if cfg.get('tambienEn'):
+        period['sharedWith'] = list(cfg['tambienEn'])
 
     accounts = OrderedDict()
     for acc in list(g) + [a for a in m_acc if a not in g]:

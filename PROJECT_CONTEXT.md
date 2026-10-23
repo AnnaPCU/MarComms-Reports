@@ -401,6 +401,14 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **IFPA también en Control Union México** (23/10/2026): campaña conjunta
+  de CU Estados Unidos y CU México (`tambienEn` en `campaña.json`). Nueva
+  cuenta de Paid `cumx` «Control Union México», solo con «IFPA · Oct
+  2026»; las dos cuentas ven la campaña completa con un aviso de que es
+  conjunta y no se reparte por país (los exports no traen ese desglose). El
+  cliente CU México suma el pilar Paid en la vista Clientes (3 pilares).
+  Criterio en `docs/DECISIONES.md` §22.
+
 - **Paid · IFPA (CU Estados Unidos) en paralelo, Google Ads + Meta Ads**
   (23/10/2026): primera campaña en paralelo (§22), período «IFPA · Oct
   2026» de `cuus`, arriba de los meses, con selector de plataforma (Google

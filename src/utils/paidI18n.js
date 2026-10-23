@@ -27,6 +27,8 @@ export const PAID_STR = {
     platformLabel: 'Plataforma',
     parallelNote: 'Campaña hecha en paralelo en Google Ads y Meta Ads: cada plataforma se lee con sus propias métricas; no se suman entre sí.',
     parGoogleWeeks: (list) => `Google Ads · semanas con impresiones (lunes de inicio): ${list}.`,
+    parShared: (names) =>
+      `Campaña conjunta de ${names}: estas son las cifras de la campaña completa. Los exports no traen desglose por país, así que no se reparten entre las cuentas.`,
     allCampaigns: 'Todas las campañas — Vista global',
     cmpCampaigns: 'Comparativa de campañas',
     // Aviso período parcial
@@ -176,6 +178,8 @@ export const PAID_STR = {
     platformLabel: 'Platform',
     parallelNote: 'Campaign run in parallel on Google Ads and Meta Ads: each platform is read with its own metrics; they are never added together.',
     parGoogleWeeks: (list) => `Google Ads · weeks with impressions (starting Monday): ${list}.`,
+    parShared: (names) =>
+      `Joint campaign of ${names}: these are the figures for the whole campaign. The exports have no country breakdown, so they are not split between the accounts.`,
     allCampaigns: 'All campaigns — Overview',
     cmpCampaigns: 'Campaign comparison',
     partialTitle: 'Partial period.',

@@ -142,6 +142,15 @@ export function PaidApp({ account, period }) {
         ]}
       />
       <span className="max-w-[640px] pb-1 text-[10.5px] italic leading-snug text-cu-grey">{t.parallelNote}</span>
+      {par.owners?.length > 1 && (
+        <div className="w-full rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-2.5 text-[11.5px] leading-relaxed text-cu-dgrey shadow-cu">
+          {t.parShared(
+            par.owners
+              .map((id) => listAccounts().find((a) => a.id === id)?.name ?? id)
+              .join(lang === 'en' ? ' and ' : ' y '),
+          )}
+        </div>
+      )}
     </div>
   );
   if (par && platform === 'meta') {

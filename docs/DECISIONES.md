@@ -757,6 +757,15 @@ evento corrió en Google Ads (Search) y en Meta Ads a la vez.
   textos dicen «período» en vez de «mes». La descarga queda en la moneda
   original: la conversión a USD/EUR usa el cierre de un mes (§19) y el
   vuelo no es un mes.
+- **Campaña conjunta de varias cuentas** (23/10/2026, IFPA: CU Estados
+  Unidos + CU México): se declara en `campaña.json` (`tambienEn`: ids de
+  las otras cuentas). Como los exports no traen desglose por país, cada
+  cuenta muestra la **campaña completa**, la misma en todas, con un aviso
+  de que es conjunta y de que las cifras no se reparten. Nunca se inventa
+  una parte por país. Si la cuenta no tenía Paid (CU México), se suma al
+  selector solo con esa campaña, y la vista Clientes la toma como su
+  último período de Paid (lo de Google Ads, que es lo que abre por
+  defecto).
 - **Exports de Google aceptados**: UTF-8 con comas o UTF-16 con
   tabuladores (cómo los baja Google según el botón), en español o en
   inglés. Si el informe de campañas sale «All time», vale igual mientras

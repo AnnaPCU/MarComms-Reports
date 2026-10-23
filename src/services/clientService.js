@@ -141,6 +141,27 @@ export function getPillarLatest(pilar, ref) {
     if (p) {
       return { ...common, kind: 'paid', period: p.id, periodLabel: monthLabel(p.id), mo: paid.getMonthly(ref.account, p.id) };
     }
+    // Cuenta sin meses de Google Ads pero con una campaña en paralelo (ej.
+    // CU México: IFPA, conjunta con CU Estados Unidos): se muestra lo de
+    // Google Ads de esa campaña, que es lo que abre la vista por defecto.
+    const pp = paid.listParallelPeriods().find((x) => paid.hasDataFor(ref.account, x.id));
+    if (pp) {
+      const par = paid.getParallel(ref.account, pp.id);
+      const names = (par.owners ?? []).map((id) => paid.listAccounts().find((a) => a.id === id)?.name ?? id);
+      return {
+        ...common,
+        kind: 'paid',
+        period: pp.id,
+        periodLabel: pp.label,
+        mo: paid.getMonthly(ref.account, pp.id),
+        ...(names.length > 1
+          ? {
+              note: `Google Ads · campaña conjunta de ${names.join(' y ')} (cifras completas, no se reparten por país)`,
+              noteEn: `Google Ads · joint campaign of ${names.join(' and ')} (whole-campaign figures, not split by country)`,
+            }
+          : {}),
+      };
+    }
     // Cuenta solo con campañas GEO de Meta (ej. CU Argentina).
     const gp = paid.listGeoPeriods().find((x) => paid.hasDataFor(ref.account, x.id));
     if (!gp) return null;

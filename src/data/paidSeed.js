@@ -23,6 +23,8 @@ export const PAID_CLIENTS = [
   // Campañas de Google Ads con marca de grupo (PCU), una cuenta por país (sep 2026).
   { id: 'pcues', name: 'PCU España' },
   { id: 'pcuar', name: 'PCU Argentina' },
+  // Solo la campaña conjunta IFPA (con CU Estados Unidos, src/data/paidParallel.js).
+  { id: 'cumx', name: 'Control Union México' },
 ];
 
 // Helper para no repetir campañas en cero.

@@ -8,6 +8,7 @@
 //  tiene generador para una sección, esa sección queda vacía.
 // ════════════════════════════════════════════════════════════════
 import { CLIENT_STR, PILLAR_NAMES } from '@/utils/clientI18n';
+import { periodItems } from '@/utils/periodWording';
 import { ML_EN } from '@/utils/socialI18n';
 import { MONTHS_EN } from '@/utils/paidI18n';
 import { genMonthlyInsights, genCountryInsights, genSocialConclusions, genSocialNextSteps } from '@/utils/socialInsights';
@@ -110,9 +111,10 @@ export function summarizePillar(p, lang = 'es') {
           { value: money(tt.cost, cur, lang), text: t.kCost },
           { value: n(activeCampaigns(mo).length), text: t.kCampaigns },
         ],
-        insights: genPaidInsights(mo, lang, p.period).slice(0, 2),
-        conclusion: genPaidConclusions(mo, lang)[0] ?? null,
-        nextStep: genPaidNextSteps(mo, lang)[0] ?? null,
+        // En una campaña en paralelo los textos dicen «período», no «mes».
+        insights: periodItems(genPaidInsights(mo, lang, p.period), p.period, lang).slice(0, 2),
+        conclusion: periodItems(genPaidConclusions(mo, lang), p.period, lang)[0] ?? null,
+        nextStep: periodItems(genPaidNextSteps(mo, lang), p.period, lang)[0] ?? null,
       };
     }
 

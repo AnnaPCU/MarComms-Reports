@@ -26,15 +26,23 @@ const CAMPAIGNS = [
 // Períodos en paralelo, del más reciente al más viejo.
 export const PARALLEL_PERIODS = CAMPAIGNS.map((x) => x.period).sort((a, b) => b.start.localeCompare(a.start));
 
-// cuenta → período → { google, meta, period }.
+// cuenta → período → { google, meta, period, owners }.
+// `period.sharedWith`: cuentas que comparten la campaña (campaña conjunta,
+// ej. IFPA de CU Estados Unidos + CU México). Como los exports no traen
+// desglose por país, esas cuentas ven la campaña COMPLETA, la misma que la
+// cuenta dueña; `owners` lista todas para aclararlo en la vista.
 export const PARALLEL = {};
 for (const { period, accounts } of CAMPAIGNS) {
+  const owners = [...Object.keys(accounts), ...(period.sharedWith ?? [])];
   for (const [acc, data] of Object.entries(accounts)) {
-    (PARALLEL[acc] ??= {})[period.id] = {
+    const entry = {
       google: data.google,
       // La parte de Meta lleva el período, como las campañas de paidMeta/.
       meta: data.meta ? { ...data.meta, period } : null,
       period,
+      owners,
     };
+    (PARALLEL[acc] ??= {})[period.id] = entry;
+    for (const other of period.sharedWith ?? []) (PARALLEL[other] ??= {})[period.id] = { ...entry, sharedFrom: acc };
   }
 }

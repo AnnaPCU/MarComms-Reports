@@ -115,3 +115,13 @@ describe('Email con varias campañas en el mes', () => {
     expect(em.campaignLabel).toBeNull();
   });
 });
+
+describe('Paid de CU México: la campaña conjunta IFPA', () => {
+  it('la vista General usa lo de Google Ads de la campaña y aclara que es conjunta', () => {
+    const p = getOverview('cu-mx').pillars.find((x) => x.pilar === 'paid');
+    expect(p.kind).toBe('paid');
+    expect(p.period).toBe('par-ifpa-202610');
+    expect(p.mo.totals.impressions).toBe(1722);
+    expect(p.note).toContain('conjunta');
+  });
+});

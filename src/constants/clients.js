@@ -106,7 +106,12 @@ export const CLIENTS = [
     name: 'Control Union México',
     unit: 'cu',
     region: 'Latinoamérica',
-    pillars: { social: { account: 'cul', country: 'mx' }, website: { account: 'cumx' } },
+    pillars: {
+      social: { account: 'cul', country: 'mx' },
+      // Paid: solo la campaña conjunta IFPA (con CU Estados Unidos), completa.
+      paid: { account: 'cumx' },
+      website: { account: 'cumx' },
+    },
   },
   {
     id: 'cu-pe',

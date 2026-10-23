@@ -1666,3 +1666,15 @@
 > Procesá las métricas nuevas de Paid Media
 
 (Con el pedido llegaron por la conversación los dos informes de Google Ads de IFPA que faltaban: «Semanal por grupo de anuncios» y «Rendimiento de la campaña».)
+
+
+**#134** (23/10/2026)
+
+> Esta campaña tiene que aparecer tanto para la vista de CU USA como CU México
+
+
+**#135** (23/10/2026)
+
+> Tenés que siempre poder pushear en esta conversación
+
+(Indicación para esta conversación: además de `main`, se pushea la rama de trabajo; la regla general de `CLAUDE.md` —push solo de `main`— sigue para las demás sesiones.)
