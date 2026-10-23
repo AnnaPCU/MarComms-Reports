@@ -293,6 +293,13 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 ## 11. Pendientes
 
+- **Meta Ads · IFPA (CU USA, 13–18/10/2026)**: medir el objetivo por el
+  destino final de cada anuncio (landing / formulario / teléfono,
+  `docs/DECISIONES.md` §21). Falta: exports con un solo desglose cada uno
+  (día, plataforma, edad, sexo), Ads con nombre de campaña y URL final, y
+  las capturas de Typeform/HubSpot con el rango del vuelo. Con eso se adapta
+  `scripts/paid/build_meta.py` (diario sin columna «Día», destino por
+  anuncio) y se procesa.
 - Formatos de export reales de GA4 / Search Console (documentar columnas cuando
   lleguen los próximos exports).
 - **Vista por cliente**: revisar con el equipo dos mapeos que son criterio y no

@@ -1646,3 +1646,11 @@
 >
 > Implementame un modo oscuro para toda la web, y que también se guarde a nivel cookies.
 
+
+
+## 23 de octubre de 2026
+
+
+**#131** (23/10/2026)
+
+> Lo que yo necesito es que en el cerebro de MarComms Reports quede que el objective de Meta Ads se mide según las URLs finales que tengan los ads. Si esa información vos no la tenés a priori, yo puedo configurarla para que así la tengas. Avisame qué onda. Porque vos estás interpretando que el call to action es landing, cuando en realidad hay algunos de landing y otros de teléfono.

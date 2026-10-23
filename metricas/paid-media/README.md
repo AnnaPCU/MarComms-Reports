@@ -74,8 +74,24 @@ en el enlace, Clics salientes, Resultados e Indicador de resultado.** Si la
 campaña es de WhatsApp, sumar *Conversaciones con mensajes iniciadas*; si
 usa formulario instantáneo de Meta, *Clientes potenciales*.
 
-Edad y sexo van en **dos exports separados**: si vienen juntos, Meta no
-permite sumar el alcance por edad o por sexo y esa columna queda vacía.
+En el export de **anuncios** sumar además **Nombre de la campaña** y la
+columna con la **URL final (destino) de cada anuncio**: es lo que define
+qué se mide (ver «Qué se mide» más abajo).
+
+**Un solo desglose por export.** Edad y sexo van en **dos exports
+separados**, y el diario no se combina con plataforma: si vienen juntos,
+Meta no permite sumar el alcance por cada corte y esa columna queda vacía.
+Los desgloses van solo en la pestaña **Campañas**; el de anuncios va sin
+desglose.
+
+### Qué se mide: el destino de cada anuncio
+
+Una misma campaña puede tener anuncios que llevan a una **landing**, a un
+**formulario** (Typeform, HubSpot) o a una **llamada**. El objetivo se mide
+por la URL final de cada anuncio: landing → clics y visitas a la página;
+formulario → clics salientes al formulario; teléfono → llamadas; WhatsApp →
+conversaciones. No se suman en un único número. Criterio completo en
+`docs/DECISIONES.md` §21.
 
 ```
 paid-media/meta-ads/

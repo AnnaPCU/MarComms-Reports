@@ -670,3 +670,43 @@ arrancaba de cero (pilar, cuenta, período y filtros por defecto).
 - Al sumar un color nuevo fijo en un componente (`text-[#…]`, atributo de
   Recharts), agregar su equivalente oscuro en `index.css`.
 
+
+## 21. Meta Ads: el objetivo se mide por el destino final de cada anuncio
+
+Pedido del equipo el 23/10/2026, con la campaña GEO de IFPA (CU USA): una
+misma campaña de Meta mezcla anuncios que llevan a una landing, a un
+formulario (Typeform) o a una llamada telefónica. El objetivo no es uno solo
+por campaña ni se interpreta como «clic al CTA»: **se mide por la URL final
+(destino) de cada anuncio**.
+
+- **Fuente**: el destino sale del export de Meta a nivel **anuncio** (una
+  columna con la URL final / destino de cada anuncio, que el equipo agrega a
+  su vista de columnas). No se deduce del nombre del anuncio ni de la
+  campaña. Si el export no trae el destino, el reporte no inventa el
+  objetivo: se pide la columna.
+- **Qué se mide según el destino**:
+  - **Landing / web** → clics en el enlace y visitas a la página de destino.
+  - **Formulario (Typeform, HubSpot)** → clics salientes hacia el
+    formulario. Las respuestas del formulario no vienen en Meta: si se suben
+    (export o captura del panel, con el rango del vuelo), van como contexto
+    aparte, sin sumarse al embudo de Meta.
+  - **Teléfono** → las llamadas que registra Meta (métrica de llamadas del
+    export; nombre exacto de la columna a confirmar con el primer export).
+  - **WhatsApp** → conversaciones iniciadas; **formulario instantáneo** →
+    clientes potenciales (como hasta ahora, §17).
+- **Destinos distintos no se suman en un único número**: clics a la web y
+  llamadas son acciones distintas. Cada destino muestra su propia métrica;
+  la campaña se lee por destino.
+- **Reemplaza** el «tipo» único por campaña de §17 (`tipo` en
+  `campaña.json` o deducido del indicador de resultado) cuando el export trae
+  el destino por anuncio.
+- **Estado**: criterio fijado; la implementación en
+  `scripts/paid/build_meta.py` y en el reporte se hace con el primer export
+  real que traiga la columna de destino (IFPA), para confirmar el nombre de
+  las columnas con datos reales.
+- **Aprendido con el primer export real (IFPA)**: en el desglose «Por tiempo
+  → Día», Meta no trae una columna «Día»: marca cada día repitiendo la fecha
+  en «Reporting starts» y «Reporting ends». El script tiene que reconocer
+  ese formato como diario. Y cada export lleva **un solo desglose** (si se
+  combinan día + plataforma o edad + sexo, se pierde el alcance de cada
+  corte).
