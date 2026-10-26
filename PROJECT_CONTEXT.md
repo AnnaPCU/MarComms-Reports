@@ -403,7 +403,8 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 - **Paid: semanas del consumo de presupuesto como rango** (26/10/2026): el
   eje del gráfico «Gasto semanal» muestra cada semana de Google Ads como
-  rango («5–11/10», «12–18/10»; EN «10/5–10/11») y el tooltip dice «Semana
+  rango completo («5/10 al 11/10», «12/10 al 18/10»; EN «10/5 to 10/11») y
+  el tooltip dice «Semana
   del …». Antes mostraba solo el lunes de inicio («5/10», «12/10») y se
   leía como días sueltos: en IFPA parecía que faltaba la semana del 12/10,
   que estaba cargada y graficada.

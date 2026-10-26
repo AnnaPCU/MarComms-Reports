@@ -1698,3 +1698,10 @@
 
 (La barra de la semana del 12/10 ya estaba —171.342,17 ARS—; el eje mostraba solo el lunes de inicio de cada semana. Ahora muestra el rango de cada semana.)
 
+
+
+**#138** (26/10/2026)
+
+> Tenés razón. Entonces lo que me corrijo, lo que sí me gustaría que hagas es que aclares tipo de qué día a qué día es. Por más de que se entienda que es un semana a semana y que es la semana del 5, sí está bueno que donde dice, por ejemplo, 5 del 10, debajo del rectángulo, celeste, vertical, que pongas, por ejemplo, no sé, 5 al 10 al 12 del 10 o al 11 del 10. Y luego en el 12 del 10 pondrías 12 del 10 al 18 del 10, para que se entienda que se mide la semana completa. Si fuera el caso, ¿no? Eso.
+
+(Rótulo de cada barra: «5/10 al 11/10», «12/10 al 18/10»; las semanas de Google Ads van de lunes a domingo.)
