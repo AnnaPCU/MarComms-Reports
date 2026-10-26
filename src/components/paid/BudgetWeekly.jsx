@@ -15,10 +15,19 @@ import { PAID_STR } from '@/utils/paidI18n';
 import { paidFmt } from '@/utils/paidFormat';
 
 
-// "2026-07-06" → "6/7"
-const wkLabel = (w) => {
-  const [, m, d] = w.split('-');
-  return `${Number(d)}/${Number(m)}`;
+// Semana de Google Ads (lunes a domingo) como rango, para que no se lea
+// como un día suelto: "2026-10-12" → "12–18/10" (ES) · "10/12–10/18" (EN).
+// Si cruza de mes: "28/9–4/10" · "9/28–10/4".
+const wkRange = (w) => {
+  const start = new Date(`${w}T12:00:00Z`);
+  const end = new Date(start);
+  end.setUTCDate(end.getUTCDate() + 6);
+  return [start, end].map((x) => ({ d: x.getUTCDate(), m: x.getUTCMonth() + 1 }));
+};
+const wkLabel = (w, lang = 'es') => {
+  const [a, b] = wkRange(w);
+  if (lang === 'en') return `${a.m}/${a.d}–${b.m}/${b.d}`;
+  return a.m === b.m ? `${a.d}–${b.d}/${b.m}` : `${a.d}/${a.m}–${b.d}/${b.m}`;
 };
 
 const MAX_SERIES = 6;
@@ -68,7 +77,7 @@ export function BudgetWeekly({ series = [], currency = 'EUR', lang = 'es' }) {
   // Filas del chart: solo las series activas; el acumulado refleja lo visible.
   let cum = 0;
   const rows = data.allWeeks.map((wk) => {
-    const row = { name: wkLabel(wk) };
+    const row = { name: wkLabel(wk, lang) };
     let wkTotal = 0;
     data.seriesOut.forEach((s) => {
       if (!activeKeys.includes(s.name)) return;
@@ -132,7 +141,12 @@ export function BudgetWeekly({ series = [], currency = 'EUR', lang = 'es' }) {
               <XAxis dataKey="name" tick={{ fontSize: 10, fill: CU.grey }} />
               <YAxis yAxisId="left" tick={{ fontSize: 10, fill: CU.grey }} />
               <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 10, fill: CU.grey }} />
-              <Tooltip {...CHART_TOOLTIP} formatter={(v) => money(v, currency)} cursor={{ fill: 'rgba(62,178,237,.06)' }} />
+              <Tooltip
+                {...CHART_TOOLTIP}
+                formatter={(v) => money(v, currency)}
+                labelFormatter={(l) => `${L.weekOf} ${l}`}
+                cursor={{ fill: 'rgba(62,178,237,.06)' }}
+              />
               {activeKeys.map((k) => (
                 <Bar key={k} yAxisId="left" dataKey={k} stackId="cost" fill={colorOf[k]} maxBarSize={44} />
               ))}

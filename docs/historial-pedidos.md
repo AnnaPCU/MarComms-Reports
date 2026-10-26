@@ -1691,3 +1691,10 @@
 
 (Sobre la semana «faltante» de IFPA: el export semanal de Google Ads trae dos semanas, las que arrancan el lunes 5/10 y el lunes 12/10, que cubren del 5 al 18/10 y suman exactamente los totales de la campaña. La nota listaba solo los lunes de inicio; ahora da el rango completo.)
 
+
+**#137** (26/10/2026)
+
+> Sigo sin ver que el consumo del presupuesto semana a semana muestre la semana que le sigue al 5. O sea, la semana del 12 de octubre. Eso debería estar en el consumo del presupuesto y no lo estoy viendo. Como que básicamente que la barra de progreso aparezca también la semana siguiente. Resumidamente.
+
+(La barra de la semana del 12/10 ya estaba —171.342,17 ARS—; el eje mostraba solo el lunes de inicio de cada semana. Ahora muestra el rango de cada semana.)
+
