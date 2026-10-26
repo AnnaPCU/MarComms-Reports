@@ -112,9 +112,11 @@ entero (totales, campañas, consumo semanal, grupos y términos) con el tipo de
 cambio de ESE mes (`src/data/fxRates.js`, BNA billete vendedor al cierre), y
 el reporte lo aclara arriba como «importes aproximados de referencia».
 Impresiones, clics, CTR y conversiones no cambian. Una moneda queda
-deshabilitada si falta el tipo de cambio de alguno de los meses elegidos. El
-resumen anual, la comparativa y las campañas de Meta van en su moneda
-original. Servicio: `src/services/fxService.js`.
+deshabilitada si falta el tipo de cambio de alguno de los períodos elegidos.
+Las campañas (en paralelo y de Meta) se convierten igual, con el tipo de
+cambio del cierre de la campaña (clave del período en `fxRates.js`;
+`build_meta.py` y `build_parallel.py` avisan si falta). El resumen anual y la
+comparativa van en su moneda original. Servicio: `src/services/fxService.js`.
 
 ## Validaciones de Google Ads
 

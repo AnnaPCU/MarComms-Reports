@@ -3,7 +3,8 @@ import { MapPin } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { listAccounts, getGeo } from '@/services/paidService';
 import { aggAccount } from '@/data/paidMetaGeo';
-import { GEO_STR } from '@/utils/paidI18n';
+import { GEO_STR, PAID_STR, fxDate } from '@/utils/paidI18n';
+import { fxFactor, fxPair, getFx } from '@/services/fxService';
 import { genGeoNextSteps } from '@/utils/paidInsights';
 import { dayLabel, rangeLabel, deliveryWindow } from '@/utils/metaDates';
 import { Funnel } from '@/components/shared/Funnel';
@@ -16,7 +17,7 @@ import { ChartCard } from '@/components/shared/ChartCard';
 import { NextStepsPanel } from '@/components/shared/PerformancePanels';
 import { BrandIcon } from '@/components/shared/BrandIcon';
 import { Glossary } from '@/components/shared/Glossary';
-import { isExternalReport } from '@/utils/reportAudience';
+import { isExternalReport, getReportCurrency } from '@/utils/reportAudience';
 import { useReportLang } from '@/hooks/useReportLang';
 
 // ════════════════════════════════════════════════════════════════
@@ -112,6 +113,9 @@ export function MetaGeoReport({ account, period }) {
   const geo = getGeo(account, period);
   // Textos base + los propios de la campaña (seed `texts`).
   const t = { ...GEO_STR[lang], ...(geo?.texts?.[lang] ?? {}) };
+  // Descargable externo: ficha, alcance único, día por día, anuncios y
+  // género son de uso interno (pedido del equipo, 26/10/2026).
+  const external = isExternalReport();
 
   if (!geo) {
     return (
@@ -133,7 +137,15 @@ export function MetaGeoReport({ account, period }) {
     );
   }
 
-  const money = moneyFor(geo.currency, loc);
+  // Moneda del descargable (§19 de DECISIONES): importes aproximados de
+  // referencia al tipo de cambio del cierre de la campaña. En la app y sin
+  // elegir moneda, siempre la moneda original del export de Meta.
+  const fxTo = getReportCurrency();
+  const fxK = fxTo && fxTo !== geo.currency ? fxFactor(geo.currency, fxTo, period) : null;
+  const moneyCur = moneyFor(fxK != null ? fxTo : geo.currency, loc);
+  const money = fxK != null ? (v) => moneyCur(Number(v || 0) * fxK) : moneyCur;
+  const fx = fxK != null ? { from: geo.currency, to: fxTo, date: getFx(period).date, ...fxPair(geo.currency, fxTo, period) } : null;
+  const pt = PAID_STR[lang];
   const acc = aggAccount(geo);
   const per = acc.per; // [{c, t}] por campaña
   const tf = per.find((x) => x.c.kind === 'typeform');
@@ -184,11 +196,12 @@ export function MetaGeoReport({ account, period }) {
   const days = [...new Set(visible.flatMap(({ c }) => c.days.map((d) => d.d)))]
     .filter((d) => !win || (d >= win.start && d <= win.end))
     .sort();
-  const chart = (field) =>
+  // `k`: factor de conversión para los importes (la inversión del día).
+  const chart = (field, k = 1) =>
     days.map((d) => {
       const row = { d: dayLabel(d, en) };
       visible.forEach(({ c }) => {
-        row[kindOf(c)] = c.days.find((x) => x.d === d)?.[field] ?? 0;
+        row[kindOf(c)] = (c.days.find((x) => x.d === d)?.[field] ?? 0) * k;
       });
       return row;
     });
@@ -251,7 +264,20 @@ export function MetaGeoReport({ account, period }) {
         />
       </div>
 
-      {/* ── Ficha del experimento ── */}
+      {fx && (
+        <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3 text-[11.5px] leading-relaxed text-cu-dgrey shadow-cu">
+          <strong className="text-cu-dblue">{pt.fxLead(fx.to)}</strong>
+          {pt.fxRest(fx.from, fx.source, fxDate(fx.date, lang))}
+          <strong className="text-cu-dblue">
+            1 {fx.unit} = {Number(fx.value).toLocaleString(loc, { maximumFractionDigits: fx.decimals })} {fx.quote}
+          </strong>
+          .
+        </div>
+      )}
+
+      {/* ── Ficha del experimento — solo uso interno ── */}
+      {!external && (
+      <>
       <SectionHeader title={t.fichaSection} note={[accName, t.channel, geo.event].filter(Boolean).join(' · ')} />
       <div className="mb-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {geo.targeting && (
@@ -313,6 +339,8 @@ export function MetaGeoReport({ account, period }) {
         <div className="mb-5 rounded-cu border border-cu-border bg-white px-4 py-2.5 text-[11px] italic leading-relaxed text-cu-grey shadow-cu">
           {t.fichaMissing}
         </div>
+      )}
+      </>
       )}
 
       {/* ── Resultados generales (de la vista activa) ── */}
@@ -722,11 +750,11 @@ export function MetaGeoReport({ account, period }) {
         </ChartCard>
         <ChartCard title={t.chSpendTitle} subtitle={t.chSpendSub}>
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chart('spend')} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
+            <BarChart data={chart('spend', fxK ?? 1)} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
               <CartesianGrid vertical={false} stroke={CU.border2} />
               <XAxis dataKey="d" tick={{ fontSize: 10, fill: CU.grey }} />
               <YAxis tick={{ fontSize: 10, fill: CU.grey }} width={56} tickFormatter={(v) => numEs(v)} />
-              <Tooltip {...CHART_TOOLTIP} cursor={{ fill: 'rgba(62,178,237,.06)' }} formatter={(v, n) => [money(v), n]} />
+              <Tooltip {...CHART_TOOLTIP} cursor={{ fill: 'rgba(62,178,237,.06)' }} formatter={(v, n) => [moneyCur(v), n]} />
               <Legend wrapperStyle={{ fontSize: 10, color: CU.dgrey }} />
               {visible.map(({ c }, i) => (
                 <Bar key={c.id} dataKey={kindOf(c)} fill={PAL[i % PAL.length]} radius={[3, 3, 0, 0]} />
@@ -736,7 +764,8 @@ export function MetaGeoReport({ account, period }) {
         </ChartCard>
       </div>
 
-      {/* Tabla día por día */}
+      {/* Tabla día por día — solo uso interno */}
+      {!external && (
       <div className="mb-2 overflow-x-auto rounded-cu border border-cu-border bg-white px-5 py-4 shadow-cu">
         <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[0.5px] text-cu-dblue">{t.dailyTableTitle}</h3>
         <table className="w-full min-w-[720px] border-collapse">
@@ -772,9 +801,10 @@ export function MetaGeoReport({ account, period }) {
         </table>
         <div className="mt-2 text-[10px] italic text-cu-grey">{t.dailyReachFoot}</div>
       </div>
+      )}
 
-      {/* ── Alcance único del período (export sin desglose diario) ── */}
-      {visible.some(({ c }) => c.periodReach) && (
+      {/* ── Alcance único del período (export sin desglose diario) — solo uso interno ── */}
+      {!external && visible.some(({ c }) => c.periodReach) && (
         <>
           <SectionHeader title={t.reachSection} note={t.reachNote} />
           <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -800,7 +830,7 @@ export function MetaGeoReport({ account, period }) {
       )}
 
       {/* ── Resultados por anuncio (creativos) — solo uso interno ── */}
-      {!isExternalReport() && visible.some(({ c }) => c.ads?.length) && (
+      {!external && visible.some(({ c }) => c.ads?.length) && (
         <>
           <SectionHeader title={t.adsSection} />
           {visible.filter(({ c }) => c.ads?.length).map(({ c }) => {
@@ -873,8 +903,8 @@ export function MetaGeoReport({ account, period }) {
         </>
       )}
 
-      {/* ── Desglose por género ── */}
-      {visible.some(({ c }) => c.gender?.length) && (
+      {/* ── Desglose por género — solo uso interno (la edad sí va al externo) ── */}
+      {!external && visible.some(({ c }) => c.gender?.length) && (
         <>
           <SectionHeader title={t.genderSection} />
           {visible.filter(({ c }) => c.gender?.length).map(({ c }) => {

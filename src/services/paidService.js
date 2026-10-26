@@ -98,6 +98,20 @@ export function hasDataFor(account, period) {
   return Boolean(getMonthly(account, period));
 }
 
+// Moneda(s) original(es) del período, para el descargable en otra moneda
+// (§19): el mes o la parte de Google de una campaña en paralelo (moneda de
+// facturación de Google Ads) y la de Meta Ads. [] si el período no se
+// convierte (resumen anual, comparativa) o no tiene datos.
+export function getNativeCurrencies(accountId, periodId) {
+  if (isParallelPeriod(periodId)) {
+    const p = getParallel(accountId, periodId);
+    return [p?.google?.mo?.totals?.currency, p?.meta?.currency].filter(Boolean);
+  }
+  if (isMetaPeriod(periodId)) return [getGeo(accountId, periodId)?.currency].filter(Boolean);
+  if (/^m\d\d$/.test(String(periodId))) return [getMonthly(accountId, periodId)?.totals?.currency].filter(Boolean);
+  return [];
+}
+
 // Detalle por grupo de anuncios (consumo semanal + términos/keywords).
 // Solo existe para los meses con los informes de detalle cargados.
 export function getDetail(accountId, periodId) {

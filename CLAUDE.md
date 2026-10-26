@@ -77,8 +77,9 @@ suficiente". Nunca inventar, estimar ni rellenar números.**
 - Nunca convertir monedas ni sumar importes de monedas distintas. Única
   excepción: el descargable de Paid Media se puede bajar en ARS, USD o EUR,
   como importe aproximado de referencia al tipo de cambio BNA de cierre de
-  cada mes (`src/data/fxRates.js`, `docs/DECISIONES.md` §19). La app
-  siempre muestra la moneda original.
+  cada mes, o del cierre de la campaña en las campañas en paralelo y de
+  Meta (`src/data/fxRates.js`, `docs/DECISIONES.md` §19). La app siempre
+  muestra la moneda original.
 
 ### 2. Idioma
 
@@ -129,9 +130,14 @@ Orden común en todos los pilares: **Insights (Plan de Acción)** → **KPIs** �
 
 - Insights, diagnóstico y próximos pasos se **generan de las métricas reales**
   (reglas fijas contra benchmarks, sin IA). No se hardcodean.
-- **Próximos Pasos no se muestra en los reportes de uso externo.** En Paid,
-  tampoco el «Detalle por Grupo de Anuncio» (palabras clave y términos de
-  búsqueda): es solo de uso interno.
+- **Próximos Pasos y el Plan de Acción (Insights) no se muestran nunca en
+  los reportes de uso externo, en ningún pilar.** En Paid, tampoco: las
+  aclaraciones de las campañas en paralelo (nota de paralelo, campaña
+  conjunta, semanas de Google Ads) y, en Meta Ads, la ficha de la campaña,
+  la nota de configuración fina, el alcance único, el detalle día por día,
+  los resultados por anuncio y el desglose por género (el de edad sí va).
+  El «Detalle por Grupo de Anuncio» sí va al externo, al final del reporte
+  (`docs/DECISIONES.md` §23).
 - **Vista por cliente** («Clientes» en la nav): cruza los pilares para un
   cliente (unidad de negocio + país/región) y **solo existe si el cliente tiene
   más de un pilar con datos**. El mapeo cliente → cuenta por pilar es explícito

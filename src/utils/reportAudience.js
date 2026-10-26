@@ -6,6 +6,13 @@ export function isExternalReport() {
   return Boolean(e && e.audience === 'external');
 }
 
+// Moneda elegida para el descargable de Paid (ARS/USD/EUR) o null si va en
+// la moneda original. Solo en el HTML descargado.
+export function getReportCurrency() {
+  const e = typeof window !== 'undefined' ? window.__REPORT_EMBED__ : null;
+  return e?.currency ?? null;
+}
+
 // ¿Estamos dentro de un HTML descargado (embed)?
 // El descargable muestra TODO el contenido de una vez (sin toggles de vista),
 // para que el archivo entregue el reporte completo.

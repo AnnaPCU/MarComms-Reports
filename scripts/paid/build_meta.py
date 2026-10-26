@@ -570,6 +570,7 @@ def write(folder, period, acc_out, info, dry):
     text = '\n'.join(js) + '\n'
 
     print(f'\n  Período: {pid} · {label} · {start} → {end}', file=sys.stderr)
+    check_fx(pid, end)
     for acc, names in accounts.items():
         for n in names:
             c = camps[n]
@@ -586,6 +587,25 @@ def write(folder, period, acc_out, info, dry):
     open(out, 'w', encoding='utf-8').write(text)
     register(pid)
     print(f'  → escrito {os.path.relpath(out, ROOT)} y registrado en src/data/paidMetaGeo.js', file=sys.stderr)
+
+
+def check_fx(pid, end):
+    """Avisa si falta el tipo de cambio de la campaña en src/data/fxRates.js.
+
+    Toda campaña (de Meta o en paralelo) se descarga en ARS / USD / EUR con el
+    tipo de cambio del CIERRE DE LA CAMPAÑA (dólar BNA vendedor y euro/dólar
+    oficial del BCE del último día hábil del vuelo, 2+ fuentes). Se carga a
+    mano con la clave del período; fxService.test.js falla si falta.
+    """
+    fx_path = os.path.join(ROOT, 'src', 'data', 'fxRates.js')
+    fx_txt = open(fx_path, encoding='utf-8').read() if os.path.exists(fx_path) else ''
+    blk = re.search(r"\n  '" + re.escape(pid) + r"': \{([^\n]*)\}", fx_txt)
+    if not blk or 'USD:' not in blk.group(1) or 'usdPerEur:' not in blk.group(1):
+        print(f"  ⚠ Falta el tipo de cambio de la campaña en src/data/fxRates.js: '{pid}' con el dólar BNA "
+              f'vendedor y el euro/dólar oficial del BCE al cierre de la campaña ({end}, último día hábil), '
+              f'2+ fuentes. Sin él, la descarga en otra moneda queda deshabilitada.', file=sys.stderr)
+    else:
+        print(f"  ✓ tipo de cambio de '{pid}' cargado en src/data/fxRates.js", file=sys.stderr)
 
 
 def to_js(v, ind=0):

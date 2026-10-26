@@ -5,7 +5,7 @@ import { MONTHS_2026 } from '@/constants/periods';
 import { hasData } from '@/utils/hasData';
 import { genPaidInsights, genPaidConclusions, genPaidNextSteps, campaignStatus } from '@/utils/paidInsights';
 import { campaignPartial } from '@/utils/campaignPartial';
-import { PAID_STR, MONTHS_EN } from '@/utils/paidI18n';
+import { PAID_STR, MONTHS_EN, fxDate } from '@/utils/paidI18n';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
@@ -92,8 +92,8 @@ function CampaignDetail({ c, currency, accName, periodLabel, t, lang, detailGrou
         </>
       )}
 
-      {/* Detalle por grupo de anuncio: solo uso interno (no va en el descargable externo). */}
-      {detailGroups.length > 0 && !isExternalReport() && (
+      {/* Detalle por grupo de anuncio: al final, también en el descargable externo. */}
+      {detailGroups.length > 0 && (
         <>
           <SectionHeader title={t.adgSection} note={t.adgNote(detailGroups.length)} />
           <AdGroupsDetail groups={detailGroups} currency={currency} lang={lang} />
@@ -142,8 +142,11 @@ export function PaidApp({ account, period }) {
           { id: 'meta', label: 'Meta Ads' },
         ]}
       />
-      <span className="max-w-[640px] pb-1 text-[10.5px] italic leading-snug text-cu-grey">{t.parallelNote}</span>
-      {par.owners?.length > 1 && (
+      {/* Aclaraciones de la campaña en paralelo / conjunta: solo uso interno. */}
+      {!isExternalReport() && (
+        <span className="max-w-[640px] pb-1 text-[10.5px] italic leading-snug text-cu-grey">{t.parallelNote}</span>
+      )}
+      {!isExternalReport() && par.owners?.length > 1 && (
         <div className="w-full rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-2.5 text-[11.5px] leading-relaxed text-cu-dgrey shadow-cu">
           {t.parShared(
             par.owners
@@ -214,15 +217,26 @@ export function PaidApp({ account, period }) {
     { id: CMP, label: t.cmpCampaigns },
   ];
 
-  // Semanas del vuelo de Google (campaña en paralelo): dd/mm en ES, mm/dd en EN.
-  const parWeeks = (par?.google?.weeks ?? [])
-    .map((w) => (lang === 'en' ? `${Number(w.slice(5, 7))}/${Number(w.slice(8, 10))}` : `${Number(w.slice(8, 10))}/${Number(w.slice(5, 7))}`))
-    .join(lang === 'en' ? ', ' : ' · ');
+  // Semanas del vuelo de Google (campaña en paralelo): del lunes de la
+  // primera semana con impresiones al domingo de la última (el export
+  // semanal no trae el día exacto). dd/mm en ES, mm/dd en EN.
+  const dm = (iso) => {
+    const [, m, d] = iso.split('-').map(Number);
+    return lang === 'en' ? `${m}/${d}` : `${d}/${m}`;
+  };
+  const gWeeks = [...(par?.google?.weeks ?? [])].sort();
+  const parWeeks = gWeeks.length
+    ? (() => {
+        const end = new Date(`${gWeeks[gWeeks.length - 1]}T12:00:00Z`);
+        end.setUTCDate(end.getUTCDate() + 6);
+        return t.parGoogleWeeks(dm(gWeeks[0]), dm(end.toISOString().slice(0, 10)), gWeeks.length);
+      })()
+    : null;
 
   return (
     <div className="animate-fade-in">
       {platformBar}
-      {par && parWeeks && <div className="-mt-2 mb-4 text-[10.5px] text-cu-grey">{t.parGoogleWeeks(parWeeks)}</div>}
+      {par && parWeeks && !isExternalReport() && <div className="-mt-2 mb-4 text-[10.5px] text-cu-grey">{parWeeks}</div>}
       {/* Selector de vista / campaña + idioma */}
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <Select label={t.viewLabel} value={view} onChange={setView} options={campOptions} />
@@ -240,7 +254,7 @@ export function PaidApp({ account, period }) {
       {mo.fx && (
         <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3 text-[11.5px] leading-relaxed text-cu-dgrey shadow-cu">
           <strong className="text-cu-dblue">{t.fxLead(mo.fx.to)}</strong>
-          {t.fxRest(mo.fx.from, mo.fx.source)}
+          {t.fxRest(mo.fx.from, mo.fx.source, mo.fx.campaign ? fxDate(mo.fx.date, lang) : null)}
           <strong className="text-cu-dblue">
             1 {mo.fx.unit} ={' '}
             {Number(mo.fx.value).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR', { maximumFractionDigits: mo.fx.decimals })}{' '}
@@ -313,15 +327,6 @@ export function PaidApp({ account, period }) {
             </>
           )}
 
-          {/* Campaña en paralelo (una sola campaña de Google): el detalle por
-              grupo va en la vista general, sin tener que entrar a la campaña. */}
-          {par && detail?.groups?.length > 0 && !isExternalReport() && (
-            <>
-              <SectionHeader title={t.adgSection} note={t.adgNote(detail.groups.length)} />
-              <AdGroupsDetail groups={detail.groups} currency={c} lang={lang} />
-            </>
-          )}
-
           <SectionHeader title={t.tableSection} />
           <CampaignsTable campaigns={mo.campaigns} currency={c} title={t.tableTitle(mo.channel || 'Google Ads')} lang={lang} period={period} />
 
@@ -332,6 +337,16 @@ export function PaidApp({ account, period }) {
             <>
               <SectionHeader title={t.nextSection} />
               <NextStepsPanel steps={periodItems(genPaidNextSteps(mo, lang), period, lang)} subtitle={[accName, periodLabel].filter(Boolean).join(' · ')} title={t.nextTitle} />
+            </>
+          )}
+
+          {/* Campaña en paralelo (una sola campaña de Google): el detalle por
+              grupo va en la vista general, sin tener que entrar a la campaña.
+              Al final del reporte, también en el descargable externo. */}
+          {par && detail?.groups?.length > 0 && (
+            <>
+              <SectionHeader title={t.adgSection} note={t.adgNote(detail.groups.length)} />
+              <AdGroupsDetail groups={detail.groups} currency={c} lang={lang} />
             </>
           )}
         </>

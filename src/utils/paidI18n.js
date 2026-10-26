@@ -9,24 +9,37 @@ export const MONTHS_EN = {
   m09: 'September 2026', m10: 'October 2026', m11: 'November 2026', m12: 'December 2026',
 };
 
+// Fecha del tipo de cambio de una campaña: 23/10/2026 (ES) · Oct 23, 2026 (EN).
+export function fxDate(iso, lang = 'es') {
+  const [y, m, d] = String(iso).split('-').map(Number);
+  return lang === 'en'
+    ? new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+    : `${String(d).padStart(2, '0')}/${String(m).padStart(2, '0')}/${y}`;
+}
+
 export const PAID_STR = {
   es: {
     // Objetivo de la cuenta (paidSeed `objetivo`, que viene en español).
     objectives: {},
     // Nota del descargable convertido a otra moneda (texto aprobado 21/10/2026).
     fxLead: (to) => `Importes aproximados de referencia en ${to}`,
-    fxRest: (from, src) =>
-      src === 'bce'
-        ? `, convertidos desde la moneda ${from} al tipo de cambio oficial del Banco Central Europeo al cierre del mes respectivo: `
+    // `campaignDate`: en las campañas (paralelas o de Meta) el cambio es el
+    // del cierre de la campaña, no el del mes.
+    fxRest: (from, src, campaignDate = null) => {
+      const when = campaignDate ? `al cierre de la campaña (${campaignDate})` : 'al cierre del mes respectivo';
+      return src === 'bce'
+        ? `, convertidos desde la moneda ${from} al tipo de cambio oficial del Banco Central Europeo ${when}: `
         : src === 'bna-bce'
-          ? `, convertidos desde la moneda ${from} al tipo de cambio del Banco de la Nación Argentina al cierre del mes respectivo (euro calculado con el dólar BNA y el euro/dólar oficial del Banco Central Europeo): `
-          : `, convertidos desde la moneda ${from} al tipo de cambio del Banco de la Nación Argentina al cierre del mes respectivo: `,
+          ? `, convertidos desde la moneda ${from} al tipo de cambio del Banco de la Nación Argentina ${when} (euro calculado con el dólar BNA y el euro/dólar oficial del Banco Central Europeo): `
+          : `, convertidos desde la moneda ${from} al tipo de cambio del Banco de la Nación Argentina ${when}: `;
+    },
     // Selector de vista
     viewLabel: 'Vista / Campaña',
     // Campaña en paralelo (Google Ads + Meta Ads, §22 de DECISIONES)
     platformLabel: 'Plataforma',
     parallelNote: 'Campaña hecha en paralelo en Google Ads y Meta Ads: cada plataforma se lee con sus propias métricas; no se suman entre sí.',
-    parGoogleWeeks: (list) => `Google Ads · semanas con impresiones (lunes de inicio): ${list}.`,
+    parGoogleWeeks: (from, to, n) =>
+      `Google Ads · impresiones en ${n === 1 ? 'la semana' : `las ${n} semanas`} del ${from} al ${to} (el export semanal no trae el día exacto de cada impresión).`,
     parShared: (names) =>
       `Campaña conjunta de ${names}: estas son las cifras de la campaña completa. Los exports no traen desglose por país, así que no se reparten entre las cuentas.`,
     allCampaigns: 'Todas las campañas — Vista global',
@@ -167,17 +180,20 @@ export const PAID_STR = {
   en: {
     objectives: { 'Generación de leads': 'Lead generation' },
     fxLead: (to) => `Approximate reference amounts in ${to}`,
-    fxRest: (from, src) =>
-      src === 'bce'
-        ? `, converted from ${from} at the European Central Bank official exchange rate at the close of the respective month: `
+    fxRest: (from, src, campaignDate = null) => {
+      const when = campaignDate ? `at the close of the campaign (${campaignDate})` : 'at the close of the respective month';
+      return src === 'bce'
+        ? `, converted from ${from} at the European Central Bank official exchange rate ${when}: `
         : src === 'bna-bce'
-          ? `, converted from ${from} at the Banco de la Nación Argentina exchange rate at the close of the respective month (euro derived from the BNA dollar and the European Central Bank official euro/dollar rate): `
-          : `, converted from ${from} at the Banco de la Nación Argentina exchange rate at the close of the respective month: `,
+          ? `, converted from ${from} at the Banco de la Nación Argentina exchange rate ${when} (euro derived from the BNA dollar and the European Central Bank official euro/dollar rate): `
+          : `, converted from ${from} at the Banco de la Nación Argentina exchange rate ${when}: `;
+    },
     viewLabel: 'View / Campaign',
     // Parallel campaign (Google Ads + Meta Ads)
     platformLabel: 'Platform',
     parallelNote: 'Campaign run in parallel on Google Ads and Meta Ads: each platform is read with its own metrics; they are never added together.',
-    parGoogleWeeks: (list) => `Google Ads · weeks with impressions (starting Monday): ${list}.`,
+    parGoogleWeeks: (from, to, n) =>
+      `Google Ads · impressions in the ${n === 1 ? 'week' : `${n} weeks`} from ${from} to ${to} (the weekly export does not give the exact day of each impression).`,
     parShared: (names) =>
       `Joint campaign of ${names}: these are the figures for the whole campaign. The exports have no country breakdown, so they are not split between the accounts.`,
     allCampaigns: 'All campaigns — Overview',

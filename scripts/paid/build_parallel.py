@@ -191,6 +191,7 @@ def main():
           'export default ' + build_meta.to_js(OrderedDict(period=period, accounts=accounts)) + ';']
     text = '\n'.join(js) + '\n'
     print(f'\n  Período: {pid} · {period["label"]} · cuentas: {", ".join(accounts)}', file=sys.stderr)
+    build_meta.check_fx(pid, period['end'])
     if dry:
         print(text)
         return

@@ -1,7 +1,11 @@
 // SERVICE — Conversión de moneda de los reportes de Paid Media (solo para
 // el descargable). Tipos de cambio en src/data/fxRates.js (ARS por unidad,
-// BNA vendedor al cierre de cada mes). Nunca se suman monedas distintas: se
-// convierte el reporte entero de un mes con el tipo de cambio de ese mes.
+// BNA vendedor al cierre de cada mes, o al cierre de cada campaña en las
+// campañas en paralelo y de Meta). Nunca se suman monedas distintas: se
+// convierte el reporte entero de un período con el tipo de cambio de ese período.
+
+// ¿El tipo de cambio es el del cierre de una campaña (no de un mes)?
+export const isCampaignFx = (periodId) => !/^m\d\d$/.test(String(periodId));
 import { FX_RATES } from '@/data/fxRates';
 
 export const CURRENCIES = ['ARS', 'USD', 'EUR'];
@@ -73,7 +77,7 @@ export function convertPaidMonth(mo, detail, periodId, to) {
     ...mo,
     totals: { ...convertRow(mo.totals, k), currency: to },
     campaigns: mo.campaigns.map((c) => convertRow(c, k)),
-    fx: { from, to, date: getFx(periodId).date, ...fxPair(from, to, periodId) },
+    fx: { from, to, date: getFx(periodId).date, campaign: isCampaignFx(periodId), ...fxPair(from, to, periodId) },
   };
   const outDetail = detail
     ? {

@@ -642,8 +642,16 @@ USD como archivo puntual.
   de cambio del Banco de la Nación Argentina al cierre del mes respectivo:
   1 USD = 1.540 ARS.» (y su versión en inglés).
 - **Alcance**: todos los reportes mensuales de Google Ads (febrero–septiembre
-  cargados). El resumen anual, la comparativa y las campañas de Meta van en
-  su moneda original.
+  cargados) y, desde el 26/10/2026, todas las campañas fuera del flujo
+  mensual (en paralelo `par-…` y de Meta `geo-…`/`meta-…`), las actuales y
+  las nuevas. El resumen anual y la comparativa van en su moneda original.
+- **Campañas**: el tipo de cambio es el del **cierre de la campaña** (último
+  día hábil del vuelo), con el mismo criterio de fuentes, y se carga con la
+  clave del período (`'par-ifpa-202610'`). La nota dice «al cierre de la
+  campaña (23/10/2026)» en vez de «al cierre del mes respectivo». En una
+  campaña en paralelo, Google y Meta usan el mismo tipo de cambio. Pedido
+  del equipo: «en todas las nuevas campañas tiene que poder descargarse con
+  las tres monedas posibles».
 
 ## 20. La app recuerda el recorrido y tiene modo oscuro
 
@@ -770,3 +778,26 @@ evento corrió en Google Ads (Search) y en Meta Ads a la vez.
   tabuladores (cómo los baja Google según el botón), en español o en
   inglés. Si el informe de campañas sale «All time», vale igual mientras
   cuadre exacto con el semanal del vuelo (así vino IFPA).
+
+## 23. Qué no va en el descargable de uso externo
+
+Pedido del equipo el 26/10/2026. El reporte externo es el que se entrega al
+cliente: lleva los resultados, no la gestión interna ni las aclaraciones de
+cómo se armó el reporte.
+
+- **Todos los pilares**: ni «Conclusión — Próximos Pasos» ni el **Plan de
+  Acción (Insights)**. «Nunca. Esto para todo, literalmente todos los
+  pilares.» Se resuelve en `InsightsPanel`, así ningún pilar nuevo se olvida.
+- **Paid · campañas en paralelo**: la nota «Campaña hecha en paralelo…», la
+  de campaña conjunta (CU Estados Unidos y CU México) y la de semanas de
+  Google Ads son aclaraciones internas.
+- **Paid · Meta Ads**: la ficha de la campaña (en todas las vistas de
+  campaña), la nota de configuración fina (edades y restricciones de
+  audiencia, placements, creativos y CTA), el alcance único del período, el
+  detalle día por día, los resultados por anuncio y el desglose por género.
+  El desglose por edad sí va.
+- **Paid · Detalle por Grupo de Anuncio**: sí va al externo, al final del
+  reporte (el 23/10 se había pedido lo contrario; el equipo lo revirtió).
+- El diálogo de descarga lista lo que el externo no trae. Lo oculto no se
+  ve en el reporte, pero el HTML descargable lleva adentro el código de la
+  app con sus datos, así que no es un mecanismo para datos confidenciales.

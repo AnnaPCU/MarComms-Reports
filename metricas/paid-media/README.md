@@ -186,6 +186,10 @@ HubSpot con su rango) va en un `campaña.json` en la raíz de la carpeta.
   carga en `src/data/fxRates.js` con las fuentes anotadas.
   `build_month.py` avisa si falta y el test `fxService.test.js` falla si un
   mes en ARS no lo tiene.
+- **Tipo de cambio de una campaña** (Meta o en paralelo): lo mismo, pero al
+  cierre de la campaña (último día hábil del vuelo) y con la clave del
+  período (`'par-ifpa-202610': { date: '2026-10-23', … }`). `build_meta.py`
+  y `build_parallel.py` avisan si falta, y el test falla.
 - **Meta Ads**: `python3 -B scripts/paid/build_meta.py
   "metricas/paid-media/meta-ads/AAAA-MM-<campaña>"` → valida que el diario
   cuadre con el total (si no, corta), escribe

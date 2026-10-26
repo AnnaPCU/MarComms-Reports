@@ -1684,3 +1684,10 @@
 
 > Los «Detalle por Grupo de Anuncio» quiero que queden en el descargable solo a nivel interno.
 
+
+**#136** (26/10/2026)
+
+> El plan de acción Insights Pay Media siempre el plan de acción no se tiene que mostrar al externo. Nunca. Esto para todo, literalmente todos los pilares… En todas las nuevas campañas tiene que poder descargarse con las tres monedas posibles… en ISPA no me deja descargarlo con las tres monedas posibles… Tiene que aplicarse a las nuevas también y a las actuales… hay tres aclaraciones… que no se tienen que ver por ningún motivo a nivel externo. Primero, lo que está al lado de los botones de Google Ads y metadas, lo que dice campaña hecha en paralelo en Google Ads y metadas… Luego, lo que dice campaña conjunta de control 1 en Estados Unidos y control 1 en México… y tampoco lo de abajo, que dice que Google Ads semana con impresiones de 5 al 12… se sigue consumiendo el presupuesto en la semana siguiente… El movimiento surgió a partir del día 8… Hasta el 18. Entonces hay una semana que no contemplaste ahí… el detalle por grupo de anuncio, quiero que se muestre al final a nivel externo. Sé que te aclaré lo contrario… La ficha de la campaña no se muestra a nivel externo. En ninguno de los casos. En ninguna, ni en excluyendo participantes, ni en BBBD registrados… las aclaraciones… de la configuración fina edades y restricciones de audiencia, placements utilizados y cantidad de creativos y call to action de cada anuncio, no se tiene que mostrar en el export externo… Alcance único del periodo, detalle por día, resultados por anuncios y desglose por género [no externo]. Lo que sí puedes mantener a nivel externo es el desglose por edad.
+
+(Sobre la semana «faltante» de IFPA: el export semanal de Google Ads trae dos semanas, las que arrancan el lunes 5/10 y el lunes 12/10, que cubren del 5 al 18/10 y suman exactamente los totales de la campaña. La nota listaba solo los lunes de inicio; ahora da el rango completo.)
+

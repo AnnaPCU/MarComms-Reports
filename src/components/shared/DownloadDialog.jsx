@@ -115,7 +115,7 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
                     key={o.id}
                     onClick={() => o.ok && setCurrencyPick(o.id)}
                     disabled={!o.ok}
-                    title={o.ok ? '' : 'Falta el tipo de cambio de alguno de los meses elegidos'}
+                    title={o.ok ? '' : 'Falta el tipo de cambio de alguno de los períodos elegidos'}
                     className={`rounded-cu border px-3 py-2 text-[12px] font-bold transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
                       currency === o.id
                         ? 'border-cu-dblue bg-cu-dblue text-white'
@@ -128,10 +128,10 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
                 ))}
               </div>
               <p className="mb-4 text-[10.5px] leading-snug text-cu-grey">
-                {!currency && 'Los meses elegidos tienen monedas distintas: si no elegís una, cada uno sale en su moneda original. '}
-                La conversión usa el tipo de cambio vendedor del Banco Nación al cierre de cada mes y el reporte
-                lo aclara como importe aproximado de referencia. El resumen anual, la comparativa y las campañas
-                de Meta se descargan en su moneda original.
+                {!currency && 'Los períodos elegidos tienen monedas distintas: si no elegís una, cada uno sale en su moneda original. '}
+                La conversión usa el tipo de cambio vendedor del Banco Nación al cierre de cada mes (en las
+                campañas, al cierre de la campaña) y el reporte lo aclara como importe aproximado de referencia.
+                El resumen anual y la comparativa se descargan en su moneda original.
               </p>
             </>
           )}
@@ -205,7 +205,10 @@ export function DownloadDialog({ onClose, onChoose, periods = [], currentPeriod 
             ℹ️ En el reporte de <strong className="text-cu-dgrey">uso externo</strong>{' '}
             {externalHidden.length ? 'no estarán visibles las secciones' : 'no estará visible la sección'}{' '}
             <strong className="text-cu-dgrey">
-              {['«Conclusión — Próximos Pasos»', ...externalHidden.map((x) => `«${x}»`)].join(' y ')}
+              {(() => {
+                const all = ['«Conclusión — Próximos Pasos»', ...externalHidden.map((x) => `«${x}»`)];
+                return all.length > 1 ? `${all.slice(0, -1).join(', ')} y ${all[all.length - 1]}` : all[0];
+              })()}
             </strong>
             .
           </div>

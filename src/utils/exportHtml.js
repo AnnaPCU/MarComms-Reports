@@ -85,7 +85,7 @@ const safeJson = (obj) => JSON.stringify(obj).replace(/</g, '\\u003c');
 // Favicon único de todos los descargables: el isotipo de MarComms (el equipo
 // que produce los reportes), sin importar de qué cliente sean las métricas.
 
-export async function exportViewAsHtml({ pilar, account, period, audience, brand, title, filename, snapshot, socialCountry = null, periods = null, lang = 'es' }) {
+export async function exportViewAsHtml({ pilar, account, period, audience, brand, title, filename, snapshot, socialCountry = null, periods = null, lang = 'es', currency = null }) {
   // Logos como data URI (para que no se rompan en el archivo offline):
   // el de MarComms es el principal del header; el del cliente va en segundo plano.
   const marcommsLogoSrc = await fetchAsDataUri(MARCOMMS_LOGO.full);
@@ -129,7 +129,7 @@ export async function exportViewAsHtml({ pilar, account, period, audience, brand
     }
     if (!css) css = collectInlineCss();
 
-    const embed = safeJson({ pilar, account, period, audience, brand, title, snapshot, logoSrc, marcommsLogoSrc, socialCountry, periods, lang });
+    const embed = safeJson({ pilar, account, period, audience, brand, title, snapshot, logoSrc, marcommsLogoSrc, socialCountry, periods, lang, currency });
 
     const doc = `<!DOCTYPE html>
 <html lang="es">

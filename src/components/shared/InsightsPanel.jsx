@@ -3,6 +3,7 @@
 //              label?: etiqueta propia (reemplaza a «<label> N») }.
 import { Zap } from 'lucide-react';
 import { BrandIcon } from '@/components/shared/BrandIcon';
+import { isExternalReport } from '@/utils/reportAudience';
 
 export function InsightsPanel({
   subtitle,
@@ -12,6 +13,9 @@ export function InsightsPanel({
   actionLabel = 'Acción recomendada',
   emptyText = 'Sin información suficiente para este período',
 }) {
+  // El Plan de Acción es de uso interno: nunca va en un descargable externo,
+  // en ningún pilar (pedido del equipo, 26/10/2026).
+  if (isExternalReport()) return null;
   return (
     <div className="mb-5 overflow-hidden rounded-cu border border-cu-border bg-white shadow-cu">
       <div className="flex flex-wrap items-center gap-2.5 bg-cu-dblue px-5 py-3">

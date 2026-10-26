@@ -14,6 +14,10 @@
 //    publica de forma consistente en fuentes verificables, así que el euro se
 //    calcula con el dólar BNA y el euro/dólar oficial del BCE.
 //  Se cargan al procesar las métricas del mes (metricas/paid-media/README.md).
+//
+//  Campañas fuera del flujo mensual (en paralelo `par-…` y de Meta
+//  `geo-…`/`meta-…`): mismo criterio, con la clave del período de la
+//  campaña y la fecha de CIERRE DE LA CAMPAÑA (último día hábil del vuelo).
 // ════════════════════════════════════════════════════════════════
 
 export const FX_RATES = {
@@ -34,4 +38,13 @@ export const FX_RATES = {
   m08: { date: '2026-08-31', USD: 1530, usdPerEur: 1.1596 },
   // 30/09: Ámbito (cierre) · Rava · Estudio de la Mano · BCE BOE-A-2026-20464
   m09: { date: '2026-09-30', USD: 1540, usdPerEur: 1.1355 },
+
+  // ── Campañas (cierre de la campaña) ──
+  // Aapresid (Meta, 03–07/08): Cronista (cierre BNA) · La Nación · Río Negro ·
+  // BCE BOE-A-2026-17373
+  'geo-aapresid-2026': { date: '2026-08-07', USD: 1520, usdPerEur: 1.1535 },
+  // IFPA (Google + Meta, 01–23/10): Río Negro (cierre BNA) · Ámbito · Cronista ·
+  // BCE tipos de referencia del 23/10 (la resolución del BOE no estaba
+  // publicada todavía al cargarlo, 26/10/2026)
+  'par-ifpa-202610': { date: '2026-10-23', USD: 1550, usdPerEur: 1.1193 },
 };

@@ -401,10 +401,29 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
-- **Paid: «Detalle por Grupo de Anuncio» solo interno** (23/10/2026): el
-  descargable de uso externo ya no trae el detalle por grupo (palabras clave
-  y términos de búsqueda); el interno y la web lo siguen mostrando. El
-  diálogo de descarga lo avisa.
+- **Uso externo y monedas de las campañas** (26/10/2026):
+  - El **Plan de Acción (Insights)** ya no va en ningún descargable externo,
+    en ningún pilar (`InsightsPanel` devuelve null en uso externo).
+  - **Paid, solo uso interno**: la nota de campaña en paralelo, la de campaña
+    conjunta y la de semanas de Google Ads; en Meta Ads, la ficha de la
+    campaña (todas las vistas), la nota de configuración fina, el alcance
+    único, el detalle día por día, los resultados por anuncio y el desglose
+    por género. El desglose por edad sí va al externo.
+  - El **«Detalle por Grupo de Anuncio»** vuelve al externo (revierte el
+    cambio del 23/10) y en las campañas en paralelo va al final del reporte.
+  - La nota interna de semanas de Google Ads ahora da el rango real: IFPA
+    «del 5/10 al 18/10» (las 2 semanas del export semanal; antes listaba
+    solo los lunes de inicio y parecía que faltaba una semana).
+  - **Las campañas también se bajan en ARS, USD o EUR** (en paralelo y de
+    Meta), con el tipo de cambio del cierre de la campaña: IFPA 23/10/2026
+    (1 USD = 1.550 ARS, 1 EUR = 1,1193 USD) y Aapresid 07/08/2026 (1.520 ARS,
+    1,1535 USD). Las campañas nuevas necesitan su entrada en `fxRates.js`:
+    `build_meta.py` / `build_parallel.py` avisan y el test falla si falta.
+
+- **Paid: «Detalle por Grupo de Anuncio» solo interno** (23/10/2026,
+  revertido el 26/10/2026: vuelve al externo). El descargable de uso externo
+  dejó de traer el detalle por grupo (palabras clave y términos de búsqueda).
+  El interno y la web lo seguían mostrando.
 
 - **IFPA también en Control Union México** (23/10/2026): campaña conjunta
   de CU Estados Unidos y CU México (`tambienEn` en `campaña.json`). Nueva

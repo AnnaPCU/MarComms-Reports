@@ -16,7 +16,7 @@ import { reportFilename, expandAccountName, localizeLabel, localizePilarLabel } 
 import { brandOf } from '@/constants/brand';
 import { getSegConfig } from '@/services/socialService';
 import { listCampaigns } from '@/services/emailService';
-import { getMonthly as getPaidMonthly } from '@/services/paidService';
+import { getNativeCurrencies } from '@/services/paidService';
 import { CURRENCIES, canConvert } from '@/services/fxService';
 import { emailLabelEn } from '@/utils/emailI18n';
 import { viewState } from '@/utils/viewState';
@@ -44,6 +44,23 @@ function navFor(pilarId) {
       : (list[0]?.id ?? cfg.defaultPeriod ?? '');
   return { account, period };
 }
+
+// Secciones que el descargable de USO EXTERNO no muestra, además de
+// «Conclusión — Próximos Pasos» (se listan en la nota del diálogo).
+// El Plan de Acción (Insights) es interno en todos los pilares.
+const EXTERNAL_HIDDEN_ALL = ['Plan de Acción (Insights)'];
+const EXTERNAL_HIDDEN = {
+  social: EXTERNAL_HIDDEN_ALL,
+  email: EXTERNAL_HIDDEN_ALL,
+  webinars: EXTERNAL_HIDDEN_ALL,
+  website: EXTERNAL_HIDDEN_ALL,
+  clients: EXTERNAL_HIDDEN_ALL,
+  paid: [
+    ...EXTERNAL_HIDDEN_ALL,
+    'Meta Ads: Ficha de la campaña, Alcance único, Detalle día por día, Resultados por anuncio y Desglose por género',
+    'aclaraciones internas de las campañas en paralelo',
+  ],
+};
 
 export default function App() {
   const { authed, login, logout } = useAuth();
@@ -91,14 +108,11 @@ export default function App() {
 
   // audience: 'internal' (reporte completo) | 'external' (sin "Próximos Pasos").
   // periodIds: períodos elegidos en el diálogo (cada uno baja su propio HTML).
-  // Paid: moneda original de los meses elegidos y a qué monedas se pueden
-  // convertir (hace falta el tipo de cambio de cada mes en fxRates.js). El
-  // resumen anual, la comparativa y las campañas de Meta van en su moneda.
+  // Paid: moneda original de los períodos elegidos (meses y campañas) y a
+  // qué monedas se pueden convertir (hace falta el tipo de cambio de cada
+  // período en fxRates.js). El resumen anual y la comparativa van en su moneda.
   function paidCurrencyInfo(ids) {
-    const months = ids
-      .filter((pid) => /^m\d\d$/.test(pid))
-      .map((pid) => ({ pid, cur: getPaidMonthly(account, pid)?.totals?.currency }))
-      .filter((m) => m.cur);
+    const months = ids.flatMap((pid) => getNativeCurrencies(account, pid).map((cur) => ({ pid, cur })));
     const natives = [...new Set(months.map((m) => m.cur))];
     return {
       native: natives.length === 1 ? natives[0] : null,
@@ -149,10 +163,7 @@ export default function App() {
     }
     // Moneda del descargable de Paid: solo si cambia algún mes elegido.
     const fxTo =
-      pilar === 'paid' && currency && ids.some((pid) => {
-        const cur = /^m\d\d$/.test(pid) ? getPaidMonthly(account, pid)?.totals?.currency : null;
-        return cur && cur !== currency;
-      })
+      pilar === 'paid' && currency && ids.some((pid) => getNativeCurrencies(account, pid).some((cur) => cur !== currency))
         ? currency
         : null;
     const snapOpts = { emailCampaign, currency: fxTo };
@@ -204,6 +215,7 @@ export default function App() {
       socialCountry: withCountry ? socialCountry : null,
       periods: multiPeriods,
       lang,
+      currency: fxTo,
     });
   }
 
@@ -268,7 +280,7 @@ export default function App() {
           currentPeriod={period}
           mode={pilar === 'plans' ? 'format' : 'audience'}
           currencyInfo={pilar === 'paid' ? paidCurrencyInfo : null}
-          externalHidden={pilar === 'paid' ? ['Detalle por Grupo de Anuncio'] : []}
+          externalHidden={EXTERNAL_HIDDEN[pilar] ?? []}
         />
       )}
     </div>
