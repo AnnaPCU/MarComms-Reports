@@ -1705,3 +1705,9 @@
 > Tenés razón. Entonces lo que me corrijo, lo que sí me gustaría que hagas es que aclares tipo de qué día a qué día es. Por más de que se entienda que es un semana a semana y que es la semana del 5, sí está bueno que donde dice, por ejemplo, 5 del 10, debajo del rectángulo, celeste, vertical, que pongas, por ejemplo, no sé, 5 al 10 al 12 del 10 o al 11 del 10. Y luego en el 12 del 10 pondrías 12 del 10 al 18 del 10, para que se entienda que se mide la semana completa. Si fuera el caso, ¿no? Eso.
 
 (Rótulo de cada barra: «5/10 al 11/10», «12/10 al 18/10»; las semanas de Google Ads van de lunes a domingo.)
+
+
+**#139** (26/10/2026)
+
+> Me gustaría ajustar algo en cada vez que suceda esto. Dentro de PayMedia, cuando haya una campaña concreta que haya repercutido, que se haya abarque tanto Google Ads como MetaAds, haya una vista general y luego hace la vista de Google Ads y MetaAds. Ya que hoy en día la vista de comparativa de campañas no encuentro mucho sentido, además está puesto en euros, cuando no manejamos euros ni en MetaAds ni en Google Ads. Está medio raro, no me convence esa vista. Entonces, por default, estaría la vista general, puede llamarla la de todas las campañas, como quiera llamarle, donde ahí mostrarías insights unificados de estas dos herramientas. Por ejemplo, cuánto se gastó en la campaña, en las campañas, las impresiones totales entre las dos, los clics, conversiones, etc. Y ya luego sí, también se puede filtrar dentro de la vista general también uno puede elegir puntualmente la vista de Google Ads o la de MetaAds como funciona hoy en día. Pero como que la vista principal sea una y luego esté Google Ads y MetaAds. Y también podrías aprovechar para hacer gráficos o cosas que veas con sentido en base a estas a estos indicadores que te comenté clave, ¿no?
+

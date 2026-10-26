@@ -3,7 +3,8 @@ import { MapPin } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { listAccounts, getGeo } from '@/services/paidService';
 import { aggAccount } from '@/data/paidMetaGeo';
-import { GEO_STR, PAID_STR, fxDate } from '@/utils/paidI18n';
+import { GEO_STR } from '@/utils/paidI18n';
+import { FxNote } from '@/components/paid/FxNote';
 import { fxFactor, fxPair, getFx } from '@/services/fxService';
 import { genGeoNextSteps } from '@/utils/paidInsights';
 import { dayLabel, rangeLabel, deliveryWindow } from '@/utils/metaDates';
@@ -144,8 +145,7 @@ export function MetaGeoReport({ account, period }) {
   const fxK = fxTo && fxTo !== geo.currency ? fxFactor(geo.currency, fxTo, period) : null;
   const moneyCur = moneyFor(fxK != null ? fxTo : geo.currency, loc);
   const money = fxK != null ? (v) => moneyCur(Number(v || 0) * fxK) : moneyCur;
-  const fx = fxK != null ? { from: geo.currency, to: fxTo, date: getFx(period).date, ...fxPair(geo.currency, fxTo, period) } : null;
-  const pt = PAID_STR[lang];
+  const fx = fxK != null ? { from: geo.currency, to: fxTo, date: getFx(period).date, campaign: true, ...fxPair(geo.currency, fxTo, period) } : null;
   const acc = aggAccount(geo);
   const per = acc.per; // [{c, t}] por campaña
   const tf = per.find((x) => x.c.kind === 'typeform');
@@ -264,16 +264,7 @@ export function MetaGeoReport({ account, period }) {
         />
       </div>
 
-      {fx && (
-        <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3 text-[11.5px] leading-relaxed text-cu-dgrey shadow-cu">
-          <strong className="text-cu-dblue">{pt.fxLead(fx.to)}</strong>
-          {pt.fxRest(fx.from, fx.source, fxDate(fx.date, lang))}
-          <strong className="text-cu-dblue">
-            1 {fx.unit} = {Number(fx.value).toLocaleString(loc, { maximumFractionDigits: fx.decimals })} {fx.quote}
-          </strong>
-          .
-        </div>
-      )}
+      <FxNote fx={fx} lang={lang} />
 
       {/* ── Ficha del experimento — solo uso interno ── */}
       {!external && (

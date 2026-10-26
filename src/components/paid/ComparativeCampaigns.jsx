@@ -138,14 +138,14 @@ export function ComparativeCampaigns({ mo, currency = 'EUR', lang = 'es' }) {
 
       <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
         <BarByCampaign lang={lang} title={L.chCtrTitle} subtitle={L.chCtrSub} data={ctrData} unit="pct" />
-        <BarByCampaign lang={lang} title={L.chCpcTitle} subtitle={L.chCpcSub} data={cpcData} unit="money" currency={currency} color={CU.dblue} />
+        <BarByCampaign lang={lang} title={L.chCpcTitle} subtitle={L.chCpcSub(currency)} data={cpcData} unit="money" currency={currency} color={CU.dblue} />
       </div>
       <div className="mb-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
         <BarByCampaign lang={lang} title={L.chCvrTitle} subtitle={L.chCvrSub} data={cvrData} unit="pct" color="#2d8a4e" />
         {cplData.length ? (
-          <BarByCampaign lang={lang} title={L.chCplTitle} subtitle={L.chCplSub} data={cplData} unit="money" currency={currency} color="#d4a72c" />
+          <BarByCampaign lang={lang} title={L.chCplTitle} subtitle={L.chCplSub(currency)} data={cplData} unit="money" currency={currency} color="#d4a72c" />
         ) : (
-          <ChartCard title={L.chCplTitle} subtitle={L.chCplSub}>
+          <ChartCard title={L.chCplTitle} subtitle={L.chCplSub(currency)}>
             <div className="flex h-full items-center justify-center text-center text-[12px] text-cu-grey">
               {L.chCplEmpty}
             </div>

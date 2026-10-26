@@ -401,6 +401,17 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **Paid: Vista general en las campañas en paralelo** (26/10/2026): IFPA
+  abre en «Vista general» (Google Ads + Meta Ads juntos) y el selector deja
+  pasar a Google Ads o Meta Ads. Suma solo lo comparable: inversión en la
+  misma moneda (IFPA 561.545,13 ARS), impresiones (13.120), clics de Google
+  + clics en el enlace de Meta (270) y conversiones registradas (1, de
+  Google; Meta de tráfico no registra). Tiene embudo combinado, aporte por
+  plataforma, inversión semanal por plataforma, tabla Google vs. Meta vs.
+  total y lectura de performance. Se sacó la «Comparativa de campañas» de
+  las campañas en paralelo, y la de los meses ahora dice la moneda real
+  (decía «EUR» fijo). Criterios en DECISIONES §22.
+
 - **Paid: semanas del consumo de presupuesto como rango** (26/10/2026): el
   eje del gráfico «Gasto semanal» muestra cada semana de Google Ads como
   rango completo («5/10 al 11/10», «12/10 al 18/10»; EN «10/5 to 10/11») y

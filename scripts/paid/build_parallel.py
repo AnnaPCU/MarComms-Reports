@@ -185,7 +185,7 @@ def main():
           '//  GENERADO con scripts/paid/build_parallel.py desde',
           f'//  metricas/paid-media/{os.path.basename(folder)}/. No editar a mano: corregir',
           '//  el export (o campaña.json) y volver a correr.',
-          '//  Las plataformas no se suman entre sí (docs/DECISIONES.md §22).',
+          '//  La vista general suma solo lo comparable (docs/DECISIONES.md §22).',
           '// ════════════════════════════════════════════════════════════════',
           '',
           'export default ' + build_meta.to_js(OrderedDict(period=period, accounts=accounts)) + ';']

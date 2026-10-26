@@ -4,8 +4,8 @@
 //  Una campaña de evento que corrió a la vez en las dos plataformas (mismo
 //  nombre en el mismo drop, docs/DECISIONES.md §22) es un período propio
 //  de la cuenta: «Período/Campaña» → ej. «IFPA · Oct 2026». Adentro, un
-//  selector de plataforma: Google Ads por defecto, Meta Ads a un clic.
-//  Las plataformas NUNCA se suman entre sí.
+//  selector: Vista general por defecto (suma solo lo comparable, §22),
+//  Google Ads y Meta Ads a un clic, cada una con sus propias métricas.
 //  Cada campaña vive en src/data/paidParallel/<id>.js, generado con
 //  scripts/paid/build_parallel.py. Forma:
 //    { period: { id, label, labelEn, start, end, platforms },

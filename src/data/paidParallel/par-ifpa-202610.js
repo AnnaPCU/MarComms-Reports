@@ -3,7 +3,7 @@
 //  GENERADO con scripts/paid/build_parallel.py desde
 //  metricas/paid-media/IFPA-2026-10/. No editar a mano: corregir
 //  el export (o campaña.json) y volver a correr.
-//  Las plataformas no se suman entre sí (docs/DECISIONES.md §22).
+//  La vista general suma solo lo comparable (docs/DECISIONES.md §22).
 // ════════════════════════════════════════════════════════════════
 
 export default {

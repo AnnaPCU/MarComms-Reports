@@ -743,11 +743,35 @@ evento corrió en Google Ads (Search) y en Meta Ads a la vez.
   `Google Ads/` y `Meta Ads/` (así se subió IFPA). Se archiva entera en
   `_procesados/` al procesarla.
 - **Cómo se ve**: un solo período en «Período/Campaña» de la cuenta (ej.
-  «IFPA · Oct 2026»). Al entrar se muestra **por defecto lo de Google Ads**,
-  y un selector de plataforma deja pasar a **Meta Ads**. Cada plataforma
-  muestra sus propias métricas; **no se suman entre plataformas** (miden
-  cosas distintas y pueden venir en monedas distintas, §5). En Meta, el
+  «IFPA · Oct 2026»). Al entrar se muestra la **Vista general** (las dos
+  plataformas juntas) y el selector deja pasar a **Google Ads** o a
+  **Meta Ads**, cada una con sus propias métricas como siempre. En Meta, el
   objetivo se lee por destino de cada anuncio (§21).
+- **Vista general** (pedido del equipo el 26/10/2026; antes las plataformas
+  no se sumaban nunca): suma **solo lo comparable**
+  (`src/utils/paidParallelSummary.js`):
+  - **Inversión**: solo si las dos plataformas están en la misma moneda (nunca
+    se suman monedas distintas, §5). En IFPA, las dos en ARS.
+  - **Impresiones** y **clics**: clics de Google Ads + clics en el enlace de
+    Meta Ads (es la métrica de Meta equivalente al clic de Google; la tabla
+    lo aclara).
+  - **Conversiones**: las que registra cada plataforma. Una campaña de Meta
+    de tráfico no registra conversiones: se dice «no registra», no se pone 0.
+    Los envíos de formularios (Typeform / HubSpot) no se suman: su rango no
+    coincide con el vuelo y reciben visitas de cualquier origen.
+  - **Costo por conversión total**: solo si las dos plataformas registran
+    conversiones; si no, mezclaría inversión que no buscaba convertir.
+  - Muestra indicadores clave con el detalle por plataforma, embudo
+    combinado, aporte de cada plataforma (% de inversión, impresiones y
+    clics), inversión semanal por plataforma (Meta agrupado por semana de
+    lunes a domingo desde su diario), tabla Google vs. Meta vs. total y
+    lectura de performance. Plan de Acción y Próximos Pasos, solo internos
+    (§23).
+- **Sin «Comparativa de campañas»** en las campañas en paralelo: Google
+  tiene una sola campaña, así que no había nada que comparar. La
+  comparación es entre plataformas, en la Vista general. En los meses de
+  Google Ads la comparativa sigue (y sus subtítulos ahora dicen la moneda
+  real; antes decían «EUR» fijo).
 - **El mes de Google Ads no cambia**: la campaña sigue apareciendo en el
   reporte mensual de su cuenta junto con las demás (Google se reporta por
   mes con todas las campañas, §17). La vista de la campaña es un corte
@@ -762,9 +786,9 @@ evento corrió en Google Ads (Search) y en Meta Ads a la vez.
   el selector de plataforma se recuerda por cuenta y período, y en el HTML
   descargado sigue funcionando. Google muestra el reporte de siempre (con el
   detalle por grupo en la vista general, porque es una sola campaña) y los
-  textos dicen «período» en vez de «mes». La descarga queda en la moneda
-  original: la conversión a USD/EUR usa el cierre de un mes (§19) y el
-  vuelo no es un mes.
+  textos dicen «período» en vez de «mes». Desde el 26/10/2026 la descarga
+  también se puede pasar a USD/EUR, con el tipo de cambio del cierre de la
+  campaña (§19).
 - **Campaña conjunta de varias cuentas** (23/10/2026, IFPA: CU Estados
   Unidos + CU México): se declara en `campaña.json` (`tambienEn`: ids de
   las otras cuentas). Como los exports no traen desglose por país, cada

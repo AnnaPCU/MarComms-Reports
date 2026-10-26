@@ -13,22 +13,8 @@ import { CU, PAL, CHART_TOOLTIP } from '@/constants/brand';
 import { ChartCard } from '@/components/shared/ChartCard';
 import { PAID_STR } from '@/utils/paidI18n';
 import { paidFmt } from '@/utils/paidFormat';
+import { weekRangeLabel } from '@/utils/weekRange';
 
-
-// Semana de Google Ads (lunes a domingo) como rango completo, para que no
-// se lea como un día suelto: "2026-10-12" → "12/10 al 18/10" (ES) ·
-// "10/12 to 10/18" (EN). Si cruza de mes: "28/9 al 4/10".
-const wkRange = (w) => {
-  const start = new Date(`${w}T12:00:00Z`);
-  const end = new Date(start);
-  end.setUTCDate(end.getUTCDate() + 6);
-  return [start, end].map((x) => ({ d: x.getUTCDate(), m: x.getUTCMonth() + 1 }));
-};
-const wkLabel = (w, lang = 'es') => {
-  const [a, b] = wkRange(w);
-  if (lang === 'en') return `${a.m}/${a.d} to ${b.m}/${b.d}`;
-  return `${a.d}/${a.m} al ${b.d}/${b.m}`;
-};
 
 const MAX_SERIES = 6;
 
@@ -77,7 +63,7 @@ export function BudgetWeekly({ series = [], currency = 'EUR', lang = 'es' }) {
   // Filas del chart: solo las series activas; el acumulado refleja lo visible.
   let cum = 0;
   const rows = data.allWeeks.map((wk) => {
-    const row = { name: wkLabel(wk, lang) };
+    const row = { name: weekRangeLabel(wk, lang) };
     let wkTotal = 0;
     data.seriesOut.forEach((s) => {
       if (!activeKeys.includes(s.name)) return;

@@ -5,7 +5,7 @@ import { MONTHS_2026 } from '@/constants/periods';
 import { hasData } from '@/utils/hasData';
 import { genPaidInsights, genPaidConclusions, genPaidNextSteps, campaignStatus } from '@/utils/paidInsights';
 import { campaignPartial } from '@/utils/campaignPartial';
-import { PAID_STR, MONTHS_EN, fxDate } from '@/utils/paidI18n';
+import { PAID_STR, MONTHS_EN } from '@/utils/paidI18n';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { KpiCard } from '@/components/shared/KpiCard';
@@ -22,6 +22,8 @@ import { ComparativeCampaigns } from '@/components/paid/ComparativeCampaigns';
 import { BudgetWeekly } from '@/components/paid/BudgetWeekly';
 import { AdGroupsDetail } from '@/components/paid/AdGroupsDetail';
 import { MetaGeoReport } from '@/components/paid/MetaGeoReport';
+import { ParallelOverview } from '@/components/paid/ParallelOverview';
+import { FxNote } from '@/components/paid/FxNote';
 import { PaidAnnualReview } from '@/components/paid/PaidAnnualReview';
 import { PaidComparative } from '@/components/paid/PaidComparative';
 import { isExternalReport } from '@/utils/reportAudience';
@@ -111,8 +113,9 @@ export function PaidApp({ account, period }) {
   // Vista elegida (todas / una campaña / comparativa), recordada por cuenta y período.
   const [savedView, setView] = usePersistentState(`paid.view.${account}.${period}`, ALL);
   const [lang, setLang] = useReportLang('es');
-  // Campaña en paralelo: plataforma elegida (Google Ads por defecto, §22).
-  const [platform, setPlatform] = usePersistentState(`paid.platform.${account}.${period}`, 'google');
+  // Campaña en paralelo: vista elegida (general por defecto, después Google
+  // Ads o Meta Ads, §22).
+  const [platform, setPlatform] = usePersistentState(`paid.parView.${account}.${period}`, 'all');
 
   const t = PAID_STR[lang];
   const accName = listAccounts().find((a) => a.id === account)?.name ?? '';
@@ -129,15 +132,17 @@ export function PaidApp({ account, period }) {
     return <MetaGeoReport account={account} period={period} />;
   }
 
-  // Campaña hecha en paralelo en Google Ads y Meta Ads: un selector de
-  // plataforma arriba; cada una con sus métricas, nunca sumadas.
+  // Campaña hecha en paralelo en Google Ads y Meta Ads: arriba, la vista
+  // general (suma lo comparable) y, a un clic, la de cada plataforma.
+  const parView = ['google', 'meta'].includes(platform) ? platform : 'all';
   const platformBar = par && (
     <div className="mb-4 flex flex-wrap items-end gap-3">
       <SegmentedControl
         label={t.platformLabel}
-        value={platform === 'meta' ? 'meta' : 'google'}
+        value={parView}
         onChange={setPlatform}
         options={[
+          { id: 'all', label: t.parAll },
           { id: 'google', label: 'Google Ads' },
           { id: 'meta', label: 'Meta Ads' },
         ]}
@@ -157,11 +162,30 @@ export function PaidApp({ account, period }) {
       )}
     </div>
   );
-  if (par && platform === 'meta') {
+  if (par && parView === 'meta') {
     return (
       <div className="animate-fade-in">
         {platformBar}
         <MetaGeoReport account={account} period={period} />
+      </div>
+    );
+  }
+  if (par && parView === 'all') {
+    return (
+      <div className="animate-fade-in">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">{platformBar}</div>
+          <SegmentedControl
+            value={lang}
+            onChange={setLang}
+            size="sm"
+            options={[
+              { id: 'es', label: 'ES' },
+              { id: 'en', label: 'EN' },
+            ]}
+          />
+        </div>
+        <ParallelOverview par={par} period={period} accName={accName} periodLabel={periodLabel} lang={lang} />
       </div>
     );
   }
@@ -205,7 +229,10 @@ export function PaidApp({ account, period }) {
   const c = tt.currency || 'EUR';
   const partial = Boolean(mo.partial);
   // La vista guardada vale si sigue existiendo en este mes (si no, todas).
-  const view = savedView === ALL || savedView === CMP || mo.campaigns.some((x) => x.name === savedView) ? savedView : ALL;
+  // En una campaña en paralelo no hay comparativa de campañas (una sola
+  // campaña de Google): la comparación es entre plataformas, en la vista general.
+  const view =
+    savedView === ALL || (savedView === CMP && !par) || mo.campaigns.some((x) => x.name === savedView) ? savedView : ALL;
   const selected = mo.campaigns.find((x) => x.name === view);
 
   const campOptions = [
@@ -214,7 +241,7 @@ export function PaidApp({ account, period }) {
       const p = campaignPartial(x, period);
       return { id: x.name, label: p ? `${x.name} · ${t.cPartialChip(p.activeDays)}` : x.name };
     }),
-    { id: CMP, label: t.cmpCampaigns },
+    ...(par ? [] : [{ id: CMP, label: t.cmpCampaigns }]),
   ];
 
   // Semanas del vuelo de Google (campaña en paralelo): del lunes de la
@@ -251,18 +278,7 @@ export function PaidApp({ account, period }) {
         />
       </div>
 
-      {mo.fx && (
-        <div className="mb-4 rounded-cu border border-cu-border border-l-4 border-l-cu-cyan bg-white px-4 py-3 text-[11.5px] leading-relaxed text-cu-dgrey shadow-cu">
-          <strong className="text-cu-dblue">{t.fxLead(mo.fx.to)}</strong>
-          {t.fxRest(mo.fx.from, mo.fx.source, mo.fx.campaign ? fxDate(mo.fx.date, lang) : null)}
-          <strong className="text-cu-dblue">
-            1 {mo.fx.unit} ={' '}
-            {Number(mo.fx.value).toLocaleString(lang === 'en' ? 'en-US' : 'es-AR', { maximumFractionDigits: mo.fx.decimals })}{' '}
-            {mo.fx.quote}
-          </strong>
-          .
-        </div>
-      )}
+      <FxNote fx={mo.fx} lang={lang} />
 
       {partial && (
         <div className="mb-4 flex items-start gap-2 rounded-cu border border-amber-300 bg-amber-50 px-4 py-3 text-[12px] text-amber-800">

@@ -138,6 +138,12 @@ Orden común en todos los pilares: **Insights (Plan de Acción)** → **KPIs** �
   los resultados por anuncio y el desglose por género (el de edad sí va).
   El «Detalle por Grupo de Anuncio» sí va al externo, al final del reporte
   (`docs/DECISIONES.md` §23).
+- **Campañas en paralelo (Google Ads + Meta Ads)**: abren en una **Vista
+  general** que suma solo lo comparable (inversión solo en la misma moneda,
+  impresiones, clics de Google + clics en el enlace de Meta, conversiones
+  que registra cada plataforma; nunca formularios ni 0 inventados); Google
+  Ads y Meta Ads quedan a un clic con su reporte de siempre
+  (`docs/DECISIONES.md` §22).
 - **Vista por cliente** («Clientes» en la nav): cruza los pilares para un
   cliente (unidad de negocio + país/región) y **solo existe si el cliente tiene
   más de un pilar con datos**. El mapeo cliente → cuenta por pilar es explícito
