@@ -10,6 +10,7 @@ import {
 import { ML } from '@/data/socialSeed';
 import { genCountryInsights } from '@/utils/socialInsights';
 import { SOCIAL_STR, ML_EN } from '@/utils/socialI18n';
+import { countryEn } from '@/utils/webinarsI18n';
 import { fmt, num, computeDelta } from '@/utils/format';
 import { isQuarterPeriod, periodItems, periodDelta, periodText } from '@/utils/periodWording';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
@@ -41,7 +42,8 @@ export function CountryView({ account, country, period, lang = 'es' }) {
   const en = lang === 'en';
   const cfg = getSegConfig(account);
   const cInfo = cfg?.countries.find((c) => c.id === country);
-  const name = cInfo?.name ?? country;
+  // Nombre del país en el idioma del reporte (el seed lo guarda en español).
+  const name = en ? countryEn(cInfo?.name ?? country) : (cInfo?.name ?? country);
   const d = useMemo(() => getSegCountry(account, country, period), [account, country, period]);
   const prev = useMemo(() => getPrevSegCountry(account, country, period), [account, country, period]);
   const tot = useMemo(() => getSegMonthTotals(account, period), [account, period]);

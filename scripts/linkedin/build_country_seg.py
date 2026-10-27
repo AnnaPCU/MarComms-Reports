@@ -3,6 +3,7 @@
 #   · cul  → src/data/socialLatam.js    (Argentina, Brasil, Chile, Perú,
 #                                        México, Ecuador)
 #   · cuna → src/data/socialNorthAm.js  (USA, Canadá)
+#   · pia  → src/data/socialPsIberia.js (Argentina, Brasil, Estados Unidos)
 #
 # Metodología (regla de honestidad — solo datos reales del export):
 #  · Publicaciones: cada post se atribuye a un país por su hashtag
@@ -75,6 +76,21 @@ ACCOUNTS = {
             'us': C('USA', '#ControlUnionUSA', ['usa', 'unitedstates'], ['united states'],
                     ['estados unidos', 'united states', 'us_metro']),
             'ca': C('Canadá', '#ControlUnionCanada', ['canad'], ['canada'], ['canada']),
+        },
+    ),
+    # Peterson Solutions (Iberia & Americas): vistas de Argentina, Brasil y
+    # Estados Unidos (pedido del equipo, 27/10/2026). Publica con
+    # #PetersonSolutionsArgentina, #PetersonSolutionsUSA / #PetersonUSA (y
+    # #PetersonSolutionsBrasil cuando haya). Las ubicaciones fuera de EE. UU.
+    # siempre traen «, País»; las metro de EE. UU. no (regla us_metro).
+    'pia': dict(
+        folder_sub='iberia',
+        out='socialPsIberia.js', prefix='PIA',
+        countries={
+            'ar': C('Argentina', '#PetersonSolutionsArgentina', ['argentina'], ['argentina'], ['argentina']),
+            'br': C('Brasil', '#PetersonSolutionsBrasil', ['brasil', 'brazil'], ['brasil', 'brazil'], ['brasil', 'brazil']),
+            'us': C('Estados Unidos', '#PetersonSolutionsUSA · #PetersonUSA', ['usa', 'unitedstates', 'estadosunidos'],
+                    ['united states', 'estados unidos'], ['estados unidos', 'united states', 'us_metro']),
         },
     ),
 }

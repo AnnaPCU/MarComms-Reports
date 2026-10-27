@@ -17,6 +17,7 @@ import {
 } from '@/services/socialService';
 import { genCountryYearInsights } from '@/utils/socialInsights';
 import { SOCIAL_STR } from '@/utils/socialI18n';
+import { countryEn } from '@/utils/webinarsI18n';
 import { fmt, num } from '@/utils/format';
 import { CU, CHART_TOOLTIP } from '@/constants/brand';
 import { InsightsPanel } from '@/components/shared/InsightsPanel';
@@ -39,7 +40,8 @@ export function CountryYearView({ account, country, lang = 'es' }) {
   const en = lang === 'en';
   const cfg = getSegConfig(account);
   const cInfo = cfg?.countries.find((c) => c.id === country);
-  const name = cInfo?.name ?? country;
+  // Nombre del país en el idioma del reporte (el seed lo guarda en español).
+  const name = en ? countryEn(cInfo?.name ?? country) : (cInfo?.name ?? country);
   const series = useMemo(() => getSegCountryYearSeries(account, country), [account, country]);
   const folBase = useMemo(() => getSegFolBase(account, country), [account, country]);
 

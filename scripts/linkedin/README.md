@@ -44,6 +44,9 @@ Cada ruta acepta dos formatos (se detectan solos):
 - `acc=cul` → `src/data/socialLatam.js` (Argentina, Brasil, Chile, Perú,
   México, Ecuador)
 - `acc=cuna` → `src/data/socialNorthAm.js` (USA, Canadá)
+- `acc=pia` → `src/data/socialPsIberia.js` (Argentina, Brasil, Estados
+  Unidos; hashtags `#PetersonSolutionsArgentina`, `#PetersonSolutionsBrasil`,
+  `#PetersonSolutionsUSA` / `#PetersonUSA`). Desde agosto 2026.
 
 ```bash
 python3 scripts/linkedin/build_country_seg.py acc=cuna \
@@ -70,7 +73,7 @@ de la cuenta) o el `.xlsx` unificado de la cuenta. Metodología:
   sin país ("Miami-Fort Lauderdale y alrededores").
 
 Al cargar un mes nuevo, correr `build_monthly.py` y `build_country_seg.py`
-**una vez por cuenta segmentada** (`acc=cul` y `acc=cuna`).
+**una vez por cuenta segmentada** (`acc=cul`, `acc=cuna` y `acc=pia`).
 
 Los .xls de LinkedIn a veces traen texto mal codificado (pasó con CU España y
 PS Iberia & Americas en septiembre 2026) y `xlrd` corta con

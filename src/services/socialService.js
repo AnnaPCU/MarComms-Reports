@@ -11,6 +11,7 @@
 import { DB, ML, MO } from '@/data/socialSeed';
 import { LATAM_DB, LATAM_COUNTRIES } from '@/data/socialLatam';
 import { NA_DB, NA_COUNTRIES } from '@/data/socialNorthAm';
+import { PIA_DB, PIA_COUNTRIES } from '@/data/socialPsIberia';
 import { monthHasData } from '@/utils/hasData';
 
 // ── Cuentas (clientes del pilar Social) ──
@@ -83,14 +84,16 @@ export function prevPeriodId(period) {
 export { CMP_DATA, TOP_ENG_POSTS } from '@/data/socialSeed';
 
 // ════════════════════════════════════════════════════════════════
-//  Segmentación POR PAÍS de cuentas LinkedIn (CU Latinoamérica y
-//  CU North America). Datos generados por
+//  Segmentación POR PAÍS de cuentas LinkedIn (CU Latinoamérica, CU North
+//  America y PS Iberia & Americas). Datos generados por
 //  scripts/linkedin/build_country_seg.py — ver la nota de metodología en
 //  los seeds (posts por hashtag de país + hojas de Ubicación del export).
 // ════════════════════════════════════════════════════════════════
 const SEG = {
   cul: { label: 'CU Latinoamérica', countries: LATAM_COUNTRIES, db: LATAM_DB },
   cuna: { label: 'CU North America', countries: NA_COUNTRIES, db: NA_DB },
+  // Desde agosto 2026 (los exports crudos de enero-julio no están en el repo).
+  pia: { label: 'PS Iberia & Americas', countries: PIA_COUNTRIES, db: PIA_DB },
 };
 
 // Config de segmentación de la cuenta (o null si no segmenta por país).

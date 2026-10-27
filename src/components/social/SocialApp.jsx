@@ -1,5 +1,6 @@
 import { useMemo, useEffect } from 'react';
 import { listAccounts, getSegConfig } from '@/services/socialService';
+import { countryEn } from '@/utils/webinarsI18n';
 import { useSocialMonthly } from '@/hooks/useSocialMonthly';
 import { ML, MO } from '@/data/socialSeed';
 import { monthHasData } from '@/utils/hasData';
@@ -47,7 +48,8 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
   const { mo, prev, audience, loading } = useSocialMonthly(account, period);
   const crm = usePillarCrm('social', account, period);
 
-  // Segmentación por país (CU Latinoamérica, CU North America): el reporte
+  // Segmentación por país (CU Latinoamérica, CU North America, PS Iberia &
+  // Americas): el reporte
   // de la cuenta se mantiene igual ('all') y se puede abrir el reporte de
   // cada país (posts por hashtag + audiencia por ubicación), tanto en la
   // vista mensual como en el Resumen del Año.
@@ -95,7 +97,7 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
           size="sm"
           options={[
             { id: 'all', label: segCfg.label },
-            ...segCfg.countries.map((c) => ({ id: c.id, label: c.name })),
+            ...segCfg.countries.map((c) => ({ id: c.id, label: lang === 'en' ? countryEn(c.name) : c.name })),
           ]}
         />
       ) : (
@@ -137,7 +139,7 @@ export function SocialApp({ account, period, country: forcedCountry = null }) {
                   size="sm"
                   options={[
                     { id: 'all', label: segCfg.label },
-                    ...segCfg.countries.map((c) => ({ id: c.id, label: c.name })),
+                    ...segCfg.countries.map((c) => ({ id: c.id, label: lang === 'en' ? countryEn(c.name) : c.name })),
                   ]}
                 />
               </div>

@@ -51,9 +51,9 @@ describe('Webinar Fueling Conversations (PS Estados Unidos, oct 2026)', () => {
     expect(c.emails.map((e) => e.name)).toEqual(ev.email.sends.map((s) => s.name));
   });
 
-  it('el cliente PS Estados Unidos cruza Email y Webinars, con el show rate externo', () => {
+  it('el cliente PS Estados Unidos cruza Social (vista EE. UU. de PS Iberia & Americas), Email y Webinars', () => {
     expect(listClients().some((c) => c.id === 'ps-usa')).toBe(true);
     const o = getOverview('ps-usa');
-    expect(o.pillars.map((p) => p.kind).sort()).toEqual(['email', 'webinars']);
+    expect(o.pillars.map((p) => p.kind).sort()).toEqual(['email', 'social-country', 'webinars']);
   });
 });

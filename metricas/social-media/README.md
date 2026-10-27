@@ -42,8 +42,9 @@ social-media/
 
 1. `build_monthly.py` → regenera `src/data/socialMonthly.js` (KPIs + top posts
    por cuenta).
-2. `build_country_seg.py acc=cul` y `acc=cuna` → regenera la segmentación por
-   país de CU Latinoamérica y CU North America.
+2. `build_country_seg.py acc=cul`, `acc=cuna` y `acc=pia` → regenera la
+   segmentación por país de CU Latinoamérica, CU North America y PS Iberia &
+   Americas (Argentina, Brasil, Estados Unidos).
 3. Verifica los reportes en el navegador, deploya a producción y mueve la
    carpeta del mes a `_procesados/`.
 

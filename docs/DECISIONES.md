@@ -241,8 +241,12 @@ Quedó como práctica fija, y conviene sostenerla:
   Son criterios revisables por
   el equipo, no datos.
 - **Social por país reutiliza la segmentación por hashtag** de la cuenta
-  regional (CU Latinoamérica, CU North America), con sus limitaciones ya
-  documentadas (§1): lo que LinkedIn no segmenta por país no se muestra.
+  regional (CU Latinoamérica, CU North America y, desde el 27/10/2026, PS
+  Iberia & Americas con Argentina, Brasil y Estados Unidos), con sus
+  limitaciones ya documentadas (§1): lo que LinkedIn no segmenta por país no
+  se muestra. En PS, los meses sin export crudo en el repo (enero-julio) no
+  se reconstruyen desde el top 5 del seed mensual: quedan sin dato por país
+  hasta tener el export completo de publicaciones.
 - **Entrar a un pilar desde el cliente es entrar al pilar.** La botonera
   renderiza el mismo componente del pilar con la cuenta mapeada; no hay una
   versión «resumida» del pilar que pueda quedar desactualizada respecto de la

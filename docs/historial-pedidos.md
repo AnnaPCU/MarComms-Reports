@@ -1718,3 +1718,8 @@
 
 (El drop: «Biofuel_Talks_Leads_y_Metricas.xlsx» en `metricas/webinars/` —commit «16.10 Webinar PS USA Biofuels Talks»—, 14 exports de Mailchimp «PS - Webinar Fueling conversations USA» en `metricas/email-marketing/` y 4 capturas de posteos de LinkedIn en `metricas/social-media/`.)
 
+
+**#141** (27/10/2026)
+
+> Necesito que, asi como en los reportes de Social Media, para CU Latinoamerica hay distitnas vistas para ciertos paises más la vista general, busco hacer lo mismo para ps iberia & americas, con una vista general como la que está ahora + vistas para los paies Argentina Brasil y Estados Unidos
+

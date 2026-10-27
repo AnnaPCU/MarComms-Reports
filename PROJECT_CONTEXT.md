@@ -98,7 +98,7 @@ src/
   data/
     socialSeed.js             estructura + audiencia Social (9 cuentas); los meses vienen de socialMonthly.js
     socialMonthly.js          KPIs y top posts por cuenta y mes (Ene–Sep 2026), generado por scripts/linkedin/
-    socialLatam.js / socialNorthAm.js  segmentación por país de CU Latinoamérica y CU North America
+    socialLatam.js / socialNorthAm.js / socialPsIberia.js  segmentación por país de CU Latinoamérica, CU North America y PS Iberia & Americas
     paidSeed.js               datos reales Paid (pt, es, cuc, psar, cuus, cuar, pcues, pcuar; ver §6)
     paidMetaGeo.js            registro de las campañas de Meta Ads (una por archivo en paidMeta/, generadas por scripts/paid/build_meta.py)
     websiteSeed.js            datos reales Website (CU Argentina, Q1 2026)
@@ -262,7 +262,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 | Módulo | Estado |
 |--------|--------|
-| Social Media | ✅ Completo (Ene–Sep 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
+| Social Media | ✅ Completo (Ene–Sep 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país (CU Latinoamérica, CU North America y PS Iberia & Americas — esta última desde agosto) + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
 | Paid Media | ✅ Completo (Feb–Sep 2026; 8 cuentas de Google Ads desde septiembre: suman Control Union Argentina, PCU España y PCU Argentina) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) · campaña en paralelo Google + Meta: IFPA · Oct 2026 (CU Estados Unidos, `scripts/paid/build_parallel.py`) |
 | Website (GA + SEO) | ✅ Q1+Q2 2026 (12 cuentas) y **Q3 2026** (10 cuentas, de los reportes trimestrales .md de GA4 + Search Console del 9/10; ahora también con SEO de Peterson). CU Estados Unidos y CU Canadá en Q3 salen del reporte de North America segmentado por país (12 cuentas en total). + Resumen del Año + comparativa. Tooling: `scripts/website/md_to_seed.py` |
 | Email Marketing | ✅ Siete campañas reales: `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `psus` (Peterson Solutions Estados Unidos) m10 — webinar Fueling Conversations (14 envíos: base actual, base nueva y 2 post-webinar) · `cuus` (Control Union Estados Unidos) m10 — tres campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange), «SMETA · Campaign 3» e «IFPA» (3 envíos) (tooling: `scripts/mailchimp-to-seed.mjs`) |
@@ -350,7 +350,7 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   procesan igual y se archivan como `_procesados/AAAA-MM`), correr el tooling
   correspondiente, verificar, deployar y mover la carpeta en el mismo commit.
   - **Social**: `python3 scripts/linkedin/build_monthly.py mXX="<carpeta>"` y
-    `build_country_seg.py acc=cul mXX=…` + `acc=cuna mXX=…`. Los tres scripts
+    `build_country_seg.py acc=cul mXX=…` + `acc=cuna mXX=…` + `acc=pia mXX=…`. Los scripts
     **fusionan** el mes nuevo con lo ya cargado en `src/data/` (los crudos de
     meses anteriores no viven en el repo). Después sumar el mes a `ML`/`MO`
     en `socialSeed.js` y mover `defaultPeriod` de Social en el registry.
@@ -405,6 +405,23 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Social: PS Iberia & Americas por país** (27/10/2026): como CU
+  Latinoamérica, la cuenta tiene la vista general de siempre más las vistas
+  **Argentina, Brasil y Estados Unidos** (mensual, trimestre y Resumen del
+  Año, en la app y en el descargable). Posts por hashtag
+  (`#PetersonSolutionsArgentina`, `#PetersonSolutionsUSA` / `#PetersonUSA`,
+  `#PetersonSolutionsBrasil`); audiencia por ubicación del export.
+  - Cargado **agosto y septiembre 2026**, los únicos meses con exports crudos
+    en el repo (`_procesados/2026-08` y `2026-09`). Enero-julio quedan en
+    «Sin información suficiente» por país, y por eso también el Q3 por país
+    (falta julio), hasta recibir esos exports.
+  - Brasil no tiene posteos con marcador en agosto ni septiembre: su vista
+    muestra solo la audiencia (2.203 seguidores, 138 visualizaciones de
+    página en septiembre).
+  - El cliente PS Estados Unidos suma Social (vista Estados Unidos).
+  - En inglés, los nombres de país de todas las vistas por país (también CU
+    Latinoamérica y North America) se traducen (Brasil → Brazil).
 
 - **Webinar Fueling Conversations — Peterson Solutions Estados Unidos**
   (27/10/2026): webinar en inglés del 16/10 sobre biocombustibles en

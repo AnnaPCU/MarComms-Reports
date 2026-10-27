@@ -203,6 +203,7 @@ export const CLIENTS = [
     unit: 'ps',
     region: 'North America',
     pillars: {
+      social: { account: 'pia', country: 'us' },
       email: { account: 'psus' },
       webinars: { account: 'psus', note: 'Webinars en inglés con la base de contactos de Norteamérica', noteEn: 'English-language webinars with the North American contact base' },
     },
