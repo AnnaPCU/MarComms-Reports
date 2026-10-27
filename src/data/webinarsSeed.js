@@ -19,6 +19,8 @@ export const WEBINAR_CLIENTS = [
   { id: 'cu', name: 'Control Union Latinoamérica' },
   { id: 'cug', name: 'Control Union Global' },
   { id: 'psi', name: 'Peterson Solutions Iberoamérica' },
+  // Webinars en inglés de Peterson Solutions para Norteamérica (base de EE.UU. y Canadá).
+  { id: 'psus', name: 'Peterson Solutions Estados Unidos' },
 ];
 
 // Metodología de scoring (doc "Metodología de Scoring de Leads en Webinars",
@@ -857,6 +859,225 @@ export const WEBINARS_DB = {
       ],
     },
   },
+  psus: {
+    'wbn-fueling': {
+      title: 'Webinar Fueling Conversations',
+      tema: 'Biocombustibles en Norteamérica — señales de mercado, regulación, feedstocks e intensidad de carbono, agricultura regenerativa',
+      temaEn: 'North American biofuels — market signals, regulation, feedstock markets and carbon intensity, regenerative agriculture',
+      subtitle: '«The conversations shaping North American biofuels — beyond the headlines»',
+      date: '16 de octubre de 2026',
+      dateEn: 'October 16, 2026',
+      reagendado: false,
+      idioma: 'Inglés',
+      idiomaEn: 'English',
+      audiencia: 'Industria de biocombustibles de Norteamérica (base actual de contactos y una base nueva) — 86 registrados externos: entre los que informaron país, 54 de Estados Unidos y 13 de Canadá (12 sin país claro)',
+      audienciaEn: 'North American biofuels industry (current contact base plus a new base) — 86 external registrants: among those with a country on file, 54 from the United States and 13 from Canada (12 with no clear country)',
+      canales: 'Email marketing (14 envíos: 7 a la base actual — Emails 1-3 y 5-8 —, 5 a una base nueva — Emails 1-5 — y 2 post-webinar: participantes y registrados) · Plataforma: Microsoft Teams · LinkedIn: 4 posteos con captura en Peterson Solutions (Iberia & Americas)',
+      canalesEn: 'Email marketing (14 sends: 7 to the current base — Emails 1-3 and 5-8 —, 5 to a new base — Emails 1-5 — and 2 post-webinar sends: attendees and registrants) · Platform: Microsoft Teams · LinkedIn: 4 posts with screenshots on Peterson Solutions (Iberia & Americas)',
+      serieEmails: ['Base actual: 996 contactos (7 envíos)', 'Base nueva: 2.640 contactos (5 envíos), sin contactos en común con la actual', 'Post-webinar a los 28 participantes y a 34 direcciones de registrados (31 de los 58 que no asistieron)'],
+      serieEmailsEn: ['Current base: 996 contacts (7 sends)', 'New base: 2,640 contacts (5 sends), with no contacts in common with the current one', 'Post-webinar to the 28 attendees and to 34 registrant addresses (31 of the 58 who did not attend)'],
+
+      // ── Key insights (scripts/webinars/build_event.py, Excel «por segmentos») ──
+      // El Excel del equipo ya viene depurado: 103 registros → 99 personas y 45
+      // entradas de asistencia → 41 personas (28 externas, 11 internas, 2
+      // speakers). El show rate se mide sobre EXTERNOS (28/86), como pide el
+      // equipo: las entradas brutas mezclan duplicados, internos y speakers.
+      registered: 99,
+      attended: 41,
+      showRate: 32.6,
+      showRateBasis: 'external',
+      speakers: 2,
+      regCountries: 6, // países declarados por los registrados externos
+      countries: [
+        { name: 'Estados Unidos', reg: 54, att: 19 },
+        { name: 'Canadá', reg: 13, att: 5 },
+        { name: 'España', reg: 2, att: 0 },
+        { name: 'Brasil', reg: 2, att: 0 },
+        { name: 'Reino Unido', reg: 2, att: 0 },
+        { name: 'India', reg: 1, att: 0 },
+      ],
+      companies: {
+        unique: 25,
+        uniqueNote: 'Entre los 28 asistentes externos (empresa declarada o dominio del email corporativo; sin internos ni speakers)',
+        uniqueNoteEn: 'Among the 28 external attendees (declared company or corporate email domain; no internal contacts or speakers)',
+        // Destacadas = empresas de los hot potenciales y warm (tal como las escribió cada registrado).
+        featured: ['LR3Technologies LLC', 'AMERRA Capital Management', 'next energy fuels', 'takachar.com', 'Transworld Technologies Inc.', 'LanzaJet', 'Beachway EcoSearch LLC', 'California Bioenergy', 'Sun Country Highway', 'Permolex', 'ROSLIN GROUP OF COMPANIES', 'BioEonomy Solutions', 'Azure Sustainable Fuels Corp.', 'Marquis', 'Bridgestone Americas', 'Petrogenium', 'thermafuels.com'],
+        featuredNote: 'Empresas de los hot potenciales y warm del evento',
+        featuredNoteEn: 'Companies from the event\'s potential hot and warm leads',
+        others: ['amspecgroup.com', 'EcoEngineers', 'American Soybean Association', 'University of Kentucky', 'P2i2', 'catalystgrp.com', 'Vision Bioenergy Oilseeds LLC', 'Forest Concepts, LLC'],
+      },
+      internos: { total: 13, attended: 11 }, // Control Union / Peterson (3 asistieron sin registrarse: organizadores y moderadora)
+      externos: { registered: 86, attended: 28 },
+      deals: {
+        total: 17, // hot potenciales + warm (candidatos para seguimiento en HubSpot)
+        hot: 2,
+        warm: 15,
+        warmHigh: 11, // warm con ≥ 45 min (prioridad «2 - Warm alto» del Excel)
+        review: 6,
+        cold: 5,
+        nurture: 58,
+        note: '2 hot potenciales + 15 warm — candidatos para seguimiento (externos). Sin hot con intención comercial confirmada.',
+        noteEn: '2 potential hot + 15 warm — candidates for follow-up (external). No hot lead with confirmed commercial intent.',
+      },
+      durationTotalLabel: '1 h 12 min', // tiempo conectado del organizador en Teams
+      durationTotalNote: 'Tiempo conectado del organizador en Teams',
+      durationTotalNoteEn: 'Organizer\'s connected time in Teams',
+      durationAvgMin: 44.8, // asistentes externos (minutos como unión de intervalos, sin doble conteo de reconexiones)
+      durationMedianMin: 47.9,
+      durationBasis: 'external',
+      // Bandas de permanencia del evento (umbrales del equipo: ≥ 45 min = prioridad alta, < 20 min = cold).
+      engagement: { high: 17, mid: 6, low: 5, base: 28 },
+      engagementBands: { high: '≥ 45 min', mid: '20 – 44 min', low: '< 20 min' },
+      highlight:
+        '41 personas se conectaron de 99 registrados: 28 externos, 11 internos y 2 speakers. Sobre la audiencia externa, el show rate fue de 32,6% (28 de 86), y los que entraron se quedaron: mediana de 47,9 minutos y 17 de 28 con 45 minutos o más. La segmentación del equipo dejó 17 candidatos para seguimiento (2 hot potenciales, con señales de intervención en vivo por validar, y 15 warm); no hubo preguntas de asistentes en el Q&A exportado. El email fue el canal principal: 40 de los 99 registrados hicieron clic en algún envío previo al evento.',
+      highlightEn:
+        '41 people joined out of 99 registrants: 28 external, 11 internal and 2 speakers. Among the external audience, the show rate was 32.6% (28 of 86), and those who joined stayed: a median of 47.9 minutes and 17 of 28 connected for 45 minutes or more. The team\'s segmentation left 17 candidates for follow-up (2 potential hot leads, with live-intervention signals still to validate, and 15 warm); attendees asked no questions in the exported Q&A. Email was the main channel: 40 of the 99 registrants clicked a pre-event send.',
+
+      // Segmentación propia del evento (Excel del equipo): sin score numérico.
+      scoring: {
+        mode: 'segments',
+        desc: 'Segmentación del equipo sobre los registrados externos, sin score numérico: tiempo conectado (unión de intervalos, sin doble conteo de reconexiones) y señales de intervención en vivo (mano levantada, audio habilitado). Se excluyen los 16 contactos internos de Control Union / Peterson y los 2 speakers. Umbrales operativos propuestos para este evento.',
+        descEn: 'The team\'s segmentation of external registrants, with no numeric score: time connected (union of intervals, with no double counting of reconnections) and live-intervention signals (raised hand, audio enabled). The 16 internal Control Union / Peterson contacts and the 2 speakers are excluded. Operating thresholds proposed for this event.',
+        classes: [
+          { name: 'Hot potencial', range: 'Señales de intervención en vivo', rangeEn: 'Live-intervention signals', action: 'Validar la intención antes del contacto: revisar la grabación y el CRM (cliente, propuesta, oportunidad activa y owner) y consultar por el proyecto o la necesidad concreta.', actionEn: 'Validate intent before reaching out: review the recording and the CRM (client, proposal, active opportunity and owner) and ask about the specific project or need.' },
+          { name: 'Warm', range: '≥ 20 min conectado', rangeEn: '≥ 20 min connected', action: 'Seguimiento personalizado: preguntar por el proyecto o la necesidad. Prioridad alta desde 45 minutos.', actionEn: 'Personalized follow-up: ask about the project or need. High priority from 45 minutes.' },
+          { name: 'Revisar encaje', range: 'Asistió · relación por validar', rangeEn: 'Attended · relationship to validate', action: 'Validar la relación (proveedor, par o posible alianza) antes de tratarlo como lead.', actionEn: 'Validate the relationship (supplier, peer or potential alliance) before treating it as a lead.' },
+          { name: 'Cold', range: '< 20 min conectado', rangeEn: '< 20 min connected', action: 'Nurturing: contenido educativo y próximo webinar.', actionEn: 'Nurturing: educational content and the next webinar.' },
+          { name: 'Nurture', range: 'Registrado, no asistió', rangeEn: 'Registered, did not attend', action: 'Enviar la grabación y sumarlo al nurturing.', actionEn: 'Send the recording and add to nurturing.' },
+        ],
+      },
+
+      // ── Sección 1: Email Marketing (exports de destinatarios de Mailchimp) ──
+      email: {
+        sends: [
+          { name: 'Email 1 · Base actual', sent: 996, open: 22.9, click: 2.6 },
+          { name: 'Email 1 · Base nueva', sent: 2640, open: 22.9, click: 2.5 },
+          { name: 'Email 2 · Base actual', sent: 946, open: 23.7, click: 3.5 },
+          { name: 'Email 2 · Base nueva', sent: 2549, open: 21.9, click: 2.2 },
+          { name: 'Email 3 · Base actual', sent: 940, open: 21.2, click: 2.8 },
+          { name: 'Email 3 · Base nueva', sent: 2525, open: 36.0, click: 2.4 },
+          { name: 'Email 4 · Base nueva', sent: 2503, open: 35.3, click: 2.3 },
+          { name: 'Email 5 · Base actual', sent: 937, open: 19.9, click: 2.5 },
+          { name: 'Email 5 · Base nueva', sent: 2493, open: 22.4, click: 2.3 },
+          { name: 'Email 6 · Base actual', sent: 933, open: 24.3, click: 3.0 },
+          { name: 'Email 7 · Base actual', sent: 929, open: 24.1, click: 2.8 },
+          { name: 'Email 8 · Base actual', sent: 917, open: 19.0, click: 2.8 },
+          { name: 'Post-webinar · Participantes', sent: 28, open: 25.0, click: 7.1 },
+          { name: 'Post-webinar · Registrados', sent: 34, open: 32.4, click: 8.8 },
+        ],
+        totalSent: 19370,
+        sendNamesEn: ['Email 1 · Current base', 'Email 1 · New base', 'Email 2 · Current base', 'Email 2 · New base', 'Email 3 · Current base', 'Email 3 · New base', 'Email 4 · New base', 'Email 5 · Current base', 'Email 5 · New base', 'Email 6 · Current base', 'Email 7 · Current base', 'Email 8 · Current base', 'Post-webinar · Attendees', 'Post-webinar · Registrants'],
+        uniqueContacts: 3681,
+        openedOnce: 1745,
+        openedOncePct: 47.4,
+        clickedOnce: 188,
+        clickedOncePct: 5.1,
+        // Atribución SOLO con los 12 envíos previos al evento: los post-webinar
+        // le llegaron a gente ya registrada (scripts/webinars/build_event.py).
+        regFromEmail: 40, // registrados con clic rastreado en un envío previo (atribución directa)
+        regFromEmailPct: 40,
+        regFromEmailNote: 'Con clic rastreado en un envío previo al evento — atribución directa del canal',
+        regFromEmailNoteEn: 'With a tracked click on a pre-event send — direct channel attribution',
+        regOpened: 42, // registrados que abrieron al menos un envío previo
+        regInBase: 45, // registrados presentes en la base de los envíos previos
+        regInBasePct: 45,
+        nota: 'En la base nueva, los Emails 3 y 4 fueron los de mejor apertura de la serie (36,0% y 35,3%); el resto de los envíos previos, de las dos bases, quedó entre 19,0% y 24,3%. En clics, la base actual estuvo apenas arriba (2,5-3,5% contra 2,2-2,5%), con el Email 2 a la base actual como el mejor (3,5%). Los dos post-webinar tuvieron los clics más altos: 8,8% el de registrados y 7,1% el de participantes. Los exports de destinatarios no traen el asunto ni la fecha de cada envío.',
+        notaEn: 'In the new base, Emails 3 and 4 had the best open rates of the series (36.0% and 35.3%); the rest of the pre-event sends, across both bases, ranged from 19.0% to 24.3%. On clicks, the current base was slightly ahead (2.5-3.5% vs 2.2-2.5%), with Email 2 to the current base the best (3.5%). The two post-webinar sends had the highest click rates: 8.8% for registrants and 7.1% for attendees. The recipient exports do not carry each send\'s subject line or date.',
+        notaClics:
+          'La atribución del canal se lee en capas y solo con los 12 envíos previos al evento (los dos post-webinar no cuentan: le llegaron a gente ya registrada). 40 de los 99 registrados hicieron clic en algún email (atribución directa — el piso), 42 abrieron al menos uno y 45 estaban en la base de esos envíos (45%). Los otros 54 (55%) llegaron por fuera de la base de email: LinkedIn u otros canales — el registro por Teams no trae atribución por canal.',
+        notaClicsEn:
+          'Channel attribution is read in layers and only with the 12 pre-event sends (the two post-webinar sends do not count: they reached people who had already registered). 40 of the 99 registrants clicked an email (direct attribution — the floor), 42 opened at least one and 45 were in the base of those sends (45%). The other 54 (55%) came from outside the email base: LinkedIn or other channels — Teams registration carries no per-channel attribution.',
+      },
+
+      // ── Sección 2: Social Media (LinkedIn Peterson Solutions (Iberia & Americas)) ──
+      // Fuente: capturas del panel «Rendimiento del anuncio» subidas por el
+      // equipo el 27/10/2026 (fecha del posteo en el nombre de cada archivo).
+      social: {
+        posts: [
+          { name: 'Post 1 · «What are people really talking about in North American biofuels?» (25/9)', imp: 344, inter: 13, rate: 3.78, clicks: 8, ctr: 2.33, reactions: 4 },
+          { name: 'Post 2 · Evento de LinkedIn (1/10)', imp: 458, inter: 5, rate: 1.09, clicks: 0, ctr: 0, reactions: 4 },
+          { name: 'Post 3 · Speakers (10/10)', imp: 599, inter: 44, rate: 7.35, clicks: 24, ctr: 4.01, reactions: 16 },
+          { name: 'Post 4 · «October 16, 2026 – 3:00 PM ET» (14/10)', imp: 232, inter: 13, rate: 5.6, clicks: 2, ctr: 0.86, reactions: 10 },
+        ],
+        totals: { imp: 1633, inter: 75, rate: 4.59, clicks: 34, ctr: 2.08, reactions: 34, shares: 7 },
+        regFromSocial: null, // sin atribución directa: el registro corrió por Teams
+        regFromSocialPct: null,
+        regOutsideEmail: 54, // registrados que NO estaban en la base de los envíos previos
+        regOutsideEmailPct: 55,
+        postNamesEn: ['Post 1 · "What are people really talking about in North American biofuels?" (9/25)', 'Post 2 · LinkedIn event (10/1)', 'Post 3 · Speakers (10/10)', 'Post 4 · "October 16, 2026 – 3:00 PM ET" (10/14)'],
+        lectura:
+          'Cuatro posteos de Peterson Solutions (Iberia & Americas) con captura: 1.633 impresiones, 75 interacciones (4,6%) y 34 clics (2,1%). El de los speakers (10/10) fue el mejor por lejos: 599 impresiones, 7,35% de interacción y 24 de los 34 clics. El evento de LinkedIn (1/10) tuvo 458 impresiones y ningún clic. No hay atribución individual: 54 de los 99 registrados (55%) no estaban en la base de los envíos previos de email.',
+        lecturaEn:
+          'Four posts on Peterson Solutions (Iberia & Americas) with screenshots: 1,633 impressions, 75 interactions (4.6%) and 34 clicks (2.1%). The speakers post (10/10) was by far the best: 599 impressions, 7.35% interaction and 24 of the 34 clicks. The LinkedIn event (10/1) had 458 impressions and no clicks. There is no individual attribution: 54 of the 99 registrants (55%) were not in the base of the pre-event email sends.',
+      },
+
+      // ── Sección 3: Leads para seguimiento (segmentación del evento) ──
+      hotLeads: {
+        col3: 'Permanencia',
+        rows: [
+          { empresa: 'LR3Technologies LLC', pais: 'Estados Unidos', det: '114,8 min', score: null, tier: 'HOT', segment: 'Hot potencial' },
+          { empresa: 'BioEonomy Solutions', pais: 'Estados Unidos', det: '45,0 min', score: null, tier: 'HOT', segment: 'Hot potencial' },
+          { empresa: 'AMERRA Capital Management', pais: 'Estados Unidos', det: '87,8 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'next energy fuels', pais: 'Estados Unidos', det: '63,6 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'takachar.com', pais: '—', det: '61,2 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'Transworld Technologies Inc.', pais: 'Estados Unidos', det: '60,6 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'LanzaJet', pais: 'Estados Unidos', det: '59,0 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'Beachway EcoSearch LLC', pais: 'Estados Unidos', det: '58,5 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'California Bioenergy', pais: 'Estados Unidos', det: '57,3 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'Sun Country Highway', pais: 'Canadá', det: '55,9 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'Permolex', pais: 'Canadá', det: '53,7 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'ROSLIN GROUP OF COMPANIES', pais: 'Canadá', det: '48,5 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'Azure Sustainable Fuels Corp.', pais: 'Canadá', det: '45,0 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'Marquis', pais: 'Estados Unidos', det: '42,0 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'Bridgestone Americas', pais: 'Estados Unidos', det: '27,1 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'Petrogenium', pais: 'Estados Unidos', det: '24,5 min', score: null, tier: 'WARM', segment: 'Warm' },
+          { empresa: 'thermafuels.com', pais: '—', det: '24,2 min', score: null, tier: 'WARM', segment: 'Warm' },
+        ],
+        pipelineUrl: HUBSPOT_PIPELINE_URL,
+        scoreNote: 'Segmentación del evento (Teams): hot potencial = señales de intervención en vivo; warm = ≥ 20 min conectado. Permanencia = unión de intervalos conectados.',
+        universeNote: 'Sin preguntas de asistentes en el Q&A exportado (solo un mensaje interno de moderación); puede haber preguntas orales o en otro chat no incluido. Hot potenciales: el contacto de BioEonomy Solutions levantó la mano y fue habilitado a hablar; el de LR3Technologies fue habilitado por el servidor y estuvo 114,8 min (incluye conexión anticipada). Validar antes del contacto: Beachway EcoSearch (el asistente también usó un email de LCY Biosciences) y California Bioenergy (misma empresa que uno de los speakers). No se validó el CRM ni se crearon contactos o deals.',
+        universeNoteEn: 'No attendee questions in the exported Q&A (only an internal moderation message); there may have been spoken questions or another chat not included. Potential hot leads: the BioEonomy Solutions contact raised a hand and was allowed to speak; the LR3Technologies contact was enabled by the server and stayed 114.8 min (early connection included). Validate before reaching out: Beachway EcoSearch (the attendee also used an LCY Biosciences email) and California Bioenergy (same company as one of the speakers). The CRM was not checked and no contacts or deals were created.',
+      },
+
+      surveys: [], // este evento no corrió encuestas de diagnóstico en vivo
+
+      // ── Oportunidad comercial (POTENCIAL, no certeza) ──
+      commercial: {
+        productionCost: null, // no se pide ni se muestra (16/9/2026)
+        pipelinePotential: null, // proyección descartada (docs/DECISIONES.md §3)
+        pipelinePotentialNote: null,
+        hotPipeline: null,
+        hotPipelineNote: null,
+        closeLow: null,
+        closeLowNote: null,
+        closeHigh: null,
+        closeHighNote: null,
+        roi: null,
+        metodologia:
+          'Se excluyen los 16 contactos internos (Control Union / Peterson) y los 2 speakers: la oportunidad son los 86 registrados externos únicos y los 28 que asistieron. El equipo depuró el export de Teams: 103 registros → 99 personas (4 pares de emails de una misma persona) y 45 entradas de asistencia → 41 personas (reconexiones agrupadas; minutos como unión de intervalos, sin doble conteo). El show rate se mide sobre externos (28/86).',
+        metodologiaEn:
+          'The 16 internal contacts (Control Union / Peterson) and the 2 speakers are excluded — the opportunity is the 86 unique external registrants and the 28 who attended. The team cleaned the Teams export: 103 registrations → 99 people (4 pairs of emails from the same person) and 45 attendance entries → 41 people (reconnections grouped; minutes as a union of intervals, with no double counting). The show rate is measured on external attendees (28/86).',
+      },
+
+      // ── Plan de acción (solo vista interna) ──
+      actionPlan: [
+        '<strong>Validar a los 2 hot potenciales esta semana.</strong> BioEonomy Solutions (levantó la mano y fue habilitado a hablar) y LR3Technologies (114,8 min conectado): revisar la grabación y el CRM antes del contacto, y preguntar por el proyecto o la necesidad concreta.',
+        '<strong>Seguimiento personalizado a los 15 warm, empezando por los 11 con 45 minutos o más:</strong> AMERRA Capital Management, next energy fuels, takachar.com, Transworld Technologies, LanzaJet, Beachway EcoSearch, California Bioenergy, Sun Country Highway, Permolex, Roslin Group y Azure Sustainable Fuels.',
+        '<strong>Revisar el encaje de 6 asistentes antes de tratarlos como leads:</strong> AmSpec y EcoEngineers (relación comercial o de proveedor), University of Kentucky y American Soybean Association (posibles alianzas).',
+        '<strong>Completar el post-webinar a los no asistentes.</strong> El post-webinar a registrados llegó a 31 de los 58 que no asistieron y fue el de mejor clic de la serie (8,8%): mandar la grabación a los otros 27.',
+        '<strong>Cargar los 17 candidatos en HubSpot</strong> con los datos del evento (segmento, prioridad, minutos) como propiedades de contacto personalizadas, no como Lead Status ni Lifecycle Stage, y cruzar antes con clientes actuales, propuestas y oportunidades activas.',
+        '<strong>Repetir el formato de speakers en LinkedIn</strong> (7,35% de interacción y 24 de los 34 clics de la serie); el evento de LinkedIn no generó clics.',
+      ],
+      actionPlanEn: [
+        '<strong>Validate the 2 potential hot leads this week.</strong> BioEonomy Solutions (raised a hand and was allowed to speak) and LR3Technologies (114.8 min connected): review the recording and the CRM before reaching out, and ask about the specific project or need.',
+        '<strong>Personalized follow-up for the 15 warm leads, starting with the 11 who stayed 45 minutes or more:</strong> AMERRA Capital Management, next energy fuels, takachar.com, Transworld Technologies, LanzaJet, Beachway EcoSearch, California Bioenergy, Sun Country Highway, Permolex, Roslin Group and Azure Sustainable Fuels.',
+        '<strong>Review the fit of 6 attendees before treating them as leads:</strong> AmSpec and EcoEngineers (commercial or supplier relationship), University of Kentucky and American Soybean Association (potential alliances).',
+        '<strong>Complete the post-webinar to no-shows.</strong> The post-webinar to registrants reached 31 of the 58 who did not attend and had the best click rate of the series (8.8%): send the recording to the other 27.',
+        '<strong>Load the 17 candidates into HubSpot</strong> with the event data (segment, priority, minutes) as custom contact properties, not as Lead Status or Lifecycle Stage, and check first against current clients, proposals and active opportunities.',
+        '<strong>Repeat the speakers format on LinkedIn</strong> (7.35% interaction and 24 of the series\' 34 clicks); the LinkedIn event generated no clicks.',
+      ],
+    },
+  },
 };
 
 export const WEBINAR_PERIODS = [
@@ -865,4 +1086,5 @@ export const WEBINAR_PERIODS = [
   { id: 'wbn-eudr', label: 'Webinar EUDR · Ago 2026' },
   { id: 'wbn-plastic', label: 'Webinar Plastic Packaging · Sep 2026' },
   { id: 'wbn-empco', label: 'Webinar EmpCo 2026 · Sep 2026' },
+  { id: 'wbn-fueling', label: 'Webinar Fueling Conversations · Oct 2026' },
 ];

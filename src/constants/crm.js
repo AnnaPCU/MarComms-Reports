@@ -59,6 +59,7 @@ export const CRM_ACCOUNT_ENTITIES = {
     cups: [...CU_LATAM, '592', '442', '849'],
     psi: PS_IBEROAM,
     cuus: CU_US,
+    psus: ['767'], // Peterson Solutions Estados Unidos
   },
 };
 

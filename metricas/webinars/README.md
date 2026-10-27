@@ -25,6 +25,16 @@ Carpeta de ingesta de los exports de cada webinar. El tooling es
 Si Livestorm reemplaza a Teams, subir sus exports crudos: el parser se ajusta
 con el primer drop real de esa plataforma.
 
+**Formato «por segmentos»** (Fueling Conversations, oct 2026): un Excel con
+las hojas `Resumen · HubSpot · Base externa · Excluidos · Registro original ·
+Asistencia original`, ya depurado por el equipo (un registro por persona,
+internos y speakers en «Excluidos») y con segmentos en vez de score. El
+tooling lo detecta solo.
+
+Las capturas de LinkedIn de un webinar van con el evento
+(`webinars/<evento>/linkedin/`), no en `social-media/`: si llegan ahí, Claude
+las archiva igual con el evento.
+
 ## Estructura esperada
 
 ```

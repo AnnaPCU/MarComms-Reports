@@ -190,13 +190,21 @@ export function summarizePillar(p, lang = 'es') {
       if (!ev) return null;
       const plan = tx(ev, 'actionPlan', lang) ?? [];
       const highlight = tx(ev, 'highlight', lang);
+      // Show rate sobre externos (eventos depurados por el equipo): el hero
+      // y la conclusión usan los externos, para que la tasa cierre con los números.
+      const ext = ev.showRateBasis === 'external';
+      const seg = ev.scoring?.mode === 'segments';
       return {
         ...base,
         subtitle: ev.title,
-        hero: { label: t.kAtt, value: n(ev.attended), pill: `${t.kShow} ${dec(ev.showRate, lang)} %` },
+        hero: {
+          label: ext ? t.kAttExt : t.kAtt,
+          value: n(ext ? ev.externos.attended : ev.attended),
+          pill: `${ext ? t.kShowExt : t.kShow} ${dec(ev.showRate, lang)} %`,
+        },
         lines: [
-          { value: n(ev.registered), text: t.kReg },
-          { value: n(ev.deals?.total), text: `${t.kDeals} · ${t.hotWarm(ev.deals?.hot ?? 0, ev.deals?.warm)}` },
+          { value: n(ext ? ev.externos.registered : ev.registered), text: ext ? t.kRegExt : t.kReg },
+          { value: n(ev.deals?.total), text: `${seg ? t.kDealsSeg : t.kDeals} · ${t.hotWarm(ev.deals?.hot ?? 0, ev.deals?.warm)}` },
           ...(ev.email?.regFromEmail != null ? [{ value: n(ev.email.regFromEmail), text: t.kRegEmail }] : []),
         ],
         // El hallazgo principal y el plan de acción del evento vienen del seed
@@ -204,7 +212,9 @@ export function summarizePillar(p, lang = 'es') {
         insights: highlight && plan[0] ? [{ m: highlight, a: plan[0] }] : [],
         conclusion: {
           label: t.cEvent,
-          text: t.cEventText(n(ev.registered), n(ev.attended), dec(ev.showRate, lang), n(ev.deals?.total), n(ev.deals?.hot)),
+          text: ext
+            ? t.cEventTextExt(n(ev.externos.registered), n(ev.externos.attended), dec(ev.showRate, lang), n(ev.deals?.total), ev.deals?.hot ?? 0)
+            : t.cEventText(n(ev.registered), n(ev.attended), dec(ev.showRate, lang), n(ev.deals?.total), n(ev.deals?.hot)),
         },
         nextStep: plan[0] ?? null,
       };

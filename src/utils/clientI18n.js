@@ -86,6 +86,13 @@ export const CLIENT_STR = {
     cEvent: 'Evento',
     cEventText: (reg, att, sr, deals, hot) =>
       `<strong>${reg} registrados</strong> → <strong>${att} asistentes</strong> (${sr} % show rate) y ${deals} deals en HubSpot (${hot} hot).`,
+    // Eventos medidos sobre externos y segmentados (sin deals en HubSpot todavía).
+    kShowExt: 'Show rate externo',
+    kRegExt: 'Registrados externos',
+    kAttExt: 'Asistentes externos',
+    kDealsSeg: 'Candidatos para seguimiento',
+    cEventTextExt: (reg, att, sr, prior, hot) =>
+      `<strong>${reg} registrados externos</strong> → <strong>${att} asistentes</strong> (${sr} % show rate) y ${prior} candidatos para seguimiento (${hot} hot ${hot === 1 ? 'potencial' : 'potenciales'}).`,
     glossary: { social: 'social', paid: 'paid', paidGeo: 'paidMeta', website: ['website', 'websiteSeo'], email: 'email', webinars: 'webinars' },
   },
 
@@ -162,6 +169,12 @@ export const CLIENT_STR = {
     cEvent: 'Event',
     cEventText: (reg, att, sr, deals, hot) =>
       `<strong>${reg} registrants</strong> → <strong>${att} attendees</strong> (${sr}% show rate) and ${deals} deals in HubSpot (${hot} hot).`,
+    kShowExt: 'External show rate',
+    kRegExt: 'External registrants',
+    kAttExt: 'External attendees',
+    kDealsSeg: 'Candidates for follow-up',
+    cEventTextExt: (reg, att, sr, prior, hot) =>
+      `<strong>${reg} external registrants</strong> → <strong>${att} attendees</strong> (${sr}% show rate) and ${prior} candidates for follow-up (${hot} potential hot).`,
     glossary: { social: 'socialEn', paid: 'paidEn', paidGeo: 'paidMetaEn', website: ['websiteEn', 'websiteSeoEn'], email: 'emailEn', webinars: 'webinarsEn' },
   },
 };

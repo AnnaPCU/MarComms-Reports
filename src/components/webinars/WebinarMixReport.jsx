@@ -66,7 +66,16 @@ export function WebinarMixReport({ ev, accName }) {
   const dealsOnly = ev.deals.total - ev.deals.hot;
   const prioritized = ev.deals.hot + (ev.deals.warm ?? 0);
   const hotRows = ev.hotLeads.rows.filter((r) => (r.tier ?? 'HOT') === 'HOT');
-  const avgScore = hotRows.length ? hotRows.reduce((a, r) => a + r.score, 0) / hotRows.length : 0;
+  const avgScore = hotRows.length ? hotRows.reduce((a, r) => a + (r.score ?? 0), 0) / hotRows.length : 0;
+  // Eventos «por segmentos» (sin score numérico) y medidos sobre externos
+  // (Excel depurado por el equipo, Fueling Conversations oct 2026).
+  const seg = evScoring?.mode === 'segments';
+  const extBasis = ev.showRateBasis === 'external';
+  const bands = ev.engagementBands ?? null;
+  const engBase = ev.engagement.base ?? ev.attended;
+  const srPill = (v) => (extBasis ? t.showRateExt(v) : t.showRate(v));
+  const engLabel = (k, fallback) => (bands ? t.engBand[k](bands[k]) : fallback);
+  const engFoot = (v) => (extBasis ? t.engFootExt : t.engFoot)(p1((v / engBase) * 100));
   const hasRegByCountry = ev.countries.some((c) => c.reg != null);
   // Un evento puede venir sin exports de LinkedIn: se dice, no se inventa.
   const hasSocial = (ev.social?.posts?.length ?? 0) > 0;
@@ -137,14 +146,14 @@ export function WebinarMixReport({ ev, accName }) {
         <HeroCard
           label={t.kAtt}
           value={num(ev.attended)}
-          pill={t.showRate(p1(ev.showRate))}
-          footnote={t.attFoot(ev.externos.attended, ev.internos.attended)}
+          pill={srPill(p1(ev.showRate))}
+          footnote={ev.speakers ? t.attFootSpk(ev.externos.attended, ev.internos.attended, ev.speakers) : t.attFoot(ev.externos.attended, ev.internos.attended)}
         />
         <KpiCard label={t.kEmails} value={num(ev.email.totalSent)} footnote={t.emailsFoot(ev.email.sends.length, num(ev.email.uniqueContacts))} />
         <HeroCard
-          label={t.kDeals}
+          label={seg ? t.kDealsSeg : t.kDeals}
           value={num(ev.deals.total)}
-          pill={t.hotPill(ev.deals.hot)}
+          pill={seg ? t.hotPillSeg(ev.deals.hot) : t.hotPill(ev.deals.hot)}
           pillTone="green"
           footnote={tx(ev.deals, 'note') ?? `${ev.deals.hot} hot + ${dealsOnly} leads`}
         />
@@ -153,15 +162,19 @@ export function WebinarMixReport({ ev, accName }) {
         <KpiCard
           label={t.kDurTotal}
           value={ev.durationTotalLabel ?? (ev.durationTotalMin != null ? `${p1(ev.durationTotalMin)} min` : '—')}
-          footnote={ev.durationTotalLabel == null && ev.durationTotalMin == null ? t.durNA : undefined}
+          footnote={ev.durationTotalLabel == null && ev.durationTotalMin == null ? t.durNA : tx(ev, 'durationTotalNote')}
         />
-        <KpiCard label={t.kDurAvg} value={`${p1(ev.durationAvgMin)} min`} footnote={t.median(p1(ev.durationMedianMin))} />
+        <KpiCard
+          label={t.kDurAvg}
+          value={`${p1(ev.durationAvgMin)} min`}
+          footnote={(ev.durationBasis === 'external' ? t.medianExt : t.median)(p1(ev.durationMedianMin))}
+        />
         <KpiCard
           label={t.kUnique}
           value={ev.companies.unique != null ? num(ev.companies.unique) : '—'}
           footnote={tx(ev.companies, 'uniqueNote') ?? (ev.companies.unique == null ? t.uniqueFallback(ev.companies.featured.length) : undefined)}
         />
-        <KpiCard label={t.kHighEng} value={num(ev.engagement.high)} footnote={t.highEngFoot} />
+        <KpiCard label={t.kHighEng} value={num(ev.engagement.high)} footnote={bands ? t.highEngFootBand(bands.high, engBase) : t.highEngFoot} />
       </div>
       </>
       )}
@@ -209,9 +222,13 @@ export function WebinarMixReport({ ev, accName }) {
               {t.views.webinar}
             </div>
             <ul className="mb-3 flex flex-col gap-1.5 text-[12px] text-cu-dgrey">
-              <li><strong className="text-cu-dblue">{num(ev.registered)}</strong>{t.sumWbn1('', p1(ev.showRate))[0]}<strong className="text-cu-dblue">{num(ev.attended)}</strong>{t.sumWbn1('', p1(ev.showRate))[1]}</li>
-              <li><strong className="text-cu-dblue">{num(ev.deals.total)}</strong>{t.sumWbn2}</li>
-              <li><strong className="text-cu-dblue">{ev.deals.hot}</strong>{t.sumWbn3(ev.deals.hot, ev.deals.warm)}</li>
+              {extBasis ? (
+                <li><strong className="text-cu-dblue">{num(ev.externos.registered)}</strong>{t.sumWbn1Ext(p1(ev.showRate))[0]}<strong className="text-cu-dblue">{num(ev.externos.attended)}</strong>{t.sumWbn1Ext(p1(ev.showRate))[1]}</li>
+              ) : (
+                <li><strong className="text-cu-dblue">{num(ev.registered)}</strong>{t.sumWbn1('', p1(ev.showRate))[0]}<strong className="text-cu-dblue">{num(ev.attended)}</strong>{t.sumWbn1('', p1(ev.showRate))[1]}</li>
+              )}
+              <li><strong className="text-cu-dblue">{num(ev.deals.total)}</strong>{seg ? t.sumWbn2Seg : t.sumWbn2}</li>
+              <li><strong className="text-cu-dblue">{ev.deals.hot}</strong>{seg ? t.sumWbn3Seg(ev.deals.hot, ev.deals.warm) : t.sumWbn3(ev.deals.hot, ev.deals.warm)}</li>
             </ul>
             <button onClick={() => setView('webinar')} className="mt-auto self-start text-[11px] font-bold text-cu-cyan hover:underline">{t.verVista}</button>
           </div>
@@ -297,25 +314,46 @@ export function WebinarMixReport({ ev, accName }) {
       <SectionHeader title={t.funnelTitle} note="Livestorm / Teams" />
       <div className="mb-3 rounded-cu border border-cu-border bg-white px-7 pb-6 pt-6 shadow-cu">
         <div className="mx-auto max-w-[640px]">
+          {/* Medido sobre externos: el embudo arranca en los registrados externos,
+              así cada etapa cierra con su porcentaje. */}
           <Funnel
-            stages={[
-              { name: t.fsReg, value: ev.registered, desc: t.fsRegDesc(ev.regCountries), retention: '100 %' },
-              { name: t.fsAtt, value: ev.attended, desc: t.showRate(p1(ev.showRate)), retention: `${p1(ev.showRate)} %` },
-              { name: t.fsHigh, value: ev.engagement.high, desc: t.fsHighDesc, retention: `${p1((ev.engagement.high / ev.registered) * 100)} %` },
-              {
-                name: t.fsDeals,
-                value: ev.deals.total,
-                desc: ev.deals.warm != null ? `${ev.deals.hot} hot · ${ev.deals.warm} warm` : `${ev.deals.hot} hot leads`,
-                retention: `${p1((ev.deals.total / ev.registered) * 100)} %`,
-              },
-            ]}
+            stages={
+              extBasis
+                ? [
+                    { name: t.fsRegExt, value: ev.externos.registered, desc: t.fsRegDesc(ev.regCountries), retention: '100 %' },
+                    { name: t.fsAttExt, value: ev.externos.attended, desc: srPill(p1(ev.showRate)), retention: `${p1(ev.showRate)} %` },
+                    {
+                      name: bands ? t.fsHighBand(bands.high) : t.fsHigh,
+                      value: ev.engagement.high,
+                      desc: bands ? t.fsHighBandDesc : t.fsHighDesc,
+                      retention: `${p1((ev.engagement.high / ev.externos.registered) * 100)} %`,
+                    },
+                    {
+                      name: seg ? t.fsPrior : t.fsDeals,
+                      value: ev.deals.total,
+                      desc: `${ev.deals.hot} hot · ${ev.deals.warm} warm`,
+                      retention: `${p1((ev.deals.total / ev.externos.registered) * 100)} %`,
+                    },
+                  ]
+                : [
+                    { name: t.fsReg, value: ev.registered, desc: t.fsRegDesc(ev.regCountries), retention: '100 %' },
+                    { name: t.fsAtt, value: ev.attended, desc: t.showRate(p1(ev.showRate)), retention: `${p1(ev.showRate)} %` },
+                    { name: t.fsHigh, value: ev.engagement.high, desc: t.fsHighDesc, retention: `${p1((ev.engagement.high / ev.registered) * 100)} %` },
+                    {
+                      name: t.fsDeals,
+                      value: ev.deals.total,
+                      desc: ev.deals.warm != null ? `${ev.deals.hot} hot · ${ev.deals.warm} warm` : `${ev.deals.hot} hot leads`,
+                      retention: `${p1((ev.deals.total / ev.registered) * 100)} %`,
+                    },
+                  ]
+            }
           />
         </div>
       </div>
       <div className="mb-5 grid grid-cols-3 gap-3">
-        <KpiCard label={t.engHigh} value={num(ev.engagement.high)} footnote={t.engFoot(p1((ev.engagement.high / ev.attended) * 100))} />
-        <KpiCard label={t.engMid} value={num(ev.engagement.mid)} footnote={t.engFoot(p1((ev.engagement.mid / ev.attended) * 100))} />
-        <KpiCard label={t.engLow} value={num(ev.engagement.low)} footnote={t.engFoot(p1((ev.engagement.low / ev.attended) * 100))} />
+        <KpiCard label={engLabel('high', t.engHigh)} value={num(ev.engagement.high)} footnote={engFoot(ev.engagement.high)} />
+        <KpiCard label={engLabel('mid', t.engMid)} value={num(ev.engagement.mid)} footnote={engFoot(ev.engagement.mid)} />
+        <KpiCard label={engLabel('low', t.engLow)} value={num(ev.engagement.low)} footnote={engFoot(ev.engagement.low)} />
       </div>
 
       </>
@@ -428,13 +466,22 @@ export function WebinarMixReport({ ev, accName }) {
       {/* ── Sección 3: Hot Leads (solo vista Webinar) ── */}
       {view === 'webinar' && (
       <>
-      <SectionHeader title={t.s3} note={t.s3note} />
+      <SectionHeader title={t.s3} note={seg ? t.s3noteSeg : t.s3note} />
+      {seg ? (
+      <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <KpiCard label={t.kPrior} value={num(prioritized)} footnote={t.priorFootSeg(ev.deals.hot, ev.deals.warm, num(ev.externos.attended))} />
+        <KpiCard label={t.kHotSeg} value={num(ev.deals.hot)} accent="green" delta={{ dir: 'up', label: t.hotSegPill }} footnote={t.hotSegFoot} />
+        <KpiCard label={t.kWarm} value={num(ev.deals.warm)} footnote={t.warmSegFoot(num(ev.deals.warmHigh ?? 0))} />
+        <KpiCard label={t.kReview} value={num(ev.deals.review ?? 0)} footnote={t.reviewFoot} />
+      </div>
+      ) : (
       <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <KpiCard label={ev.scoring ? t.kPrior : t.kDealsTot} value={num(ev.scoring ? prioritized : ev.deals.total)} footnote={ev.scoring ? t.priorFoot(ev.deals.hot, ev.deals.warm, num(ev.externos.attended)) : (tx(ev.deals, 'note') ?? t.dealsTotFoot)} />
         <KpiCard label={t.kHot} value={num(ev.deals.hot)} accent="green" delta={{ dir: 'up', label: t.scorePill(hotRange) }} footnote={t.hotFoot} />
         <KpiCard label={ev.scoring ? t.kWarm : t.kRest} value={num(ev.deals.warm ?? dealsOnly)} footnote={t.warmFoot(rng(classes[1].range))} />
         <KpiCard label={t.kScoreHot} value={p1(avgScore)} footnote={hotRows.length === 1 ? hotRows[0].empresa : t.scoreHotFoot(hotRows.length)} />
       </div>
+      )}
       {!external && ev.hotLeads.universeNote && <Note>{tx(ev.hotLeads, 'universeNote')}</Note>}
 
       {/* Metodología de scoring (global o propia del evento) */}
@@ -466,7 +513,12 @@ export function WebinarMixReport({ ev, accName }) {
             <tbody>
               {classes.map((c) => (
                 <tr key={c.name} className="border-b border-cu-border2 last:border-b-0">
-                  <td className={`${tdCls} w-36 font-medium text-cu-dblue`}>{c.name}<br /><span className="text-[10px] font-bold text-cu-cyan">{t.scoreWord} {rng(c.range)}</span></td>
+                  <td className={`${tdCls} w-36 font-medium text-cu-dblue`}>
+                    {c.name}
+                    <br />
+                    {/* Por segmentos: el criterio va tal cual (no es un rango de score). */}
+                    <span className="text-[10px] font-bold text-cu-cyan">{seg ? (en ? (c.rangeEn ?? c.range) : c.range) : `${t.scoreWord} ${rng(c.range)}`}</span>
+                  </td>
                   <td className={`${tdCls} text-[11px]`}>{en ? (c.actionEn ?? c.action) : c.action}</td>
                 </tr>
               ))}

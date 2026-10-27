@@ -1,0 +1,79 @@
+{
+  "accountId": "psus",
+  "accountName": "Peterson Solutions Estados Unidos",
+  "handle": "",
+  "period": "m10",
+  "campaignName": "Webinar Fueling Conversations · Octubre 2026",
+  "emails": [
+    {
+      "name": "Email 1 · Base actual",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_1_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 1 · Base nueva",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_1_New_database_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 2 · Base actual",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_Conversations_USA___Email_2_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 2 · Base nueva",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_2_New_database_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 3 · Base actual",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_3_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 3 · Base nueva",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_3_New_database_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 4 · Base nueva",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_4_New_database_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 5 · Base actual",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_5_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 5 · Base nueva",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_5_New_database_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 6 · Base actual",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_6_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 7 · Base actual",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_7_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Email 8 · Base actual",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Email_8_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Post-webinar · Participantes",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___PARTICIPANTS_sent_Oct_27_2026.csv"
+    },
+    {
+      "name": "Post-webinar · Registrados",
+      "subject": "",
+      "csv": "members_PS___Webinar_Fueling_conversations_USA___Registrations_sent_Oct_27_2026.csv"
+    }
+  ]
+}

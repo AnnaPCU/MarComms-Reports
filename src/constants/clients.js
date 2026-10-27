@@ -196,6 +196,17 @@ export const CLIENTS = [
       webinars: { account: 'psi', note: 'Webinars en español con la base de contactos de Iberia y Américas', noteEn: 'Spanish-language webinars with the Iberia + Americas contact base' },
     },
   },
+  {
+    id: 'ps-usa',
+    crmEntities: ['767'],
+    name: 'Peterson Solutions Estados Unidos',
+    unit: 'ps',
+    region: 'North America',
+    pillars: {
+      email: { account: 'psus' },
+      webinars: { account: 'psus', note: 'Webinars en inglés con la base de contactos de Norteamérica', noteEn: 'English-language webinars with the North American contact base' },
+    },
+  },
 ];
 
 export const CLIENT_BY_ID = Object.fromEntries(CLIENTS.map((c) => [c.id, c]));

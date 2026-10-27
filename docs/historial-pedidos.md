@@ -1711,3 +1711,10 @@
 
 > Me gustaría ajustar algo en cada vez que suceda esto. Dentro de PayMedia, cuando haya una campaña concreta que haya repercutido, que se haya abarque tanto Google Ads como MetaAds, haya una vista general y luego hace la vista de Google Ads y MetaAds. Ya que hoy en día la vista de comparativa de campañas no encuentro mucho sentido, además está puesto en euros, cuando no manejamos euros ni en MetaAds ni en Google Ads. Está medio raro, no me convence esa vista. Entonces, por default, estaría la vista general, puede llamarla la de todas las campañas, como quiera llamarle, donde ahí mostrarías insights unificados de estas dos herramientas. Por ejemplo, cuánto se gastó en la campaña, en las campañas, las impresiones totales entre las dos, los clics, conversiones, etc. Y ya luego sí, también se puede filtrar dentro de la vista general también uno puede elegir puntualmente la vista de Google Ads o la de MetaAds como funciona hoy en día. Pero como que la vista principal sea una y luego esté Google Ads y MetaAds. Y también podrías aprovechar para hacer gráficos o cosas que veas con sentido en base a estas a estos indicadores que te comenté clave, ¿no?
 
+
+**#140** (27/10/2026)
+
+> Procesá las métricas nuevas de Webinar
+
+(El drop: «Biofuel_Talks_Leads_y_Metricas.xlsx» en `metricas/webinars/` —commit «16.10 Webinar PS USA Biofuels Talks»—, 14 exports de Mailchimp «PS - Webinar Fueling conversations USA» en `metricas/email-marketing/` y 4 capturas de posteos de LinkedIn en `metricas/social-media/`.)
+

@@ -94,6 +94,28 @@
   webinar puede traer su propia fórmula (EUDR: +3/+2/+1, HOT ≥ 8; Plastic:
   registro 10 + asistencia 20 + tiempo hasta 40 + pregunta 20 + interacción
   hasta 10, HOT ≥ 70). El reporte muestra la del evento y no las normaliza.
+- **Webinars de Peterson Solutions para Norteamérica: cuenta propia**
+  (`psus`, «Peterson Solutions Estados Unidos», desde Fueling Conversations ·
+  16/10/2026). Es otra audiencia (en inglés, base de EE.UU. y Canadá) que la
+  de `psi` (en español, Iberoamérica): una cuenta por audiencia, con su
+  campaña de email en la cuenta de Email del mismo nombre.
+- **Excel «por segmentos» (Fueling Conversations, oct 2026).** El equipo
+  entregó el evento ya depurado (un registro por persona, internos y
+  speakers aparte) y segmentado sin score numérico: Hot potencial (señales de
+  intervención en vivo, intención por validar) · Warm (≥ 20 min) · Revisar
+  encaje · Cold (< 20 min) · Nurture (no asistió). El reporte muestra esos
+  segmentos y sus criterios tal cual, sin inventar un score. Los priorizados
+  son hot potenciales + warm («candidatos para seguimiento»: no son deals
+  creados en HubSpot).
+- **Show rate sobre externos cuando el equipo lo pide** (`showRateBasis:
+  'external'`): las entradas brutas de Teams mezclan duplicados, internos y
+  speakers, así que la tasa es asistentes externos / registrados externos
+  (28/86) y el embudo arranca en los registrados externos. Los totales (99
+  registrados, 41 asistentes) se muestran igual, con el desglose.
+- **La atribución del email usa solo los envíos previos al evento.** Los
+  post-webinar (a participantes y a registrados) le llegan a gente que ya se
+  registró: si contaran, inflarían «registrados vía email» (en Fueling
+  Conversations daban 45 con clic en vez de 40). Siguen sumando como envíos.
 - **Un reenvío de Mailchimp («copy») es un envío más.** Se lista como tal
   («Email 3 (reenvío)») y suma a los enviados; no se fusiona con el original
   porque son dos oportunidades de apertura distintas.

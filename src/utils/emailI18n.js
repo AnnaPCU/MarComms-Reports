@@ -140,7 +140,7 @@ const EMAIL_LABEL_EN = [
   ['Recordatorio', 'Reminder'], ['Nueva BBDD', 'New database'], ['nueva BBDD', 'new database'], ['Reactivación', 'Reactivation'],
   ['Última convocatoria', 'Last call'], ['Aviso de nueva fecha', 'New date notice'], ['registrados', 'registrants'],
   ['Registrados', 'Registrants'], ['participantes', 'attendees'], ['Asistentes', 'Attendees'], ['asistentes', 'attendees'],
-  ['Base completa', 'Full base'], ['reenvío', 'resend'], ['Américas', 'Americas'], ['Europa', 'Europe'],
+  ['Base completa', 'Full base'], ['Base actual', 'Current base'], ['Base nueva', 'New base'], ['Participantes', 'Attendees'], ['reenvío', 'resend'], ['Américas', 'Americas'], ['Europa', 'Europe'],
   ['Septiembre', 'September'], ['Agosto', 'August'], ['Julio', 'July'], ['Junio', 'June'], ['Mayo', 'May'], ['Abril', 'April'],
   ['Marzo', 'March'], ['Febrero', 'February'], ['Enero', 'January'], ['Octubre', 'October'], ['Noviembre', 'November'], ['Diciembre', 'December'],
 ];

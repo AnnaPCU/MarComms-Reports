@@ -84,10 +84,174 @@ def load_csv(path):
         return list(csv.DictReader(fh))
 
 
+# Países declarados que no son el nombre del país (formulario libre de Teams).
+COUNTRY_FIX = {'usa': 'Estados Unidos', 'us': 'Estados Unidos', 'u.s.': 'Estados Unidos', 'new york ,ny': 'Estados Unidos',
+               'canada ontario': 'Canadá'}
+# Ambiguos: no se asignan a un país (no se deduce). «USA/CA» puede ser EE.UU./Canadá o California.
+COUNTRY_AMBIGUOUS = {'usa/ca'}
+
+
+def country2(v):
+    s = re.sub(r'\s+', ' ', str(v or '')).strip()
+    if not s or s.lower() in COUNTRY_AMBIGUOUS:
+        return None
+    return COUNTRY_FIX.get(s.lower()) or country(s)
+
+
+# Envíos posteriores al evento (a registrados / participantes): suman como
+# envíos, pero NO cuentan para la atribución de registros al canal email —
+# le llegaron a la gente justamente por haberse registrado.
+POST_EVENT = re.compile(r'participants|registrations|registrados|asistentes|post', re.I)
+
+
+def email_block(folder, regs, registered):
+    """Envíos de Mailchimp (members_*.csv) y atribución de los registrados
+    (solo con los envíos previos al evento)."""
+    sends = []
+    by_contact = collections.defaultdict(lambda: [0, 0])
+    pre = collections.defaultdict(lambda: [0, 0])
+    for f in sorted(glob.glob(os.path.join(folder, 'members_*.csv'))):
+        rows_csv = load_csv(f)
+        sent = len(rows_csv)
+        op = sum(1 for r in rows_csv if int(r.get('opens') or 0) > 0)
+        cl = sum(1 for r in rows_csv if int(r.get('clicks') or 0) > 0)
+        post = bool(POST_EVENT.search(os.path.basename(f)))
+        sends.append({'file': os.path.basename(f), 'sent': sent, 'opens': op, 'clicks': cl, 'post': post,
+                      'open': round(op / sent * 100, 1) if sent else 0, 'click': round(cl / sent * 100, 1) if sent else 0})
+        for r in rows_csv:
+            e = r['email'].strip().lower(); o = int(r.get('opens') or 0); c = int(r.get('clicks') or 0)
+            by_contact[e][0] += o; by_contact[e][1] += c
+            if not post:
+                pre[e][0] += o; pre[e][1] += c
+    in_base = regs & set(pre)
+    email = {
+        'sends': sends,
+        'totalSent': sum(s['sent'] for s in sends),
+        'uniqueContacts': len(by_contact),
+        'openedOnce': sum(1 for v in by_contact.values() if v[0] > 0),
+        'clickedOnce': sum(1 for v in by_contact.values() if v[1] > 0),
+        'regInBase': len(in_base),
+        'regOpened': sum(1 for e in in_base if pre[e][0] > 0),
+        'regFromEmail': sum(1 for e in in_base if pre[e][1] > 0),
+        'regOutsideEmail': len(regs - set(pre)),
+        'attributionSends': sum(1 for x in sends if not x['post']),
+    }
+    email['openedOncePct'] = round(email['openedOnce'] / email['uniqueContacts'] * 100, 1)
+    email['clickedOncePct'] = round(email['clickedOnce'] / email['uniqueContacts'] * 100, 1)
+    email['regInBasePct'] = round(email['regInBase'] / registered * 100)
+    email['regFromEmailPct'] = round(email['regFromEmail'] / registered * 100)
+    email['regOutsideEmailPct'] = round(email['regOutsideEmail'] / registered * 100)
+    return email
+
+
+def main_segments(wb, folder):
+    """Excel «por segmentos» (Fueling Conversations, oct 2026): hojas Resumen ·
+    HubSpot · Base externa · Excluidos · Registro original · Asistencia original.
+    El equipo ya depuró duplicados (un registro por persona) y separó internos
+    y speakers; no hay score numérico sino segmentos (Hot potencial · Warm ·
+    Revisar encaje · Cold · Nurture). Todo se recalcula desde «Base externa»
+    (una fila por registrado externo) y «Excluidos» (internos y speakers)."""
+    B = [x for x in sheet(wb, 'Base externa') if x.get('Email')]
+    X = [x for x in sheet(wb, 'Excluidos') if x.get('Email')]
+    R = [x for x in sheet(wb, 'Registro original') if x.get('Correo electrónico de registro')]
+    A = [x for x in sheet(wb, 'Asistencia original') if x.get('Nombre')]
+    att = [x for x in B if x['Webinar attendance'] == 'Attended']
+    internal = [x for x in X if x['Motivo'] == 'Interno']
+    speakers = [x for x in X if x['Motivo'] == 'Speaker']
+    int_reg = [x for x in internal if x['Registrado'] == 'Sí']
+    int_att = [x for x in internal if x['Asistió'] == 'Sí']
+    registered = len(B) + len(int_reg)
+    attended = len(att) + len(int_att) + sum(1 for x in speakers if x['Asistió'] == 'Sí')
+
+    # Países declarados por los externos (registrados y asistentes).
+    reg_c = collections.Counter(country2(x['Country/Region']) for x in B if country2(x['Country/Region']))
+    att_c = collections.Counter(country2(x['Country/Region']) for x in att if country2(x['Country/Region']))
+    countries = [{'name': c, 'reg': n, 'att': att_c.get(c, 0)} for c, n in reg_c.most_common(10)]
+
+    # Empresas de los asistentes externos (sin empresa: dominio del email).
+    GENERIC = ('gmail.', 'hotmail.', 'yahoo.', 'outlook.', 'live.', 'icloud.', 'protonmail.', 'msn.')
+    def dom(x):
+        d = str(x['Email'] or '').strip().lower().split('@')[-1]
+        return None if not d or d.startswith(GENERIC) else d
+    def org(x):
+        o = re.sub(r'\s+', ' ', str(x['Company Name'] or '')).strip()
+        return o or dom(x) or '—'
+    prio = [x for x in att if x['Webinar segment'] in ('Hot potencial', 'Warm')]
+    featured, seen = [], set()
+    for x in sorted(prio, key=lambda x: -num(x['Attendance minutes'])):
+        k = dom(x) or org(x)
+        if k not in seen:
+            seen.add(k); featured.append(org(x))
+    others = []
+    for x in sorted(att, key=lambda x: -num(x['Attendance minutes'])):
+        k = dom(x) or org(x)
+        if k not in seen:
+            seen.add(k); others.append(org(x))
+    unique_companies = len({dom(x) or org(x) for x in att})
+
+    mins = [num(x['Attendance minutes']) for x in att]
+    seg = collections.Counter(x['Webinar segment'] for x in B)
+    organizer = [x for x in A if x['Rol'] == 'Organizador']
+    room = max((parse_teams_duration(x['Duración de la reunión']) for x in organizer), default=None)
+    rows = [{
+        'empresa': org(x),
+        'pais': country2(x['Country/Region']) or '—',
+        'det': f"{num(x['Attendance minutes']):.1f}".replace('.', ',') + ' min',
+        'score': None,
+        'tier': 'HOT' if x['Webinar segment'] == 'Hot potencial' else 'WARM',
+        'segment': x['Webinar segment'],
+        'priority': x['Follow-up priority'],
+    } for x in sorted(prio, key=lambda x: (str(x['Follow-up priority']), -num(x['Attendance minutes'])))]
+    # Atribución con el email de registro (como en los otros eventos).
+    regs = {x['Email'].strip().lower() for x in B} | {x['Email'].strip().lower() for x in int_reg}
+    out = {
+        'format': 'segments',
+        'title': next((str(r[0]) for r in wb['Resumen'].iter_rows(values_only=True) if r and r[0]), ''),
+        'registered': registered,
+        'attended': attended,
+        'showRateBasis': 'external',
+        'showRate': round(len(att) / len(B) * 100, 1),
+        'regCountries': len(reg_c),
+        'countries': countries,
+        'countryUnknown': sum(1 for x in B if not country2(x['Country/Region'])),
+        'internos': {'total': len(int_reg), 'attended': len(int_att), 'attendedUnregistered': sum(1 for x in int_att if x['Registrado'] != 'Sí')},
+        'speakers': sum(1 for x in speakers if x['Asistió'] == 'Sí'),
+        'externos': {'registered': len(B), 'attended': len(att)},
+        'companies': {'uniqueExternalAttended': unique_companies, 'featured': featured, 'others': others},
+        'deals': {'total': len(prio), 'hot': seg.get('Hot potencial', 0), 'warm': seg.get('Warm', 0),
+                  'review': seg.get('Revisar encaje', 0), 'cold': seg.get('Cold', 0), 'nurture': seg.get('Nurture', 0)},
+        'durationRoomMin': round(room, 1) if room else None,
+        'durationRoomLabel': dur_label(room) if room else None,
+        'durationAvgMin': round(statistics.mean(mins), 1),
+        'durationMedianMin': round(statistics.median(mins), 1),
+        'engagement': {'high': sum(m >= 45 for m in mins), 'mid': sum(20 <= m < 45 for m in mins), 'low': sum(m < 20 for m in mins), 'base': len(att)},
+        'questionsExternal': sum(int(num(x.get('Interacción: preguntas de Preguntas y respuestas'))) for x in A
+                                 if str(x.get('Correo electrónico de registro') or '').lower() in {e for e in regs}),
+        'hotLeads': rows,
+        'email': email_block(folder, regs, registered),
+        'registrationWindow': [R[0]['Hora de registro'], R[-1]['Hora de registro']] if R else None,
+    }
+    return out
+
+
 def main():
     xlsx, folder = sys.argv[1], sys.argv[2]
     out_path = sys.argv[3] if len(sys.argv) > 3 else None
     wb = openpyxl.load_workbook(xlsx, data_only=True)
+    if 'Base externa' in wb.sheetnames:
+        out = main_segments(wb, folder)
+        js = json.dumps(out, ensure_ascii=False, indent=1)
+        if out_path:
+            open(out_path, 'w').write(js); print('wrote', out_path, file=sys.stderr)
+        else:
+            print(js)
+        d, e = out['deals'], out['email']
+        print(f"  registrados {out['registered']} ({out['externos']['registered']} externos) · asistentes {out['attended']} "
+              f"({out['externos']['attended']} externos, {out['showRate']}% sobre externos) · hot {d['hot']} · warm {d['warm']} · "
+              f"revisar {d['review']} · cold {d['cold']} · nurture {d['nurture']}", file=sys.stderr)
+        print(f"  emails: {len(e['sends'])} envíos · {e['totalSent']} enviados · {e['uniqueContacts']} contactos · reg en base {e['regInBase']} · "
+              f"abrieron {e['regOpened']} · clic {e['regFromEmail']} · fuera {e['regOutsideEmail']}", file=sys.stderr)
+        return
 
     L = [x for x in sheet(wb, 'Lead Scoring') if x.get('Email')]
     R = [x for x in sheet(wb, 'Registrations Raw') if x.get('Correo electrónico de registro')]
