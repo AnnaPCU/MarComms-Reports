@@ -1723,3 +1723,10 @@
 
 > Necesito que, asi como en los reportes de Social Media, para CU Latinoamerica hay distitnas vistas para ciertos paises más la vista general, busco hacer lo mismo para ps iberia & americas, con una vista general como la que está ahora + vistas para los paies Argentina Brasil y Estados Unidos
 
+
+**#142** (29/10/2026)
+
+> Quiero que veas los nuevos reportes que hicimos en email marketing y me lo armes. Es un reporte sobre , el newsletter de Peterson Solutions Argentina.
+
+(Llegaron dos exports de Mailchimp «PS - ARG - Newsletter general» — Email 1 y Email 2 — con el commit «10.10 PS ARG Newslette general».)
+

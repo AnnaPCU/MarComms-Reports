@@ -182,6 +182,7 @@ export const CLIENTS = [
         noteEn: 'Regional Iberia & Americas account (cannot be split by country)',
       },
       paid: { account: 'psar', note: 'Cuenta de Google Ads de Peterson Solutions Argentina', noteEn: 'Peterson Solutions Argentina Google Ads account' },
+      email: { account: 'psar', note: 'Newsletter de Peterson Solutions Argentina', noteEn: 'Peterson Solutions Argentina newsletter' },
       website: { account: 'psam' },
     },
   },

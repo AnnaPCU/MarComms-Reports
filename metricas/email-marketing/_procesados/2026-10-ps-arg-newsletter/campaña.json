@@ -1,0 +1,11 @@
+{
+  "accountId": "psar",
+  "accountName": "Peterson Solutions Argentina",
+  "handle": "",
+  "period": "m10",
+  "campaignName": "Newsletter general · Octubre 2026",
+  "emails": [
+    { "name": "Email 1", "subject": "", "csv": "members_PS___ARG___Newsletter_general___Email_1_sent_Oct_29_2026.csv" },
+    { "name": "Email 2", "subject": "", "csv": "members_PS___ARG___Newsletter_general___Email_2_sent_Oct_29_2026.csv" }
+  ]
+}

@@ -13191,6 +13191,130 @@ EMAIL_DB['psus'] = {
   },
 };
 
+// Peterson Solutions Argentina · m10 — generado con scripts/mailchimp-to-seed.mjs
+EMAIL_DB['psar'] = {
+  name: 'Peterson Solutions Argentina',
+  periods: {
+    'm10': {
+        campaignName: 'Newsletter general · Octubre 2026',
+        emails: [
+          {
+            name: 'Email 1',
+            subject: '',
+            metrics: {
+              sent: 738,
+              uniqueOpens: 128,
+              uniqueClicks: 3,
+              totalOpens: 187,
+              totalClicks: 15,
+              openRate: 17.34,
+              clickRate: 0.41,
+              ctor: 2.34
+            }
+          },
+          {
+            name: 'Email 2',
+            subject: '',
+            metrics: {
+              sent: 663,
+              uniqueOpens: 124,
+              uniqueClicks: 2,
+              totalOpens: 175,
+              totalClicks: 13,
+              openRate: 18.7,
+              clickRate: 0.3,
+              ctor: 1.61
+            }
+          }
+        ],
+        totals: {
+          emailCount: 2,
+          totalSent: 1401,
+          totalDelivered: 1401,
+          totalOpens: 252,
+          totalClicks: 5,
+          totalBounces: null,
+          totalUnsubs: null,
+          openRate: 17.99,
+          clickRate: 0.36,
+          ctor: 1.98,
+          bounceRate: null,
+          unsubRate: null
+        },
+        comparison: [
+          {
+            name: 'Email 1',
+            aperturas: 17.3,
+            clics: 0.4,
+            ctor: 2.3
+          },
+          {
+            name: 'Email 2',
+            aperturas: 18.7,
+            clics: 0.3,
+            ctor: 1.6
+          }
+        ],
+        hotLeads: [
+          {
+            email: 'jalegre@silvateam.com',
+            clicks: 24,
+            opens: 2,
+            company: 'Silvateam',
+            firstName: 'Jorgelina',
+            lastName: 'Alegre',
+            campaigns: 2,
+            emailAppearances: [
+              1,
+              2
+            ]
+          },
+          {
+            email: 'stramon@emiliana.cl',
+            clicks: 2,
+            opens: 1,
+            company: 'Emiliana',
+            firstName: 'Sebastian',
+            lastName: 'Tramon',
+            campaigns: 2,
+            emailAppearances: [
+              1,
+              2
+            ]
+          },
+          {
+            email: 'vbustamante@scanntech.com',
+            clicks: 1,
+            opens: 2,
+            company: 'Scann tech',
+            firstName: 'Veronica',
+            lastName: 'Bustamante',
+            campaigns: 2,
+            emailAppearances: [
+              1,
+              2
+            ]
+          },
+          {
+            email: 'mvmedina@oca.com.ar',
+            clicks: 1,
+            opens: 1,
+            company: 'OCA',
+            firstName: 'Marcelo',
+            lastName: 'Medina',
+            campaigns: 2,
+            emailAppearances: [
+              1,
+              2
+            ]
+          }
+        ],
+        hotLeadsCount: 4,
+        allLeadsCount: 738
+      },
+  },
+};
+
 export const EMAIL_CLIENTS = Object.entries(EMAIL_DB).map(([id, v]) => ({ id, name: v.name }));
 
 // Períodos (meses) presentes en el seed, en el orden canónico de MONTHS_2026.
