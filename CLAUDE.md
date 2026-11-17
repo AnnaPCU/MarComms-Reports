@@ -43,7 +43,7 @@ commit → deploy. No hay import por UI ni base de datos.
 | Pilar | Fuentes | Cómo llegan los archivos |
 |-------|---------|--------------------------|
 | **Social Media** | LinkedIn Analytics | carpeta `metricas/social-media/` |
-| **Paid Media** | Google Ads (mes completo), Meta Ads (campaña puntual) | carpeta `metricas/paid-media/` (`google-ads/AAAA-MM/` · `meta-ads/AAAA-MM-<campaña>/`) o adjuntos |
+| **Paid Media** | Google Ads (mes completo), Meta Ads (campaña puntual) | carpeta `metricas/paid-media/` (`google-ads/AAAA-MM/` · `meta-ads/AAAA-MM-<campaña>/`) o adjuntos; también la entrega por API del proyecto SEO-SEM (`docs/ENTREGA_PAID_DESDE_SEO_SEM.md`) |
 | **Email Marketing** | Mailchimp, Apollo | carpeta `metricas/email-marketing/` |
 | **Webinars** | Livestorm / Teams (+ Mailchimp, LinkedIn, HubSpot) | carpeta `metricas/webinars/` |
 | **Website** | GA4, Search Console | adjuntos en la conversación (reporte trimestral .md → `scripts/website/md_to_seed.py`; se archiva en `metricas/website/_procesados/AAAA-QN/`) |
@@ -209,5 +209,6 @@ igual; lo que no se hace es `git push` de esa rama.
 | `docs/historial-pedidos.md` | Registro textual de lo que pidió el equipo, por fecha |
 | `metricas/README.md` | Cómo se entregan los exports de cada pilar |
 | `scripts/paid/README.md` | Tooling de Google Ads (los 3 CSV, validaciones, cuentas) |
+| `docs/ENTREGA_PAID_DESDE_SEO_SEM.md` | Contrato de entrega mensual de Paid Media desde la sesión del proyecto SEO-SEM (API de Google Ads y Meta Ads) |
 | `scripts/crm/README.md` | Tooling de HubSpot (consultas, validaciones, seed del CRM) |
 | `DEPLOY.md` | Integración GitHub → Vercel |

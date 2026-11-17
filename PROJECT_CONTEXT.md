@@ -406,6 +406,17 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **Conexión con el proyecto SEO-SEM para Paid Media** (17/11/2026): el
+  equipo quiere que la sesión de Claude Code de Marcomms-Seo-Sem (Google Ads
+  y Meta Ads por API, GSC/GA4) le pase cada mes las métricas de Paid a esta.
+  El canal es este repo: aquella sesión deja los CSV en `metricas/paid-media/`
+  con el formato que ya lee el tooling (columnas del export en inglés,
+  moneda original, mes completo), los valida con `--dry-run` y pushea a
+  `main`; acá se procesa como siempre. Contrato en
+  `docs/ENTREGA_PAID_DESDE_SEO_SEM.md`. Pendiente: si llegan campañas con la
+  nomenclatura nueva (`CU_US_SEARCH_…`), mapearla en `build_detail.py` /
+  `build_meta.py` (hoy el tooling corta y avisa).
+
 - **Email: Newsletter general de Peterson Solutions Argentina** (29/10/2026):
   cuenta nueva `psar` en Email (logo Peterson, entidad 592 de HubSpot; suma
   el pilar Email al cliente Peterson Solutions Americas, como su Paid). Dos

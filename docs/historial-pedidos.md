@@ -1730,3 +1730,8 @@
 
 (Llegaron dos exports de Mailchimp «PS - ARG - Newsletter general» — Email 1 y Email 2 — con el commit «10.10 PS ARG Newslette general».)
 
+
+**#143** (17/11/2026)
+
+> Necesito conectar dos conversaciones de claude code, donde cada una convive con su propia carpeta de archivos y sus respectivas websites que representan. Resumidamente tengo otro claude code con sus respectivas carpetas y website donde tengo integrado GSC-GA4, Meta Ads y Google Ads para extraccíón de métricas. Lo que me gustaria es que, por cada mes nuevo te pase a vos las metricas que necesites de las campañas del mes anterior de publicidad (Google Ads y Meta Ads) para que vos, puedas armar los reportes respectivos
+

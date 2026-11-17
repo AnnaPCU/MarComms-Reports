@@ -11,6 +11,13 @@ Tooling: `scripts/paid/build_month.py` (Google Ads) y
 `scripts/paid/build_meta.py` (Meta Ads). Detalle técnico en
 `scripts/paid/README.md`.
 
+**Entrega desde el proyecto SEO-SEM.** La sesión de Claude Code de
+Marcomms-Seo-Sem (que tiene Google Ads y Meta Ads por API) puede dejar acá
+los archivos de cada mes, ya en el formato que lee el tooling, y pushearlos a
+`main`. El contrato (archivos, columnas, reglas y validación previa) está en
+`docs/ENTREGA_PAID_DESDE_SEO_SEM.md`. Después, acá se procesa igual que un
+drop manual.
+
 ---
 
 ## Google Ads — un mes de todas las campañas
