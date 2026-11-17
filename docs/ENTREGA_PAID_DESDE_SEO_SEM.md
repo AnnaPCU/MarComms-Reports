@@ -144,12 +144,15 @@ mitad de mes (con fecha) y cualquier cosa que no se pudo extraer.
 ## Qué pasa después (en MarComms-Reports)
 
 **Automático:** una tarea programada («Paid Media: procesar entrega mensual
-de SEO-SEM») corre **del 3 al 10 de cada mes a las 8:37 (hora de
+de SEO-SEM») corre **todos los días a las 8:37 y a las 14:37 (hora de
 Argentina)**. Si encuentra una entrega sin procesar, la procesa y la
-publica; si no hay nada, termina sin avisar. Si algo no cuadra (tooling que
-corta, nomenclatura nueva, tipo de cambio sin 2 fuentes), no publica y deja
-un resumen con lo que falta. Por eso la entrega tiene que estar en `main`
-**antes del día 10**, idealmente el 2 o el 3.
+publica; si no hay nada, termina sin avisar. Una entrega pusheada a `main`
+queda publicada, como mucho, en la siguiente de esas dos corridas. Si algo
+no cuadra (tooling que corta, nomenclatura nueva, dólar BNA sin 2 fuentes),
+no publica y deja un resumen con lo que falta. Si lo único que falta es el
+euro/dólar oficial del BCE, publica el mes igual con la descarga en EUR
+deshabilitada (`eurPending` en `src/data/fxRates.js`) y lo completa en una
+corrida posterior, cuando lo pueda verificar.
 
 También se puede disparar a mano en cualquier sesión del repo:
 «Procesá las métricas nuevas de Paid Media» → tooling + validación, tipo de

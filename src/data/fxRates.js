@@ -14,6 +14,9 @@
 //    publica de forma consistente en fuentes verificables, así que el euro se
 //    calcula con el dólar BNA y el euro/dólar oficial del BCE.
 //  Se cargan al procesar las métricas del mes (metricas/paid-media/README.md).
+//  Si el euro/dólar del BCE no se puede verificar en 2 fuentes, se carga
+//  `usdPerEur: null, eurPending: true`: el mes se publica y la descarga en
+//  EUR queda deshabilitada hasta completarlo (nunca se estima).
 //
 //  Campañas fuera del flujo mensual (en paralelo `par-…` y de Meta
 //  `geo-…`/`meta-…`): mismo criterio, con la clave del período de la
@@ -38,6 +41,11 @@ export const FX_RATES = {
   m08: { date: '2026-08-31', USD: 1530, usdPerEur: 1.1596 },
   // 30/09: Ámbito (cierre) · Rava · Estudio de la Mano · BCE BOE-A-2026-20464
   m09: { date: '2026-09-30', USD: 1540, usdPerEur: 1.1355 },
+  // 30/10: Río Negro · Ámbito (cierre) · El Cronista · La Nación · MinutoYa
+  // (BNA 1.510 / 1.560). Euro/dólar del BCE del 30/10 PENDIENTE: no se pudo
+  // verificar en el BOE ni en el BCE (las cotizaciones de mercado no son el
+  // tipo oficial). Hasta cargarlo, octubre se descarga en ARS y USD, no en EUR.
+  m10: { date: '2026-10-30', USD: 1560, usdPerEur: null, eurPending: true },
 
   // ── Campañas (cierre de la campaña) ──
   // Aapresid (Meta, 03–07/08): Cronista (cierre BNA) · La Nación · Río Negro ·

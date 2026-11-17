@@ -678,6 +678,14 @@ USD como archivo puntual.
   campaña en paralelo, Google y Meta usan el mismo tipo de cambio. Pedido
   del equipo: «en todas las nuevas campañas tiene que poder descargarse con
   las tres monedas posibles».
+- **Euro pendiente** (17/11/2026): si el euro/dólar oficial del BCE del
+  cierre no se puede verificar en 2 fuentes (pasó con el 30/10/2026: sin
+  acceso al BOE ni al BCE y cotizaciones de mercado distintas entre sí), no
+  se estima ni se frena la publicación del mes: se carga `usdPerEur: null,
+  eurPending: true`, el mes se baja en ARS y USD y el botón EUR del
+  descargable queda deshabilitado hasta completarlo. El dólar BNA sí es
+  obligatorio. La tarea automática revisa los euros pendientes en cada
+  corrida.
 
 ## 20. La app recuerda el recorrido y tiene modo oscuro
 

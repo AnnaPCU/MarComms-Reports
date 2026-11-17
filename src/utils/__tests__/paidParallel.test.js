@@ -64,7 +64,7 @@ describe('campaña en paralelo (Google Ads + Meta Ads): IFPA · CU Estados Unido
   });
 
   it('el último mes de la cuenta sigue siendo un mes, nunca la campaña en paralelo', () => {
-    expect(latestPeriod('paid', { account: 'cuus' }).id).toBe('m09');
+    expect(latestPeriod('paid', { account: 'cuus' }).id).toBe('m10');
   });
 });
 

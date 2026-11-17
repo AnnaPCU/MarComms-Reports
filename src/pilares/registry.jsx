@@ -53,7 +53,7 @@ export const REGISTRY = {
       return list;
     },
     periodFilterLabel: 'Período/Campaña',
-    defaultPeriod: 'm09', // Septiembre 2026: último mes cargado
+    defaultPeriod: 'm10', // Octubre 2026: último mes cargado
     hasDataFor: paid.hasDataFor,
   },
   website: {

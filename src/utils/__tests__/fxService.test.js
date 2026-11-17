@@ -63,8 +63,17 @@ describe('Paid · descarga en otra moneda', () => {
     const missing = [];
     for (const { id } of listPeriods()) {
       const has = Object.values(PAID_DB).some((a) => a.periods[id]);
-      if (has && !(FX_RATES[id]?.USD && FX_RATES[id]?.usdPerEur)) missing.push(id);
+      const fx = FX_RATES[id];
+      // El euro/dólar puede quedar pendiente solo con la marca explícita.
+      if (has && !(fx?.USD && (fx.usdPerEur || fx.eurPending))) missing.push(id);
     }
     expect(missing, 'Falta el tipo de cambio en src/data/fxRates.js (ver metricas/paid-media/README.md)').toEqual([]);
+  });
+  it('un mes con el euro/dólar pendiente se baja en ARS y USD, nunca en EUR', () => {
+    for (const [id, fx] of Object.entries(FX_RATES).filter(([, f]) => f.eurPending)) {
+      expect(fx.usdPerEur).toBeNull();
+      expect(canConvert('ARS', 'USD', id)).toBe(true);
+      expect(canConvert('ARS', 'EUR', id)).toBe(false);
+    }
   });
 });

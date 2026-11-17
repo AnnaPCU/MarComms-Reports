@@ -162,6 +162,22 @@ export const PAID_DB = {
         analysis:
           'Septiembre completo. La cuenta triplicó el alcance frente a agosto: 2.661 impresiones (+210%) y 151 clics (+125%), con 343.101,45 ARS invertidos. Textile lideró en alcance (822 impresiones) y en gasto (71.984,76 ARS); Plásticos y Bioenergía sostuvieron CTR altos (7,00% y 6,32%) y Biomasa marcó el mejor CTR (13,73%) sobre apenas 51 impresiones. GMP+ tuvo 4 impresiones sin clics. Sin conversiones en el mes. Total: 2.661 impresiones, 151 clics y 343.101,45 ARS.',
       },
+      m10: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 3440, clicks: 202, ctr: 5.87, cpc: 1838.26, cost: 371329.34, currency: 'ARS', conversions: 0, convRate: 0, costPerConv: 0 },
+        campaigns: [
+          { name: 'Plásticos', impressions: 591, clicks: 24, ctr: 4.06, cpc: 2900.34, cost: 69608.16, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', impressions: 718, clicks: 36, ctr: 5.01, cpc: 1926.72, cost: 69361.99, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Textile', impressions: 1163, clicks: 60, ctr: 5.16, cpc: 1152.46, cost: 69147.81, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Bioenergía', impressions: 347, clicks: 32, ctr: 9.22, cpc: 2150.06, cost: 68801.88, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Forestal', impressions: 566, clicks: 39, ctr: 6.89, cpc: 1753.98, cost: 68405.13, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Biomasa', impressions: 52, clicks: 11, ctr: 21.15, cpc: 2364.03, cost: 26004.37, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'GMP+', impressions: 3, clicks: 0, ctr: 0, cpc: 0, cost: 0, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Octubre completo. Frente a septiembre, 3.440 impresiones (+29%) y 202 clics (+34%), con 371.329,34 ARS invertidos. Textile lideró en alcance (1.163 impresiones) y en clics (60), con el CPC más bajo de la cuenta (1.152,46 ARS). Bioenergía tuvo un CTR de 9,22% y Biomasa el mejor (21,15%) sobre 52 impresiones. GMP+ tuvo 3 impresiones sin clics. Sin conversiones en el mes. Total: 3.440 impresiones, 202 clics y 371.329,34 ARS.',
+      },
     },
   },
 
@@ -251,6 +267,24 @@ export const PAID_DB = {
         analysis:
           'Septiembre completo. El volumen creció fuerte frente a agosto: 6.708 impresiones (+61%) y 273 clics (+61%), con 477.519,76 ARS invertidos. Seis conversiones en el mes: Bioenergía y Plásticos aportaron dos cada una (coste por lead de 31.259,51 y 26.225,73 ARS) y Smeta y CAEs, una cada una. CAEs sostuvo el mayor alcance (2.041 impresiones) y Textile el mejor CTR entre las campañas con volumen (7,35%). Biomasa recién tuvo impresiones desde la semana del 21/9 y GMP+ tuvo actividad mínima (78 impresiones, 2 clics). Total: 6.708 impresiones, 273 clics y 477.519,76 ARS.',
       },
+      m10: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 9770, clicks: 417, ctr: 4.27, cpc: 1379.3, cost: 575167.34, currency: 'ARS', conversions: 1, convRate: 0.24, costPerConv: 575167.34 },
+        campaigns: [
+          { name: 'Forestal', impressions: 1651, clicks: 61, ctr: 3.69, cpc: 1143.28, cost: 69740.13, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', impressions: 994, clicks: 67, ctr: 6.74, cpc: 1037.53, cost: 69514.21, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'IFS', impressions: 1349, clicks: 37, ctr: 2.74, cpc: 1862.95, cost: 68929.27, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Textile', impressions: 1206, clicks: 67, ctr: 5.56, cpc: 1026.18, cost: 68754.32, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'CAEs', impressions: 3430, clicks: 80, ctr: 2.33, cpc: 848.19, cost: 67855.39, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Plásticos', impressions: 426, clicks: 34, ctr: 7.98, cpc: 1979.89, cost: 67316.39, conversions: 1, convRate: 2.94, costPerConv: 67316.39 },
+          { name: 'Bioenergía', impressions: 410, clicks: 37, ctr: 9.02, cpc: 1815.98, cost: 67191.24, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'GMP+', impressions: 166, clicks: 11, ctr: 6.63, cpc: 5060.52, cost: 55665.73, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Biomasa', impressions: 138, clicks: 23, ctr: 16.67, cpc: 1747.85, cost: 40200.66, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Octubre completo. Frente a septiembre, 9.770 impresiones (+46%) y 417 clics (+53%), con 575.167,34 ARS invertidos. Una sola conversión en el mes, de Plásticos (67.316,39 ARS por lead), contra seis en septiembre. CAEs sostuvo el mayor alcance (3.430 impresiones, 80 clics) con el CTR más bajo de la cuenta (2,33%). Biomasa tuvo el mejor CTR (16,67%) sobre 138 impresiones, y Bioenergía y Plásticos también superaron el 7%. El gasto se repartió parejo: siete de las nueve campañas invirtieron entre 67.000 y 70.000 ARS. Total: 9.770 impresiones, 417 clics y 575.167,34 ARS.',
+      },
     },
   },
 
@@ -314,6 +348,20 @@ export const PAID_DB = {
         ],
         analysis:
           'Septiembre completo. Frente a agosto, 2.591 impresiones (+184%) y 106 clics (+71%), con 354.018,20 ARS invertidos. GLOBALG.A.P. aportó la única conversión del mes (48.016,08 ARS por lead). Forestry concentró el 40% del gasto (141.467,62 ARS) y el mayor alcance (1.270 impresiones), pero con el CTR más bajo de la cuenta (2,68%). Aqua / Fisheries tuvo el mejor CTR (13,10%) sobre 84 impresiones. Total: 2.591 impresiones, 106 clics y 354.018,20 ARS.',
+      },
+      m10: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 2938, clicks: 174, ctr: 5.92, cpc: 2425.68, cost: 422068.04, currency: 'ARS', conversions: 0, convRate: 0, costPerConv: 0 },
+        campaigns: [
+          { name: 'Forestry', impressions: 1253, clicks: 52, ctr: 4.15, cpc: 2675.03, cost: 139101.72, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Canada Gap', impressions: 453, clicks: 33, ctr: 7.28, cpc: 2202.8, cost: 72692.45, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'GLOBALG.A.P.', impressions: 444, clicks: 30, ctr: 6.76, cpc: 2366.75, cost: 71002.63, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', impressions: 575, clicks: 30, ctr: 5.22, cpc: 2339.26, cost: 70177.91, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Aqua / Fisheries', impressions: 213, clicks: 29, ctr: 13.62, cpc: 2382.53, cost: 69093.33, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Octubre completo. Frente a septiembre, 2.938 impresiones (+13%) y 174 clics (+64%): el CTR de la cuenta subió de 4,09% a 5,92%, con 422.068,04 ARS invertidos. Forestry concentró el 33% del gasto (139.101,72 ARS) y el mayor alcance (1.253 impresiones), con el CTR más bajo de la cuenta (4,15%). Aqua / Fisheries tuvo el mejor CTR (13,62%) sobre 213 impresiones. Sin conversiones en el mes (una en septiembre). Total: 2.938 impresiones, 174 clics y 422.068,04 ARS.',
       },
     },
   },
@@ -389,6 +437,23 @@ export const PAID_DB = {
         analysis:
           'Septiembre completo. Las impresiones subieron a 17.062 (+48% frente a agosto) pero los clics bajaron a 324 (−36%): el CTR de la cuenta cayó de 4,37% a 1,90%, con 358.222,62 ARS invertidos. SuSo - Agricultura regenerativa concentró el 45% de las impresiones (7.676) y 134 clics, con el CPC más bajo de la cuenta (515,91 ARS). SuSe - Huella de agua tuvo el mejor CTR (4,86%). Sin conversiones en el mes. Total: 17.062 impresiones, 324 clics y 358.222,62 ARS.',
       },
+      m10: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 20239, clicks: 403, ctr: 1.99, cpc: 1105.92, cost: 445686.95, currency: 'ARS', conversions: 0, convRate: 0, costPerConv: 0 },
+        campaigns: [
+          { name: 'SuSe - Huella de agua', impressions: 632, clicks: 24, ctr: 3.8, cpc: 3071.57, cost: 73717.57, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSe - ESG / Reportes', impressions: 896, clicks: 43, ctr: 4.8, cpc: 1630.67, cost: 70118.98, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Bioenergía / Biocombustibles', impressions: 2689, clicks: 47, ctr: 1.75, cpc: 1475.25, cost: 69336.59, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSe - Huella de carbono / GEI', impressions: 5830, clicks: 97, ctr: 1.66, cpc: 711.28, cost: 68993.89, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSo - Agricultura regenerativa', impressions: 9128, clicks: 162, ctr: 1.77, cpc: 425.01, cost: 68851.72, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'CeSu - Preparacion para certificaciones', impressions: 476, clicks: 15, ctr: 3.15, cpc: 3579.64, cost: 53694.54, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSo - Trazabilidad / EUDR', impressions: 246, clicks: 9, ctr: 3.66, cpc: 3170.07, cost: 28530.61, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'SuSo - Abastecimiento sostenible', impressions: 342, clicks: 6, ctr: 1.75, cpc: 2073.84, cost: 12443.05, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Octubre completo. Frente a septiembre, 20.239 impresiones (+19%) y 403 clics (+24%), con 445.686,95 ARS invertidos; el CTR de la cuenta siguió bajo (1,99%). SuSo - Agricultura regenerativa concentró el 45% de las impresiones (9.128) y 162 clics, con el CPC más bajo de la cuenta (425,01 ARS), y SuSe - Huella de carbono / GEI sumó 5.830 impresiones y 97 clics. SuSe - ESG / Reportes tuvo el mejor CTR (4,80%). Sin conversiones en el mes. Total: 20.239 impresiones, 403 clics y 445.686,95 ARS.',
+      },
     },
   },
 
@@ -420,6 +485,18 @@ export const PAID_DB = {
         analysis:
           'Primer mes completo de la cuenta. Toda la actividad la hizo Organic - USDA NOP: 449 impresiones, 32 clics (CTR 7,13%) y 240.944,29 ARS, con un CPC de 7.529,51 ARS, el más alto de todas las cuentas. Organic - PrimusGFS registró apenas 3 impresiones sin clics. Sin conversiones todavía. Total: 452 impresiones, 32 clics y 240.944,29 ARS.',
       },
+      m10: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 2791, clicks: 182, ctr: 6.52, cpc: 4017.17, cost: 731124.48, currency: 'ARS', conversions: 1, convRate: 0.55, costPerConv: 731124.48 },
+        campaigns: [
+          { name: 'Organic - USDA NOP', impressions: 1058, clicks: 52, ctr: 4.91, cpc: 8699.8, cost: 452389.4, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'IFPA event', startedOn: '2026-10-07', impressions: 1722, clicks: 129, ctr: 7.49, cpc: 2051.44, cost: 264635.17, conversions: 1, convRate: 0.78, costPerConv: 264635.17 },
+          { name: 'Organic - PrimusGFS', impressions: 11, clicks: 1, ctr: 9.09, cpc: 14099.91, cost: 14099.91, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Octubre completo, con IFPA event activa desde el 7 de octubre (parcial). Frente a septiembre, 2.791 impresiones (+517%) y 182 clics (+469%), con 731.124,48 ARS invertidos. IFPA event hizo 1.722 impresiones y 129 clics (CTR 7,49%) y aportó la primera conversión de la cuenta (264.635,17 ARS por lead). Organic - USDA NOP sumó 1.058 impresiones y 52 clics, con el 62% del gasto (452.389,40 ARS) y un CPC de 8.699,80 ARS. Organic - PrimusGFS tuvo 11 impresiones y 1 clic. Total: 2.791 impresiones, 182 clics y 731.124,48 ARS.',
+      },
     },
   },
   cuar: {
@@ -440,6 +517,22 @@ export const PAID_DB = {
         analysis:
           'Primer mes de Google Ads de la cuenta, con seis campañas. Agroexportación concentró el 52% de las impresiones (1.055), 68 clics y la única conversión del mes (95.306,47 ARS por lead). GHG sumó 513 impresiones y 24 clics; Biocombustible e Industria tuvieron volumen menor. Agro sostenible y Cadena de Custodia recién registraron impresiones en la semana del 28/9 (20 y 18). Total: 2.031 impresiones, 112 clics y 164.191,66 ARS.',
       },
+      m10: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 11116, clicks: 523, ctr: 4.7, cpc: 1135.85, cost: 594050.61, currency: 'ARS', conversions: 1, convRate: 0.19, costPerConv: 594050.61 },
+        campaigns: [
+          { name: 'Agroexportación', impressions: 3988, clicks: 268, ctr: 6.72, cpc: 784.11, cost: 210141.53, conversions: 1, convRate: 0.37, costPerConv: 210141.53 },
+          { name: 'GHG', impressions: 1632, clicks: 66, ctr: 4.04, cpc: 1924.05, cost: 126987.32, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Industria', impressions: 1998, clicks: 64, ctr: 3.2, cpc: 1483.18, cost: 94923.47, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Cadena de Custodia', impressions: 1683, clicks: 55, ctr: 3.27, cpc: 1092.3, cost: 60076.43, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Biocombustible', impressions: 751, clicks: 35, ctr: 4.66, cpc: 1632.56, cost: 57139.52, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Agro sostenible', impressions: 963, clicks: 30, ctr: 3.12, cpc: 1115.72, cost: 33471.75, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Smeta', startedOn: '2026-10-27', impressions: 101, clicks: 5, ctr: 4.95, cpc: 2262.12, cost: 11310.59, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Octubre completo. La cuenta multiplicó su volumen frente a septiembre: 11.116 impresiones (+447%) y 523 clics (+367%), con 594.050,61 ARS invertidos. Agroexportación concentró el 36% de las impresiones (3.988), 268 clics y la única conversión del mes (210.141,53 ARS por lead), con el mejor CTR (6,72%) y el CPC más bajo de la cuenta (784,11 ARS). GHG fue la segunda en gasto (126.987,32 ARS). Smeta es una campaña nueva, activa desde el 27 de octubre (parcial): 101 impresiones y 5 clics. Total: 11.116 impresiones, 523 clics y 594.050,61 ARS.',
+      },
     },
   },
   pcues: {
@@ -456,6 +549,17 @@ export const PAID_DB = {
         analysis:
           'Primer mes de la cuenta (campañas de ISO 27001 con marca PCU). ISO 27001 concentró casi todo: 5.480 impresiones, 360 clics (CTR 6,57%, CPC 975,03 ARS) y la única conversión del mes (351.010,31 ARS por lead). Competidores ISO 27001 sumó 191 impresiones y 13 clics, con un CPC más alto (3.588,10 ARS). Total: 5.671 impresiones, 373 clics y 397.655,58 ARS.',
       },
+      m10: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 15457, clicks: 934, ctr: 6.04, cpc: 544.74, cost: 508789.69, currency: 'ARS', conversions: 0, convRate: 0, costPerConv: 0 },
+        campaigns: [
+          { name: 'ISO 27001', impressions: 15167, clicks: 921, ctr: 6.07, cpc: 502.49, cost: 462794.46, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Competidores ISO 27001', impressions: 290, clicks: 13, ctr: 4.48, cpc: 3538.09, cost: 45995.23, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Octubre completo. Frente a septiembre, 15.457 impresiones (+173%) y 934 clics (+150%), con 508.789,69 ARS invertidos; el CPC de ISO 27001 bajó de 975,03 a 502,49 ARS. ISO 27001 concentró casi toda la actividad (15.167 impresiones, 921 clics, CTR 6,07%). Competidores ISO 27001 sumó 290 impresiones y 13 clics, con un CPC de 3.538,09 ARS. Sin conversiones en el mes (una en septiembre). Total: 15.457 impresiones, 934 clics y 508.789,69 ARS.',
+      },
     },
   },
   pcuar: {
@@ -471,6 +575,17 @@ export const PAID_DB = {
         ],
         analysis:
           'Primer mes de la cuenta (campañas de ISO 27001 con marca PCU). ISO 27001 hizo 2.597 impresiones y 150 clics (CTR 5,78%) y aportó la única conversión del mes (293.242,54 ARS por lead). Competidores ISO 27001 sumó 298 impresiones y 9 clics (CTR 3,02%). Total: 2.895 impresiones, 159 clics y 309.991,29 ARS.',
+      },
+      m10: {
+        channel: 'Google Ads Search',
+        objetivo: 'Generación de leads',
+        totals: { impressions: 3786, clicks: 227, ctr: 6, cpc: 1729.47, cost: 392589.14, currency: 'ARS', conversions: 0, convRate: 0, costPerConv: 0 },
+        campaigns: [
+          { name: 'ISO 27001', impressions: 3694, clicks: 224, ctr: 6.06, cpc: 1727.35, cost: 386927.4, conversions: 0, convRate: 0, costPerConv: 0 },
+          { name: 'Competidores ISO 27001', impressions: 92, clicks: 3, ctr: 3.26, cpc: 1887.25, cost: 5661.74, conversions: 0, convRate: 0, costPerConv: 0 },
+        ],
+        analysis:
+          'Octubre completo. Frente a septiembre, 3.786 impresiones (+31%) y 227 clics (+43%), con 392.589,14 ARS invertidos. ISO 27001 hizo 3.694 impresiones y 224 clics (CTR 6,06%) y concentró el 99% del gasto. Competidores ISO 27001 tuvo 92 impresiones y 3 clics. Sin conversiones en el mes (una en septiembre). Total: 3.786 impresiones, 227 clics y 392.589,14 ARS.',
       },
     },
   },

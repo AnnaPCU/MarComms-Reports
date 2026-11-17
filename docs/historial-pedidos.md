@@ -1735,3 +1735,9 @@
 
 > Necesito conectar dos conversaciones de claude code, donde cada una convive con su propia carpeta de archivos y sus respectivas websites que representan. Resumidamente tengo otro claude code con sus respectivas carpetas y website donde tengo integrado GSC-GA4, Meta Ads y Google Ads para extraccíón de métricas. Lo que me gustaria es que, por cada mes nuevo te pase a vos las metricas que necesites de las campañas del mes anterior de publicidad (Google Ads y Meta Ads) para que vos, puedas armar los reportes respectivos
 
+
+**#144** (17/11/2026)
+
+> No veo que se haya actualizado al marcomms reports. no deberia esar automatizado tambien el rpcoeso de alta del github al reports?
+
+(La entrega de Google Ads de octubre llegó desde la sesión de SEO-SEM el 17/11, fuera del rango del 3 al 10 de la tarea automática. Se procesó a mano y la tarea pasó a correr todos los días a las 8:37 y 14:37.)

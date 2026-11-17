@@ -263,7 +263,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 | Módulo | Estado |
 |--------|--------|
 | Social Media | ✅ Completo (Ene–Sep 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país (CU Latinoamérica, CU North America y PS Iberia & Americas — esta última desde agosto) + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
-| Paid Media | ✅ Completo (Feb–Sep 2026; 8 cuentas de Google Ads desde septiembre: suman Control Union Argentina, PCU España y PCU Argentina) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) · campaña en paralelo Google + Meta: IFPA · Oct 2026 (CU Estados Unidos, `scripts/paid/build_parallel.py`) |
+| Paid Media | ✅ Completo (Feb–Oct 2026; 8 cuentas de Google Ads desde septiembre: suman Control Union Argentina, PCU España y PCU Argentina) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) · campaña en paralelo Google + Meta: IFPA · Oct 2026 (CU Estados Unidos, `scripts/paid/build_parallel.py`) |
 | Website (GA + SEO) | ✅ Q1+Q2 2026 (12 cuentas) y **Q3 2026** (10 cuentas, de los reportes trimestrales .md de GA4 + Search Console del 9/10; ahora también con SEO de Peterson). CU Estados Unidos y CU Canadá en Q3 salen del reporte de North America segmentado por país (12 cuentas en total). + Resumen del Año + comparativa. Tooling: `scripts/website/md_to_seed.py` |
 | Email Marketing | ✅ Ocho campañas reales: `psar` (Peterson Solutions Argentina) m10 — Newsletter general (2 envíos) · `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `psus` (Peterson Solutions Estados Unidos) m10 — webinar Fueling Conversations (14 envíos: base actual, base nueva y 2 post-webinar) · `cuus` (Control Union Estados Unidos) m10 — tres campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange), «SMETA · Campaign 3» e «IFPA» (3 envíos) (tooling: `scripts/mailchimp-to-seed.mjs`) |
 | Webinars | ✅ Reporte mixto por evento, cuatro cuentas: **CU Latinoamérica** (Webinar EUDR · Ago 2026; ISO 14064 oculto a pedido del equipo), **CU Global** (Webinar Plastic Packaging · Sep 2026, en inglés; LinkedIn cargado desde capturas el 16/9), **Peterson Solutions Iberoamérica** (Webinar EmpCo 2026 · 10/9/2026, en español, logo Peterson) y **Peterson Solutions Estados Unidos** (Webinar Fueling Conversations · 16/10/2026, en inglés, Excel «por segmentos»: show rate sobre externos y sin score numérico). Tooling: `scripts/webinars/build_event.py` |
@@ -417,8 +417,10 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   nomenclatura nueva (`CU_US_SEARCH_…`), mapearla en `build_detail.py` /
   `build_meta.py` (hoy el tooling corta y avisa).
   - Tarea programada «Paid Media: procesar entrega mensual de SEO-SEM»
-    (`trig_01Uqn1CodZhaqYPHL1AqWNJ3`): del 3 al 10 de cada mes, 8:37 ART,
-    sesión nueva por disparo. Procesa y publica si hay entrega; si algo no
+    (`trig_01Uqn1CodZhaqYPHL1AqWNJ3`): todos los días a las 8:37 y 14:37
+    ART (hasta el 17/11 corría solo del 3 al 10 y la entrega de octubre,
+    pusheada el 17/11, quedó esperando), sesión nueva por disparo; si no
+    hay entrega ni euro pendiente, termina sin avisar. Procesa y publica si hay entrega; si algo no
     cuadra, no publica y avisa. Se creó sin el repo adjunto ni el conector
     de Vercel (la herramienta no los permite): se agregan desde la
     configuración de la tarea en claude.ai.
@@ -587,6 +589,21 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   `exportDate`). Drop archivado en
   `metricas/email-marketing/_procesados/2026-10-ifpa/` (se subió como
   `AAAA-MM-2026-10-IFPA-CAMPAIGN`).
+
+- **Paid Media · Google Ads octubre 2026** (17/11/2026): primera entrega
+  de la sesión de SEO-SEM por API (cuenta 1606422184, ARS, extraída el
+  17/11). 43 campañas en las 8 cuentas: 69.537 impresiones, 3.062 clics,
+  4.040.805,59 ARS y 3 conversiones (CU España, CU Estados Unidos y CU
+  Argentina); semanal = informe de campañas exacto. Campañas parciales
+  (`startedOn`): «IFPA event» de CU Estados Unidos desde el 7/10 y «Smeta»
+  de CU Argentina (nueva) desde el 27/10. Organic - PrimusGFS no es parcial
+  (existe desde el 21/8; en octubre recién tuvo actividad desde la semana
+  del 19/10). Tipo de cambio: dólar BNA 1.560 (30/10, 5 fuentes); el
+  euro/dólar oficial del BCE del 30/10 no se pudo verificar (sin acceso al
+  BOE ni al BCE y las cotizaciones de mercado no coinciden), así que queda
+  `eurPending`: octubre se baja en ARS y USD, no en EUR, hasta completarlo.
+  Archivado en `google-ads/_procesados/2026-10/`. Período por defecto de
+  Paid: octubre.
 
 - **Paid Media · Google Ads septiembre 2026** (13/10/2026): primer mes
   ingresado por `metricas/paid-media/` (la carpeta se subió como
