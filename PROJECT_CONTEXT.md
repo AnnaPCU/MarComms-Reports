@@ -416,6 +416,12 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   `docs/ENTREGA_PAID_DESDE_SEO_SEM.md`. Pendiente: si llegan campañas con la
   nomenclatura nueva (`CU_US_SEARCH_…`), mapearla en `build_detail.py` /
   `build_meta.py` (hoy el tooling corta y avisa).
+  - Tarea programada «Paid Media: procesar entrega mensual de SEO-SEM»
+    (`trig_01Uqn1CodZhaqYPHL1AqWNJ3`): del 3 al 10 de cada mes, 8:37 ART,
+    sesión nueva por disparo. Procesa y publica si hay entrega; si algo no
+    cuadra, no publica y avisa. Se creó sin el repo adjunto ni el conector
+    de Vercel (la herramienta no los permite): se agregan desde la
+    configuración de la tarea en claude.ai.
 
 - **Email: Newsletter general de Peterson Solutions Argentina** (29/10/2026):
   cuenta nueva `psar` en Email (logo Peterson, entidad 592 de HubSpot; suma

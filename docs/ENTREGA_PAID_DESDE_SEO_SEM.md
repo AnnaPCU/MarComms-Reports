@@ -143,6 +143,15 @@ mitad de mes (con fecha) y cualquier cosa que no se pudo extraer.
 
 ## Qué pasa después (en MarComms-Reports)
 
+**Automático:** una tarea programada («Paid Media: procesar entrega mensual
+de SEO-SEM») corre **del 3 al 10 de cada mes a las 8:37 (hora de
+Argentina)**. Si encuentra una entrega sin procesar, la procesa y la
+publica; si no hay nada, termina sin avisar. Si algo no cuadra (tooling que
+corta, nomenclatura nueva, tipo de cambio sin 2 fuentes), no publica y deja
+un resumen con lo que falta. Por eso la entrega tiene que estar en `main`
+**antes del día 10**, idealmente el 2 o el 3.
+
+También se puede disparar a mano en cualquier sesión del repo:
 «Procesá las métricas nuevas de Paid Media» → tooling + validación, tipo de
 cambio del cierre del mes (BNA y BCE, validado en 2+ fuentes), análisis
 redactado sobre los números, revisión en el navegador en ES y EN, publicación
