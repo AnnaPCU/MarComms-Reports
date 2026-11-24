@@ -262,7 +262,7 @@ gráficos/tabla propios del pilar → **Lectura de Performance (diagnóstico)** 
 
 | Módulo | Estado |
 |--------|--------|
-| Social Media | ✅ Completo (Ene–Sep 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país (CU Latinoamérica, CU North America y PS Iberia & Americas — esta última desde agosto) + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
+| Social Media | ✅ Completo (Ene–Oct 2026, 9 cuentas) + **trimestres Q1–Q3** (suma de los 3 meses, también por país) + comparativa + reportes por país (CU Latinoamérica, CU North America y PS Iberia & Americas — esta última desde agosto) + Resumen del Año (tooling: `scripts/linkedin/`). Agosto fue el primer mes ingresado por `metricas/social-media/` |
 | Paid Media | ✅ Completo (Feb–Oct 2026; 8 cuentas de Google Ads desde septiembre: suman Control Union Argentina, PCU España y PCU Argentina) + drill-down + detalle por grupo + Resumen del Año + comparativa + campañas de Meta Ads como reporte propio (GEO Aapresid). Ingesta por carpeta `metricas/paid-media/` (Google Ads por mes, Meta por campaña; tooling: `scripts/paid/`) · campaña en paralelo Google + Meta: IFPA · Oct 2026 (CU Estados Unidos, `scripts/paid/build_parallel.py`) |
 | Website (GA + SEO) | ✅ Q1+Q2 2026 (12 cuentas) y **Q3 2026** (10 cuentas, de los reportes trimestrales .md de GA4 + Search Console del 9/10; ahora también con SEO de Peterson). CU Estados Unidos y CU Canadá en Q3 salen del reporte de North America segmentado por país (12 cuentas en total). + Resumen del Año + comparativa. Tooling: `scripts/website/md_to_seed.py` |
 | Email Marketing | ✅ Ocho campañas reales: `psar` (Peterson Solutions Argentina) m10 — Newsletter general (2 envíos) · `cups` (Control Union + Peterson Solutions Latinoamérica) m08 — webinar EUDR · `cug` (Control Union Global) m09 — webinar Plastic Packaging · `psi` (Peterson Solutions Iberoamérica) m09 — webinar EmpCo 2026 · `psus` (Peterson Solutions Estados Unidos) m10 — webinar Fueling Conversations (14 envíos: base actual, base nueva y 2 post-webinar) · `cuus` (Control Union Estados Unidos) m10 — tres campañas one shot con botonera de campaña: «PCU x Fairly Made · Networking Event» (Textile Exchange), «SMETA · Campaign 3» e «IFPA» (3 envíos) (tooling: `scripts/mailchimp-to-seed.mjs`) |
@@ -405,6 +405,20 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   único que sobrevive entre sesiones y entre cuentas.
 
 ## 15. Registro de cambios relevantes
+
+- **Social · octubre 2026** (24/11/2026): LinkedIn de las 9 cuentas (1–31/10
+  en los tres exports de cada una) + países de CU Latinoamérica (41 posts:
+  ar 11 · br 5 · cl 2 · pe 6 · mx 5 · ec 2 · sin país 10), CU North America
+  (15: us 2 · ca 3 · sin país 10) y PS Iberia & Americas (26: ar 2 · br 0 ·
+  us 3 · sin país 21). Impresiones y clics de cada cuenta verificados contra
+  la hoja Indicadores (coinciden exacto). Ojo: PS Global suma 4.285
+  seguidores nuevos en el mes, 4.141 de ellos el 13/10 («seguidores
+  generales», ni patrocinados ni invitados): es lo que trae el export.
+  Octubre sumado a `MO`/`ML` de `socialSeed.js` (sin eso el mes no aparece
+  en el selector) y período por defecto de Social → octubre. Q4 recién
+  existe con octubre–diciembre (§16). Carpeta archivada en
+  `metricas/social-media/_procesados/2026-10/` (se subió como «Metricas
+  2026-10 Social Media»).
 
 - **Conexión con el proyecto SEO-SEM para Paid Media** (17/11/2026): el
   equipo quiere que la sesión de Claude Code de Marcomms-Seo-Sem (Google Ads

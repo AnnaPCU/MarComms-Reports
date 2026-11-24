@@ -299,4 +299,43 @@ export const LATAM_DB = {
     ec: {np:0, imp:0, clk:0, er:0, vis:47, folBase:427, posts:[]},
     _tot: {np:41, imp:57893, clk:8647, un:6},
   },
+  m10: {
+    ar: {np:11, imp:10566, clk:4903, er:48.01, vis:427, folBase:5037, posts:[
+      {t:"#ControlUnionArgentina 🌱 Medir la huella de carbono es un paso importante. Poder respaldar esa información, ta",url:"https://www.linkedin.com/feed/update/urn:li:activity:7519050780641906688",imp:2034,clk:143,er:11.01,tp:"Vídeo"},
+      {t:"#ControlUnionArgentina La trazabilidad de la soja ya es parte del negocio",url:"https://www.linkedin.com/feed/update/urn:li:activity:7520454319184412672",imp:1220,clk:761,er:63.69,tp:"Orgánico"},
+      {t:"#ControlUnionArgentina #AgriReport Reporte mensual de mercado de granos de Argentina.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7513216458878025730",imp:1109,clk:998,er:90.53,tp:"Orgánico"},
+      {t:"#ControlUnionArgentina GLOBALG.A.P. se actualiza: 4 cambios que conviene conocer 🌱",url:"https://www.linkedin.com/feed/update/urn:li:activity:7521918960544468993",imp:1090,clk:754,er:70.0,tp:"Orgánico"},
+      {t:"#ControlUnionArgentina ¿Pensando en certificar una ISO? Ahora también podés hacerlo con Control Union",url:"https://www.linkedin.com/feed/update/urn:li:activity:7520819233178566657",imp:974,clk:29,er:5.13,tp:"Orgánico"}
+    ]},
+    br: {np:5, imp:8168, clk:469, er:8.25, vis:538, folBase:4074, posts:[
+      {t:"#ControlUnionBrasil 🐟 Um marco para a certificação aquícola no Brasil!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7511852466473242624",imp:3217,clk:158,er:7.71,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil 🐟 Mais uma conquista para a aquicultura responsável no Brasil!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7515841333907849216",imp:2087,clk:83,er:6.04,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil Fortalecer conexões também faz parte da construção de mercados mais sólidos.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7512865173473382400",imp:1174,clk:19,er:5.2,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil 🌱 A Control Union Brasil está presente no GAFFFF 2026!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7511854652766728193",imp:1052,clk:22,er:4.37,tp:"Orgánico"},
+      {t:"#ControlUnionBrasil Tecnologia aplicada para transformar dados de campo em decisões mais precisas.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7517962828012662785",imp:638,clk:187,er:30.25,tp:"Orgánico"}
+    ]},
+    cl: {np:2, imp:4968, clk:1417, er:30.23, vis:28, folBase:553, posts:[
+      {t:"#ControlUnionChile Nos encontramos con empresas de la industria alimentaria en Espacio Food & Service! 🍎",url:"https://www.linkedin.com/feed/update/urn:li:activity:7511855433658298369",imp:2535,clk:140,er:7.42,tp:"Vídeo"},
+      {t:"#ControlUnionChile 🤝 Estar presentes en los encuentros de la industria nos permite comprender mejor sus desafí",url:"https://www.linkedin.com/feed/update/urn:li:activity:7513303944836841472",imp:2433,clk:1277,er:54.01,tp:"Orgánico"}
+    ]},
+    pe: {np:6, imp:6576, clk:658, er:11.86, vis:290, folBase:2071, posts:[
+      {t:"#ControlUnionServices #Peru Transparencia, trazabilidad y relaciones comerciales más justas a lo largo de toda",url:"https://www.linkedin.com/feed/update/urn:li:activity:7516471032174772224",imp:1617,clk:17,er:3.34,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Peru La importancia de los estándares internacionales en el sector pesquero",url:"https://www.linkedin.com/feed/update/urn:li:activity:7516229316062474241",imp:1459,clk:39,er:4.32,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Peru Control Conecta | Jaén, Cajamarca",url:"https://www.linkedin.com/feed/update/urn:li:activity:7519488572954140672",imp:1338,clk:501,er:39.39,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Peru ¡Nos vemos en EXPOCAFÉ Cajamarca 2026!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7518006452259651586",imp:871,clk:12,er:2.76,tp:"Orgánico"},
+      {t:"#ControlUnionServices #Perú Mercedes Lodge se suma a Green Choice",url:"https://www.linkedin.com/feed/update/urn:li:activity:7515738413178834944",imp:684,clk:82,er:14.04,tp:"Orgánico"}
+    ]},
+    mx: {np:5, imp:5000, clk:1062, er:22.8, vis:61, folBase:572, posts:[
+      {t:"#ControlUnionMéxico ¡Aprender a cuidar de los demás también es parte de nuestro compromiso!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7519361404328574976",imp:1789,clk:740,er:43.21,tp:"Orgánico"},
+      {t:"#ControlUnionMéxico #Webinar 🧵 ¿Cómo preparar tu estrategia de sostenibilidad textil para 2027 sin generar cos",url:"https://www.linkedin.com/feed/update/urn:li:activity:7515750578568941568",imp:983,clk:11,er:1.93,tp:"Orgánico"},
+      {t:"#ControlUnionMéxico ✈️ Fuimos parte del ASA SAF-MX Summit 2026",url:"https://www.linkedin.com/feed/update/urn:li:activity:7521297570204356608",imp:972,clk:297,er:32.41,tp:"Orgánico"},
+      {t:"#ControlUnionMéxico ✈️ ¡Control Union México estará presente en el ASA SAF-MX Summit 2026!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7515789660967690241",imp:688,clk:6,er:2.33,tp:"Orgánico"},
+      {t:"#ControlUnionMéxico #Webinar Cambios en el Gateway y cómo obtener tu InCheck Verification",url:"https://www.linkedin.com/feed/update/urn:li:activity:7520544075025063937",imp:568,clk:8,er:2.99,tp:"Orgánico"}
+    ]},
+    ec: {np:2, imp:3588, clk:79, er:4.21, vis:73, folBase:450, posts:[
+      {t:"#ControlUnionEcuador Estaremos presente en Banana Time Guayaquil 2026.",url:"https://www.linkedin.com/feed/update/urn:li:activity:7520810518295539712",imp:2162,clk:56,er:4.35,tp:"Orgánico"},
+      {t:"#ControlUnionEcuador 🌊 Control Union Ecuador presente en AquaExpo 2026",url:"https://www.linkedin.com/feed/update/urn:li:activity:7515736175710748672",imp:1426,clk:23,er:4.0,tp:"Orgánico"}
+    ]},
+    _tot: {np:41, imp:48253, clk:8848, un:10},
+  },
 };

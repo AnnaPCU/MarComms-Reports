@@ -131,4 +131,16 @@ export const NA_DB = {
     ]},
     _tot: {np:11, imp:5616, clk:793, un:7},
   },
+  m10: {
+    us: {np:2, imp:1062, clk:675, er:67.8, vis:21, folBase:145, posts:[
+      {t:"A great day of conversations around the future of sustainable fuels, circularity, and certification in Nashvil",url:"https://www.linkedin.com/feed/update/urn:li:activity:7514346118391078912",imp:833,clk:672,er:85.11,tp:"Orgánico"},
+      {t:"Control Union is heading to The Global Produce & Floral Show 2026!",url:"https://www.linkedin.com/feed/update/urn:li:activity:7511417217155170304",imp:229,clk:3,er:4.8,tp:"Orgánico"}
+    ]},
+    ca: {np:3, imp:1031, clk:23, er:5.63, vis:20, folBase:93, posts:[
+      {t:"#ControlUnionCanada #WeAreHiring #AgriAuditor",url:"https://www.linkedin.com/feed/update/urn:li:activity:7513297723849203712",imp:549,clk:19,er:5.46,tp:"Orgánico"},
+      {t:"#ControlUnionCanada Exciting news! Our certifications manager Carlos Rainero and our commercial lead for our c",url:"https://www.linkedin.com/feed/update/urn:li:activity:7519007755974881280",imp:274,clk:4,er:5.11,tp:"Orgánico"},
+      {t:"#ControlUnionCanada Is the U.S. Cannabis Industry Ready for International Compliance?",url:"https://www.linkedin.com/feed/update/urn:li:activity:7518002928432123904",imp:208,clk:0,er:6.73,tp:"Orgánico"}
+    ]},
+    _tot: {np:15, imp:4785, clk:808, un:10},
+  },
 };

@@ -31,7 +31,7 @@ export const REGISTRY = {
     accounts: social.listAccounts(),
     // trimestres (suma de 3 meses) + meses (más reciente primero) + resumen anual + comparativa
     periods: [...social.listQuarters(), ...[...social.listPeriods()].reverse(), YEAR_2026, COMPARATIVE],
-    defaultPeriod: 'm09', // Septiembre 2026: último mes cargado
+    defaultPeriod: 'm10', // Octubre 2026: último mes cargado
     hasDataFor: social.hasDataFor,
   },
   paid: {

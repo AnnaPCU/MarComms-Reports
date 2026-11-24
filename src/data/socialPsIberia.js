@@ -37,4 +37,17 @@ export const PIA_DB = {
     ]},
     _tot: {np:21, imp:12934, clk:2041, un:17},
   },
+  m10: {
+    ar: {np:2, imp:1344, clk:23, er:3.72, vis:77, folBase:885, posts:[
+      {t:"#PetersonSolutionsArgentina ¿Está tu empresa preparada para las nuevas exigencias del comercio internacional?",url:"https://www.linkedin.com/feed/update/urn:li:activity:7520824224773509120",imp:763,clk:9,er:3.41,tp:"Orgánico"},
+      {t:"#PetersonSolutionsArgentina Sustentabilidad y Comercio Internacional: nuevos desafíos para las empresas export",url:"https://www.linkedin.com/feed/update/urn:li:activity:7518642053614841857",imp:581,clk:14,er:4.13,tp:"Orgánico"}
+    ]},
+    br: {np:0, imp:0, clk:0, er:0, vis:100, folBase:2201, posts:[]},
+    us: {np:3, imp:1082, clk:23, er:4.53, vis:23, folBase:100, posts:[
+      {t:"#PetersonSolutionsUSA #FuelingConversations",url:"https://www.linkedin.com/feed/update/urn:li:activity:7517946513134632962",imp:451,clk:12,er:4.88,tp:"Orgánico"},
+      {t:"#PetersonSolutionsUSA #FuelingConversations",url:"https://www.linkedin.com/feed/update/urn:li:activity:7513259466201522176",imp:374,clk:8,er:3.48,tp:"Orgánico"},
+      {t:"#PetersonSolutionsUSA #Webinar #Biofuels #FuelingConversations",url:"https://www.linkedin.com/feed/update/urn:li:activity:7515478914274852864",imp:257,clk:3,er:5.45,tp:"Orgánico"}
+    ]},
+    _tot: {np:26, imp:14576, clk:908, un:21},
+  },
 };

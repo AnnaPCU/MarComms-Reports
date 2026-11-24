@@ -1741,3 +1741,11 @@
 > No veo que se haya actualizado al marcomms reports. no deberia esar automatizado tambien el rpcoeso de alta del github al reports?
 
 (La entrega de Google Ads de octubre llegó desde la sesión de SEO-SEM el 17/11, fuera del rango del 3 al 10 de la tarea automática. Se procesó a mano y la tarea pasó a correr todos los días a las 8:37 y 14:37.)
+
+
+## 24 de noviembre de 2026
+
+
+**#145** (24/11/2026)
+
+> Procesá las métricas nuevas de social media

@@ -73,7 +73,9 @@ de la cuenta) o el `.xlsx` unificado de la cuenta. Metodología:
   sin país ("Miami-Fort Lauderdale y alrededores").
 
 Al cargar un mes nuevo, correr `build_monthly.py` y `build_country_seg.py`
-**una vez por cuenta segmentada** (`acc=cul`, `acc=cuna` y `acc=pia`).
+**una vez por cuenta segmentada** (`acc=cul`, `acc=cuna` y `acc=pia`), y
+sumar el mes a `MO` y `ML` de `src/data/socialSeed.js`: el selector de
+períodos sale de esa lista, no de `socialMonthly.js`.
 
 Los .xls de LinkedIn a veces traen texto mal codificado (pasó con CU España y
 PS Iberia & Americas en septiembre 2026) y `xlrd` corta con

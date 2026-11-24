@@ -45,7 +45,10 @@ social-media/
 2. `build_country_seg.py acc=cul`, `acc=cuna` y `acc=pia` → regenera la
    segmentación por país de CU Latinoamérica, CU North America y PS Iberia &
    Americas (Argentina, Brasil, Estados Unidos).
-3. Verifica los reportes en el navegador, deploya a producción y mueve la
+3. Suma el mes a `MO` y `ML` de `src/data/socialSeed.js` (si no, el mes no
+   aparece en el selector aunque esté cargado) y mueve el período por
+   defecto de Social en `src/pilares/registry.jsx`.
+4. Verifica los reportes en el navegador, deploya a producción y mueve la
    carpeta del mes a `_procesados/`.
 
 Pedido típico: **«Procesá las métricas nuevas de Social Media»**.
