@@ -1749,3 +1749,9 @@
 **#145** (24/11/2026)
 
 > Procesá las métricas nuevas de social media
+
+
+## 25 de noviembre de 2026
+
+
+(Tarea automática de Paid Media, sin pedido nuevo: no había entregas sin procesar; se completó el euro/dólar oficial del BCE del 30/10/2026 —1,1172, BOE-A-2026-22881 y tipos de referencia del BCE— que había quedado pendiente en octubre, así que la descarga de octubre en EUR quedó habilitada.)

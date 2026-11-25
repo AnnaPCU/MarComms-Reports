@@ -406,6 +406,13 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
 
 ## 15. Registro de cambios relevantes
 
+- **Paid · euro de octubre 2026** (25/11/2026, tarea automática): se
+  completó el euro/dólar oficial del BCE del 30/10 que había quedado
+  `eurPending` al cargar Google Ads de octubre: 1,1172, verificado en la
+  resolución del Banco de España BOE-A-2026-22881 y en los tipos de
+  referencia del BCE (api.frankfurter.dev). Octubre ya se descarga también
+  en EUR (1 EUR ≈ 1.560 × 1,1172 ARS). Sin entregas nuevas de Paid.
+
 - **Social · octubre 2026** (24/11/2026): LinkedIn de las 9 cuentas (1–31/10
   en los tres exports de cada una) + países de CU Latinoamérica (41 posts:
   ar 11 · br 5 · cl 2 · pe 6 · mx 5 · ec 2 · sin país 10), CU North America
@@ -614,8 +621,8 @@ Env vars (`.env.local`): solo `VITE_SHARED_PASSWORD` (opcional; default
   (existe desde el 21/8; en octubre recién tuvo actividad desde la semana
   del 19/10). Tipo de cambio: dólar BNA 1.560 (30/10, 5 fuentes); el
   euro/dólar oficial del BCE del 30/10 no se pudo verificar (sin acceso al
-  BOE ni al BCE y las cotizaciones de mercado no coinciden), así que queda
-  `eurPending`: octubre se baja en ARS y USD, no en EUR, hasta completarlo.
+  BOE ni al BCE y las cotizaciones de mercado no coinciden), así que quedó
+  `eurPending` (completado el 25/11: 1,1172, ver arriba).
   Archivado en `google-ads/_procesados/2026-10/`. Período por defecto de
   Paid: octubre.
 

@@ -42,10 +42,10 @@ export const FX_RATES = {
   // 30/09: Ámbito (cierre) · Rava · Estudio de la Mano · BCE BOE-A-2026-20464
   m09: { date: '2026-09-30', USD: 1540, usdPerEur: 1.1355 },
   // 30/10: Río Negro · Ámbito (cierre) · El Cronista · La Nación · MinutoYa
-  // (BNA 1.510 / 1.560). Euro/dólar del BCE del 30/10 PENDIENTE: no se pudo
-  // verificar en el BOE ni en el BCE (las cotizaciones de mercado no son el
-  // tipo oficial). Hasta cargarlo, octubre se descarga en ARS y USD, no en EUR.
-  m10: { date: '2026-10-30', USD: 1560, usdPerEur: null, eurPending: true },
+  // (BNA 1.510 / 1.560) · BCE BOE-A-2026-22881 + tipos de referencia del BCE
+  // (api.frankfurter.dev): 1,1172. El euro quedó pendiente al cargar octubre
+  // (17/11) y se completó el 25/11 al poder verificarlo en las 2 fuentes.
+  m10: { date: '2026-10-30', USD: 1560, usdPerEur: 1.1172 },
 
   // ── Campañas (cierre de la campaña) ──
   // Aapresid (Meta, 03–07/08): Cronista (cierre BNA) · La Nación · Río Negro ·
